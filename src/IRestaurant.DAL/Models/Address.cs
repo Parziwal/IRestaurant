@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.Models
     {
         public int Id { get; set; }
         [Required]
-        [Range(1000, 10000)]
+        [Range(1000, 9999)]
         public int ZipCode { get; set; }
         [Required]
         [StringLength(50)]
@@ -23,6 +23,7 @@ namespace IRestaurant.DAL.Models
         [Phone]
         public string PhoneNumber { get; set; }
         public string UserId { get; set; }
+        [Required]
         public ApplicationUser User { get; set; }
         public ICollection<Order> Orders { get; set; }
     }

@@ -14,7 +14,9 @@ namespace IRestaurant.DAL.Models
         public int Amount { get; set; }
         public int OrderId { get; set; }
         public int FoodId { get; set; }
+        [Required]
         public Order Order { get; set; }
+        [Required]
         public Food Food { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace IRestaurant.DAL.Models
         [StringLength(1000)]
         public string Description { get; set; }
         public int RestaurantId { get; set; }
+        [Required]
         public Restaurant Restaurant { get; set; }
         public ICollection<OrderFood> OrderFoods { get; set; }
     }
