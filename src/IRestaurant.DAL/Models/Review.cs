@@ -13,7 +13,7 @@ namespace IRestaurant.DAL.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int RestaurantId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public Restaurant Restaurant { get; set; }
         public ApplicationUser User { get; set; }
     }

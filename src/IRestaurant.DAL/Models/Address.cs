@@ -22,8 +22,7 @@ namespace IRestaurant.DAL.Models
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
-        public int UserId { get; set; }
-        [Required]
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public ICollection<Order> Orders { get; set; }
     }

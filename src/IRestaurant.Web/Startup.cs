@@ -1,5 +1,5 @@
-using IRestaurant.Web.Data;
-using IRestaurant.Web.Models;
+using IRestaurant.DAL.Data;
+using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

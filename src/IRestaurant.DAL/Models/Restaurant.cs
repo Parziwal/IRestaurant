@@ -1,5 +1,4 @@
-﻿using IRestaurant.Web.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,8 +29,10 @@ namespace IRestaurant.DAL.Models
         [Required]
         [StringLength(100)]
         public string Street { get; set; }
-        public string OwnerId { get; set; }
         [Required]
+        [Phone]
+        public string PhoneNumber { get; set; }
+        public string OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
         public ICollection<Food> Foods { get; set; }
         public ICollection<Order> Orders { get; set; }
