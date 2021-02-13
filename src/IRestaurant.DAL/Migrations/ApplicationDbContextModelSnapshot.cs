@@ -172,9 +172,6 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<DateTime>("PreferredDeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("RestaurantId")
-                        .HasColumnType("int");
-
                     b.Property<int>("status")
                         .HasColumnType("int");
 
@@ -183,8 +180,6 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("PaymentMethodId");
-
-                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Order");
                 });
@@ -588,10 +583,6 @@ namespace IRestaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IRestaurant.DAL.Models.Restaurant", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("RestaurantId");
-
                     b.Navigation("Address");
 
                     b.Navigation("PaymentMethod");
@@ -723,8 +714,6 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
                 {
                     b.Navigation("Foods");
-
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

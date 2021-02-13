@@ -35,6 +35,5 @@ namespace IRestaurant.DAL.Models
         public string OwnerId { get; set; }
         public ApplicationUser Owner { get; set; }
         public ICollection<Food> Foods { get; set; }
-        public ICollection<Order> Orders { get; set; }
     }
 }
