@@ -124,6 +124,28 @@ namespace IRestaurant.DAL.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("IRestaurant.DAL.Models.FavouriteRestaurant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavouriteRestaurant");
+                });
+
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>
                 {
                     b.Property<int>("Id")
@@ -258,6 +280,9 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
+
                     b.Property<string>("ShortDescription")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -292,8 +317,8 @@ namespace IRestaurant.DAL.Migrations
                         .HasMaxLength(10000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<double>("Rating")
+                        .HasColumnType("float");
 
                     b.Property<int>("RestaurantId")
                         .HasColumnType("int");
@@ -564,6 +589,23 @@ namespace IRestaurant.DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("IRestaurant.DAL.Models.FavouriteRestaurant", b =>
+                {
+                    b.HasOne("IRestaurant.DAL.Models.Restaurant", "Restaurant")
+                        .WithMany("UsersFavourite")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
+                        .WithMany("FavouriteRestaurants")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.Restaurant", "Restaurant")
@@ -616,7 +658,7 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "Owner")
-                        .WithOne("Restaurant")
+                        .WithOne("MyRestaurant")
                         .HasForeignKey("IRestaurant.DAL.Models.Restaurant", "OwnerId");
 
                     b.Navigation("Owner");
@@ -625,13 +667,13 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.Review", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.Restaurant", "Restaurant")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -701,7 +743,11 @@ namespace IRestaurant.DAL.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Restaurant");
+                    b.Navigation("FavouriteRestaurants");
+
+                    b.Navigation("MyRestaurant");
+
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>
@@ -722,6 +768,10 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
                 {
                     b.Navigation("Foods");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("UsersFavourite");
                 });
 #pragma warning restore 612, 618
         }

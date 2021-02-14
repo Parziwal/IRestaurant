@@ -235,6 +235,7 @@ namespace IRestaurant.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Rating = table.Column<double>(type: "float", nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     DetailedDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -287,6 +288,32 @@ namespace IRestaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FavouriteRestaurant",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RestaurantId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavouriteRestaurant", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavouriteRestaurant_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_FavouriteRestaurant_Restaurant_RestaurantId",
+                        column: x => x.RestaurantId,
+                        principalTable: "Restaurant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Food",
                 columns: table => new
                 {
@@ -314,7 +341,7 @@ namespace IRestaurant.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Rating = table.Column<double>(type: "float", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
                     RestaurantId = table.Column<int>(type: "int", nullable: false),
@@ -420,6 +447,16 @@ namespace IRestaurant.DAL.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FavouriteRestaurant_RestaurantId",
+                table: "FavouriteRestaurant",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavouriteRestaurant_UserId",
+                table: "FavouriteRestaurant",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Food_RestaurantId",
                 table: "Food",
                 column: "RestaurantId");
@@ -496,6 +533,9 @@ namespace IRestaurant.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
+
+            migrationBuilder.DropTable(
+                name: "FavouriteRestaurant");
 
             migrationBuilder.DropTable(
                 name: "OrderFood");

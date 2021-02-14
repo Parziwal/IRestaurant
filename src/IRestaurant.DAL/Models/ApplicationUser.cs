@@ -13,6 +13,8 @@ namespace IRestaurant.DAL.Models
         [StringLength(50)]
         public string FullName { get; set; }
         public ICollection<Address> Addresses { get; set; }
-        public Restaurant Restaurant { get; set; }
+        public Restaurant MyRestaurant { get; set; }
+        public ICollection<FavouriteRestaurant> FavouriteRestaurants { get; set; }
+        public ICollection<Review> Reviews { get; set; }
     }
 }

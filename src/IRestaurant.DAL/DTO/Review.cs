@@ -9,7 +9,7 @@ namespace IRestaurant.DAL.DTO
     public class Review
     {
         public int Id { get; }
-        public int Rating { get; }
+        public double Rating { get; }
         public string Title { get; }
         public string Description { get; }
         public string UserFullName { get; }
