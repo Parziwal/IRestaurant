@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.Repositories
     {
         Task<IReadOnlyCollection<DTO.RestaurantOverview>> ListRestaurantOverviews(string restaurantName = null);
         Task<DTO.Restaurant> GetRestaurantOrNull(int restaurantId);
-        Task<DTO.Restaurant> InsertDeafaultRestaurant(string ownerId);
+        Task<DTO.Restaurant> CreateDeafaultRestaurant(string ownerId);
         Task<DTO.Restaurant> EditRestaurant(int restaurantId, DTO.EditRestaurant editRestaurant);
         Task<bool> ShowRestaurantForUsers(int restaurantId);
         Task<bool> HideRestaurantFromUsers(int restaurantId);

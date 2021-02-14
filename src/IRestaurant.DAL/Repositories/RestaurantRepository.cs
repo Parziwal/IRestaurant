@@ -35,7 +35,7 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant?.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> InsertDeafaultRestaurant(string ownerId)
+        public async Task<DTO.Restaurant> CreateDeafaultRestaurant(string ownerId)
         {
             var dbRestaurant = new Models.Restaurant { OwnerId = ownerId };
 
