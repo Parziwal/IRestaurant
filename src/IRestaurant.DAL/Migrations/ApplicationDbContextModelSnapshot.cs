@@ -280,7 +280,8 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Rating")
+                    b.Property<double?>("Rating")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("float");
 
                     b.Property<string>("ShortDescription")
@@ -294,7 +295,7 @@ namespace IRestaurant.DAL.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ZipCode")
+                    b.Property<int?>("ZipCode")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
