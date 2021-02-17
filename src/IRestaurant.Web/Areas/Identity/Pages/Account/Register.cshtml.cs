@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using IRestaurant.BL;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account
 {
@@ -24,17 +25,20 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RestaurantManager restaurantManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RestaurantManager restaurantManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.restaurantManager = restaurantManager;
         }
 
         [BindProperty]
@@ -85,6 +89,10 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, Input.Role);
+                    if (Input.Role == "Restaurant")
+                    {
+                        await restaurantManager.CreateDeafaultRestaurant(user.Id);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

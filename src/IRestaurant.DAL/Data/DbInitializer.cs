@@ -13,11 +13,13 @@ namespace IRestaurant.DAL.Data
 {
     public class DbInitializer
     {
-        public static async void Initialize(ApplicationDbContext context, IServiceProvider service)
+        public static async Task Initialize(ApplicationDbContext context, IServiceProvider services)
         {
-            var logger = service.GetRequiredService<ILogger<DbInitializer>>();
-            var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = service.GetRequiredService<UserManager<ApplicationUser>>();
+            context.Database.EnsureCreated();
+
+            var logger = services.GetRequiredService<ILogger<DbInitializer>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
             if (context.Users.Any())
             {
@@ -26,16 +28,16 @@ namespace IRestaurant.DAL.Data
             }
 
             logger.LogInformation("Start seeding the database.");
-
+            
             await roleManager.CreateAsync(new IdentityRole("Guest"));
             await roleManager.CreateAsync(new IdentityRole("Restaurant"));
 
             var users = new ApplicationUser[]
                 {
-                    new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu", PhoneNumber="06-30-123-1234"},
-                    new ApplicationUser{UserName="yanli99", FullName="Yan Li", Email="yan@email.hu", PhoneNumber="06-20-157-1234"},
-                    new ApplicationUser{UserName="peggy95", FullName="Peggy Justice", Email="peggy@email.hu", PhoneNumber="06-30-787-1564"},
-                    new ApplicationUser{UserName="nini45",FullName="Nini Olivetto", Email="nini@email.hu", PhoneNumber="06-30-163-1984"},
+                    new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu"},
+                    new ApplicationUser{UserName="yanli99", FullName="Yan Li", Email="yan@email.hu"},
+                    new ApplicationUser{UserName="peggy95", FullName="Peggy Justice", Email="peggy@email.hu"},
+                    new ApplicationUser{UserName="nini45",FullName="Nini Olivetto", Email="nini@email.hu"},
                 };
 
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
@@ -46,6 +48,9 @@ namespace IRestaurant.DAL.Data
                 user.NormalizedEmail = user.Email.ToUpper();
                 await userManager.AddToRoleAsync(user, "Guest");
             }
+
+            context.Users.AddRange(users);
+            context.SaveChanges();
 
             logger.LogInformation("Finished seeding the database.");
         }

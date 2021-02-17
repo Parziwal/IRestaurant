@@ -38,7 +38,7 @@ namespace IRestaurant.Web
                 {
                     var context = services.GetRequiredService<ApplicationDbContext>();
 
-                    DbInitializer.Initialize(context, services);
+                    DbInitializer.Initialize(context, services).Wait();
                 }
                 catch (Exception ex)
                 {

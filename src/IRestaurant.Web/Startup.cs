@@ -1,5 +1,7 @@
+using IRestaurant.BL;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
+using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +51,10 @@ namespace IRestaurant.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<IRestaurantRepository, RestaurantRepository>();
+
+            services.AddTransient<RestaurantManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
