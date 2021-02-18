@@ -12,7 +12,7 @@ namespace IRestaurant.DAL.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public DbSet<Address> Addresses { get; set; }
+        public DbSet<UserAddress> Addresses { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderFood> OrderFoods { get; set; }
@@ -28,7 +28,7 @@ namespace IRestaurant.DAL.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Address>().ToTable("Address");
+            modelBuilder.Entity<UserAddress>().ToTable("Address");
             modelBuilder.Entity<Food>().ToTable("Food");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderFood>().ToTable("OrderFood");
