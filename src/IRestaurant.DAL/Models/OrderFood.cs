@@ -12,6 +12,8 @@ namespace IRestaurant.DAL.Models
         public int Id { get; set; }
         [Required]
         public int Amount { get; set; }
+        [Required]
+        public int Price { get; set; }
         public int OrderId { get; set; }
         public int FoodId { get; set; }
         [Required]
