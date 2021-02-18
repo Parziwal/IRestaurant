@@ -13,21 +13,12 @@ namespace IRestaurant.DAL.Models
         public int Id { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public double? Rating { get; set; }
         [StringLength(200)]
         public string ShortDescription { get; set; }
         [StringLength(10000)]
         public string DetailedDescription { get; set; }
         public string ImagePath { get; set; }
-        [Range(1000, 9999)]
-        public int? ZipCode { get; set; }
-        [StringLength(50)]
-        public string City { get; set; }
-        [StringLength(100)]
-        public string Street { get; set; }
-        [Phone]
-        public string PhoneNumber { get; set; }
+        public RestaurantAddress Address { get; set; }
         [Required]
         public bool ShowForUsers { get; set; }
         [Required]

@@ -20,11 +20,17 @@ namespace IRestaurant.DAL.Repositories
         {
             if (string.IsNullOrEmpty(restaurantName))
             {
-                return await dbContext.Restaurants.Where(r => r.ShowForUsers).GetRestaurantOverviews();
+                return await dbContext.Restaurants
+                    .Include(r => r.Reviews)
+                    .Where(r => r.ShowForUsers)
+                    .GetRestaurantOverviews();
             }
             else
             {
-                return await dbContext.Restaurants.Where(r => r.Name.Contains(restaurantName) && r.ShowForUsers).GetRestaurantOverviews();
+                return await dbContext.Restaurants
+                    .Include(r => r.Reviews)
+                    .Where(r => r.Name.Contains(restaurantName) && r.ShowForUsers)
+                    .GetRestaurantOverviews();
             }
         }
 
@@ -32,6 +38,7 @@ namespace IRestaurant.DAL.Repositories
         {
             var dbRestaurant = await dbContext.Restaurants
                                     .Include(r => r.Owner)
+                                    .Include(r => r.Reviews)
                                     .SingleOrDefaultAsync(r => r.Id == restaurantId && r.ShowForUsers);
 
             return dbRestaurant?.GetRestaurant();
@@ -59,10 +66,10 @@ namespace IRestaurant.DAL.Repositories
             dbRestaurant.Name = editRestaurant.Name;
             dbRestaurant.ShortDescription = editRestaurant.ShortDescription;
             dbRestaurant.DetailedDescription = editRestaurant.DetailedDescription;
-            dbRestaurant.ZipCode = editRestaurant.ZipCode;
-            dbRestaurant.City = editRestaurant.City;
-            dbRestaurant.Street = editRestaurant.Street;
-            dbRestaurant.PhoneNumber = editRestaurant.PhoneNumber;
+            dbRestaurant.Address.ZipCode = editRestaurant.ZipCode;
+            dbRestaurant.Address.City = editRestaurant.City;
+            dbRestaurant.Address.Street = editRestaurant.Street;
+            dbRestaurant.Address.PhoneNumber = editRestaurant.PhoneNumber;
             //TODO: képfeltöltés
 
             await dbContext.SaveChangesAsync();
@@ -129,10 +136,10 @@ namespace IRestaurant.DAL.Repositories
                 || string.IsNullOrEmpty(dbRestaurant.Name)
                 || string.IsNullOrEmpty(dbRestaurant.ShortDescription)
                 || string.IsNullOrEmpty(dbRestaurant.DetailedDescription)
-                || string.IsNullOrEmpty(dbRestaurant.City)
-                || string.IsNullOrEmpty(dbRestaurant.Street)
-                || string.IsNullOrEmpty(dbRestaurant.PhoneNumber)
-                && dbRestaurant.ZipCode != null)
+                || string.IsNullOrEmpty(dbRestaurant.Address.City)
+                || string.IsNullOrEmpty(dbRestaurant.Address.Street)
+                || string.IsNullOrEmpty(dbRestaurant.Address.PhoneNumber)
+                && dbRestaurant.Address.ZipCode != null)
             {
                 return false;
             }
@@ -157,12 +164,21 @@ namespace IRestaurant.DAL.Repositories
     {
         public static async Task<IReadOnlyCollection<DTO.RestaurantOverview>> GetRestaurantOverviews(this IQueryable<Models.Restaurant> restaurants)
         {
-            return await restaurants.Select(r => new DTO.RestaurantOverview(r)).ToListAsync();
+            return await restaurants.Select(r => new DTO.RestaurantOverview(r, CalculateRestaurantRating(r))).ToListAsync();
         }
 
         public static DTO.Restaurant GetRestaurant(this Models.Restaurant restaurant)
         {
-            return new DTO.Restaurant(restaurant, restaurant.Owner);
+            return new DTO.Restaurant(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
+        }
+
+        private static double? CalculateRestaurantRating(Models.Restaurant restaurant)
+        {
+            if (!restaurant.Reviews.Any())
+            {
+                return null;
+            }
+            return restaurant.Reviews.Average(r => r.Rating);
         }
     }
 }
