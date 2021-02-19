@@ -16,7 +16,6 @@ namespace IRestaurant.DAL.Data
         public DbSet<Food> Foods { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderFood> OrderFoods { get; set; }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public ApplicationDbContext(
@@ -32,7 +31,6 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Food>().ToTable("Food");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderFood>().ToTable("OrderFood");
-            modelBuilder.Entity<PaymentMethod>().ToTable("PaymentMethod");
             modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
             modelBuilder.Entity<Review>().ToTable("Review");
         }

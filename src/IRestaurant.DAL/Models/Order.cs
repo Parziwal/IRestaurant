@@ -17,11 +17,8 @@ namespace IRestaurant.DAL.Models
         [Required]
         public Status status { get; set; }
         public int AddressId { get; set; }
-        public int PaymentMethodId { get; set; }
         [Required]
         public UserAddress Address { get; set; }
-        [Required]
-        public PaymentMethod PaymentMethod { get; set; }
         public ICollection<OrderFood> OrderFoods { get; set; }
     }
 }
