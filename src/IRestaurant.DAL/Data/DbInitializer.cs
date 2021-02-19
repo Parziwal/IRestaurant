@@ -34,10 +34,10 @@ namespace IRestaurant.DAL.Data
 
             var users = new ApplicationUser[]
                 {
-                    new ApplicationUser{UserName="alexander33", FullName="Carson Alexander", Email="carson@email.hu"},
-                    new ApplicationUser{UserName="yanli99", FullName="Yan Li", Email="yan@email.hu"},
-                    new ApplicationUser{UserName="peggy95", FullName="Peggy Justice", Email="peggy@email.hu"},
-                    new ApplicationUser{UserName="nini45",FullName="Nini Olivetto", Email="nini@email.hu"},
+                    new ApplicationUser{ UserName="carson@email.hu", FullName="Carson Alexander", Email="carson@email.hu" },
+                    new ApplicationUser{ UserName="yan@email.hu", FullName="Yan Li", Email="yan@email.hu"},
+                    new ApplicationUser{ UserName="peggy@email.hu", FullName="Peggy Justice", Email="peggy@email.hu" },
+                    new ApplicationUser{ UserName="nini@email.hu", FullName="Nini Olivetto", Email="nini@email.hu" },
                 };
 
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
@@ -46,11 +46,15 @@ namespace IRestaurant.DAL.Data
                 user.PasswordHash = passwordHasher.HashPassword(user, "Test.54321");
                 user.NormalizedUserName = user.UserName.ToUpper();
                 user.NormalizedEmail = user.Email.ToUpper();
-                await userManager.AddToRoleAsync(user, "Guest");
             }
 
             context.Users.AddRange(users);
             context.SaveChanges();
+
+            foreach (ApplicationUser user in users)
+            {
+                await userManager.AddToRoleAsync(user, "Guest");
+            }
 
             logger.LogInformation("Finished seeding the database.");
         }

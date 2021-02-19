@@ -10,51 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210214172113_InitialCreate")]
+    [Migration("20210219140946_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.3")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("IRestaurant.DAL.Models.Address", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Address");
-                });
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
                 {
@@ -131,7 +96,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("RestaurantId")
                         .HasColumnType("int");
@@ -153,7 +118,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -183,7 +148,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
@@ -214,7 +179,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -223,6 +188,9 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -239,7 +207,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -256,11 +224,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("City")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .UseIdentityColumn();
 
                     b.Property<string>("DetailedDescription")
                         .HasMaxLength(10000)
@@ -273,32 +237,20 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("OwnerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Rating")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("float");
-
                     b.Property<string>("ShortDescription")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("ShowForUsers")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Street")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("ZipCode")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -314,7 +266,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("Description")
                         .HasMaxLength(10000)
@@ -327,6 +279,7 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -341,6 +294,24 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Review");
+                });
+
+            modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -478,7 +449,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -502,7 +473,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -581,17 +552,6 @@ namespace IRestaurant.DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("IRestaurant.DAL.Models.Address", b =>
-                {
-                    b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("IRestaurant.DAL.Models.FavouriteRestaurant", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.Restaurant", "Restaurant")
@@ -622,7 +582,7 @@ namespace IRestaurant.DAL.Migrations
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
-                    b.HasOne("IRestaurant.DAL.Models.Address", "Address")
+                    b.HasOne("IRestaurant.DAL.Models.UserAddress", "Address")
                         .WithMany("Orders")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -664,6 +624,40 @@ namespace IRestaurant.DAL.Migrations
                         .WithOne("MyRestaurant")
                         .HasForeignKey("IRestaurant.DAL.Models.Restaurant", "OwnerId");
 
+                    b.OwnsOne("IRestaurant.DAL.Models.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("RestaurantId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .UseIdentityColumn();
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ZipCode")
+                                .HasColumnType("int");
+
+                            b1.HasKey("RestaurantId");
+
+                            b1.ToTable("Restaurant");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RestaurantId");
+                        });
+
+                    b.Navigation("Address");
+
                     b.Navigation("Owner");
                 });
 
@@ -682,6 +676,51 @@ namespace IRestaurant.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Restaurant");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
+                {
+                    b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("IRestaurant.DAL.Models.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("UserAddressId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .UseIdentityColumn();
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ZipCode")
+                                .HasColumnType("int");
+
+                            b1.HasKey("UserAddressId");
+
+                            b1.ToTable("Address");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserAddressId");
+                        });
+
+                    b.Navigation("Address");
 
                     b.Navigation("User");
                 });
@@ -737,11 +776,6 @@ namespace IRestaurant.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("IRestaurant.DAL.Models.Address", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Addresses");
@@ -775,6 +809,11 @@ namespace IRestaurant.DAL.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("UsersFavourite");
+                });
+
+            modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

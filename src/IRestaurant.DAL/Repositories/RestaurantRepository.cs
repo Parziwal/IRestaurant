@@ -39,14 +39,27 @@ namespace IRestaurant.DAL.Repositories
             var dbRestaurant = await dbContext.Restaurants
                                     .Include(r => r.Owner)
                                     .Include(r => r.Reviews)
-                                    .SingleOrDefaultAsync(r => r.Id == restaurantId && r.ShowForUsers);
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             return dbRestaurant?.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> CreateDeafaultRestaurant(string ownerId)
+        public async Task<DTO.Restaurant> CreateDefaultRestaurant(string ownerId)
         {
-            var dbRestaurant = new Models.Restaurant { OwnerId = ownerId };
+            var dbRestaurant = new Models.Restaurant {
+                Name = "",
+                ShortDescription = "",
+                DetailedDescription = "",
+                Address = new Models.Address {
+                    ZipCode = 1000,
+                    City = "",
+                    Street = "",
+                    PhoneNumber = ""
+                },
+                ShowForUsers = false,
+                IsOrderAvailable = false,
+                OwnerId = ownerId
+            };
 
             await dbContext.AddAsync(dbRestaurant);
             await dbContext.SaveChangesAsync();
@@ -54,9 +67,9 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> EditRestaurant(int restaurantId, DTO.EditRestaurant editRestaurant)
+        public async Task<DTO.Restaurant> EditRestaurant(string ownerId, DTO.EditRestaurant editRestaurant)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
             if (dbRestaurant == null)
             {
@@ -77,72 +90,33 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> ShowRestaurantForUsers(int restaurantId)
-        {
-            return await ChangeShowForUsersStatus(restaurantId, true);
-        }
-
-        public async Task<DTO.Restaurant> HideRestaurantFromUsers(int restaurantId)
-        {
-            return await ChangeShowForUsersStatus(restaurantId, false);
-        }
-
-        private async Task<DTO.Restaurant> ChangeShowForUsersStatus(int restaurantId, bool value)
+        public async Task<bool> ChangeShowForUsersStatus(int restaurantId, bool value)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
-                return null;
+                return false;
             }
 
             dbRestaurant.IsOrderAvailable = value;
             dbRestaurant.ShowForUsers = value;
             await dbContext.SaveChangesAsync();
 
-            return dbRestaurant.GetRestaurant();
+            return true;
         }
 
-        public async Task<DTO.Restaurant> TurnOnOrderOption(int restaurantId)
-        {
-            return await ChangeOrderAvailableStatus(restaurantId, true);
-        }
-
-        public async Task<DTO.Restaurant> TurnOffOrderOption(int restaurantId)
-        {
-            return await ChangeOrderAvailableStatus(restaurantId, false);
-        }
-
-        private async Task<DTO.Restaurant> ChangeOrderAvailableStatus(int restaurantId, bool value)
+        public async Task<bool> ChangeOrderAvailableStatus(int restaurantId, bool value)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
-                return null;
+                return false;
             }
 
             dbRestaurant.IsOrderAvailable = value;
             await dbContext.SaveChangesAsync();
-
-            return dbRestaurant.GetRestaurant();
-        }
-
-        public async Task<bool> IsAllRestaurantDataGiven(int restaurantId)
-        {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null
-                || string.IsNullOrEmpty(dbRestaurant.Name)
-                || string.IsNullOrEmpty(dbRestaurant.ShortDescription)
-                || string.IsNullOrEmpty(dbRestaurant.DetailedDescription)
-                || string.IsNullOrEmpty(dbRestaurant.Address.City)
-                || string.IsNullOrEmpty(dbRestaurant.Address.Street)
-                || string.IsNullOrEmpty(dbRestaurant.Address.PhoneNumber)
-                && dbRestaurant.Address.ZipCode != null)
-            {
-                return false;
-            }
 
             return true;
         }
@@ -157,6 +131,11 @@ namespace IRestaurant.DAL.Repositories
             }
 
             return dbRestaurant.ShowForUsers;
+        }
+
+        public async Task<bool> UserOwnsThisRestaurant(string ownerId, int restaurantId)
+        {
+            return (await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId && r.OwnerId == ownerId)) != null;
         }
     }
 
@@ -174,7 +153,8 @@ namespace IRestaurant.DAL.Repositories
 
         private static double? CalculateRestaurantRating(Models.Restaurant restaurant)
         {
-            if (!restaurant.Reviews.Any())
+            bool hasReview = restaurant.Reviews == null ? false : restaurant.Reviews.Any();
+            if (!hasReview)
             {
                 return null;
             }

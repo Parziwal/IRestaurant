@@ -10,8 +10,10 @@ namespace IRestaurant.DAL.Models
     public class Review
     {
         public int Id { get; set; }
+        [Required]
         [Range(1, 5)]
         public double Rating { get; set; }
+        [Required]
         [StringLength(200)]
         public string Title { get; set; }
         [StringLength(10000)]

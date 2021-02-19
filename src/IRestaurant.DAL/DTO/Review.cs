@@ -9,14 +9,16 @@ namespace IRestaurant.DAL.DTO
 {
     public class Review
     {
-        public int Id { get; }
+        public int Id { get; set; }
+        [Required]
         [Range(1, 5)]
-        public double Rating { get; }
+        public double Rating { get; set; }
+        [Required]
         [StringLength(200)]
-        public string Title { get; }
+        public string Title { get; set; }
         [StringLength(10000)]
-        public string Description { get; }
-        public string UserFullName { get; }
+        public string Description { get; set; }
+        public string UserFullName { get; set; }
 
         public Review(Models.Review review, Models.ApplicationUser user)
         {

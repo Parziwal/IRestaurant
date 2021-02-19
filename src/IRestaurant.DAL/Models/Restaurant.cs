@@ -11,14 +11,16 @@ namespace IRestaurant.DAL.Models
     public class Restaurant
     {
         public int Id { get; set; }
+        [Required]
         [StringLength(50)]
         public string Name { get; set; }
+        [Required]
         [StringLength(200)]
         public string ShortDescription { get; set; }
         [StringLength(10000)]
         public string DetailedDescription { get; set; }
         public string ImagePath { get; set; }
-        public RestaurantAddress Address { get; set; }
+        public Address Address { get; set; }
         [Required]
         public bool ShowForUsers { get; set; }
         [Required]

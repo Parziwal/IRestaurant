@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using IRestaurant.DAL.Data;
 using IRestaurant.BL;
 using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.Repositories;
+using System.Security.Claims;
 
 namespace IRestaurant.Web.Controllers
 {
@@ -33,16 +35,17 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult<Restaurant>> Get(int restaurantId)
         {
-            var restaurant = await restaurantManager.GetRestaurantOrNull(restaurantId);
+            //var restaurant = await restaurantManager.GetRestaurantOrNull(restaurantId);
 
-            if (restaurant == null)
+            if (null == null)
             {
                 return NotFound();
             }
             else
             {
-                return Ok(restaurant);
+                return Ok(); //Ok(restaurant);
             }
         }
+
     }
 }

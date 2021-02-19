@@ -9,15 +9,18 @@ namespace IRestaurant.DAL.DTO
 {
     public class RestaurantOverview
     {
-        public int Id { get; }
+        public int Id { get; set; }
+        [Required]
         [StringLength(50)]
-        public string Name { get; }
-        public double? Rating { get; }
+        public string Name { get; set; }
+        public double? Rating { get; set; }
+        [Required]
         [StringLength(200)]
-        public string ShortDescription { get; }
-        public string ImagePath { get; }
+        public string ShortDescription { get; set; }
+        public string ImagePath { get; set; }
+        [Required]
         [StringLength(50)]
-        public string City { get; }
+        public string City { get; set; }
 
         public RestaurantOverview(Models.Restaurant restaurant, double? rating)
         {

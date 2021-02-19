@@ -11,13 +11,11 @@ namespace IRestaurant.DAL.Repositories
     {
         Task<IReadOnlyCollection<DTO.RestaurantOverview>> ListRestaurantOverviews(string restaurantName = null);
         Task<DTO.Restaurant> GetRestaurantOrNull(int restaurantId);
-        Task<DTO.Restaurant> CreateDeafaultRestaurant(string ownerId);
-        Task<DTO.Restaurant> EditRestaurant(int restaurantId, DTO.EditRestaurant editRestaurant);
-        Task<DTO.Restaurant> ShowRestaurantForUsers(int restaurantId);
-        Task<DTO.Restaurant> HideRestaurantFromUsers(int restaurantId);
-        Task<DTO.Restaurant> TurnOnOrderOption(int restaurantId);
-        Task<DTO.Restaurant> TurnOffOrderOption(int restaurantId);
-        Task<bool> IsAllRestaurantDataGiven(int restaurantId);
+        Task<DTO.Restaurant> CreateDefaultRestaurant(string ownerId);
+        Task<DTO.Restaurant> EditRestaurant(string ownerId, DTO.EditRestaurant editRestaurant);
+        Task<bool> ChangeShowForUsersStatus(string ownerId, bool value);
+        Task<bool> ChangeOrderAvailableStatus(string ownerId, bool value);
         Task<bool> IsRestaurantAvailableForUsers(int restaurantId);
+        Task<bool> UserOwnsThisRestaurant(string ownerId, int restaurantId);
     }
 }

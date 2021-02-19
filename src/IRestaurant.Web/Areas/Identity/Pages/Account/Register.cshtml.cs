@@ -91,7 +91,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, Input.Role);
                     if (Input.Role == "Restaurant")
                     {
-                        await restaurantManager.CreateDeafaultRestaurant(user.Id);
+                        await restaurantManager.CreateDefaultRestaurant(user.Id);
                     }
                     _logger.LogInformation("User created a new account with password.");
 
