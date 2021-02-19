@@ -123,6 +123,9 @@ namespace IRestaurant.DAL.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -154,9 +157,6 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethodId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("PreferredDeliveryDate")
                         .HasColumnType("datetime2");
 
@@ -166,8 +166,6 @@ namespace IRestaurant.DAL.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("PaymentMethodId");
 
                     b.ToTable("Order");
                 });
@@ -198,23 +196,6 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderFood");
-                });
-
-            modelBuilder.Entity("IRestaurant.DAL.Models.PaymentMethod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentMethod");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
@@ -586,15 +567,7 @@ namespace IRestaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IRestaurant.DAL.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany("Orders")
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
-
-                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.OrderFood", b =>
@@ -793,11 +766,6 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
                     b.Navigation("OrderFoods");
-                });
-
-            modelBuilder.Entity("IRestaurant.DAL.Models.PaymentMethod", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
