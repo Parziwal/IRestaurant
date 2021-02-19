@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class Food
+    public class FoodDto
     {
         public int Id { get; }
         [Required]
@@ -19,7 +19,7 @@ namespace IRestaurant.DAL.DTO
         [StringLength(1000)]
         public string Description { get; }
 
-        public Food(Models.Food food)
+        public FoodDto(Models.Food food)
         {
             this.Id = food.Id;
             this.Name = food.Name;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class Restaurant
+    public class RestaurantDto
     {
         public int Id { get; set; }
         [Required]
@@ -38,7 +38,7 @@ namespace IRestaurant.DAL.DTO
         [Required]
         public bool IsOrderAvailable { get; set; }
 
-        public Restaurant(Models.Restaurant restaurant, Models.ApplicationUser owner, double? rating)
+        public RestaurantDto(Models.Restaurant restaurant, Models.ApplicationUser owner, double? rating)
         {
             this.Id = restaurant.Id;
             this.Name = restaurant.Name;

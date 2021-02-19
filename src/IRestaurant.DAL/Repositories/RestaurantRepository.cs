@@ -1,4 +1,6 @@
 ﻿using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace IRestaurant.DAL.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<IReadOnlyCollection<DTO.RestaurantOverview>> ListRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> ListRestaurantOverviews(string restaurantName = null)
         {
             if (string.IsNullOrEmpty(restaurantName))
             {
@@ -34,7 +36,7 @@ namespace IRestaurant.DAL.Repositories
             }
         }
 
-        public async Task<DTO.Restaurant> GetRestaurantOrNull(int restaurantId)
+        public async Task<RestaurantDto> GetRestaurantOrNull(int restaurantId)
         {
             var dbRestaurant = await dbContext.Restaurants
                                     .Include(r => r.Owner)
@@ -44,9 +46,9 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant?.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> CreateDefaultRestaurant(string ownerId)
+        public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
-            var dbRestaurant = new Models.Restaurant {
+            var dbRestaurant = new Restaurant {
                 Name = "",
                 ShortDescription = "",
                 DetailedDescription = "",
@@ -67,7 +69,7 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<DTO.Restaurant> EditRestaurant(string ownerId, DTO.EditRestaurant editRestaurant)
+        public async Task<RestaurantDto> EditRestaurant(string ownerId, EditRestaurantDto editRestaurant)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
@@ -141,17 +143,17 @@ namespace IRestaurant.DAL.Repositories
 
     internal static class RestaurantRepositoryExtensions
     {
-        public static async Task<IReadOnlyCollection<DTO.RestaurantOverview>> GetRestaurantOverviews(this IQueryable<Models.Restaurant> restaurants)
+        public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(this IQueryable<Restaurant> restaurants)
         {
-            return await restaurants.Select(r => new DTO.RestaurantOverview(r, CalculateRestaurantRating(r))).ToListAsync();
+            return await restaurants.Select(r => new RestaurantOverviewDto(r, CalculateRestaurantRating(r))).ToListAsync();
         }
 
-        public static DTO.Restaurant GetRestaurant(this Models.Restaurant restaurant)
+        public static RestaurantDto GetRestaurant(this Restaurant restaurant)
         {
-            return new DTO.Restaurant(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
+            return new RestaurantDto(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
         }
 
-        private static double? CalculateRestaurantRating(Models.Restaurant restaurant)
+        private static double? CalculateRestaurantRating(Restaurant restaurant)
         {
             bool hasReview = restaurant.Reviews == null ? false : restaurant.Reviews.Any();
             if (!hasReview)

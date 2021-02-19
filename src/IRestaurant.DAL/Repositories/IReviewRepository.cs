@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IRestaurant.DAL.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IReviewRepository
     {
-        Task<IReadOnlyCollection<DTO.Review>> GetRestaurantReviews(int restaurantId);
-        Task<DTO.Review> AddReviewToRestaurant(string userId, int restaurantId, DTO.CreateReview review);
-        Task<DTO.Review> DeleteReview(int reviewId);
+        Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId);
+        Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review);
+        Task<ReviewDto> DeleteReview(int reviewId);
     }
 }

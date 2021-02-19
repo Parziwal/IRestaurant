@@ -27,15 +27,15 @@ namespace IRestaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<RestaurantOverview>> Get()
+        public async Task<IEnumerable<RestaurantOverviewDto>> Get([FromQuery] string restaurantName = null)
         {
-            return await restaurantManager.ListRestaurantOverviews();
+            return await restaurantManager.ListRestaurantOverviews(restaurantName);
         }
 
         [HttpGet("{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Restaurant>> Get(int restaurantId)
+        public async Task<ActionResult<RestaurantDto>> Get(int restaurantId)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var restaurant = await restaurantManager.GetRestaurantOrNull(userId, restaurantId);
@@ -54,7 +54,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPut("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Restaurant>> EditRestaurant([FromBody]EditRestaurant editRestaurant)
+        public async Task<ActionResult<RestaurantDto>> EditRestaurant([FromBody]EditRestaurantDto editRestaurant)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             var restaurant = await restaurantManager.EditRestaurant(userId, editRestaurant);

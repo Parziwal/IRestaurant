@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class Review
+    public class ReviewDto
     {
         public int Id { get; set; }
         [Required]
@@ -20,7 +20,7 @@ namespace IRestaurant.DAL.DTO
         public string Description { get; set; }
         public string UserFullName { get; set; }
 
-        public Review(Models.Review review, Models.ApplicationUser user)
+        public ReviewDto(Models.Review review, Models.ApplicationUser user)
         {
             this.Id = review.Id;
             this.Rating = review.Rating;

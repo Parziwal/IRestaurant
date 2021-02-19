@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class CreateReview
+    public class CreateReviewDto
     {
         [Required]
         [Range(1, 5)]

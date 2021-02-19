@@ -18,12 +18,12 @@ namespace IRestaurant.BL
             this.restaurantRepository = restaurantRepository;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverview>> ListRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> ListRestaurantOverviews(string restaurantName = null)
         {
             return await restaurantRepository.ListRestaurantOverviews(restaurantName);
         }
 
-        public async Task<Restaurant> GetRestaurantOrNull(string userId, int restaurantId)
+        public async Task<RestaurantDto> GetRestaurantOrNull(string userId, int restaurantId)
         {
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
                 || await restaurantRepository.UserOwnsThisRestaurant(userId, restaurantId))
@@ -33,11 +33,11 @@ namespace IRestaurant.BL
 
             return null;
         }
-        public async Task<Restaurant> CreateDefaultRestaurant(string ownerId)
+        public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
             return await restaurantRepository.CreateDefaultRestaurant(ownerId);
         }
-        public async Task<Restaurant> EditRestaurant(string ownerId, EditRestaurant editRestaurant)
+        public async Task<RestaurantDto> EditRestaurant(string ownerId, EditRestaurantDto editRestaurant)
         {
             return await restaurantRepository.EditRestaurant(ownerId, editRestaurant);
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class EditRestaurant
+    public class EditRestaurantDto
     {
         [Required]
         [StringLength(50)]
