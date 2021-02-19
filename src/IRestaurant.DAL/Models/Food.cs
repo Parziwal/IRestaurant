@@ -18,6 +18,7 @@ namespace IRestaurant.DAL.Models
         [Required]
         [StringLength(1000)]
         public string Description { get; set; }
+        public string ImagePath { get; set; }
         public int RestaurantId { get; set; }
         [Required]
         public Restaurant Restaurant { get; set; }
