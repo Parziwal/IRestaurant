@@ -90,9 +90,9 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<bool> ChangeShowForUsersStatus(int restaurantId, bool value)
+        public async Task<bool> ChangeShowForUsersStatus(string ownerId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
             if (dbRestaurant == null)
             {
@@ -106,9 +106,9 @@ namespace IRestaurant.DAL.Repositories
             return true;
         }
 
-        public async Task<bool> ChangeOrderAvailableStatus(int restaurantId, bool value)
+        public async Task<bool> ChangeOrderAvailableStatus(string ownerId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
             if (dbRestaurant == null)
             {

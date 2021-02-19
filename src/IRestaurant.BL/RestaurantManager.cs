@@ -43,13 +43,13 @@ namespace IRestaurant.BL
         }
         public async Task<bool> ShowRestaurantForUsers(string ownerId)
         {
-            bool showWasSuccessfull = await restaurantRepository.ChangeShowForUsersStatus(ownerId, true);
-            if (!showWasSuccessfull)
+            bool showResult = await restaurantRepository.ChangeShowForUsersStatus(ownerId, true);
+            if (!showResult)
             {
                 return false;
             }
-            bool orderWasSuccessfull = await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
-            if (!orderWasSuccessfull)
+            bool orderResult = await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
+            if (!orderResult)
             {
                 return false;
             }
