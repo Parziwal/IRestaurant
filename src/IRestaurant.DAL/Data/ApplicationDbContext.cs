@@ -12,12 +12,13 @@ namespace IRestaurant.DAL.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public DbSet<UserAddress> Addresses { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderFood> OrderFoods { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -27,12 +28,13 @@ namespace IRestaurant.DAL.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<UserAddress>().ToTable("Address");
+            modelBuilder.Entity<UserAddress>().ToTable("UserAddress");
             modelBuilder.Entity<Food>().ToTable("Food");
             modelBuilder.Entity<Order>().ToTable("Order");
             modelBuilder.Entity<OrderFood>().ToTable("OrderFood");
             modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
             modelBuilder.Entity<Review>().ToTable("Review");
+            modelBuilder.Entity<Review>().ToTable("Invoice");
         }
     }
 }

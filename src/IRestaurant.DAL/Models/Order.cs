@@ -20,5 +20,6 @@ namespace IRestaurant.DAL.Models
         [Required]
         public UserAddress Address { get; set; }
         public ICollection<OrderFood> OrderFoods { get; set; }
+        public Invoice Invoice { get; set; }
     }
 }
