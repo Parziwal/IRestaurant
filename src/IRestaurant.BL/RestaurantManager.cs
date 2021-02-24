@@ -12,26 +12,35 @@ namespace IRestaurant.BL
     public class RestaurantManager
     {
         private IRestaurantRepository restaurantRepository;
+        private IUserRepository userRepository;
 
-        public RestaurantManager(IRestaurantRepository restaurantRepository)
+        public RestaurantManager(IRestaurantRepository restaurantRepository, IUserRepository userRepository)
         {
             this.restaurantRepository = restaurantRepository;
+            this.userRepository = userRepository;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> ListRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
         {
-            return await restaurantRepository.ListRestaurantOverviews(restaurantName);
+            return await restaurantRepository.GetRestaurantOverviews(restaurantName);
         }
 
-        public async Task<RestaurantDto> GetRestaurantOrNull(string userId, int restaurantId)
+        public async Task<RestaurantDto> GetRestaurantOrNull(int restaurantId)
         {
-            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
-                || await restaurantRepository.UserOwnsThisRestaurant(userId, restaurantId))
+            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
                 return await restaurantRepository.GetRestaurantOrNull(restaurantId);
             }
-
             return null;
+        }
+        public async Task<RestaurantDto> GetUserRestaurantOrNull(string userId)
+        {
+            int? userRestaurantId = await userRepository.GetUserRestaurantOrNull(userId);
+            if (userRestaurantId == null)
+            {
+                return null;
+            }
+            return await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
         }
         public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
@@ -41,54 +50,42 @@ namespace IRestaurant.BL
         {
             return await restaurantRepository.EditRestaurant(ownerId, editRestaurant);
         }
-        public async Task<bool> ShowRestaurantForUsers(string ownerId)
-        {
-            bool showResult = await restaurantRepository.ChangeShowForUsersStatus(ownerId, true);
-            if (!showResult)
-            {
-                return false;
-            }
-            bool orderResult = await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
-            if (!orderResult)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public async Task<bool> HideRestaurantFromUsers(string ownerId)
+        public async Task ShowRestaurantForUsers(string ownerId)
         {
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
               new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
               TransactionScopeAsyncFlowOption.Enabled))
             {
-                bool showWasSuccessfull = await restaurantRepository.ChangeShowForUsersStatus(ownerId, false);
-                if (!showWasSuccessfull)
-                {
-                    return false;
-                }
-                bool orderWasSuccessfull = await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
-                if (!orderWasSuccessfull)
-                {
-                    return false;
-                }
+                await restaurantRepository.ChangeShowForUsersStatus(ownerId, true);
+                await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
 
                 transaction.Complete();
-
-                return true;
             }
         }
 
-        public async Task<bool> TurnOnOrderOption(string ownerId)
+        public async Task HideRestaurantFromUsers(string ownerId)
         {
-            return await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
+            using (var transaction = new TransactionScope(
+              TransactionScopeOption.Required,
+              new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
+              TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await restaurantRepository.ChangeShowForUsersStatus(ownerId, false);
+                await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
+
+                transaction.Complete();
+            }
         }
 
-        public async Task<bool> TurnOffOrderOption(string ownerId)
+        public async Task TurnOnOrderOption(string ownerId)
         {
-            return await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
+        }
+
+        public async Task TurnOffOrderOption(string ownerId)
+        {
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
         }
     }
 }

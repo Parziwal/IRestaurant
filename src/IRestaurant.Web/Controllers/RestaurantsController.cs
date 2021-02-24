@@ -29,7 +29,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<RestaurantOverviewDto>> Get([FromQuery] string restaurantName = null)
         {
-            return await restaurantManager.ListRestaurantOverviews(restaurantName);
+            return await restaurantManager.GetRestaurantOverviews(restaurantName);
         }
 
         [HttpGet("{restaurantId}")]
@@ -37,8 +37,26 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantDto>> Get(int restaurantId)
         {
+            var restaurant = await restaurantManager.GetRestaurantOrNull(restaurantId);
+
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(restaurant);
+            }
+        }
+
+        [Authorize(Roles = "Restaurant")]
+        [HttpGet("myrestaurant")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RestaurantDto>> GetMyRestaurant()
+        {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var restaurant = await restaurantManager.GetRestaurantOrNull(userId, restaurantId);
+            var restaurant = await restaurantManager.GetUserRestaurantOrNull(userId);
 
             if (restaurant == null)
             {
@@ -70,69 +88,73 @@ namespace IRestaurant.Web.Controllers
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ShowRestaurantForUsers()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var result = await restaurantManager.ShowRestaurantForUsers(userId);
-
-            if (!result)
+            try
             {
-                NotFound();
+                await restaurantManager.ShowRestaurantForUsers(userId);
+                return Ok();
             }
-
-            return Ok();
+            catch(ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> HideRestaurantFromUsers()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var result = await restaurantManager.HideRestaurantFromUsers(userId);
-
-            if (!result)
+            try
             {
-                NotFound();
+                await restaurantManager.HideRestaurantFromUsers(userId);
+                return Ok();
             }
-
-            return Ok();
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/turnofforder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOnOrderOption()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var result = await restaurantManager.TurnOnOrderOption(userId);
-
-            if (!result)
+            try
             {
-                NotFound();
+                await restaurantManager.TurnOnOrderOption(userId);
+                return Ok();
             }
-
-            return Ok();
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/turnonorder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var result = await restaurantManager.TurnOffOrderOption(userId);
-
-            if (!result)
+            try
             {
-                NotFound();
+                await restaurantManager.TurnOffOrderOption(userId);
+                return Ok();
             }
-
-            return Ok();
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace IRestaurant.DAL.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> ListRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
         {
             if (string.IsNullOrEmpty(restaurantName))
             {
@@ -92,35 +92,30 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<bool> ChangeShowForUsersStatus(string ownerId, bool value)
+        public async Task ChangeShowForUsersStatus(string ownerId, bool value)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
             if (dbRestaurant == null)
             {
-                return false;
+                throw new ArgumentException("A megadott felhasználó nem egy étterem tulajdonos.");
             }
 
-            dbRestaurant.IsOrderAvailable = value;
             dbRestaurant.ShowForUsers = value;
             await dbContext.SaveChangesAsync();
-
-            return true;
         }
 
-        public async Task<bool> ChangeOrderAvailableStatus(string ownerId, bool value)
+        public async Task ChangeOrderAvailableStatus(string ownerId, bool value)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
 
             if (dbRestaurant == null)
             {
-                return false;
+                throw new ArgumentException("A megadott felhasználó nem egy étterem tulajdonos.");
             }
 
             dbRestaurant.IsOrderAvailable = value;
             await dbContext.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task<bool> IsRestaurantAvailableForUsers(int restaurantId)
@@ -133,11 +128,6 @@ namespace IRestaurant.DAL.Repositories
             }
 
             return dbRestaurant.ShowForUsers;
-        }
-
-        public async Task<bool> UserOwnsThisRestaurant(string ownerId, int restaurantId)
-        {
-            return (await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId && r.OwnerId == ownerId)) != null;
         }
     }
 
