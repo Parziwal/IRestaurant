@@ -15,7 +15,7 @@ namespace IRestaurant.DAL.Models
         [Required]
         public DateTime PreferredDeliveryDate { get; set; }
         [Required]
-        public Status status { get; set; }
+        public Status Status { get; set; }
         public int AddressId { get; set; }
         [Required]
         public UserAddress Address { get; set; }
