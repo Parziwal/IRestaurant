@@ -56,7 +56,7 @@ namespace IRestaurant.Web.Controllers
         public async Task<ActionResult<RestaurantDto>> GetMyRestaurant()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var restaurant = await restaurantManager.GetUserRestaurantOrNull(userId);
+            var restaurant = await restaurantManager.GetOwnerRestaurantOrNull(userId);
 
             if (restaurant == null)
             {

@@ -33,14 +33,14 @@ namespace IRestaurant.BL
             }
             return null;
         }
-        public async Task<RestaurantDto> GetUserRestaurantOrNull(string userId)
+        public async Task<RestaurantDto> GetOwnerRestaurantOrNull(string ownerId)
         {
-            int? userRestaurantId = await userRepository.GetUserRestaurantOrNull(userId);
-            if (userRestaurantId == null)
+            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
+            if (ownerRestaurantId == null)
             {
                 return null;
             }
-            return await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
+            return await restaurantRepository.GetRestaurantOrNull((int)ownerRestaurantId);
         }
         public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
