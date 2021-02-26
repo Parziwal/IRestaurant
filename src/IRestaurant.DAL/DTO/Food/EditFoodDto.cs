@@ -6,13 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.DTO
+namespace IRestaurant.DAL.DTO.Food
 {
-    public class CreateFoodDto
+    public class EditFoodDto
     {
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
         [Required]
         public int Price { get; set; }
         [Required]

@@ -1,4 +1,4 @@
-﻿using IRestaurant.DAL.DTO;
+﻿using IRestaurant.DAL.DTO.Food;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,11 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IFoodRepository
     {
+        Task<FoodDto> GetFood(int foodId);
         Task<IReadOnlyCollection<FoodDto>> GetRestaurantMenu(int restaurantId);
         Task<FoodDto> AddFoodToMenu(int restaurantId, CreateFoodDto food);
         Task<FoodDto> DeleteFoodFromMenu(int foodId);
         Task<FoodDto> EditFood(int foodId, EditFoodDto food);
+        Task<int> GetFoodRestaurantId(int foodId);
     }
 }

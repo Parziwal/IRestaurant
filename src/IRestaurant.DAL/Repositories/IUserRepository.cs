@@ -8,6 +8,6 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IUserRepository
     {
-        Task<int?> GetUserRestaurantOrNull(string userId);
+        Task<int?> GetUserRestaurantIdOrNull(string userId);
     }
 }
