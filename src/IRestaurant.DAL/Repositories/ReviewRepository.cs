@@ -1,5 +1,5 @@
 ﻿using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Review;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +16,16 @@ namespace IRestaurant.DAL.Repositories
         public ReviewRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<ReviewDto> GetReview(int reviewId)
+        {
+            return (await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId))?.GetReview();
+        }
+
+        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
+        {
+            return await dbContext.Reviews.Where(r => r.RestaurantId == restaurantId).GetReviews();
         }
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
         {
@@ -48,10 +58,30 @@ namespace IRestaurant.DAL.Repositories
             return dbReview.GetReview();
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
+        public async Task<string> GetPubliserUserId(int reviewId)
         {
-            return await dbContext.Reviews.Where(r => r.RestaurantId == restaurantId).GetReviews();
+            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
+
+            if (dbReview == null)
+            {
+                return null;
+            }
+
+            return dbReview.UserId;
         }
+
+        public async Task<int?> GetRestaurantIdOrNullReviewBelongTo(int reviewId)
+        {
+            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
+
+            if (dbReview == null)
+            {
+                return null;
+            }
+
+            return dbReview.RestaurantId;
+        }
+
     }
 
     internal static class ReviewRepositoryExtensions
