@@ -53,6 +53,9 @@ namespace IRestaurant.Web
             });
 
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
+            services.AddTransient<IFoodRepository, FoodRepository>();
+            services.AddTransient<IReviewRepository, ReviewRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<RestaurantManager>();
         }

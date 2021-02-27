@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.DTO.Order
+namespace IRestaurant.DAL.DTO.Orders
 {
     public class CreateOrderFood
     {

@@ -1,4 +1,4 @@
-﻿using IRestaurant.DAL.DTO.Review;
+﻿using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Repositories;
 using System;
 using System.Collections.Generic;

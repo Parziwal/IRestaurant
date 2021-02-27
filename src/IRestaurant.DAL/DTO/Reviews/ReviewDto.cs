@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.DTO.Review
+namespace IRestaurant.DAL.DTO.Reviews
 {
     public class ReviewDto
     {

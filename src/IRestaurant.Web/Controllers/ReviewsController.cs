@@ -1,5 +1,5 @@
 ﻿using IRestaurant.BL;
-using IRestaurant.DAL.DTO.Review;
+using IRestaurant.DAL.DTO.Reviews;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

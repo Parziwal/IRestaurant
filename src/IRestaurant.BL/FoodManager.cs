@@ -1,4 +1,4 @@
-﻿using IRestaurant.DAL.DTO.Food;
+﻿using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,10 +25,11 @@ namespace IRestaurant.BL
         public async Task<FoodDto> GetFood(string userId, int foodId)
         {
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-            int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
+            int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
-            if (ownerRestaurantId == foodRestaurantId 
-                || await restaurantRepository.IsRestaurantAvailableForUsers(foodRestaurantId))
+            if (foodRestaurantId != null
+                && (ownerRestaurantId == foodRestaurantId
+                || await restaurantRepository.IsRestaurantAvailableForUsers((int)foodRestaurantId)))
             {
                 return await foodRepository.GetFood(foodId);
             }
@@ -73,7 +74,7 @@ namespace IRestaurant.BL
         public async Task<FoodDto> DeleteFoodFromMenu(string ownerId, int foodId)
         {
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
-            int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
+            int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == null || ownerRestaurantId != foodRestaurantId)
             {
@@ -86,7 +87,7 @@ namespace IRestaurant.BL
         public async Task<FoodDto> EditFood(string ownerId, int foodId, EditFoodDto food)
         {
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
-            int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
+            int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == null || ownerRestaurantId != foodRestaurantId)
             {

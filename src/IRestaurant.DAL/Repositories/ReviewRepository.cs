@@ -1,5 +1,5 @@
 ﻿using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO.Review;
+using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;

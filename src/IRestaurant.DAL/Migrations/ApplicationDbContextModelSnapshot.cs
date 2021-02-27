@@ -144,6 +144,40 @@ namespace IRestaurant.DAL.Migrations
                     b.ToTable("Food");
                 });
 
+            modelBuilder.Entity("IRestaurant.DAL.Models.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RestaurantName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserFullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Invoices");
+                });
+
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -160,7 +194,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<DateTime>("PreferredDeliveryDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("status")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -272,7 +306,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
@@ -290,7 +324,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Address");
+                    b.ToTable("UserAddress");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -559,6 +593,85 @@ namespace IRestaurant.DAL.Migrations
                     b.Navigation("Restaurant");
                 });
 
+            modelBuilder.Entity("IRestaurant.DAL.Models.Invoice", b =>
+                {
+                    b.HasOne("IRestaurant.DAL.Models.Order", "Order")
+                        .WithOne("Invoice")
+                        .HasForeignKey("IRestaurant.DAL.Models.Invoice", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("IRestaurant.DAL.Models.Address", "RestaurantAddress", b1 =>
+                        {
+                            b1.Property<int>("InvoiceId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .UseIdentityColumn();
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ZipCode")
+                                .HasColumnType("int");
+
+                            b1.HasKey("InvoiceId");
+
+                            b1.ToTable("Invoices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvoiceId");
+                        });
+
+                    b.OwnsOne("IRestaurant.DAL.Models.Address", "UserAddress", b1 =>
+                        {
+                            b1.Property<int>("InvoiceId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .UseIdentityColumn();
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)");
+
+                            b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<int>("ZipCode")
+                                .HasColumnType("int");
+
+                            b1.HasKey("InvoiceId");
+
+                            b1.ToTable("Invoices");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvoiceId");
+                        });
+
+                    b.Navigation("Order");
+
+                    b.Navigation("RestaurantAddress");
+
+                    b.Navigation("UserAddress");
+                });
+
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.UserAddress", "Address")
@@ -685,7 +798,7 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.HasKey("UserAddressId");
 
-                            b1.ToTable("Address");
+                            b1.ToTable("UserAddress");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserAddressId");
@@ -765,6 +878,8 @@ namespace IRestaurant.DAL.Migrations
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
+                    b.Navigation("Invoice");
+
                     b.Navigation("OrderFoods");
                 });
 

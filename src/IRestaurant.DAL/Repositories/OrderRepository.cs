@@ -1,5 +1,5 @@
 ﻿using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO.Order;
+using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;

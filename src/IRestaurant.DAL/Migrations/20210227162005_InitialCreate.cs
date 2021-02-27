@@ -108,29 +108,6 @@ namespace IRestaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Address",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Address_ZipCode = table.Column<int>(type: "int", nullable: true),
-                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Address_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Address", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Address_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -245,23 +222,24 @@ namespace IRestaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "UserAddress",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PreferredDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
-                    AddressId = table.Column<int>(type: "int", nullable: false)
+                    Address_ZipCode = table.Column<int>(type: "int", nullable: true),
+                    Address_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Address_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Address_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_UserAddress", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_Address_AddressId",
-                        column: x => x.AddressId,
-                        principalTable: "Address",
+                        name: "FK_UserAddress_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -316,7 +294,7 @@ namespace IRestaurant.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Invoice",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -329,17 +307,70 @@ namespace IRestaurant.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.Id);
+                    table.PrimaryKey("PK_Invoice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_AspNetUsers_UserId",
+                        name: "FK_Invoice_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Review_Restaurant_RestaurantId",
+                        name: "FK_Invoice_Restaurant_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurant",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PreferredDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Order_UserAddress_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "UserAddress",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserFullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserAddress_ZipCode = table.Column<int>(type: "int", nullable: true),
+                    UserAddress_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    UserAddress_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UserAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RestaurantId = table.Column<int>(type: "int", nullable: false),
+                    RestaurantName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RestaurantAddress_ZipCode = table.Column<int>(type: "int", nullable: true),
+                    RestaurantAddress_City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    RestaurantAddress_Street = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    RestaurantAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -371,11 +402,6 @@ namespace IRestaurant.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Address_UserId",
-                table: "Address",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -443,6 +469,22 @@ namespace IRestaurant.DAL.Migrations
                 column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Invoice_RestaurantId",
+                table: "Invoice",
+                column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoice_UserId",
+                table: "Invoice",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_OrderId",
+                table: "Invoices",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Order_AddressId",
                 table: "Order",
                 column: "AddressId");
@@ -480,13 +522,8 @@ namespace IRestaurant.DAL.Migrations
                 filter: "[OwnerId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_RestaurantId",
-                table: "Review",
-                column: "RestaurantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Review_UserId",
-                table: "Review",
+                name: "IX_UserAddress_UserId",
+                table: "UserAddress",
                 column: "UserId");
         }
 
@@ -514,13 +551,16 @@ namespace IRestaurant.DAL.Migrations
                 name: "FavouriteRestaurant");
 
             migrationBuilder.DropTable(
+                name: "Invoice");
+
+            migrationBuilder.DropTable(
+                name: "Invoices");
+
+            migrationBuilder.DropTable(
                 name: "OrderFood");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
-
-            migrationBuilder.DropTable(
-                name: "Review");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -535,7 +575,7 @@ namespace IRestaurant.DAL.Migrations
                 name: "Restaurant");
 
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "UserAddress");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

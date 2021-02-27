@@ -1,5 +1,5 @@
 ﻿using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO.Food;
+using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -73,6 +73,18 @@ namespace IRestaurant.DAL.Repositories
             await dbContext.SaveChangesAsync();
 
             return dbFood.GetFood();
+        }
+
+        public async Task<int?> GetFoodRestaurantId(int foodId)
+        {
+            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
+
+            if (dbFood == null)
+            {
+                return null;
+            }
+
+            return dbFood.RestaurantId;
         }
     }
 
