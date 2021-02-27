@@ -1,4 +1,5 @@
 ﻿using IRestaurant.DAL.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,16 @@ namespace IRestaurant.DAL.Repositories
             this.dbContext = dbContext;
         }
 
-        public Task<int?> GetUserRestaurantIdOrNull(string userId)
+        public async Task<int?> GetUserRestaurantIdOrNull(string userId)
         {
-            throw new NotImplementedException();
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.OwnerId == userId);
+
+            if (dbRestaurant == null)
+            {
+                return null;
+            }
+
+            return dbRestaurant.Id;
         }
     }
 }
