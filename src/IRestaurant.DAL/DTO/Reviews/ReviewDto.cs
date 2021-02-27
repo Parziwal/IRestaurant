@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IRestaurant.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,18 +10,13 @@ namespace IRestaurant.DAL.DTO.Reviews
 {
     public class ReviewDto
     {
-        public int Id { get; set; }
-        [Required]
-        [Range(1, 5)]
-        public double Rating { get; set; }
-        [Required]
-        [StringLength(200)]
-        public string Title { get; set; }
-        [StringLength(10000)]
-        public string Description { get; set; }
-        public string UserFullName { get; set; }
+        public int Id { get; }
+        public double Rating { get; }
+        public string Title { get; }
+        public string Description { get; }
+        public string UserFullName { get; }
 
-        public ReviewDto(Models.Review review, Models.ApplicationUser user)
+        public ReviewDto(Review review, ApplicationUser user)
         {
             this.Id = review.Id;
             this.Rating = review.Rating;
