@@ -13,7 +13,7 @@ namespace IRestaurant.DAL.DTO.Foods
         [Required]
         public int Price { get; set; }
         [Required]
-        [StringLength(1000)]
+        [StringLength(1000, MinimumLength = 50)]
         public string Description { get; set; }
         public IFormFile Image { get; set; }
     }

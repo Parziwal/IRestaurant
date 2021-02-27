@@ -9,18 +9,13 @@ namespace IRestaurant.DAL.DTO.Foods
 {
     public class FoodDto
     {
-        public int Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Name { get; set; }
-        [Required]
-        public int Price { get; set; }
-        [Required]
-        [StringLength(1000)]
-        public string Description { get; set; }
-        public string ImagePath { get; set; }
+        public int Id { get; }
+        public string Name { get; }
+        public int Price { get; }
+        public string Description { get; }
+        public string ImagePath { get; }
 
-        public FoodDto(Models.Food food)
+        public FoodDto(Food food)
         {
             this.Id = food.Id;
             this.Name = food.Name;
