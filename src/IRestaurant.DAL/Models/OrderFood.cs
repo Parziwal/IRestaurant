@@ -13,6 +13,7 @@ namespace IRestaurant.DAL.Models
         [Required]
         public int Amount { get; set; }
         [Required]
+        [Range(0, int.MaxValue)]
         public int Price { get; set; }
         public int OrderId { get; set; }
         public int FoodId { get; set; }

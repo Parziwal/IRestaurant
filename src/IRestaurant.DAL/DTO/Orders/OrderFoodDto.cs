@@ -10,9 +10,9 @@ namespace IRestaurant.DAL.DTO.Orders
 {
     public class OrderFoodDto
     {
-        public string Name { get; set; }
-        public int Price { get; set; }
-        public int Amount { get; set; }
+        public string Name { get; }
+        public int Price { get; }
+        public int Amount { get; }
 
         public OrderFoodDto(OrderFood orderFood, Food food)
         {

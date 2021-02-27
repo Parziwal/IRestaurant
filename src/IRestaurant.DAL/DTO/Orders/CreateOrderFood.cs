@@ -12,6 +12,7 @@ namespace IRestaurant.DAL.DTO.Orders
         [Required]
         public int FoodId { get; set; }
         [Required]
+        [Range(0, int.MaxValue)]
         public int Amount { get; set; }
     }
 }

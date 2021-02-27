@@ -10,16 +10,16 @@ namespace IRestaurant.DAL.DTO.Orders
 {
     public class OrderDto
     {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime PreferredDeliveryDate { get; set; }
-        public Status Status { get; set; }
-        public int Total { get; set; }
-        public string UserFullName { get; set; }
-        public AddressDto UserAddress { get; set; }
-        public string RestaurantName { get; set; }
-        public AddressDto RestaurantAddress { get; set; }
-        public List<OrderFoodDto> OrderFoods { get; set; }
+        public int Id { get; }
+        public DateTime Date { get; }
+        public DateTime PreferredDeliveryDate { get; }
+        public Status Status { get; }
+        public int Total { get; }
+        public string UserFullName { get; }
+        public AddressDto UserAddress { get; }
+        public string RestaurantName { get; }
+        public AddressDto RestaurantAddress { get; }
+        public List<OrderFoodDto> OrderFoods { get; }
 
         public OrderDto(Order order, int total, Invoice invoice, ICollection<OrderFood> orderFood)
         {
