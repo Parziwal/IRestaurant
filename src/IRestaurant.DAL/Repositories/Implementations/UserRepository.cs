@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.Repositories
+namespace IRestaurant.DAL.Repositories.Implementations
 {
     public class UserRepository : IUserRepository
     {
