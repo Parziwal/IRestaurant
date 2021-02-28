@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IRestaurant.DAL;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Restaurants;
 
 namespace IRestaurant.DAL.Repositories
 {

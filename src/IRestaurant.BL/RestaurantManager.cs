@@ -1,5 +1,5 @@
 ﻿using IRestaurant.DAL.Repositories;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Restaurants;
 using System;
 using System.Collections.Generic;
 using System.Linq;

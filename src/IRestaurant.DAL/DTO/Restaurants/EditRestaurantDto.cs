@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.DTO
+namespace IRestaurant.DAL.DTO.Restaurants
 {
     public class EditRestaurantDto
     {
