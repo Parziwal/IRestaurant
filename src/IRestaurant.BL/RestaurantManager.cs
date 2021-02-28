@@ -6,18 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace IRestaurant.BL
 {
     public class RestaurantManager
     {
-        private IRestaurantRepository restaurantRepository;
-        private IUserRepository userRepository;
-
-        public RestaurantManager(IRestaurantRepository restaurantRepository, IUserRepository userRepository)
+        private readonly IRestaurantRepository restaurantRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor accessor;
+        public RestaurantManager(IRestaurantRepository restaurantRepository,
+            IUserRepository userRepository,
+            IHttpContextAccessor accessor)
         {
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.accessor = accessor;
         }
 
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
@@ -33,59 +38,65 @@ namespace IRestaurant.BL
             }
             return null;
         }
-        public async Task<RestaurantDto> GetOwnerRestaurantOrNull(string ownerId)
+        public async Task<RestaurantDto> GetOwnerRestaurantOrNull()
         {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
-            if (ownerRestaurantId == null)
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            int? userRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+            if (userRestaurantId == null)
             {
                 return null;
             }
-            return await restaurantRepository.GetRestaurantOrNull((int)ownerRestaurantId);
+            return await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
         }
         public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
             return await restaurantRepository.CreateDefaultRestaurant(ownerId);
         }
-        public async Task<RestaurantDto> EditRestaurant(string ownerId, EditRestaurantDto editRestaurant)
+        public async Task<RestaurantDto> EditRestaurant(EditRestaurantDto editRestaurant)
         {
-            return await restaurantRepository.EditRestaurant(ownerId, editRestaurant);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            return await restaurantRepository.EditRestaurant(userId, editRestaurant);
         }
-        public async Task ShowRestaurantForUsers(string ownerId)
+        public async Task ShowRestaurantForUsers()
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
               new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
               TransactionScopeAsyncFlowOption.Enabled))
             {
-                await restaurantRepository.ChangeShowForUsersStatus(ownerId, true);
-                await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
+                await restaurantRepository.ChangeShowForUsersStatus(userId, true);
+                await restaurantRepository.ChangeOrderAvailableStatus(userId, true);
 
                 transaction.Complete();
             }
         }
 
-        public async Task HideRestaurantFromUsers(string ownerId)
+        public async Task HideRestaurantFromUsers()
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
               new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
               TransactionScopeAsyncFlowOption.Enabled))
             {
-                await restaurantRepository.ChangeShowForUsersStatus(ownerId, false);
-                await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
+                await restaurantRepository.ChangeShowForUsersStatus(userId, false);
+                await restaurantRepository.ChangeOrderAvailableStatus(userId, false);
 
                 transaction.Complete();
             }
         }
 
-        public async Task TurnOnOrderOption(string ownerId)
+        public async Task TurnOnOrderOption()
         {
-            await restaurantRepository.ChangeOrderAvailableStatus(ownerId, true);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            await restaurantRepository.ChangeOrderAvailableStatus(userId, true);
         }
 
-        public async Task TurnOffOrderOption(string ownerId)
+        public async Task TurnOffOrderOption()
         {
-            await restaurantRepository.ChangeOrderAvailableStatus(ownerId, false);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            await restaurantRepository.ChangeOrderAvailableStatus(userId, false);
         }
     }
 }

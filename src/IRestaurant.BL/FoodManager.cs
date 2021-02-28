@@ -1,8 +1,10 @@
 ﻿using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,17 +15,22 @@ namespace IRestaurant.BL
         private readonly IFoodRepository foodRepository;
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor accessor;
         public FoodManager(IFoodRepository foodRepository,
             IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IHttpContextAccessor accessor)
         {
             this.foodRepository = foodRepository;
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.accessor = accessor;
         }
 
-        public async Task<FoodDto> GetFood(string userId, int foodId)
+        public async Task<FoodDto> GetFood(int foodId)
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
@@ -47,9 +54,11 @@ namespace IRestaurant.BL
             return new List<FoodDto>();
         }
 
-        public async Task<IReadOnlyCollection<FoodDto>> GetOwnerRestaurantMenu(string ownerId)
+        public async Task<IReadOnlyCollection<FoodDto>> GetOwnerRestaurantMenu()
         {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
             {
@@ -59,9 +68,11 @@ namespace IRestaurant.BL
             return await foodRepository.GetRestaurantMenu((int)ownerRestaurantId);
         }
 
-        public async Task<FoodDto> AddFoodToMenu(string ownerId, CreateFoodDto food)
+        public async Task<FoodDto> AddFoodToMenu(CreateFoodDto food)
         {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
             {
@@ -71,9 +82,11 @@ namespace IRestaurant.BL
             return await foodRepository.AddFoodToMenu((int)ownerRestaurantId, food);
         }
 
-        public async Task<FoodDto> DeleteFoodFromMenu(string ownerId, int foodId)
+        public async Task<FoodDto> DeleteFoodFromMenu(int foodId)
         {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == null || ownerRestaurantId != foodRestaurantId)
@@ -84,9 +97,11 @@ namespace IRestaurant.BL
             return await foodRepository.DeleteFoodFromMenu(foodId);
         }
 
-        public async Task<FoodDto> EditFood(string ownerId, int foodId, EditFoodDto food)
+        public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(ownerId);
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == null || ownerRestaurantId != foodRestaurantId)

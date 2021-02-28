@@ -52,6 +52,8 @@ namespace IRestaurant.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();

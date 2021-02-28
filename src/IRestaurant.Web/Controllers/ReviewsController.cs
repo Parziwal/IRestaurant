@@ -26,8 +26,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReviewDto>> GetById(int reviewId)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var review = await reviewManager.GetReview(userId, reviewId);
+            var review = await reviewManager.GetReview(reviewId);
 
             if (review == null)
             {
@@ -41,7 +40,7 @@ namespace IRestaurant.Web.Controllers
         public async Task<IEnumerable<ReviewDto>> GetRestraurantReviews(int restaurantId)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            return await reviewManager.GetRestaurantReviews(userId, restaurantId);
+            return await reviewManager.GetRestaurantReviews(restaurantId);
         }
 
         [Authorize(Roles = "Guest")]
@@ -50,8 +49,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ReviewDto>> AddReviewToRestaurant(int restaurantId, [FromBody] CreateReviewDto review)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var createdReview = await reviewManager.AddReviewToRestaurant(userId, restaurantId, review);
+            var createdReview = await reviewManager.AddReviewToRestaurant(restaurantId, review);
 
             if (createdReview == null)
             {
@@ -68,8 +66,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteReview(int reviewId)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var deletedFood = await reviewManager.DeleteReview(userId, reviewId);
+            var deletedFood = await reviewManager.DeleteReview(reviewId);
 
             if (deletedFood == null)
             {

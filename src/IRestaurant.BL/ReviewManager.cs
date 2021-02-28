@@ -1,8 +1,10 @@
 ﻿using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,16 +15,19 @@ namespace IRestaurant.BL
         private readonly IReviewRepository reviewRepository;
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor accessor;
         public ReviewManager(IReviewRepository reviewRepository,
             IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IHttpContextAccessor accessor)
         {
             this.reviewRepository = reviewRepository;
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.accessor = accessor;
         }
 
-        public async Task<ReviewDto> GetReview(string userId, int reviewId)
+        public async Task<ReviewDto> GetReview(int reviewId)
         {
             int? reviewRestaurantId = await reviewRepository.GetRestaurantIdOrNullReviewBelongTo(reviewId);
 
@@ -30,6 +35,8 @@ namespace IRestaurant.BL
             {
                 return await reviewRepository.GetReview(reviewId);
             }
+
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
@@ -42,8 +49,10 @@ namespace IRestaurant.BL
             return null;
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(string userId, int restaurantId)
+        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
@@ -54,13 +63,17 @@ namespace IRestaurant.BL
             return new List<ReviewDto>();
         }
 
-        public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
+        public async Task<ReviewDto> AddReviewToRestaurant(int restaurantId, CreateReviewDto review)
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             return await reviewRepository.AddReviewToRestaurant(userId, restaurantId, review);
         }
 
-        public async Task<ReviewDto> DeleteReview(string userId, int reviewId)
+        public async Task<ReviewDto> DeleteReview(int reviewId)
         {
+            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? reviewRestaurantId = await reviewRepository.GetRestaurantIdOrNullReviewBelongTo(reviewId);

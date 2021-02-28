@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
@@ -26,8 +25,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FoodDto>> Get(int foodId)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var food = await foodManager.GetFood(userId, foodId);
+            var food = await foodManager.GetFood(foodId);
 
             if (food == null)
             {
@@ -47,8 +45,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("restaurant/myrestaurant")]
         public async Task<IEnumerable<FoodDto>> GetOwnerRestaurantMenu()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            return await foodManager.GetOwnerRestaurantMenu(userId);
+            return await foodManager.GetOwnerRestaurantMenu();
         }
 
         [Authorize(Roles = "Restaurant")]
@@ -57,8 +54,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<FoodDto>> AddFoodToRestaurantMenu([FromBody] CreateFoodDto food)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var createdFood =  await foodManager.AddFoodToMenu(userId, food);
+            var createdFood =  await foodManager.AddFoodToMenu(food);
 
             if (createdFood == null)
             {
@@ -74,8 +70,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FoodDto>> EditFood(int foodId, [FromBody] EditFoodDto food)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var editedFood = await foodManager.EditFood(userId, foodId, food);
+            var editedFood = await foodManager.EditFood(foodId, food);
 
             if (editedFood == null)
             {
@@ -91,8 +86,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> RemoveFoodFromRestaurantMenu(int foodId)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var deletedFood = await foodManager.DeleteFoodFromMenu(userId, foodId);
+            var deletedFood = await foodManager.DeleteFoodFromMenu(foodId);
 
             if (deletedFood == null)
             {

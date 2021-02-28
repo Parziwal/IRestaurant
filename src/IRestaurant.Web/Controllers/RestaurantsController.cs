@@ -5,11 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using IRestaurant.DAL.Data;
 using IRestaurant.BL;
 using IRestaurant.DAL.DTO;
-using IRestaurant.DAL.Repositories;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 
@@ -55,8 +52,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantDto>> GetMyRestaurant()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var restaurant = await restaurantManager.GetOwnerRestaurantOrNull(userId);
+            var restaurant = await restaurantManager.GetOwnerRestaurantOrNull();
 
             if (restaurant == null)
             {
@@ -74,8 +70,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantDto>> EditRestaurant([FromBody]EditRestaurantDto editRestaurant)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            var restaurant = await restaurantManager.EditRestaurant(userId, editRestaurant);
+            var restaurant = await restaurantManager.EditRestaurant(editRestaurant);
 
             if (restaurant == null)
             {
@@ -91,10 +86,9 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ShowRestaurantForUsers()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             try
             {
-                await restaurantManager.ShowRestaurantForUsers(userId);
+                await restaurantManager.ShowRestaurantForUsers();
                 return Ok();
             }
             catch(ArgumentException ex)
@@ -109,10 +103,9 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> HideRestaurantFromUsers()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             try
             {
-                await restaurantManager.HideRestaurantFromUsers(userId);
+                await restaurantManager.HideRestaurantFromUsers();
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -127,10 +120,9 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOnOrderOption()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             try
             {
-                await restaurantManager.TurnOnOrderOption(userId);
+                await restaurantManager.TurnOnOrderOption();
                 return Ok();
             }
             catch (ArgumentException ex)
@@ -145,10 +137,9 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             try
             {
-                await restaurantManager.TurnOffOrderOption(userId);
+                await restaurantManager.TurnOffOrderOption();
                 return Ok();
             }
             catch (ArgumentException ex)
