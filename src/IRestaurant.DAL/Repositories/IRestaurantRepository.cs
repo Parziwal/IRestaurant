@@ -13,9 +13,9 @@ namespace IRestaurant.DAL.Repositories
         Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null);
         Task<RestaurantDto> GetRestaurantOrNull(int restaurantId);
         Task<RestaurantDto> CreateDefaultRestaurant(string ownerId);
-        Task<RestaurantDto> EditRestaurant(string ownerId, EditRestaurantDto editRestaurant);
-        Task ChangeShowForUsersStatus(string ownerId, bool value);
-        Task ChangeOrderAvailableStatus(string ownerId, bool value);
+        Task<RestaurantDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant);
+        Task ChangeShowForUsersStatus(int restaurantId, bool value);
+        Task ChangeOrderAvailableStatus(int restaurantId, bool value);
         Task<bool> IsRestaurantAvailableForUsers(int restaurantId);
     }
 }

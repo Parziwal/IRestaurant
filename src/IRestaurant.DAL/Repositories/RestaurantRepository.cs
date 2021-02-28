@@ -69,9 +69,9 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<RestaurantDto> EditRestaurant(string ownerId, EditRestaurantDto editRestaurant)
+        public async Task<RestaurantDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
@@ -92,26 +92,26 @@ namespace IRestaurant.DAL.Repositories
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task ChangeShowForUsersStatus(string ownerId, bool value)
+        public async Task ChangeShowForUsersStatus(int restaurantId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott felhasználó nem egy étterem tulajdonos.");
+                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             dbRestaurant.ShowForUsers = value;
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task ChangeOrderAvailableStatus(string ownerId, bool value)
+        public async Task ChangeOrderAvailableStatus(int restaurantId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Owner.Id == ownerId);
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott felhasználó nem egy étterem tulajdonos.");
+                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             dbRestaurant.IsOrderAvailable = value;
