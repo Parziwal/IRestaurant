@@ -30,3 +30,5 @@ A weboldalra kétféle szerepkörben lehet beregisztrálni: „vendégként” �
 - Az éttermek, mint speciális felhasználók esetében a regisztráció után lehetőség van a személyes oldal szerkesztésére, mint az étterem neve, egy rövid ismertető/leírása az étteremről, az étterem címe, valamint egy étlap, amin a kiszállítandó ételek listája szerepel stb.
 - Az éttermek az oldalon nyomon tudják követni a beérkező rendeléseket, és ez alapján jóvá tudják őket hagyni és a rendelési fázis következő szakaszába mozgatni, vagy akár el is tudják azt utasítani.
 - Az éttermeknek lehetőségük van a rendelési opció kikapcsolására, illetve az étterem levételére a kereshető listából.
+- Az étterem csak akkor jelenhet meg a keresési listában, ha megadta a rá vonatkozó kötelező adatokat.
+- Az éttermek nem rendelhetnek más étteremből, illetve nem véleményezhetnek más éttermeket.
