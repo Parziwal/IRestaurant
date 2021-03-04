@@ -15,21 +15,18 @@ namespace IRestaurant.BL
         private readonly IFoodRepository foodRepository;
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
-        private readonly IHttpContextAccessor accessor;
         public FoodManager(IFoodRepository foodRepository,
             IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository,
-            IHttpContextAccessor accessor)
+            IUserRepository userRepository)
         {
             this.foodRepository = foodRepository;
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
-            this.accessor = accessor;
         }
 
         public async Task<FoodDto> GetFood(int foodId)
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
@@ -56,7 +53,7 @@ namespace IRestaurant.BL
 
         public async Task<IReadOnlyCollection<FoodDto>> GetOwnerRestaurantMenu()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
@@ -70,7 +67,7 @@ namespace IRestaurant.BL
 
         public async Task<FoodDto> AddFoodToMenu(CreateFoodDto food)
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
@@ -84,7 +81,7 @@ namespace IRestaurant.BL
 
         public async Task<FoodDto> DeleteFoodFromMenu(int foodId)
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
@@ -99,7 +96,7 @@ namespace IRestaurant.BL
 
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int? foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);

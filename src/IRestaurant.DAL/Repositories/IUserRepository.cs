@@ -9,5 +9,6 @@ namespace IRestaurant.DAL.Repositories
     public interface IUserRepository
     {
         Task<int?> GetUserRestaurantIdOrNull(string userId);
+        string GetCurrentUserId();
     }
 }

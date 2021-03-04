@@ -15,14 +15,11 @@ namespace IRestaurant.BL
     {
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
-        private readonly IHttpContextAccessor accessor;
         public RestaurantManager(IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository,
-            IHttpContextAccessor accessor)
+            IUserRepository userRepository)
         {
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
-            this.accessor = accessor;
         }
 
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
@@ -40,7 +37,7 @@ namespace IRestaurant.BL
         }
         public async Task<RestaurantDto> GetOwnerRestaurantOrNull()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
             int? userRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             if (userRestaurantId == null)
             {
@@ -54,7 +51,7 @@ namespace IRestaurant.BL
         }
         public async Task<RestaurantDto> EditRestaurant(EditRestaurantDto editRestaurant)
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
@@ -66,7 +63,7 @@ namespace IRestaurant.BL
         }
         public async Task ShowRestaurantForUsers()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
@@ -88,7 +85,7 @@ namespace IRestaurant.BL
 
         public async Task HideRestaurantFromUsers()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
 
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
@@ -111,7 +108,7 @@ namespace IRestaurant.BL
 
         public async Task TurnOnOrderOption()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
@@ -124,7 +121,7 @@ namespace IRestaurant.BL
 
         public async Task TurnOffOrderOption()
         {
-            var userId = accessor.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)

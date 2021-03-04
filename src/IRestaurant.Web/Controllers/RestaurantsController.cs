@@ -9,6 +9,7 @@ using IRestaurant.BL;
 using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace IRestaurant.Web.Controllers
 {

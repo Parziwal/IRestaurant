@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private http: HttpClient) {
+    this.http.get("https://localhost:44312/api/restaurants/myrestaurant").subscribe(
+      (res) => console.log(res)
+    );
+  }
 }
