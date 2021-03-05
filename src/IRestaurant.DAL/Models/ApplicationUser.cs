@@ -16,5 +16,6 @@ namespace IRestaurant.DAL.Models
         public Restaurant MyRestaurant { get; set; }
         public ICollection<FavouriteRestaurant> FavouriteRestaurants { get; set; }
         public ICollection<Review> Reviews { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

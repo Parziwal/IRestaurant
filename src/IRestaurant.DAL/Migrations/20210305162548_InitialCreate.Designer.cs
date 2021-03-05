@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210227162005_InitialCreate")]
+    [Migration("20210305162548_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -156,9 +156,6 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
                     b.Property<string>("RestaurantName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -168,9 +165,6 @@ namespace IRestaurant.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -187,9 +181,6 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -199,9 +190,13 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Order");
                 });
@@ -676,13 +671,13 @@ namespace IRestaurant.DAL.Migrations
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
                 {
-                    b.HasOne("IRestaurant.DAL.Models.UserAddress", "Address")
+                    b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("AddressId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.OrderFood", b =>
@@ -870,6 +865,8 @@ namespace IRestaurant.DAL.Migrations
 
                     b.Navigation("MyRestaurant");
 
+                    b.Navigation("Orders");
+
                     b.Navigation("Reviews");
                 });
 
@@ -892,11 +889,6 @@ namespace IRestaurant.DAL.Migrations
                     b.Navigation("Reviews");
 
                     b.Navigation("UsersFavourite");
-                });
-
-            modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
