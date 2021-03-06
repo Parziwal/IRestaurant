@@ -34,12 +34,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IRestaurant.BL\IRestaurant.BL.csproj" />
-    <ProjectReference Include="..\IRestaurant.DAL\IRestaurant.DAL.csproj" />
+    <None Include="wwwroot\Styles\navmenu.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Styles\" />
+    <ProjectReference Include="..\IRestaurant.BL\IRestaurant.BL.csproj" />
+    <ProjectReference Include="..\IRestaurant.DAL\IRestaurant.DAL.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

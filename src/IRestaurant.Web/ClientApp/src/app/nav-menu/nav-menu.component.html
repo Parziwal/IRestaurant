@@ -1,45 +1,28 @@
-<header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">IRestaurant.Web</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-        <app-login-menu></app-login-menu>
-      </div>
-    </div>
-  </nav>
-</header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+      <div class="container-fluid">
+          <a class="navbar-brand" routerLink="">IRestaurant</a>
+          <button (click)="toggle()" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{show: isExpanded}">
+            <div class="navbar-nav">
+              <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Kezdőlap</a>
+              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) == 'Guest'">
+                <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
+                <a class="nav-link" routerLink="kedvencek" routerLinkActive="active">Kedvencek</a>
+              </ng-container>
+              <ng-template *ngIf="(isAuthenticated | async) && (userRole | async) == 'Restaurant'">
+                <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
+                <a class="nav-link" routerLink="etermem" routerLinkActive="active">Étermem</a>
+                <a class="nav-link" routerLink="etlap" routerLinkActive="active">Étlap</a>
+              </ng-template>
+              <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
+            </div>
+            <div class="navbar-collapse collapse d-inline-flex flex-sm-row-reverse">
+              <app-login-menu></app-login-menu>
+            </div>
+          </div>
+        </div>
+  </div>
+</nav>

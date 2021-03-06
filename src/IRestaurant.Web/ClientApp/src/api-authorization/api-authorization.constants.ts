@@ -79,3 +79,9 @@ interface ApplicationPathsType {
 }
 
 export const ApplicationPaths: ApplicationPathsType = applicationPaths;
+
+export enum UserRole {
+  Restaurant = "Restaurant",
+  Guest = "Guest",
+  None = "null"
+}

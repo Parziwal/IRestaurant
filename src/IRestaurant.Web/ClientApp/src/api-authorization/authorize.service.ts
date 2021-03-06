@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
-import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
-import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
+import { catchError, filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { ApplicationPaths, ApplicationName, UserRole } from './api-authorization.constants';
 
 export type IAuthenticationResult =
   SuccessAuthenticationResult |
@@ -44,6 +46,8 @@ export class AuthorizeService {
   private userManager: UserManager;
   private userSubject: BehaviorSubject<IUser | null> = new BehaviorSubject(null);
 
+  constructor(private http: HttpClient) {}
+
   public isAuthenticated(): Observable<boolean> {
     return this.getUser().pipe(map(u => !!u));
   }
@@ -59,6 +63,12 @@ export class AuthorizeService {
     return from(this.ensureUserManagerInitialized())
       .pipe(mergeMap(() => from(this.userManager.getUser())),
         map(user => user && user.access_token));
+  }
+
+  public getUserRole(): Observable<UserRole> {
+    return this.http.get<{name: string}>(environment.apiUrl + "userroles").pipe(
+      map(role => role.name as UserRole)
+    );
   }
 
   // We try to authenticate the user in three different ways:
