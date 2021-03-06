@@ -1,3 +1,4 @@
+using Hellang.Middleware.ProblemDetails;
 using IRestaurant.BL;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
@@ -58,6 +59,8 @@ namespace IRestaurant.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddProblemDetails();
+
             services.AddHttpContextAccessor();
 
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
@@ -82,6 +85,8 @@ namespace IRestaurant.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseProblemDetails();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

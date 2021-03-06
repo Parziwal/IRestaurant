@@ -25,7 +25,7 @@ namespace IRestaurant.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<RestaurantOverviewDto>> Get([FromQuery] string restaurantName = null)
+        public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantList([FromQuery] string restaurantName = null)
         {
             return await restaurantManager.GetRestaurantOverviews(restaurantName);
         }
@@ -33,18 +33,9 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RestaurantDto>> Get(int restaurantId)
+        public async Task<ActionResult<RestaurantDto>> GetRestaurant(int restaurantId)
         {
-            var restaurant = await restaurantManager.GetRestaurantOrNull(restaurantId);
-
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(restaurant);
-            }
+            return await restaurantManager.GetRestaurant(restaurantId);
         }
 
         [Authorize(Roles = "Restaurant")]
@@ -53,100 +44,56 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<RestaurantDto>> GetMyRestaurant()
         {
-            var restaurant = await restaurantManager.GetOwnerRestaurantOrNull();
-
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(restaurant);
-            }
+            return await restaurantManager.GetMyRestaurant();
         }
 
         [Authorize( Roles = "Restaurant" )]
         [HttpPut("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RestaurantDto>> EditRestaurant([FromBody]EditRestaurantDto editRestaurant)
+        public async Task<ActionResult<RestaurantDto>> EditMyRestaurant([FromBody]EditRestaurantDto editRestaurant)
         {
-            var restaurant = await restaurantManager.EditRestaurant(editRestaurant);
-
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(restaurant);
+            return await restaurantManager.EditMyRestaurant(editRestaurant);
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> ShowRestaurantForUsers()
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> ShowMyRestaurantForUsers()
         {
-            try
-            {
-                await restaurantManager.ShowRestaurantForUsers();
-                return Ok();
-            }
-            catch(ArgumentException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            await restaurantManager.ChangeMyRestaurantShowStatus(true);
+            return Ok();
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> HideRestaurantFromUsers()
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> HideMyRestaurantFromUsers()
         {
-            try
-            {
-                await restaurantManager.HideRestaurantFromUsers();
-                return Ok();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
-
-        [Authorize(Roles = "Restaurant")]
-        [HttpPut("myrestaurant/turnofforder")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> TurnOnOrderOption()
-        {
-            try
-            {
-                await restaurantManager.TurnOnOrderOption();
-                return Ok();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            await restaurantManager.ChangeMyRestaurantShowStatus(false);
+            return Ok();
         }
 
         [Authorize(Roles = "Restaurant")]
         [HttpPut("myrestaurant/turnonorder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> TurnOnOrderOption()
+        {
+            await restaurantManager.ChangeMyRestaurantOrderStatus(true);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Restaurant")]
+        [HttpPut("myrestaurant/turnofforder")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
-            try
-            {
-                await restaurantManager.TurnOffOrderOption();
-                return Ok();
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
+            await restaurantManager.ChangeMyRestaurantOrderStatus(false);
+            return Ok();
         }
     }
 }

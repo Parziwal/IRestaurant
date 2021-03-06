@@ -9,7 +9,7 @@ export class AppComponent {
   title = 'app';
 
   constructor(private http: HttpClient) {
-    this.http.get("https://localhost:44312/api/restaurants/myrestaurant").subscribe(
+    this.http.get("https://localhost:44312/api/restaurants/myrestaurant/3").subscribe(
       (res) => console.log(res)
     );
   }

@@ -23,7 +23,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetUserOrders(string userId)
         {
             return await dbContext.Orders
-                .Where(o => o.Invoice.UserId == userId)
+                .Where(o => o.UserId == userId)
                 .Include(o => o.Invoice)
                 .Include(o => o.OrderFoods)
                 .GetOrders();
@@ -31,7 +31,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrdersBelongsToRestaurant(int restaurantId)
         {
             return await dbContext.Orders
-                .Where(o => o.Invoice.RestaurantId == restaurantId)
+                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
                 .Include(o => o.Invoice)
                 .Include(o => o.OrderFoods)
                 .GetOrders();
@@ -52,7 +52,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 Date = DateTime.Now,
                 PreferredDeliveryDate = order.PreferredDeliveryDate,
                 Status = Status.PROCESSING,
-                AddressId = order.AddressId
+                UserId = userId
             };
 
             await dbContext.Orders.AddAsync(dbOrder);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Hellang.Middleware.ProblemDetails;
 
 namespace IRestaurant.BL
 {
@@ -27,109 +28,100 @@ namespace IRestaurant.BL
             return await restaurantRepository.GetRestaurantOverviews(restaurantName);
         }
 
-        public async Task<RestaurantDto> GetRestaurantOrNull(int restaurantId)
+        public async Task<RestaurantDto> GetRestaurant(int restaurantId)
         {
-            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
+            var restaurant = await restaurantRepository.GetRestaurantOrNull(restaurantId);
+            if (!await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
+                || restaurant == null)
             {
-                return await restaurantRepository.GetRestaurantOrNull(restaurantId);
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem jelenleg nem elérhető, vagy nem is létezik.");
             }
-            return null;
+
+            return restaurant;
         }
-        public async Task<RestaurantDto> GetOwnerRestaurantOrNull()
+        public async Task<RestaurantDto> GetMyRestaurant()
         {
             string userId = userRepository.GetCurrentUserId();
             int? userRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             if (userRestaurantId == null)
             {
-                return null;
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
             }
-            return await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
+
+            var restaurant = await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
+            if (restaurant == null)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
+            }
+            return restaurant;
         }
         public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
             return await restaurantRepository.CreateDefaultRestaurant(ownerId);
         }
-        public async Task<RestaurantDto> EditRestaurant(EditRestaurantDto editRestaurant)
+        public async Task<RestaurantDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
             string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
             {
-                return null;
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
             }
 
-            return await restaurantRepository.EditRestaurant((int)ownerRestaurantId, editRestaurant);
+            var restaurant = await restaurantRepository.EditRestaurant((int)ownerRestaurantId, editRestaurant);
+            if (restaurant == null)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
+            }
+            return restaurant;
         }
-        public async Task ShowRestaurantForUsers()
+        public async Task ChangeMyRestaurantShowStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
             {
-                throw new ArgumentException("A jelenlegi felhasználó nem egy étterem tulajdonos.");
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
             }
 
-            using (var transaction = new TransactionScope(
-              TransactionScopeOption.Required,
-              new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
-              TransactionScopeAsyncFlowOption.Enabled))
+            try
             {
-                await restaurantRepository.ChangeShowForUsersStatus((int)ownerRestaurantId, true);
-                await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, true);
+                using (var transaction = new TransactionScope(
+                  TransactionScopeOption.Required,
+                  new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
+                  TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    await restaurantRepository.ChangeShowForUsersStatus((int)ownerRestaurantId, value);
+                    await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, value);
 
-                transaction.Complete();
-            }
-        }
-
-        public async Task HideRestaurantFromUsers()
-        {
-            string userId = userRepository.GetCurrentUserId();
-
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
+                    transaction.Complete();
+                }
+            } catch(ArgumentException ae)
             {
-                throw new ArgumentException("A jelenlegi felhasználó nem egy étterem tulajdonos.");
-            }
-
-            using (var transaction = new TransactionScope(
-              TransactionScopeOption.Required,
-              new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
-              TransactionScopeAsyncFlowOption.Enabled))
-            {
-                await restaurantRepository.ChangeShowForUsersStatus((int)ownerRestaurantId, false);
-                await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, false);
-
-                transaction.Complete();
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
             }
         }
 
-        public async Task TurnOnOrderOption()
+        public async Task ChangeMyRestaurantOrderStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
             {
-                throw new ArgumentException("A jelenlegi felhasználó nem egy étterem tulajdonos.");
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
             }
 
-            await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, true);
-        }
-
-        public async Task TurnOffOrderOption()
-        {
-            string userId = userRepository.GetCurrentUserId();
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
+            try
             {
-                throw new ArgumentException("A jelenlegi felhasználó nem egy étterem tulajdonos.");
+                await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, value);
             }
-
-            await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, false);
+            catch (ArgumentException ae)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
+            }
         }
     }
 }
