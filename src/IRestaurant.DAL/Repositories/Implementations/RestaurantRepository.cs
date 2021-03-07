@@ -52,7 +52,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 Name = "",
                 ShortDescription = "",
                 DetailedDescription = "",
-                Address = new Models.Address {
+                Address = new Address {
                     ZipCode = 1000,
                     City = "",
                     Street = "",

@@ -14,6 +14,6 @@ namespace IRestaurant.DAL.Repositories
         Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review);
         Task<ReviewDto> DeleteReview(int reviewId);
         Task<string> GetPubliserUserId(int reviewId);
-        Task<int?> GetRestaurantIdOrNullReviewBelongTo(int reviewId);
+        Task<int> GetRestaurantIdReviewBelongTo(int reviewId);
     }
 }

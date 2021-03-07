@@ -21,42 +21,27 @@ namespace IRestaurant.Web.Controllers
             this.reviewManager = reviewManager;
         }
 
-        [HttpGet("reviewId")]
+        [HttpGet("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReviewDto>> GetById(int reviewId)
         {
-            var review = await reviewManager.GetReview(reviewId);
-
-            if (review == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(review);
+            return await reviewManager.GetReview(reviewId);
         }
 
         [HttpGet("restaurant/{restaurantId}")]
         public async Task<IEnumerable<ReviewDto>> GetRestraurantReviews(int restaurantId)
         {
-            string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
             return await reviewManager.GetRestaurantReviews(restaurantId);
         }
 
         [Authorize(Roles = "Guest")]
         [HttpPost("restaurant/{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ReviewDto>> AddReviewToRestaurant(int restaurantId, [FromBody] CreateReviewDto review)
         {
             var createdReview = await reviewManager.AddReviewToRestaurant(restaurantId, review);
-
-            if (createdReview == null)
-            {
-                return BadRequest();
-            }
-
-
             return CreatedAtAction(nameof(GetById), new { id = createdReview }, createdReview);
         }
 
@@ -66,13 +51,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteReview(int reviewId)
         {
-            var deletedFood = await reviewManager.DeleteReview(reviewId);
-
-            if (deletedFood == null)
-            {
-                return NotFound();
-            }
-
+            await reviewManager.DeleteReview(reviewId);
             return NoContent();
         }
     }

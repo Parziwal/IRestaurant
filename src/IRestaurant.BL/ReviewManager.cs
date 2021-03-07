@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.DTO.Reviews;
+﻿using Hellang.Middleware.ProblemDetails;
+using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -26,61 +27,77 @@ namespace IRestaurant.BL
 
         public async Task<ReviewDto> GetReview(int reviewId)
         {
-            int? reviewRestaurantId = await reviewRepository.GetRestaurantIdOrNullReviewBelongTo(reviewId);
-
-            if (reviewRestaurantId != null && await restaurantRepository.IsRestaurantAvailableForUsers((int)reviewRestaurantId))
+            try
             {
-                return await reviewRepository.GetReview(reviewId);
+                int reviewRestaurantId = await reviewRepository.GetRestaurantIdReviewBelongTo(reviewId);
+
+                if (await restaurantRepository.IsRestaurantAvailableForUsers(reviewRestaurantId))
+                {
+                    return await reviewRepository.GetReview(reviewId);
+                }
+
+                string userId = userRepository.GetCurrentUserId();
+                string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
+                int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+
+                if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+                {
+                    return await reviewRepository.GetReview(reviewId);
+                }
             }
-
-            string userId = userRepository.GetCurrentUserId();
-
-            string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+            finally
             {
-                return await reviewRepository.GetReview(reviewId);
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound,
+                    "A megadott azonosítóval rendelkező értékelés nem létezik, vagy megtekintése korátozva van.");
             }
-
-            return null;
         }
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
         {
             string userId = userRepository.GetCurrentUserId();
-
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
-                || ownerRestaurantId == restaurantId)
+                || (ownerRestaurantId != null && ownerRestaurantId == restaurantId))
             {
                 return await reviewRepository.GetRestaurantReviews(restaurantId);
             }
+
             return new List<ReviewDto>();
         }
 
         public async Task<ReviewDto> AddReviewToRestaurant(int restaurantId, CreateReviewDto review)
         {
-            string userId = userRepository.GetCurrentUserId();
-
-            return await reviewRepository.AddReviewToRestaurant(userId, restaurantId, review);
+            try
+            {
+                string userId = userRepository.GetCurrentUserId();
+                return await reviewRepository.AddReviewToRestaurant(userId, restaurantId, review);
+            }
+            catch(ArgumentException ae)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest, ae.Message);
+            }
         }
 
-        public async Task<ReviewDto> DeleteReview(int reviewId)
+        public async Task DeleteReview(int reviewId)
         {
-            string userId = userRepository.GetCurrentUserId();
-
-            string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-            int? reviewRestaurantId = await reviewRepository.GetRestaurantIdOrNullReviewBelongTo(reviewId);
-
-            if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+            try
             {
-                return await reviewRepository.DeleteReview(reviewId);
-            }
+                string userId = userRepository.GetCurrentUserId();
+                string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
+                int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+                int reviewRestaurantId = await reviewRepository.GetRestaurantIdReviewBelongTo(reviewId);
 
-            return null;
+                if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+                {
+                    await reviewRepository.DeleteReview(reviewId);
+                }
+            }
+            catch (ArgumentException)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound,
+                    "A megadott azonosítójú értékelés nem létezik, vagy nincs jogosultsága a törléséhez.");
+            }
         }
     }
 }

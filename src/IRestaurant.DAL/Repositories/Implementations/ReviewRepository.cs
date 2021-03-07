@@ -29,12 +29,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
         {
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+
+            if (dbRestaurant == null)
+            {
+                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
+            }
+
             var dbReview = new Review {
                 Title = review.Title,
                 Description = review.Description,
                 Rating = review.Rating,
                 UserId = userId,
-                RestaurantId = restaurantId
+                Restaurant = dbRestaurant
             };
 
             await dbContext.AddAsync(dbReview);
@@ -49,7 +56,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbReview == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             dbContext.Reviews.Remove(dbReview);
@@ -64,19 +71,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbReview == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             return dbReview.UserId;
         }
 
-        public async Task<int?> GetRestaurantIdOrNullReviewBelongTo(int reviewId)
+        public async Task<int> GetRestaurantIdReviewBelongTo(int reviewId)
         {
             var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
 
             if (dbReview == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             return dbReview.RestaurantId;
