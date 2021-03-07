@@ -23,16 +23,10 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("{foodId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<FoodDto>> Get(int foodId)
         {
-            var food = await foodManager.GetFood(foodId);
-
-            if (food == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(food);
+           return await foodManager.GetFood(foodId);
         }
 
         [HttpGet("restaurant/{restaurantId}")]
@@ -51,16 +45,10 @@ namespace IRestaurant.Web.Controllers
         [Authorize(Roles = "Restaurant")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FoodDto>> AddFoodToRestaurantMenu([FromBody] CreateFoodDto food)
         {
             var createdFood =  await foodManager.AddFoodToMenu(food);
-
-            if (createdFood == null)
-            {
-                return BadRequest();
-            }
-
             return CreatedAtAction(nameof(Get), new { id = createdFood.Id }, createdFood);
         }
 
@@ -70,14 +58,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<FoodDto>> EditFood(int foodId, [FromBody] EditFoodDto food)
         {
-            var editedFood = await foodManager.EditFood(foodId, food);
-
-            if (editedFood == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(editedFood);
+            return await foodManager.EditFood(foodId, food);
         }
 
         [Authorize(Roles = "Restaurant")]
@@ -86,13 +67,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> RemoveFoodFromRestaurantMenu(int foodId)
         {
-            var deletedFood = await foodManager.DeleteFoodFromMenu(foodId);
-
-            if (deletedFood == null)
-            {
-                return NotFound();
-            }
-
+            await foodManager.DeleteFoodFromMenu(foodId);
             return NoContent();
         }
     }

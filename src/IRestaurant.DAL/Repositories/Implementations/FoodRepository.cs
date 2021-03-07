@@ -30,6 +30,13 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> AddFoodToMenu(int restaurantId, CreateFoodDto food)
         {
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+
+            if (dbRestaurant == null)
+            {
+                throw new ArgumentException("A megadott azonsítóval rendelkező étterem nem létezik.");
+            }
+
             var dbFood = new Food {
                 Name = food.Name,
                 Price = food.Price,
@@ -49,7 +56,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbFood == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             dbContext.Remove(dbFood);
@@ -64,7 +71,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbFood == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             dbFood.Price = food.Price;
@@ -75,13 +82,13 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbFood.GetFood();
         }
 
-        public async Task<int?> GetFoodRestaurantId(int foodId)
+        public async Task<int> GetFoodRestaurantId(int foodId)
         {
             var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
 
             if (dbFood == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             return dbFood.RestaurantId;

@@ -70,6 +70,7 @@ namespace IRestaurant.Web
 
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
+            services.AddTransient<FoodManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

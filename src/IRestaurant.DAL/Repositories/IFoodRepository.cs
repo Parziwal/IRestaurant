@@ -14,6 +14,6 @@ namespace IRestaurant.DAL.Repositories
         Task<FoodDto> AddFoodToMenu(int restaurantId, CreateFoodDto food);
         Task<FoodDto> DeleteFoodFromMenu(int foodId);
         Task<FoodDto> EditFood(int foodId, EditFoodDto food);
-        Task<int?> GetFoodRestaurantId(int foodId);
+        Task<int> GetFoodRestaurantId(int foodId);
     }
 }
