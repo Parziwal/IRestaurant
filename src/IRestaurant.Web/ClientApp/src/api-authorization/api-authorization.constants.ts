@@ -80,8 +80,11 @@ interface ApplicationPathsType {
 
 export const ApplicationPaths: ApplicationPathsType = applicationPaths;
 
+/**
+ * A felhasználó szerepkörei: Étterem, Vendég, vagy nincs bejelentkezve.
+ */
 export enum UserRole {
   Restaurant = "Restaurant",
   Guest = "Guest",
-  None = "null"
+  None = "None"
 }

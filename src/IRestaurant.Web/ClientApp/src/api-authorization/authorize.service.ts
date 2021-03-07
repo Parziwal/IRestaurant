@@ -65,9 +65,14 @@ export class AuthorizeService {
         map(user => user && user.access_token));
   }
 
+  /**
+   * Az aktuális felhsználó szerepkörének (role) lekérdezése.
+   * @returns Szerepkör/Role enum formában
+   */
   public getUserRole(): Observable<UserRole> {
     return this.http.get<{name: string}>(environment.apiUrl + "userroles").pipe(
-      map(role => role.name as UserRole)
+      map(role => role.name === UserRole.Guest.toString() ? UserRole.Guest :
+      (role.name === UserRole.Restaurant.toString() ? UserRole.Restaurant : UserRole.None ))
     );
   }
 
