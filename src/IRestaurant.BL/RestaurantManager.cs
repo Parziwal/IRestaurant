@@ -42,13 +42,9 @@ namespace IRestaurant.BL
         public async Task<RestaurantDto> GetMyRestaurant()
         {
             string userId = userRepository.GetCurrentUserId();
-            int? userRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-            if (userRestaurantId == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
-            }
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            var restaurant = await restaurantRepository.GetRestaurantOrNull((int)userRestaurantId);
+            var restaurant = await restaurantRepository.GetRestaurantOrNull(ownerRestaurantId);
             if (restaurant == null)
             {
                 throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
@@ -62,29 +58,21 @@ namespace IRestaurant.BL
         public async Task<RestaurantDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
             string userId = userRepository.GetCurrentUserId();
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            if (ownerRestaurantId == null)
+            try
             {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
+                return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
             }
-
-            var restaurant = await restaurantRepository.EditRestaurant((int)ownerRestaurantId, editRestaurant);
-            if (restaurant == null)
+            catch(ArgumentException ae)
             {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
-            }
-            return restaurant;
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
+            } 
         }
         public async Task ChangeMyRestaurantShowStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
-            }
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
 
             try
             {
@@ -93,8 +81,8 @@ namespace IRestaurant.BL
                   new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
                   TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await restaurantRepository.ChangeShowForUsersStatus((int)ownerRestaurantId, value);
-                    await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, value);
+                    await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, value);
+                    await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
 
                     transaction.Complete();
                 }
@@ -107,6 +95,20 @@ namespace IRestaurant.BL
         public async Task ChangeMyRestaurantOrderStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
+
+            try
+            {
+                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+            }
+            catch (ArgumentException ae)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
+            }
+        }
+
+        private async Task<int> GetUserRestaurantId(string userId)
+        {
             int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
 
             if (ownerRestaurantId == null)
@@ -114,14 +116,7 @@ namespace IRestaurant.BL
                 throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
             }
 
-            try
-            {
-                await restaurantRepository.ChangeOrderAvailableStatus((int)ownerRestaurantId, value);
-            }
-            catch (ArgumentException ae)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
-            }
+            return (int)ownerRestaurantId;
         }
     }
 }

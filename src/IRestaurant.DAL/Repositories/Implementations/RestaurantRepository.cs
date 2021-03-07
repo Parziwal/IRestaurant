@@ -75,7 +75,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                return null;
+                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik, így nem szerkeszthető.");
             }
 
             dbRestaurant.Name = editRestaurant.Name;
