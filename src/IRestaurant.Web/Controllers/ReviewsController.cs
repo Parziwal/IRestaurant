@@ -24,6 +24,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<ReviewDto>> GetById(int reviewId)
         {
             return await reviewManager.GetReview(reviewId);

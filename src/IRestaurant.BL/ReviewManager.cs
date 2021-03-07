@@ -44,11 +44,13 @@ namespace IRestaurant.BL
                 {
                     return await reviewRepository.GetReview(reviewId);
                 }
+
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "A megadott azonosítóval rendelkező értékelés megtekintése korátozva van.");
             }
-            finally
+            catch(ArgumentException ae)
             {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound,
-                    "A megadott azonosítóval rendelkező értékelés nem létezik, vagy megtekintése korátozva van.");
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
             }
         }
 
@@ -92,11 +94,13 @@ namespace IRestaurant.BL
                 {
                     await reviewRepository.DeleteReview(reviewId);
                 }
+
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                        "A megadott azonosítóval rendelkező értékelés törléséhez nincs jogosultságod.");
             }
-            catch (ArgumentException)
+            catch (ArgumentException ae)
             {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound,
-                    "A megadott azonosítójú értékelés nem létezik, vagy nincs jogosultsága a törléséhez.");
+                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
             }
         }
     }
