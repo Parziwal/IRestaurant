@@ -44,7 +44,7 @@ namespace IRestaurant.Web
 
             //Hogy a felhasználó szerepkörét (role) le tudjuk kérdezni oidc kliens segítségével:
             //Ezáltal a role megjelenik az access tokenben kliens oldalon.
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IProfileService, UserRoleProfileService>();
 
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;

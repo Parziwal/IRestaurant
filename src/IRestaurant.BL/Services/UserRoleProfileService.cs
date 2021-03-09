@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.BL
 {
-    public class ProfileService : IProfileService
+    public class UserRoleProfileService : IProfileService
     {
         protected UserManager<ApplicationUser> mUserManager;
 
-        public ProfileService(UserManager<ApplicationUser> userManager)
+        public UserRoleProfileService(UserManager<ApplicationUser> userManager)
         {
             mUserManager = userManager;
         }
