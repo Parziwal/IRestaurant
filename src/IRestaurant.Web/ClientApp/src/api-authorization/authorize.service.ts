@@ -67,13 +67,23 @@ export class AuthorizeService {
 
   /**
    * Az aktuális felhsználó szerepkörének (role) lekérdezése.
-   * @returns Szerepkör/Role enum formában
+   * Az access token tartalmazza ezt az információt, így ezt a token megfelelő részének dekódolásával nyerjük ki.
+   * Ezután a dekódolt információt átalakítjuk enum értékké.
+   * @returns Szerepkör/UserRole enum formában
    */
   public getUserRole(): Observable<UserRole> {
-    return this.http.get<{name: string}>(environment.apiUrl + "userroles").pipe(
-      map(role => role.name === UserRole.Guest.toString() ? UserRole.Guest :
-      (role.name === UserRole.Restaurant.toString() ? UserRole.Restaurant : UserRole.None ))
-    );
+    return this.getAccessToken().pipe(map(
+      token => {
+        if(!token) {
+          return UserRole.None;
+        }
+        let jwtData = token.split('.')[1];
+        let decodedJwtJsonData = window.atob(jwtData);
+        let decodedJwtData = JSON.parse(decodedJwtJsonData);
+        return decodedJwtData.role === UserRole.Restaurant.toString() ? UserRole.Restaurant :
+        decodedJwtData.role === UserRole.Guest.toString() ? UserRole.Guest : UserRole.None;
+      }
+    ));
   }
 
   // We try to authenticate the user in three different ways:

@@ -1,22 +1,18 @@
 using Hellang.Middleware.ProblemDetails;
+using IdentityServer4.Services;
 using IRestaurant.BL;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using IRestaurant.DAL.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Security.Claims;
 
 namespace IRestaurant.Web
 {
@@ -42,13 +38,16 @@ namespace IRestaurant.Web
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            //Hogy a felhasználó szerepkörét (role) le tudjuk kérdezni oidc kliens segítségével:
+            //Ezáltal a role megjelenik az access tokenben kliens oldalon.
+            services.AddTransient<IProfileService, ProfileService>();
+
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-
             }).AddIdentityServerJwt();
 
             services.AddControllersWithViews();
@@ -71,6 +70,8 @@ namespace IRestaurant.Web
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

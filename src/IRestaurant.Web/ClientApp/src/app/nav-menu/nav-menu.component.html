@@ -8,15 +8,15 @@
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{show: isExpanded}">
             <div class="navbar-nav">
               <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Kezdőlap</a>
-              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) == 'Guest'">
+              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
                 <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
                 <a class="nav-link" routerLink="kedvencek" routerLinkActive="active">Kedvencek</a>
               </ng-container>
-              <ng-template *ngIf="(isAuthenticated | async) && (userRole | async) == 'Restaurant'">
+              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">
                 <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
                 <a class="nav-link" routerLink="etermem" routerLinkActive="active">Étermem</a>
                 <a class="nav-link" routerLink="etlap" routerLinkActive="active">Étlap</a>
-              </ng-template>
+              </ng-container>
               <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
             </div>
             <div class="navbar-collapse collapse d-inline-flex flex-sm-row-reverse">
