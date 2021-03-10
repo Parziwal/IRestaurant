@@ -52,7 +52,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 Name = "",
                 ShortDescription = "",
                 DetailedDescription = "",
-                Address = new Address {
+                Address = new AddressOwned {
                     ZipCode = 1000,
                     City = "",
                     Street = "",
@@ -81,10 +81,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
             dbRestaurant.Name = editRestaurant.Name;
             dbRestaurant.ShortDescription = editRestaurant.ShortDescription;
             dbRestaurant.DetailedDescription = editRestaurant.DetailedDescription;
-            dbRestaurant.Address.ZipCode = editRestaurant.ZipCode;
-            dbRestaurant.Address.City = editRestaurant.City;
-            dbRestaurant.Address.Street = editRestaurant.Street;
-            dbRestaurant.Address.PhoneNumber = editRestaurant.PhoneNumber;
+            dbRestaurant.Address.ZipCode = editRestaurant.Address.ZipCode;
+            dbRestaurant.Address.City = editRestaurant.Address.City;
+            dbRestaurant.Address.Street = editRestaurant.Address.Street;
+            dbRestaurant.Address.PhoneNumber = editRestaurant.Address.PhoneNumber;
             //TODO: képfeltöltés
 
             await dbContext.SaveChangesAsync();

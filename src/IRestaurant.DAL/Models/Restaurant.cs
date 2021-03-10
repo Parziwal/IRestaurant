@@ -20,7 +20,7 @@ namespace IRestaurant.DAL.Models
         [StringLength(10000)]
         public string DetailedDescription { get; set; }
         public string ImagePath { get; set; }
-        public Address Address { get; set; }
+        public AddressOwned Address { get; set; }
         [Required]
         public bool ShowForUsers { get; set; }
         [Required]

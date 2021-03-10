@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Models
 {
     [Owned]
-    public class Address
+    public class AddressOwned
     {
         [Required]
         [Range(1000, 9999)]

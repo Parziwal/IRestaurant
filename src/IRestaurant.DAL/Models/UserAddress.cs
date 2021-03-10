@@ -10,7 +10,7 @@ namespace IRestaurant.DAL.Models
     public class UserAddress
     {
         public int Id { get; set; }
-        public Address Address { get; set; }
+        public AddressOwned Address { get; set; }
         public string UserId { get; set; }
         [Required]
         public ApplicationUser User { get; set; }
