@@ -26,19 +26,22 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RestaurantManager restaurantManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RestaurantManager restaurantManager)
+            RestaurantManager restaurantManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             this.restaurantManager = restaurantManager;
+            this.roleManager = roleManager;
         }
 
         [BindProperty]
@@ -88,11 +91,17 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (!await roleManager.RoleExistsAsync(Input.Role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(Input.Role));
+                    }
+
                     await _userManager.AddToRoleAsync(user, Input.Role);
                     if (Input.Role == "Restaurant")
                     {
                         await restaurantManager.CreateDefaultRestaurant(user.Id);
                     }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
