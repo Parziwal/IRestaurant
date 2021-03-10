@@ -116,8 +116,8 @@ namespace IRestaurant.DAL.Data
             var dbRestaurant = new Restaurant
             {
                 Name = "Lorem ipsum " + r.Next(),
-                ShortDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
-                "ut labore et dolore magna aliqua. Purus viverra accumsan in nisl nisi scelerisque. Consectetur a erat nam at lectus.",
+                ShortDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et " +
+                "dolore magna aliqua. Et netus et malesuada fames ac. Imperdiet dui accumsan sit amet.",
                 DetailedDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore" +
                 " et dolore magna aliqua. Orci ac auctor augue mauris augue neque gravida. Nibh ipsum consequat nisl vel pretium lectus quam id" +
                 " leo. Sapien eget mi proin sed libero enim sed. Fames ac turpis egestas integer eget aliquet. Etiam dignissim diam quis enim" +
@@ -149,17 +149,17 @@ namespace IRestaurant.DAL.Data
                 },
                 ShowForUsers = true,
                 IsOrderAvailable = true,
-                OwnerId = user.Id
+                Owner = user,
             };
 
-            await _context.AddAsync(dbRestaurant);
+            await _context.Restaurants.AddAsync(dbRestaurant);
             await _context.SaveChangesAsync();
 
             for (int i = 0; i < 15;i++)
             {
                 var dbFood = new Food
                 {
-                    Name = "nascetur ridiculus " + r.Next(),
+                    Name = "Nascetur ridiculus " + r.Next(),
                     Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et" +
                     " dolore magna aliqua. Nisi porta lorem mollis aliquam ut porttitor leo a diam. Quam lacus suspendisse faucibus interdum" +
                     " posuere lorem ipsum. Convallis a cras semper auctor neque. Arcu risus quis varius quam quisque id diam vel. In metus" +
@@ -169,7 +169,7 @@ namespace IRestaurant.DAL.Data
                     Price = r.Next(1000, 20000),
                     Restaurant = dbRestaurant
                 };
-                await _context.AddAsync(dbFood);
+                await _context.Foods.AddAsync(dbFood);
             }
             await _context.SaveChangesAsync();
         }
