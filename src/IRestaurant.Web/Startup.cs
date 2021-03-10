@@ -62,6 +62,28 @@ namespace IRestaurant.Web
 
             services.AddHttpContextAccessor();
 
+            // A Swagger szolgáltatás beregisztrálása a Swagger middleware használatához
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Restaurant API";
+                    document.Info.Description = "Egy étterem kezelõ ASP.NET Core web API";
+                    document.Info.TermsOfService = "None";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "Stedra Kristóf",
+                        Email = string.Empty,
+                    };
+                    document.Info.License = new NSwag.OpenApiLicense
+                    {
+                        Name = "Use under LICX",
+                        Url = "https://example.com/license"
+                    };
+                };
+            });
+
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
@@ -70,8 +92,6 @@ namespace IRestaurant.Web
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,6 +130,10 @@ namespace IRestaurant.Web
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            //A Swagger generátor és a Swagger UI middleware beregisztrálása
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseSpa(spa =>
             {
