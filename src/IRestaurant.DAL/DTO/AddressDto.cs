@@ -10,20 +10,12 @@ namespace IRestaurant.DAL.DTO
 {
     public class AddressDto
     {
-        [Required]
-        [Range(1000, 9999)]
-        public int ZipCode { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string City { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Street { get; set; }
-        [Required]
-        [Phone]
-        public string PhoneNumber { get; set; }
+        public int ZipCode { get; }
+        public string City { get; }
+        public string Street { get; }
+        public string PhoneNumber { get; }
 
-        public AddressDto(Address address)
+        public AddressDto(AddressOwned address)
         {
             this.ZipCode = address.ZipCode;
             this.City = address.City;
