@@ -13,6 +13,7 @@ using System.Security.Claims;
 
 namespace IRestaurant.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RestaurantsController : ControllerBase
@@ -24,12 +25,14 @@ namespace IRestaurant.Web.Controllers
             this.restaurantManager = restaurantManager;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantList([FromQuery] string restaurantName = null)
         {
             return await restaurantManager.GetRestaurantOverviews(restaurantName);
         }
 
+        [AllowAnonymous]
         [HttpGet("{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

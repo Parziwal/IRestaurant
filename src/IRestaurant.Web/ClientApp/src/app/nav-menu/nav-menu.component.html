@@ -7,7 +7,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{show: isExpanded}">
             <div class="navbar-nav">
-              <a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Kezdőlap</a>
+              <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
               <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
                 <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
                 <a class="nav-link" routerLink="kedvencek" routerLinkActive="active">Kedvencek</a>
