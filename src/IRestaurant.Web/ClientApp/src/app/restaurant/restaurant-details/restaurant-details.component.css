@@ -1,0 +1,22 @@
+img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.details-header {
+    background-color: rgb(129, 194, 161);
+    padding: 60px 10px 40px 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.restaurant-address ul {
+    list-style-type: none;
+}
+
+.detailed-description {
+    padding: 20px 20px 0px 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(109, 109, 109, 0.781);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}

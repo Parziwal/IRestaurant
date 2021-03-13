@@ -1,0 +1,15 @@
+<h2>Étlap</h2>
+<ul class="list-group" *ngFor="let food of (restaurantMenu | async)">
+    <li class="list-group-item" *ngIf="(restaurantMenu | async)?.length === 0">
+        Jelenleg az étlap üres.
+    </li>
+    <li class="list-group-item d-flex justify-content-start">
+        <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath"
+        [alt]="food.name" class="img-fluid float-left align-self-start">
+        <div class="food-details">
+            <h4>{{ food.name }}</h4>
+            <p><b>{{ food.air_date | currency }}</b></p>
+            <p class="text-muted text-justify">{{ food.description }}</p>
+        </div>
+    </li>
+</ul>

@@ -1,0 +1,16 @@
+img {
+    width: 150px;
+}
+
+.list-group {
+    margin: 10px 0px 10px 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.list-group-item {
+    padding: 0px;
+}
+
+.food-details {
+    margin: 10px 30px 10px 20px;
+}

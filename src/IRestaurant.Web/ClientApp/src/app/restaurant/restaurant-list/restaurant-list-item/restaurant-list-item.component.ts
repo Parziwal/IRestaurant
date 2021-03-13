@@ -12,14 +12,12 @@ export class RestaurantListItemComponent implements OnInit {
 
   @Input()
   restaurantOverview: RestaurantOverview;
-  imageUrl: string = environment.defaultImgUrl;
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-
-    if (this.restaurantOverview.imagePath != null) {
-      this.imageUrl = this.restaurantOverview.imagePath;
+    if (this.restaurantOverview.imagePath == null) {
+      this.restaurantOverview.imagePath = environment.defaultRestaurantImgUrl;
     }
   }
 

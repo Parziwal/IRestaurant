@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: "https://localhost:44312/api/",
-  defaultImgUrl: "assets/images/default-restaurant.png"
+  defaultRestaurantImgUrl: "assets/images/default-restaurant.png",
+  defaultFoodImgUrl: "assets/images/default-food.png"
 };
 
 /*

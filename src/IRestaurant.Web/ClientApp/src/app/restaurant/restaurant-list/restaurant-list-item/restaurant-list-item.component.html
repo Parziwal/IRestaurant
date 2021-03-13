@@ -1,13 +1,8 @@
 <div class="card" (click)="onItemClicked()">
-    <img [src]="imageUrl" class="card-img-top mx-auto" [alt]="restaurantOverview.name" />
+    <img [src]="restaurantOverview.imagePath" class="card-img-top mx-auto" [alt]="restaurantOverview.name" />
     <div class="card-body">
       <h5 class="card-title">{{ restaurantOverview.name }}</h5>
-      <div class="progress" [ngClass]="{'d-flex justify-content-center': restaurantOverview.rating === null}">
-            <div class="progress-bar" role="progressbar" [style]="'width: ' + restaurantOverview.rating * 20 + '%;'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-             {{ restaurantOverview.rating + ' / 5.0' }}
-            </div>
-            <p *ngIf="restaurantOverview.rating === null" class="text-muted text-center">Nincs értékelés</p>
-      </div>
+      <app-rating-bar [rating]="restaurantOverview.rating"></app-rating-bar>
       <p class="card-text text-justify">
         {{ restaurantOverview.shortDescription }}
       </p>

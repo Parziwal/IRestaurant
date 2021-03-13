@@ -1,0 +1,49 @@
+<app-spinner *ngIf="!restaurant; else content"></app-spinner>
+<ng-template #content>
+    <div class="row details-header">
+        <div class="col-lg-4">
+            <img class="img-fluid" [src]="restaurant.imagePath" [alt]="restaurant.name" />
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="col">
+                    <h1> {{ restaurant.name }} </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col restaurant-address">
+                    <p><i>Tulajdonos: {{ restaurant.ownerName }}</i></p>
+                    <p class="m-0"><b>Cím</b></p>
+                    <ul>
+                        <li>{{ restaurant.restaurantAddress.city }}, {{ restaurant.restaurantAddress.zipCode }}</li>
+                        <li>{{ restaurant.restaurantAddress.street }}</li>
+                        <li>Tel.: {{ restaurant.restaurantAddress.phoneNumber }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <h3>Értékelés</h3>
+                    <app-rating-bar [rating]="restaurant.rating"></app-rating-bar>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col">
+                    <h3>Ismertető</h3>
+                    <p class="text-justify">{{ restaurant.shortDescription }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="restaurant.detailedDescription !== null" class="row mt-5">
+        <div class="col detailed-description">
+            <h2>Részletek</h2>
+            <p class="text-justify">{{ restaurant.detailedDescription }}</p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <app-restaurant-menu [restaurantId]="restaurant.id"></app-restaurant-menu>
+        </div>
+    </div>
+</ng-template>
