@@ -14,18 +14,18 @@ namespace IRestaurant.BL
 {
     public class UserRoleProfileService : IProfileService
     {
-        protected UserManager<ApplicationUser> mUserManager;
+        private UserManager<ApplicationUser> userManager;
 
         public UserRoleProfileService(UserManager<ApplicationUser> userManager)
         {
-            mUserManager = userManager;
+            this.userManager = userManager;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            ApplicationUser user = await mUserManager.GetUserAsync(context.Subject);
+            ApplicationUser user = await userManager.GetUserAsync(context.Subject);
 
-            IList<string> roles = await mUserManager.GetRolesAsync(user);
+            IList<string> roles = await userManager.GetRolesAsync(user);
 
             IList<Claim> roleClaims = new List<Claim>();
             foreach (string role in roles)
