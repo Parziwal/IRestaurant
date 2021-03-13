@@ -16,6 +16,7 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { RatingBarComponent } from './shared/components/rating-bar/rating-bar.component';
 import { RestaurantMenuComponent } from './food/restaurant-menu/restaurant-menu.component';
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-resta
     HttpClientModule,
     FormsModule,
     ApiAuthorizationModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NoopAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
