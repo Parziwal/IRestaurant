@@ -14,15 +14,18 @@
 
   <ItemGroup>
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="5.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.10.8" />
   </ItemGroup>
