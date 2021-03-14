@@ -50,6 +50,7 @@ namespace IRestaurant.Web.Controllers
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> DeleteReview(int reviewId)
         {
             await reviewManager.DeleteReview(reviewId);

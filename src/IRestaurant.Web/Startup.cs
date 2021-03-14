@@ -1,6 +1,7 @@
 using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.Services;
 using IRestaurant.BL;
+using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
@@ -8,6 +9,7 @@ using IRestaurant.DAL.Repositories.Implementations;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -58,7 +60,11 @@ namespace IRestaurant.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddProblemDetails();
+            //ProblemDetails Middleware-hez szükséges szolgáltatások hozzáadása, és konfigurálása
+            services.AddProblemDetails(options => {
+                // Ez 404 Not Found státusz kódra cseréli EntityNotFoundException-t.
+                options.MapToStatusCode<EntityNotFoundException>(StatusCodes.Status404NotFound);
+            });
 
             services.AddHttpContextAccessor();
 
@@ -109,6 +115,7 @@ namespace IRestaurant.Web
                 app.UseHsts();
             }
 
+            //ProblemDetails Middleware hozzáadása a kérés feldolgozó pipeline-hoz
             app.UseProblemDetails();
 
             app.UseHttpsRedirection();

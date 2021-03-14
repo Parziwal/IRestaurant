@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             var dbReview = new Review {
@@ -56,7 +57,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbReview == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             dbContext.Reviews.Remove(dbReview);
@@ -71,7 +72,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbReview == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             return dbReview.UserId;
@@ -83,7 +84,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbReview == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező értékelés nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
             }
 
             return dbReview.RestaurantId;

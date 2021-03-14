@@ -56,6 +56,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPut("{foodId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<FoodDto>> EditFood(int foodId, [FromBody] EditFoodDto food)
         {
             return await foodManager.EditFood(foodId, food);
@@ -65,6 +66,7 @@ namespace IRestaurant.Web.Controllers
         [HttpDelete("{foodId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> RemoveFoodFromRestaurantMenu(int foodId)
         {
             await foodManager.DeleteFoodFromMenu(foodId);

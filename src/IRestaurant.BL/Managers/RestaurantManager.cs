@@ -60,35 +60,22 @@ namespace IRestaurant.BL
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            try
-            {
-                return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
-            }
-            catch(ArgumentException ae)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
-            } 
+            return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
         public async Task ChangeMyRestaurantShowStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            try
+            using (var transaction = new TransactionScope(
+              TransactionScopeOption.Required,
+              new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
+              TransactionScopeAsyncFlowOption.Enabled))
             {
-                using (var transaction = new TransactionScope(
-                  TransactionScopeOption.Required,
-                  new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
-                  TransactionScopeAsyncFlowOption.Enabled))
-                {
-                    await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, value);
-                    await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+                await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, value);
+                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
 
-                    transaction.Complete();
-                }
-            } catch(ArgumentException ae)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
+                transaction.Complete();
             }
         }
 
@@ -97,14 +84,7 @@ namespace IRestaurant.BL
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            try
-            {
-                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
-            }
-            catch (ArgumentException ae)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, ae.Message);
-            }
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
         }
 
         private async Task<int> GetUserRestaurantId(string userId)

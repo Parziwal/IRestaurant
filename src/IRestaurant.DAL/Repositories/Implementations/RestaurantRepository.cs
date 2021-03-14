@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -78,7 +79,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik, így nem szerkeszthető.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             dbRestaurant.Name = editRestaurant.Name;
@@ -101,7 +102,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             dbRestaurant.ShowForUsers = value;
@@ -114,7 +115,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott azonosítóval rendelkező étterem nem létezik.");
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             dbRestaurant.IsOrderAvailable = value;

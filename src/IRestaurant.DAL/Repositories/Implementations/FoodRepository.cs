@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                throw new ArgumentException("A megadott azonsítóval rendelkező étterem nem létezik.");
+                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étterem nem létezik.");
             }
 
             var dbFood = new Food {
@@ -56,7 +57,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbFood == null)
             {
-                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
+                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             dbContext.Remove(dbFood);
@@ -71,7 +72,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbFood == null)
             {
-                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
+                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             dbFood.Price = food.Price;
@@ -88,7 +89,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbFood == null)
             {
-                throw new ArgumentException("A megadott azonsítóval rendelkező étel nem létezik.");
+                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
             }
 
             return dbFood.RestaurantId;
