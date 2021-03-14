@@ -79,7 +79,7 @@ namespace IRestaurant.DAL.Data
                 ZipCode = 1022,
                 City = "Budapest",
                 Street = "Lévay u. 5",
-                PhoneNumber = "06301247898"
+                PhoneNumber = "06-30-124-7898"
             };
             foreach(var user in users)
             {

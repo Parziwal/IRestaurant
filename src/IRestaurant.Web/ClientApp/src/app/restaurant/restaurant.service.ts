@@ -29,10 +29,10 @@ export class RestaurantService {
   }
 
   getMyRestaurant() {
-    return this.http.get(this.baseUrl + "myrestaurant");
+    return this.http.get<RestaurantDetails>(this.baseUrl + "myrestaurant");
   }
 
   editMyRestaurant(editedRestaurant: EditRestaurant) {
-    return this.http.put(this.baseUrl + "myrestaurant", editedRestaurant);
+    return this.http.put<RestaurantDetails>(this.baseUrl + "myrestaurant", editedRestaurant);
   }
 }

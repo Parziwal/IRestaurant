@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -16,7 +15,9 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { RatingBarComponent } from './shared/components/rating-bar/rating-bar.component';
 import { RestaurantMenuComponent } from './food/restaurant-menu/restaurant-menu.component';
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularMaterialModule } from './angular-material.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     ApiAuthorizationModule,
     AppRoutingModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    BrowserAnimationsModule,
+    AngularMaterialModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

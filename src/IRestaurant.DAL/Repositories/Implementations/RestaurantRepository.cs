@@ -71,7 +71,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<RestaurantDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            var dbRestaurant = await dbContext.Restaurants
+                                    .Include(r => r.Owner)
+                                    .Include(r => r.Reviews)
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbRestaurant == null)
             {
