@@ -1,0 +1,21 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let food of (foods | async)">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ food.name }}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{ food.price | currency:'HUF' }}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="d-flex justify-content-between">
+            <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath" [alt]="food.name"
+                class="img-fluid align-self-start mr-3">
+            <p class="text">{{ food.description }}</p>
+        </div>
+        <mat-action-row>
+            <button type="button" class="btn btn-primary" (click)="editFood(food.id)"><fa-icon [icon]="faEdit"></fa-icon></button>
+            <button type="button" class="btn btn-danger" (click)="deleteFood(food.id)"><fa-icon [icon]="faTrashAlt"></fa-icon></button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

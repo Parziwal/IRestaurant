@@ -1,0 +1,12 @@
+img {
+    width: 150px;
+}
+
+button {
+    width: 100px;
+    margin: 10px;
+}
+
+mat-panel-title {
+    width: 500px;
+}

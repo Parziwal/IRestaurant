@@ -18,6 +18,9 @@ import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-resta
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { ToastrModule } from 'ngx-toastr';
+import { EditMenuComponent } from './food/edit-menu/edit-menu.component';
+import { FoodListComponent } from './food/edit-menu/food-list/food-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { ToastrModule } from 'ngx-toastr';
     SpinnerComponent,
     RatingBarComponent,
     RestaurantMenuComponent,
-    EditRestaurantComponent
+    EditRestaurantComponent,
+    EditMenuComponent,
+    FoodListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     AngularMaterialModule,
     ToastrModule.forRoot(),
+    FontAwesomeModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

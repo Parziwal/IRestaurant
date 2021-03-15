@@ -24,8 +24,8 @@ export class RestaurantService {
     });
   }
 
-  getRestaurantDetails(id: number) {
-    return this.http.get<RestaurantDetails>(this.baseUrl + id);
+  getRestaurantDetails(restaurantId: number) {
+    return this.http.get<RestaurantDetails>(this.baseUrl + restaurantId);
   }
 
   getMyRestaurant() {

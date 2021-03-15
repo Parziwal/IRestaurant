@@ -5,10 +5,16 @@
     </li>
     <li class="list-group-item d-flex justify-content-start">
         <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath"
-        [alt]="food.name" class="img-fluid float-left align-self-start">
+        [alt]="food.name" class="img-fluid align-self-start">
         <div class="food-details">
-            <h4>{{ food.name }}</h4>
-            <p><b>{{ food.air_date | currency }}</b></p>
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <h4>{{ food.name }}</h4>
+                </div>
+                <div class="col-auto">
+                    <h5><b>{{ food.price | currency:'HUF' }}</b></h5>
+                </div>
+            </div>
             <p class="text-muted text-justify">{{ food.description }}</p>
         </div>
     </li>

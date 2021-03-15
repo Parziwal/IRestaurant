@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CreateFood } from './models/create-food.type';
+import { EditFood } from './models/edit-food.type';
 import { Food } from './models/food.type';
 
 @Injectable({
@@ -12,7 +14,28 @@ export class FoodService {
 
   constructor(private http: HttpClient) { }
   
-  getRestaurantMenu(id: number) {
-    return this.http.get<Food[]>(this.baseUrl + "restaurant/" + id);
+  getFood(foodId: number) {
+    return this.http.get<Food>(this.baseUrl + foodId);
+  }
+
+  getRestaurantMenu(restaurntId: number) {
+    return this.http.get<Food[]>(this.baseUrl + "restaurant/" + restaurntId);
+  }
+
+  getMyRestaurantMenu() {
+    return this.http.get<Food[]>(this.baseUrl + "restaurant/myrestaurant");
+  }
+
+  addFoodToRestaurantMenu(createdFood: CreateFood) {
+    return this.http.post<Food>(this.baseUrl, createdFood);
+  }
+
+  editFood(foodId: number, editedFood: EditFood) {
+    console.log(editedFood);
+    return this.http.put<Food>(this.baseUrl + foodId, editedFood);
+  }
+
+  RemoveFoodFromMenu(id: number) {
+    return this.http.delete(this.baseUrl + id);
   }
 }

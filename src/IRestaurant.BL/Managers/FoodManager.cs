@@ -82,6 +82,7 @@ namespace IRestaurant.BL
             if (ownerRestaurantId == foodRestaurantId)
             {
                 await foodRepository.DeleteFoodFromMenu(foodId);
+                return;
             }
 
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
