@@ -41,7 +41,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.GetRestaurant(restaurantId);
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpGet("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,7 +50,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.GetMyRestaurant();
         }
 
-        [Authorize( Roles = "Restaurant" )]
+        [Authorize(Policy = "Restaurant" )]
         [HttpPut("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,7 +59,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.EditMyRestaurant(editRestaurant);
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPut("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -69,7 +69,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPut("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,7 +79,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPut("myrestaurant/turnonorder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,7 +89,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPut("myrestaurant/turnofforder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

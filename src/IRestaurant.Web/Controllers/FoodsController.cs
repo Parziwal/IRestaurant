@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FoodsController : ControllerBase
@@ -20,6 +21,7 @@ namespace IRestaurant.Web.Controllers
             this.foodManager = foodManager;
         }
 
+        [AllowAnonymous]
         [HttpGet("{foodId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -29,20 +31,21 @@ namespace IRestaurant.Web.Controllers
            return await foodManager.GetFood(foodId);
         }
 
+        [AllowAnonymous]
         [HttpGet("restaurant/{restaurantId}")]
         public async Task<IEnumerable<FoodDto>> GetRestaurantMenu(int restaurantId)
         {
             return await foodManager.GetRestaurantMenu(restaurantId);
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpGet("restaurant/myrestaurant")]
         public async Task<IEnumerable<FoodDto>> GetOwnerRestaurantMenu()
         {
             return await foodManager.GetOwnerRestaurantMenu();
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,7 +55,7 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(Get), new { id = createdFood.Id }, createdFood);
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpPut("{foodId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -62,7 +65,7 @@ namespace IRestaurant.Web.Controllers
             return await foodManager.EditFood(foodId, food);
         }
 
-        [Authorize(Roles = "Restaurant")]
+        [Authorize(Policy = "Restaurant")]
         [HttpDelete("{foodId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

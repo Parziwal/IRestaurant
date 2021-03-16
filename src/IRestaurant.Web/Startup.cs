@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace IRestaurant.Web
 {
@@ -48,9 +49,21 @@ namespace IRestaurant.Web
             //Ezáltal a role megjelenik az access tokenben kliens oldalon.
             services.AddTransient<IProfileService, UserRoleProfileService>();
 
-            services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
-            }).AddIdentityServerJwt();
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
+            //Restaurant és Guest claim policy beregisztrálása manuálisan, mivel
+            //a beébített szerepkör alapú engedélyezés nem mûködött megfelelõen,
+            //403-as státuszkódú hibákat dobott a megfelelõ szerepkörrel rendelkezõ felhasználóknak is.
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Restaurant", policy =>
+                    policy.RequireClaim(ClaimTypes.Role, "Restaurant"
+                ));
+                options.AddPolicy("Guest", policy =>
+                    policy.RequireClaim(ClaimTypes.Role, "Guest"
+                ));
+            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();

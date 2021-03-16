@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewsController : ControllerBase
@@ -21,6 +22,7 @@ namespace IRestaurant.Web.Controllers
             this.reviewManager = reviewManager;
         }
 
+        [AllowAnonymous]
         [HttpGet("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,13 +32,14 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetReview(reviewId);
         }
 
+        [AllowAnonymous]
         [HttpGet("restaurant/{restaurantId}")]
         public async Task<IEnumerable<ReviewDto>> GetRestraurantReviews(int restaurantId)
         {
             return await reviewManager.GetRestaurantReviews(restaurantId);
         }
 
-        [Authorize(Roles = "Guest")]
+        [Authorize(Policy = "Guest")]
         [HttpPost("restaurant/{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -46,7 +49,8 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdReview }, createdReview);
         }
 
-        [Authorize(Roles = "Restaurant,Guest")]
+        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = "Guest")]
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
