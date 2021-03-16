@@ -1,4 +1,5 @@
 ﻿using IRestaurant.BL;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Reviews;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,7 +40,7 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetRestaurantReviews(restaurantId);
         }
 
-        [Authorize(Policy = "Guest")]
+        [Authorize(Policy = UserRoles.Guest)]
         [HttpPost("restaurant/{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,8 +50,8 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdReview }, createdReview);
         }
 
-        [Authorize(Policy = "Restaurant")]
-        [Authorize(Policy = "Guest")]
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [Authorize(Policy = UserRoles.Guest)]
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

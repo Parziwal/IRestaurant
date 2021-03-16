@@ -35,7 +35,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public string GetCurrentUserId()
         {
-            return accessor.HttpContext.User.FindFirstValue("sub");
+            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

@@ -102,11 +102,11 @@ namespace IRestaurant.DAL.Data
             {
                 if (i > 1)
                 {
-                    await userManager.AddToRoleAsync(users[i], "Restaurant");
+                    await userManager.AddToRoleAsync(users[i], UserRoles.Restaurant);
                     await ConfigureUserRestaurant(users[i]);
                     continue;
                 }
-                await userManager.AddToRoleAsync(users[i], "Guest");
+                await userManager.AddToRoleAsync(users[i], UserRoles.Guest);
             }
         }
 

@@ -57,11 +57,11 @@ namespace IRestaurant.Web
             //403-as státuszkódú hibákat dobott a megfelelõ szerepkörrel rendelkezõ felhasználóknak is.
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("Restaurant", policy =>
-                    policy.RequireClaim(ClaimTypes.Role, "Restaurant"
+                options.AddPolicy(UserRoles.Restaurant, policy =>
+                    policy.RequireClaim(ClaimTypes.Role, UserRoles.Restaurant
                 ));
-                options.AddPolicy("Guest", policy =>
-                    policy.RequireClaim(ClaimTypes.Role, "Guest"
+                options.AddPolicy(UserRoles.Guest, policy =>
+                    policy.RequireClaim(ClaimTypes.Role, UserRoles.Guest
                 ));
             });
 

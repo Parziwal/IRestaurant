@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using IRestaurant.BL;
+using IRestaurant.DAL.Data;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account
 {
@@ -97,7 +98,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                     }
 
                     await _userManager.AddToRoleAsync(user, Input.Role);
-                    if (Input.Role == "Restaurant")
+                    if (Input.Role == UserRoles.Restaurant)
                     {
                         await restaurantManager.CreateDefaultRestaurant(user.Id);
                     }

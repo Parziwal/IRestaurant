@@ -12,9 +12,9 @@
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="toggle">
-                <input type="radio" id="guest" asp-for="Input.Role" value="Guest" checked/>
+                <input type="radio" id="guest" asp-for="Input.Role" value="@IRestaurant.DAL.Data.UserRoles.Guest" checked/>
                 <label for="guest">Vendég</label>
-                <input type="radio" id="restaurant" asp-for="Input.Role" value="Restaurant" />
+                <input type="radio" id="restaurant" asp-for="Input.Role" value="@IRestaurant.DAL.Data.UserRoles.Restaurant" />
                 <label for="restaurant">Étterem</label>
             </div>
             <div class="form-group">

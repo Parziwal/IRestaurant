@@ -1,4 +1,5 @@
 ﻿using IRestaurant.BL;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Foods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -38,14 +39,14 @@ namespace IRestaurant.Web.Controllers
             return await foodManager.GetRestaurantMenu(restaurantId);
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant/myrestaurant")]
         public async Task<IEnumerable<FoodDto>> GetOwnerRestaurantMenu()
         {
             return await foodManager.GetOwnerRestaurantMenu();
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,7 +56,7 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(Get), new { id = createdFood.Id }, createdFood);
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("{foodId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,7 +66,7 @@ namespace IRestaurant.Web.Controllers
             return await foodManager.EditFood(foodId, food);
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpDelete("{foodId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -10,6 +10,7 @@ using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using IRestaurant.DAL.Data;
 
 namespace IRestaurant.Web.Controllers
 {
@@ -41,7 +42,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.GetRestaurant(restaurantId);
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,7 +51,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.GetMyRestaurant();
         }
 
-        [Authorize(Policy = "Restaurant" )]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -59,7 +60,7 @@ namespace IRestaurant.Web.Controllers
             return await restaurantManager.EditMyRestaurant(editRestaurant);
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -69,7 +70,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,7 +80,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("myrestaurant/turnonorder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -89,7 +90,7 @@ namespace IRestaurant.Web.Controllers
             return Ok();
         }
 
-        [Authorize(Policy = "Restaurant")]
+        [Authorize(Policy = UserRoles.Restaurant)]
         [HttpPut("myrestaurant/turnofforder")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
