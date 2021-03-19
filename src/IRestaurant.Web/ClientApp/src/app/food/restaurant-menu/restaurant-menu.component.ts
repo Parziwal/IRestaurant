@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { FoodService } from '../food.service';
 import { Food } from '../models/food.type';
@@ -20,6 +19,9 @@ export class RestaurantMenuComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+  }
+
+  loadRestaurantMenu() {
     this.route.params.subscribe(
       (params: Params) => {
         let id = +params['id'];

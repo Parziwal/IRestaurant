@@ -14,7 +14,15 @@
               </ng-container>
               <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">
                 <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
-                <a class="nav-link" routerLink="myrestaurant" routerLinkActive="active">Étermem</a>
+                <div class="nav-item dropdown" routerLinkActive="active" appDropdown>
+                  <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                    Étermem
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" appDropdownMenu>
+                    <li><a class="dropdown-item" routerLink="myrestaurant/edit" routerLinkActive="active">Szerkesztés</a></li>
+                    <li><a class="dropdown-item" routerLink="myrestaurant/settings" routerLinkActive="active">Beállítások</a></li>
+                  </ul>
+                </div>
                 <a class="nav-link" routerLink="menu" routerLinkActive="active">Étlap</a>
               </ng-container>
               <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>

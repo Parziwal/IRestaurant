@@ -1,0 +1,18 @@
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+        <div>
+            <h1>Megjelenítés a listában</h1>
+            <mat-slide-toggle [(ngModel)]="showForUsers" (change)="showForUsersStatusChanged()">
+                Étterem <span *ngIf="showForUsers">elérhető</span>
+                <span *ngIf="!showForUsers">elrejtve</span>
+            </mat-slide-toggle>
+        </div>
+        <div>
+            <h1>Rendelés beállítása</h1>
+            <mat-slide-toggle [(ngModel)]="isOrderAvailable" (change)="isOrderAvailableStatusChanged()">
+                Rendelés <span *ngIf="isOrderAvailable">engedélyezve</span>
+                <span *ngIf="!isOrderAvailable">letiltva</span>
+            </mat-slide-toggle>
+        </div>
+    </div>
+</div>

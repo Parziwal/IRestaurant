@@ -9,6 +9,5 @@ export interface RestaurantDetails {
     imagePath: string;
     restaurantAddress: Address;
     ownerName: string;
-    showForUsers: boolean;
     isOrderAvailable: boolean;
 }

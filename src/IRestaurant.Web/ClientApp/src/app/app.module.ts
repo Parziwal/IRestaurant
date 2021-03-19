@@ -15,12 +15,14 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
 import { RatingBarComponent } from './shared/components/rating-bar/rating-bar.component';
 import { RestaurantMenuComponent } from './food/restaurant-menu/restaurant-menu.component';
 import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-restaurant.component';
-import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { EditMenuComponent } from './food/edit-menu/edit-menu.component';
 import { FoodListComponent } from './food/edit-menu/food-list/food-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { RestaurantSettingsComponent } from './restaurant/restaurant-settings/restaurant-settings.component';
+import { DropdownDirective, DropdownMenuDirective } from './shared/directives/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     RestaurantMenuComponent,
     EditRestaurantComponent,
     EditMenuComponent,
-    FoodListComponent
+    FoodListComponent,
+    RestaurantSettingsComponent,
+    DropdownDirective,
+    DropdownMenuDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -43,7 +48,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     ApiAuthorizationModule,
     AppRoutingModule,
-    NoopAnimationsModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
     ToastrModule.forRoot(),

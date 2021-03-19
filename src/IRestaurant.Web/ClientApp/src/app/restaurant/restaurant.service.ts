@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { EditRestaurant } from './models/edit-restaurant.type';
 import { RestaurantDetails } from './models/restaurant-details.type';
 import { RestaurantOverview } from './models/restaurant-overview.type';
+import { RestaurantSettings } from './models/restaurant-settings.type';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,25 @@ export class RestaurantService {
 
   editMyRestaurant(editedRestaurant: EditRestaurant) {
     return this.http.put<RestaurantDetails>(this.baseUrl + "myrestaurant", editedRestaurant);
+  }
+
+  getMyRestaurantSettings() {
+    return this.http.get<RestaurantSettings>(this.baseUrl + "myrestaurant/settings");
+  }
+
+  ShowMyRestaurantForUsers() {
+    return this.http.patch(this.baseUrl + "myrestaurant/show", null);
+  }
+
+  HideMyRestaurantForUsers() {
+    return this.http.patch(this.baseUrl + "myrestaurant/hide", null);
+  }
+
+  TurnOnOrderOption() {
+    return this.http.patch(this.baseUrl + "myrestaurant/order/turnon", null);
+  }
+
+  TurnOffOrderOption() {
+    return this.http.patch(this.baseUrl + "myrestaurant/order/turnoff", null);
   }
 }
