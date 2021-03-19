@@ -53,7 +53,7 @@ namespace IRestaurant.Web
                 .AddIdentityServerJwt();
 
             //Restaurant és Guest claim policy beregisztrálása manuálisan, mivel
-            //a beébített szerepkör alapú engedélyezés nem mûködött megfelelõen,
+            //a beépített szerepkör alapú engedélyezés nem mûködött megfelelõen,
             //403-as státuszkódú hibákat dobott a megfelelõ szerepkörrel rendelkezõ felhasználóknak is.
             services.AddAuthorization(options =>
             {

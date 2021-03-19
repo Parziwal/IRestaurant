@@ -7,10 +7,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - IRestaurant.Web</title>
+    <title>@ViewData["Title"] - IRestaurant</title>
     <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" crossorigin="anonymous">
     <link rel="stylesheet" href="~/Identity/css/site.css" />
     <link rel="stylesheet" href="~/Styles/navmenu.css" />
+    @RenderSection("Styles", false)
 </head>
 <body>
     <header>
@@ -47,9 +49,9 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="footer border-top text-muted">
+    <footer class="footer border-top text-muted overflow-hidden">
         <div class="container">
-            &copy; 2021 - IRestaurant.Web - <a asp-area="" asp-page="Privacy">Privacy</a>
+            &copy; 2021 - IRestaurant - <a asp-area="" asp-page="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>

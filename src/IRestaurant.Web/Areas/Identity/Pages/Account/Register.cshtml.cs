@@ -98,10 +98,6 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                     }
 
                     await _userManager.AddToRoleAsync(user, Input.Role);
-                    if (Input.Role == UserRoles.Restaurant)
-                    {
-                        await restaurantManager.CreateDefaultRestaurant(user.Id);
-                    }
 
                     _logger.LogInformation("User created a new account with password.");
 

@@ -49,9 +49,10 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Jelszó")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Emlékezz rám?")]
             public bool RememberMe { get; set; }
         }
 
