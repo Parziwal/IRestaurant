@@ -95,6 +95,17 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             return dbRestaurant.GetRestaurant();
         }
+        public async Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId)
+        {
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+
+            if (dbRestaurant == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
+            }
+
+            return new RestaurantSettingsDto(dbRestaurant);
+        }
 
         public async Task ChangeShowForUsersStatus(int restaurantId, bool value)
         {
@@ -128,7 +139,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             if (dbRestaurant == null)
             {
-                return false;
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
             return dbRestaurant.ShowForUsers;

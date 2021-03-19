@@ -18,7 +18,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public string ImagePath { get; set; }
         public AddressDto RestaurantAddress { get; set; }
         public string OwnerName { get; set; }
-        public bool ShowForUsers { get; set; }
         public bool IsOrderAvailable { get; set; }
 
         public RestaurantDto(Restaurant restaurant, ApplicationUser owner, double? rating)
@@ -31,7 +30,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
             this.ImagePath = restaurant.ImagePath;
             this.RestaurantAddress = new AddressDto(restaurant.Address);
             this.OwnerName = owner.FullName;
-            this.ShowForUsers = restaurant.ShowForUsers;
             this.IsOrderAvailable = restaurant.IsOrderAvailable;
         }
     }

@@ -20,8 +20,7 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="toggle">
                         <input id="guest" class="toggle toggle-left" asp-for="Input.Role"
-                               value="@IRestaurant.DAL.Data.UserRoles.Guest" type="radio" checked
-                               onclick="toggleButton()">
+                               value="@IRestaurant.DAL.Data.UserRoles.Guest" type="radio" checked>
                         <label for="guest" class="toggle-btn">Vendég</label>
                         <input id="restaurant" class="toggle toggle-right" asp-for="Input.Role"
                                value="@IRestaurant.DAL.Data.UserRoles.Restaurant" type="radio">
@@ -34,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" placeholder="lajos@email.hu" />
+                        <input asp-for="Input.Email" class="form-control" placeholder="nagy.lajos@email.hu" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">

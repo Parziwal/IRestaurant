@@ -61,7 +61,16 @@ namespace IRestaurant.Web.Controllers
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
-        [HttpPut("myrestaurant/show")]
+        [HttpGet("myrestaurant/settings")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<RestaurantSettingsDto>> GetMyRestaurantSettings()
+        {
+            return await restaurantManager.GetMyRestaurantSettings();
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpPatch("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ShowMyRestaurantForUsers()
@@ -71,7 +80,7 @@ namespace IRestaurant.Web.Controllers
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
-        [HttpPut("myrestaurant/hide")]
+        [HttpPatch("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> HideMyRestaurantFromUsers()
@@ -81,7 +90,7 @@ namespace IRestaurant.Web.Controllers
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
-        [HttpPut("myrestaurant/turnonorder")]
+        [HttpPatch("myrestaurant/order/turnon")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> TurnOnOrderOption()
@@ -91,7 +100,7 @@ namespace IRestaurant.Web.Controllers
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
-        [HttpPut("myrestaurant/turnofforder")]
+        [HttpPatch("myrestaurant/order/turnoff")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> TurnOffOrderOption()

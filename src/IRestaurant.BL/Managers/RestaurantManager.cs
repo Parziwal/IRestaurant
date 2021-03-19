@@ -78,6 +78,13 @@ namespace IRestaurant.BL
                 transaction.Complete();
             }
         }
+        public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
+
+            return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
+        }
 
         public async Task ChangeMyRestaurantOrderStatus(bool value)
         {
