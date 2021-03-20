@@ -30,12 +30,11 @@ namespace IRestaurant.BL
 
         public async Task<RestaurantDto> GetRestaurant(int restaurantId)
         {
-            var restaurant = await restaurantRepository.GetRestaurantOrNull(restaurantId);
-            if (!await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
-                || restaurant == null)
+            if (!await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem jelenleg nem elérhető, vagy nem is létezik.");
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest, "A megadott azonosítóval rendelkező étterem jelenleg nem elérhető.");
             }
+            var restaurant = await restaurantRepository.GetRestaurant(restaurantId);
 
             return restaurant;
         }
@@ -44,7 +43,7 @@ namespace IRestaurant.BL
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            var restaurant = await restaurantRepository.GetRestaurantOrNull(ownerRestaurantId);
+            var restaurant = await restaurantRepository.GetRestaurant(ownerRestaurantId);
             if (restaurant == null)
             {
                 throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
@@ -101,7 +100,7 @@ namespace IRestaurant.BL
 
         private async Task checkIfRestaurantDataNotEmpty(int restaurantId)
         {
-            var restaurant = await restaurantRepository.GetRestaurantOrNull(restaurantId);
+            var restaurant = await restaurantRepository.GetRestaurant(restaurantId);
 
             if (string.IsNullOrEmpty(restaurant.Name)
                 || string.IsNullOrEmpty(restaurant.ShortDescription)

@@ -37,6 +37,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<RestaurantDto>> GetRestaurant(int restaurantId)
         {
             return await restaurantManager.GetRestaurant(restaurantId);

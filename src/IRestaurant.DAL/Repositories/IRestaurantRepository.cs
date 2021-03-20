@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.Repositories
     public interface IRestaurantRepository
     {
         Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null);
-        Task<RestaurantDto> GetRestaurantOrNull(int restaurantId);
+        Task<RestaurantDto> GetRestaurant(int restaurantId);
         Task<RestaurantDto> CreateDefaultRestaurant(string ownerId);
         Task<RestaurantDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant);
         Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId);

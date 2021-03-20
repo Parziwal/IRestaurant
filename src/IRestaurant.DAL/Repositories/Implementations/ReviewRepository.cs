@@ -21,7 +21,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> GetReview(int reviewId)
         {
-            return (await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId))?.GetReview();
+            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
+
+            if (dbReview == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
+            }
+
+            return dbReview.GetReview();
         }
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)

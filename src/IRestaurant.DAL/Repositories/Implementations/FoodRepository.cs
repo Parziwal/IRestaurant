@@ -21,7 +21,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> GetFood(int foodId)
         {
-            return (await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId))?.GetFood();
+            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
+
+            if (dbFood == null)
+            {
+                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
+            }
+
+            return dbFood.GetFood();
         }
 
         public async Task<IReadOnlyCollection<FoodDto>> GetRestaurantMenu(int restaurantId)
