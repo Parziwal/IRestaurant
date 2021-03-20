@@ -21,6 +21,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       catchError((errorResponse: HttpErrorResponse) => {
         const error: Error = errorResponse.error as Error;
         this.toastr.error(error.title);
+        console.log(error);
         return throwError(error);
       }
     ));
