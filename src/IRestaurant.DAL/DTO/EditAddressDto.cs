@@ -13,10 +13,10 @@ namespace IRestaurant.DAL.DTO
         [Range(1000, 9999)]
         public int ZipCode { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string City { get; set; }
         [Required]
-        [StringLength(100)]
+        [StringLength(200)]
         public string Street { get; set; }
         [Required]
         [Phone]

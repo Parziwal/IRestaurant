@@ -14,7 +14,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
         [StringLength(50)]
         public string Name { get; set; }
         [Required]
-        [StringLength(200)]
+        [StringLength(300)]
         public string ShortDescription { get; set; }
         [StringLength(10000)]
         public string DetailedDescription { get; set; }

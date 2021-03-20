@@ -28,7 +28,7 @@ export class EditMenuComponent implements OnInit {
 
   initForm() {
     this.foodForm = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(50), Validators.minLength(2)]),
+      name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       price: new FormControl(null, [Validators.required, Validators.min(0)]),
       description: new FormControl(null, [Validators.maxLength(1000)]),
       image: new FormControl(null)
@@ -65,9 +65,6 @@ export class EditMenuComponent implements OnInit {
     }
     if (this.foodForm.get(controlName).hasError("maxlength")) {
       return `A mező értéke nem lépheti át a(z) ${this.foodForm.get(controlName).errors.maxlength.requiredLength} karakteres limitet!`;
-    }
-    if (this.foodForm.get(controlName).hasError("minlength")) {
-      return `A mező értéke minimum ${this.foodForm.get(controlName).errors.minlength.requiredLength} karakter kell, hogy legyen!`;
     }
     if (this.foodForm.get(controlName).hasError("min")) {
       return `A mező értéke nem lehet kisebb mint ${this.foodForm.get(controlName).errors.min.min}!`;

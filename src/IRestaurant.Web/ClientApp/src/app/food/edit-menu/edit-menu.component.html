@@ -9,8 +9,7 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-lg-8">
                     <mat-label>Étel neve</mat-label>
-                    <input matInput type="text" formControlName="name" placeholder="Név" maxlength="50" minlength="2"
-                        required />
+                    <input matInput type="text" formControlName="name" placeholder="Név"/>
                     <mat-hint align="end">{{ foodForm.value.name?.length || 0 }}/50</mat-hint>
                     <mat-error *ngIf="foodForm.get('name').invalid">{{
                         getErrorMessage("name")
@@ -18,8 +17,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="col-lg-4">
                     <mat-label>Ár</mat-label>
-                    <input matInput type="number" class="right-align" formControlName="price" placeholder="3000" min="0"
-                        required />
+                    <input matInput type="number" class="right-align" formControlName="price" placeholder="3000"/>
                     <span matSuffix>HUF</span>
                     <mat-error *ngIf="foodForm.get('price').invalid">{{
                         getErrorMessage("price")
@@ -28,8 +26,8 @@
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>Leírás</mat-label>
-                <textarea matInput type="text" formControlName="description" placeholder="Az étel..." maxlength="1000"
-                    rows="4"></textarea>
+                <textarea matInput type="text" formControlName="description" placeholder="Az étel..."rows="4">
+                </textarea>
                 <mat-error *ngIf="foodForm.get('description').invalid">{{
                     getErrorMessage("description")
                     }}</mat-error>

@@ -27,13 +27,13 @@ export class EditRestaurantComponent implements OnInit {
   initForm() {
     this.restaurantForm = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-      shortDescription: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
+      shortDescription: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
       detailedDescription: new FormControl(null, [Validators.maxLength(10000)]),
       image: new FormControl(null),
       address: new FormGroup({
         zipCode: new FormControl(null, [Validators.required, Validators.min(1000), Validators.max(9999)]),
-        city: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
-        street: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
+        city: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
+        street: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
         phoneNumber: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}")])
       })
     });
@@ -75,7 +75,7 @@ export class EditRestaurantComponent implements OnInit {
       return `A mező értéke nem lehet kisebb mint ${this.restaurantForm.get(controlName).errors.min.min}!`;
     }
     if (this.restaurantForm.get(controlName).hasError("pattern")) {
-      return "Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789";
+      return "Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789!";
     }
   }
 

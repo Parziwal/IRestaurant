@@ -57,6 +57,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
             [Required]
             public string Role { get; set; }
             [Required]
+            [StringLength(50)]
             [Display(Name = "Vezeték és keresztnév")]
             public string FullName { get; set; }
             [Required]
@@ -98,6 +99,10 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                     }
 
                     await _userManager.AddToRoleAsync(user, Input.Role);
+                    if (Input.Role == UserRoles.Restaurant)
+                    {
+                        await restaurantManager.CreateDefaultRestaurant(user.Id);
+                    }
 
                     _logger.LogInformation("User created a new account with password.");
 
