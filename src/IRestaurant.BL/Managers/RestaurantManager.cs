@@ -62,10 +62,20 @@ namespace IRestaurant.BL
 
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
+        public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await GetUserRestaurantId(userId);
+
+            return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
+        }
+
         public async Task ChangeMyRestaurantShowStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
+
+            await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
 
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
@@ -78,20 +88,30 @@ namespace IRestaurant.BL
                 transaction.Complete();
             }
         }
-        public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
-        {
-            string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
-
-            return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
-        }
 
         public async Task ChangeMyRestaurantOrderStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
+            
+            await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
 
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+        }
+
+        private async Task checkIfRestaurantDataNotEmpty(int restaurantId)
+        {
+            var restaurant = await restaurantRepository.GetRestaurantOrNull(restaurantId);
+
+            if (string.IsNullOrEmpty(restaurant.Name)
+                || string.IsNullOrEmpty(restaurant.ShortDescription)
+                || string.IsNullOrEmpty(restaurant.RestaurantAddress.City)
+                || string.IsNullOrEmpty(restaurant.RestaurantAddress.Street)
+                || string.IsNullOrEmpty(restaurant.RestaurantAddress.PhoneNumber))
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "Az étterem elérhetővé tétele és/vagy a rendelési lehetőség engedélyezése nem lehetséges, amíg a kötelező adatok nem kerülnek kitöltésre.");
+            }
         }
 
         private async Task<int> GetUserRestaurantId(string userId)

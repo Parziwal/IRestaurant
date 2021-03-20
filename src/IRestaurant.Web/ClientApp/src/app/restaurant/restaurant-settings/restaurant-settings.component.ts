@@ -29,17 +29,39 @@ export class RestaurantSettingsComponent implements OnInit {
   showForUsersStatusChanged() {
     this.isOrderAvailable = this.showForUsers;
     if (this.showForUsers) {
-      this.restaurantService.ShowMyRestaurantForUsers().subscribe();
+      this.restaurantService.ShowMyRestaurantForUsers().subscribe(
+        ok => {},
+        error => {
+          this.showForUsers = !this.showForUsers
+          this.isOrderAvailable = this.showForUsers;
+        }
+      );
     } else {
-      this.restaurantService.HideMyRestaurantForUsers().subscribe();
+      this.restaurantService.HideMyRestaurantForUsers().subscribe(
+        ok => {},
+        error => {
+          this.showForUsers = !this.showForUsers
+          this.isOrderAvailable = this.showForUsers;
+        }
+      );
     }
   }
 
   isOrderAvailableStatusChanged() {
     if (this.isOrderAvailable) {
-      this.restaurantService.TurnOnOrderOption().subscribe();
+      this.restaurantService.TurnOnOrderOption().subscribe(
+        ok => {},
+        error => {
+          this.isOrderAvailable = !this.isOrderAvailable;
+        }
+      );
     } else {
-      this.restaurantService.TurnOffOrderOption().subscribe();
+      this.restaurantService.TurnOffOrderOption().subscribe(
+        ok => {},
+        error => {
+          this.isOrderAvailable = !this.isOrderAvailable;
+        }
+      );
     }
   }
 }

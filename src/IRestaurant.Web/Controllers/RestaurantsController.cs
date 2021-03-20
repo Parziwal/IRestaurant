@@ -73,6 +73,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPatch("myrestaurant/show")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ShowMyRestaurantForUsers()
         {
             await restaurantManager.ChangeMyRestaurantShowStatus(true);
@@ -83,6 +84,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPatch("myrestaurant/hide")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> HideMyRestaurantFromUsers()
         {
             await restaurantManager.ChangeMyRestaurantShowStatus(false);
@@ -93,6 +95,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPatch("myrestaurant/order/turnon")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOnOrderOption()
         {
             await restaurantManager.ChangeMyRestaurantOrderStatus(true);
@@ -103,6 +106,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPatch("myrestaurant/order/turnoff")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
             await restaurantManager.ChangeMyRestaurantOrderStatus(false);
