@@ -23,6 +23,7 @@ import { FoodListComponent } from './food/edit-menu/food-list/food-list.componen
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RestaurantSettingsComponent } from './restaurant/restaurant-settings/restaurant-settings.component';
 import { DropdownDirective, DropdownMenuDirective } from './shared/directives/dropdown.directive';
+import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DropdownDirective, DropdownMenuDirective } from './shared/directives/dr
     FontAwesomeModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
