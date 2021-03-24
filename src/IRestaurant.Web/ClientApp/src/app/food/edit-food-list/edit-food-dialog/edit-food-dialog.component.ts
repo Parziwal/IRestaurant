@@ -1,25 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { FoodService } from '../food.service';
-import { EditFood } from '../models/edit-food.type';
-import { Food } from '../models/food.type';
-import { FoodListComponent } from './food-list/food-list.component';
+import { FoodService } from '../../food.service';
+import { Food } from '../../models/food.type';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './edit-menu.component.html',
-  styleUrls: ['./edit-menu.component.css']
+  templateUrl: './edit-food-dialog.component.html',
+  styleUrls: ['./edit-food-dialog.component.css']
 })
-export class EditMenuComponent implements OnInit {
+export class EditFoodDialogComponent implements OnInit {
 
   foodForm: FormGroup;
-  edit = false;
-  foodId: number;
-  refreshFoodList: Subject<boolean> = new Subject<boolean>();
 
-  constructor(private foodService: FoodService,
+  constructor(private dialogRef: MatDialogRef<EditFoodDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public food: Food,
+    private foodService: FoodService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -33,6 +30,16 @@ export class EditMenuComponent implements OnInit {
       description: new FormControl(null, [Validators.maxLength(1000)]),
       image: new FormControl(null)
     });
+
+    if (this.food) {
+      this.foodForm.setValue({
+        name: this.food.name,
+        price: this.food.price,
+        description: this.food.description,
+        image: null
+      });
+      this.foodForm.controls.name.disable();
+    }
   }
 
   onSubmit() {
@@ -40,21 +47,17 @@ export class EditMenuComponent implements OnInit {
       return;
     }
 
-    if (!this.edit) {
+    if (!this.food) {
       this.foodService.addFoodToRestaurantMenu(this.foodForm.value).subscribe(
         (foodData: Food) => {
+          this.dialogRef.close(true);
           this.toastr.success('Az étel hozzáadásra került!');
-          this.foodForm.reset();
-          this.refreshFoodList.next(true);
         });
     } else {
-      this.foodService.editFood(this.foodId, {
-        price: this.foodForm.value.name,
-        description: this.foodForm.value.description
-      }).subscribe(
+      this.foodService.editFood(this.food.id, this.foodForm.value).subscribe(
         (foodData: Food) => {
+          this.dialogRef.close(true);
           this.toastr.success('Az étel módosítása sikerült!');
-          this.refreshFoodList.next(true);
         });
     }
   }
@@ -71,26 +74,7 @@ export class EditMenuComponent implements OnInit {
     }
   }
 
-  editFood(event: {foodId: number}) {
-    this.foodId = event.foodId;
-    this.foodService.getFood(event.foodId).subscribe(
-      (food: Food) => {
-        this.edit = true;
-        this.foodForm.setValue({
-          name: food.name,
-          price: food.price,
-          description: food.description,
-          image: ""
-        });
-        this.foodForm.controls.name.disable();
-      }
-    );
-  }
-
-  cancelEdit() {
-    this.foodId = null;
-    this.edit = false;
-    this.foodForm.controls.name.enable();
-    this.foodForm.reset();
+  cancel() {
+    this.dialogRef.close(false);
   }
 }

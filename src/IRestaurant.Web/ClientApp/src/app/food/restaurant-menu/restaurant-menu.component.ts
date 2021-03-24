@@ -19,6 +19,7 @@ export class RestaurantMenuComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.loadRestaurantMenu();
   }
 
   loadRestaurantMenu() {

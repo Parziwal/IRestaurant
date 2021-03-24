@@ -31,11 +31,10 @@ export class FoodService {
   }
 
   editFood(foodId: number, editedFood: EditFood) {
-    console.log(editedFood);
     return this.http.put<Food>(this.baseUrl + foodId, editedFood);
   }
 
-  RemoveFoodFromMenu(id: number) {
+  removeFoodFromMenu(id: number) {
     return this.http.delete(this.baseUrl + id);
   }
 }

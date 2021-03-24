@@ -1,21 +1,20 @@
-<h2>Étlap</h2>
-<ul class="list-group" *ngFor="let food of (restaurantMenu | async)">
-    <li class="list-group-item" *ngIf="(restaurantMenu | async)?.length === 0">
-        Jelenleg az étlap üres.
-    </li>
-    <li class="list-group-item d-flex justify-content-start">
-        <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath"
-        [alt]="food.name" class="img-fluid align-self-start">
-        <div class="food-details">
-            <div class="row justify-content-between">
-                <div class="col-auto">
-                    <h4>{{ food.name }}</h4>
-                </div>
-                <div class="col-auto">
-                    <h5><b>{{ food.price | currency:'HUF' }}</b></h5>
-                </div>
-            </div>
-            <p class="text-muted text-justify">{{ food.description }}</p>
-        </div>
-    </li>
-</ul>
+<h2 class="menu-title">Étlap</h2>
+<mat-accordion class="row justify-content-center">
+    <div class="col-lg-6 my-1" *ngFor="let food of (restaurantMenu | async)">
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="d-flex justify-content-start">
+                        <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath" [alt]="food.name"
+                        class="img-fluid align-self-start">
+                        <div class="d-flex flex-column">
+                            <h3 class="food-name">{{ food.name }}</h3>
+                            <p class="food-price">{{ food.price | currency : 'Ft' : 'symbol' : '1.0-0'}}</p>
+                        </div>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p class="text-muted food-details">{{ food.description }}</p>
+        </mat-expansion-panel>
+    </div>
+</mat-accordion>
