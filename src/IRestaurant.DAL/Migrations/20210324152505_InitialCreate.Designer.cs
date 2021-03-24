@@ -10,16 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210305162548_InitialCreate")]
+    [Migration("20210324152505_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
                 {
@@ -96,7 +96,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("RestaurantId")
                         .HasColumnType("int");
@@ -118,7 +118,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -151,7 +151,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -179,7 +179,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -206,7 +206,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -234,7 +234,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("DetailedDescription")
                         .HasMaxLength(10000)
@@ -256,8 +256,8 @@ namespace IRestaurant.DAL.Migrations
 
                     b.Property<string>("ShortDescription")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<bool>("ShowForUsers")
                         .HasColumnType("bit");
@@ -276,7 +276,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .HasMaxLength(10000)
@@ -311,7 +311,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -459,7 +459,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -483,7 +483,7 @@ namespace IRestaurant.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -598,17 +598,17 @@ namespace IRestaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("IRestaurant.DAL.Models.Address", "RestaurantAddress", b1 =>
+                    b.OwnsOne("IRestaurant.DAL.Models.AddressOwned", "RestaurantAddress", b1 =>
                         {
                             b1.Property<int>("InvoiceId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("PhoneNumber")
                                 .IsRequired()
@@ -616,8 +616,8 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
 
                             b1.Property<int>("ZipCode")
                                 .HasColumnType("int");
@@ -630,17 +630,17 @@ namespace IRestaurant.DAL.Migrations
                                 .HasForeignKey("InvoiceId");
                         });
 
-                    b.OwnsOne("IRestaurant.DAL.Models.Address", "UserAddress", b1 =>
+                    b.OwnsOne("IRestaurant.DAL.Models.AddressOwned", "UserAddress", b1 =>
                         {
                             b1.Property<int>("InvoiceId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("PhoneNumber")
                                 .IsRequired()
@@ -648,8 +648,8 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
 
                             b1.Property<int>("ZipCode")
                                 .HasColumnType("int");
@@ -705,17 +705,17 @@ namespace IRestaurant.DAL.Migrations
                         .WithOne("MyRestaurant")
                         .HasForeignKey("IRestaurant.DAL.Models.Restaurant", "OwnerId");
 
-                    b.OwnsOne("IRestaurant.DAL.Models.Address", "Address", b1 =>
+                    b.OwnsOne("IRestaurant.DAL.Models.AddressOwned", "Address", b1 =>
                         {
                             b1.Property<int>("RestaurantId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("PhoneNumber")
                                 .IsRequired()
@@ -723,8 +723,8 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
 
                             b1.Property<int>("ZipCode")
                                 .HasColumnType("int");
@@ -769,17 +769,17 @@ namespace IRestaurant.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("IRestaurant.DAL.Models.Address", "Address", b1 =>
+                    b.OwnsOne("IRestaurant.DAL.Models.AddressOwned", "Address", b1 =>
                         {
                             b1.Property<int>("UserAddressId")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("int")
-                                .UseIdentityColumn();
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                             b1.Property<string>("City")
                                 .IsRequired()
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)");
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
 
                             b1.Property<string>("PhoneNumber")
                                 .IsRequired()
@@ -787,8 +787,8 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.Property<string>("Street")
                                 .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)");
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
 
                             b1.Property<int>("ZipCode")
                                 .HasColumnType("int");
