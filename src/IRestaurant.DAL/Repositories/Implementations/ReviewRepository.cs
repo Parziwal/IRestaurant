@@ -47,6 +47,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             var dbReview = new Review {
                 Title = review.Title,
                 Description = review.Description,
+                CreatedAt = DateTime.Now,
                 Rating = review.Rating,
                 UserId = userId,
                 Restaurant = dbRestaurant

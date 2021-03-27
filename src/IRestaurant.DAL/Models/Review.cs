@@ -16,6 +16,8 @@ namespace IRestaurant.DAL.Models
         [Required]
         [StringLength(200)]
         public string Title { get; set; }
+        [Required]
+        public DateTime CreatedAt { get; set; }
         [StringLength(10000)]
         public string Description { get; set; }
         public int RestaurantId { get; set; }

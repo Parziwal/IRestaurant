@@ -13,6 +13,7 @@ namespace IRestaurant.DAL.DTO.Reviews
         public int Id { get; }
         public double Rating { get; }
         public string Title { get; }
+        public DateTime CreatedAt { get; }
         public string Description { get; }
         public string UserFullName { get; }
 
@@ -21,6 +22,7 @@ namespace IRestaurant.DAL.DTO.Reviews
             this.Id = review.Id;
             this.Rating = review.Rating;
             this.Title = review.Title;
+            this.CreatedAt = review.CreatedAt;
             this.Description = review.Description;
             this.UserFullName = user.FullName;
         }
