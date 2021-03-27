@@ -77,6 +77,8 @@ namespace IRestaurant.Web
             services.AddProblemDetails(options => {
                 // Ez 404 Not Found státusz kódra cseréli EntityNotFoundException-t.
                 options.MapToStatusCode<EntityNotFoundException>(StatusCodes.Status404NotFound);
+                // Ez 400 Bad Request státusz kódra cseréli EntityAlreadyExistsException-t.
+                options.MapToStatusCode<EntityAlreadyExistsException>(StatusCodes.Status400BadRequest);
             });
 
             services.AddHttpContextAccessor();

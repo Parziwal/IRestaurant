@@ -113,5 +113,33 @@ namespace IRestaurant.Web.Controllers
             await restaurantManager.ChangeMyRestaurantOrderStatus(false);
             return Ok();
         }
+
+        [Authorize(Policy = UserRoles.Guest)]
+        [HttpGet("favourite")]
+        public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurants()
+        {
+            return await restaurantManager.GetUserFavouriteRestaurants();
+        }
+
+        [Authorize(Policy = UserRoles.Guest)]
+        [HttpPost("favourite/add/{restaurantId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> AddRestaurantToGuestFavourite(int restaurantId)
+        {
+            await restaurantManager.AddRestaurantToUserFavourite(restaurantId);
+            return Ok();
+        }
+
+        [Authorize(Policy = UserRoles.Guest)]
+        [HttpDelete("favourite/remove/{restaurantId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> RemoveRestaurantFromGuestFavourite(int restaurantId)
+        {
+            await restaurantManager.RemoveRestaurantFromUserFavourite(restaurantId);
+            return NoContent();
+        }
     }
 }

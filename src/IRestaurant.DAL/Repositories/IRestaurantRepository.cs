@@ -18,5 +18,8 @@ namespace IRestaurant.DAL.Repositories
         Task ChangeShowForUsersStatus(int restaurantId, bool value);
         Task ChangeOrderAvailableStatus(int restaurantId, bool value);
         Task<bool> IsRestaurantAvailableForUsers(int restaurantId);
+        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId);
+        Task AddRestaurantToUserFavourite(int restaurantId, string userId);
+        Task RemoveRestaurantFromUserFavourite(int restaurantId, string userId);
     }
 }

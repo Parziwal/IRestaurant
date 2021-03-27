@@ -19,6 +19,7 @@ namespace IRestaurant.DAL.Data
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<FavouriteRestaurant> FavouriteRestaurants { get; set; }
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -35,6 +36,7 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
             modelBuilder.Entity<Review>().ToTable("Review");
             modelBuilder.Entity<Review>().ToTable("Invoice");
+            modelBuilder.Entity<Review>().ToTable("FavouriteRestaurant");
         }
     }
 }

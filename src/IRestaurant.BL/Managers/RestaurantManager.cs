@@ -94,8 +94,25 @@ namespace IRestaurant.BL
             int ownerRestaurantId = await GetUserRestaurantId(userId);
             
             await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
-
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+        }
+
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            return await restaurantRepository.GetUserFavouriteRestaurants(userId);
+        }
+
+        public async Task AddRestaurantToUserFavourite(int restaurantId)
+        {
+            string userId = userRepository.GetCurrentUserId();
+            await restaurantRepository.AddRestaurantToUserFavourite(restaurantId, userId);
+        }
+
+        public async Task RemoveRestaurantFromUserFavourite(int restaurantId)
+        {
+            string userId = userRepository.GetCurrentUserId();
+            await restaurantRepository.RemoveRestaurantFromUserFavourite(restaurantId, userId);
         }
 
         private async Task checkIfRestaurantDataNotEmpty(int restaurantId)

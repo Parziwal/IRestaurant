@@ -54,6 +54,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
         {
+            var dbOwner = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == ownerId);
+            if (dbOwner == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
+            }
+
             var dbRestaurant = new Restaurant {
                 Name = "",
                 ShortDescription = "",
@@ -148,6 +154,53 @@ namespace IRestaurant.DAL.Repositories.Implementations
             }
 
             return dbRestaurant.ShowForUsers;
+        }
+
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId)
+        {
+            return await dbContext.Restaurants
+                   .Include(r => r.Reviews)
+                   .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId))
+                   .GetRestaurantOverviews();
+        }
+
+        public async Task AddRestaurantToUserFavourite(int restaurantId, string userId)
+        {
+            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            if (dbRestaurant == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
+            }
+
+            var dbUser = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (dbUser == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
+            }
+
+            if (await dbContext.FavouriteRestaurants.AnyAsync(fr => fr.Restaurant == dbRestaurant && fr.User == dbUser))
+            {
+                throw new EntityAlreadyExistsException("Az étterem már hozzáadásra került a kedvencekhez.");
+            }
+
+            await dbContext.FavouriteRestaurants.AddAsync(
+                new FavouriteRestaurant {
+                    Restaurant = dbRestaurant,
+                    User = dbUser
+                });
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task RemoveRestaurantFromUserFavourite(int restaurantId, string userId)
+        {
+            var dbFavourite = await dbContext.FavouriteRestaurants.SingleOrDefaultAsync(fr => fr.RestaurantId == restaurantId && fr.UserId == userId);
+            if (dbFavourite == null)
+            {
+                throw new EntityNotFoundException("A felhasználó kedvenc étteremei között a megadott azonosítóval étterem nem található.");
+            }
+
+            dbContext.FavouriteRestaurants.Remove(dbFavourite);
+            await dbContext.SaveChangesAsync();
         }
     }
 
