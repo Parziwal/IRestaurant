@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO.Restaurants
 {
-    public class RestaurantDto
+    public class RestaurantDetailsDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +20,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public string OwnerName { get; set; }
         public bool IsOrderAvailable { get; set; }
 
-        public RestaurantDto(Restaurant restaurant, ApplicationUser owner, double? rating)
+        public RestaurantDetailsDto(Restaurant restaurant, ApplicationUser owner, double? rating)
         {
             this.Id = restaurant.Id;
             this.Name = restaurant.Name;

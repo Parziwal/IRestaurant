@@ -10,6 +10,7 @@
               <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
               <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
                 <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
+                <a class="nav-link" routerLink="myreviews" routerLinkActive="active">Értékeléseim</a>
                 <a class="nav-link" routerLink="kedvencek" routerLinkActive="active">Kedvencek</a>
               </ng-container>
               <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">

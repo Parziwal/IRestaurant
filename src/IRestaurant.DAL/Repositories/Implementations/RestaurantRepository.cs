@@ -37,7 +37,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             }
         }
 
-        public async Task<RestaurantDto> GetRestaurant(int restaurantId)
+        public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
             var dbRestaurant = await dbContext.Restaurants
                                     .Include(r => r.Owner)
@@ -52,7 +52,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
         {
             var dbOwner = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == ownerId);
             if (dbOwner == null)
@@ -81,7 +81,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbRestaurant.GetRestaurant();
         }
 
-        public async Task<RestaurantDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
+        public async Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
         {
             var dbRestaurant = await dbContext.Restaurants
                                     .Include(r => r.Owner)
@@ -211,9 +211,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return await restaurants.Select(r => new RestaurantOverviewDto(r, CalculateRestaurantRating(r))).ToListAsync();
         }
 
-        public static RestaurantDto GetRestaurant(this Restaurant restaurant)
+        public static RestaurantDetailsDto GetRestaurant(this Restaurant restaurant)
         {
-            return new RestaurantDto(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
+            return new RestaurantDetailsDto(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
         }
 
         private static double? CalculateRestaurantRating(Restaurant restaurant)
@@ -223,7 +223,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             {
                 return null;
             }
-            return restaurant.Reviews.Average(r => r.Rating);
+            return Math.Round(restaurant.Reviews.Average(r => r.Rating), 2);
         }
     }
 }

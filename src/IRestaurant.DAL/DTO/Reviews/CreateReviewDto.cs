@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.DTO.Reviews
     {
         [Required]
         [Range(1, 5)]
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         [Required]
         [StringLength(200)]
         public string Title { get; set; }

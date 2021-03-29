@@ -6,7 +6,7 @@ import { FoodService } from '../../food.service';
 import { Food } from '../../models/food.type';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-edit-food-dialog',
   templateUrl: './edit-food-dialog.component.html',
   styleUrls: ['./edit-food-dialog.component.css']
 })
@@ -23,7 +23,7 @@ export class EditFoodDialogComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
+  private initForm() {
     this.foodForm = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       price: new FormControl(null, [Validators.required, Validators.min(0)]),

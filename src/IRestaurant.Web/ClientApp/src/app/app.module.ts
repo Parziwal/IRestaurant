@@ -28,6 +28,10 @@ import { RestaurantSettingsComponent } from './restaurant/restaurant-settings/re
 import { DropdownDirective, DropdownMenuDirective } from './shared/directives/dropdown.directive';
 import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
+import { RestaurantReviewListComponent } from './review/restaurant-review-list/restaurant-review-list.component';
+import { RestaurantReviewListItemComponent } from './review/restaurant-review-list/restaurant-review-list-item/restaurant-review-list-item.component';
+import { AddReviewDialogComponent } from './review/restaurant-review-list/add-review-dialog/add-review-dialog.component';
+import { GuestReviewListComponent } from './review/guest-review-list/guest-review-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,11 @@ import { ConfirmationDialogComponent } from './shared/components/confirmation-di
     RestaurantSettingsComponent,
     DropdownDirective,
     DropdownMenuDirective,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    RestaurantReviewListComponent,
+    RestaurantReviewListItemComponent,
+    AddReviewDialogComponent,
+    GuestReviewListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

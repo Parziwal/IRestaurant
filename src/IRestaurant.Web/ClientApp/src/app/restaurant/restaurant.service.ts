@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { EditRestaurant } from './models/edit-restaurant.type';
 import { RestaurantDetails } from './models/restaurant-details.type';
@@ -11,6 +12,7 @@ import { RestaurantSettings } from './models/restaurant-settings.type';
 })
 export class RestaurantService {
   private baseUrl = environment.apiUrl + "restaurants/";
+  restaurantRatingChanged = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -29,7 +31,7 @@ export class RestaurantService {
     return this.http.get<RestaurantDetails>(this.baseUrl + restaurantId);
   }
 
-  getMyRestaurant() {
+  getMyRestaurantDetails() {
     return this.http.get<RestaurantDetails>(this.baseUrl + "myrestaurant");
   }
 

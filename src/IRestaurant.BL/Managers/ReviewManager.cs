@@ -44,7 +44,7 @@ namespace IRestaurant.BL
             }
 
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                "A megadott azonosítóval rendelkező értékelés megtekintése korátozva van.");
+                "A megadott azonosítóval rendelkező értékelés megtekintése korlátozva van.");
         }
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
@@ -59,6 +59,12 @@ namespace IRestaurant.BL
             }
 
             return new List<ReviewDto>();
+        }
+
+        public async Task<IReadOnlyCollection<GuestReviewDto>> GetCurrentGuestReviews()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            return await reviewRepository.GetGuestReviews(userId);
         }
 
         public async Task<ReviewDto> AddReviewToRestaurant(int restaurantId, CreateReviewDto review)
@@ -77,6 +83,7 @@ namespace IRestaurant.BL
             if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
             {
                 await reviewRepository.DeleteReview(reviewId);
+                return;
             }
 
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,

@@ -21,7 +21,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> GetReview(int reviewId)
         {
-            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
+            var dbReview = await dbContext.Reviews
+                .Include(r => r.User)
+                .SingleOrDefaultAsync(r => r.Id == reviewId);
 
             if (dbReview == null)
             {
@@ -33,8 +35,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
         {
-            return await dbContext.Reviews.Where(r => r.RestaurantId == restaurantId).GetReviews();
+            return await dbContext.Reviews
+                .Include(r => r.User)
+                .Where(r => r.RestaurantId == restaurantId).GetReviews();
         }
+
+        public async Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(string guestId)
+        {
+            return await dbContext.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Restaurant)
+                .Where(r => r.UserId == guestId).GetGuestReviews();
+        }
+
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
@@ -44,12 +57,18 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
             }
 
+            var dbUser = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (dbUser == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
+            }
+
             var dbReview = new Review {
                 Title = review.Title,
                 Description = review.Description,
                 CreatedAt = DateTime.Now,
                 Rating = review.Rating,
-                UserId = userId,
+                User = dbUser,
                 Restaurant = dbRestaurant
             };
 
@@ -61,7 +80,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> DeleteReview(int reviewId)
         {
-            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
+            var dbReview = await dbContext.Reviews
+                .Include(r => r.User)
+                .SingleOrDefaultAsync(r => r.Id == reviewId);
 
             if (dbReview == null)
             {
@@ -110,6 +131,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public static ReviewDto GetReview(this Review review)
         {
             return new ReviewDto(review, review.User);
+        }
+
+        public static async Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(this IQueryable<Review> review)
+        {
+            return await review.Select(r => GetGuestReview(r)).ToListAsync();
+        }
+
+        public static GuestReviewDto GetGuestReview(this Review review)
+        {
+            return new GuestReviewDto(review, review.Restaurant);
         }
     }
 }

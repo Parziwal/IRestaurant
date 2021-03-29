@@ -10,7 +10,7 @@ import { Food } from '../models/food.type';
 import { EditFoodDialogComponent } from './edit-food-dialog/edit-food-dialog.component';
 
 @Component({
-  selector: 'app-food-list',
+  selector: 'app-edit-food-list',
   templateUrl: './edit-food-list.component.html',
   styleUrls: ['./edit-food-list.component.css']
 })
@@ -35,7 +35,9 @@ export class EditFoodListComponent implements OnInit {
   }
 
   addFood() {
-    const dialogRef = this.dialog.open(EditFoodDialogComponent);
+    const dialogRef = this.dialog.open(EditFoodDialogComponent, {
+      width: "500px"
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -46,7 +48,8 @@ export class EditFoodListComponent implements OnInit {
 
   editFood(food: Food) {
     const dialogRef = this.dialog.open(EditFoodDialogComponent, {
-      data: food
+      data: food,
+      width: "500px"
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -41,6 +41,13 @@ namespace IRestaurant.Web.Controllers
         }
 
         [Authorize(Policy = UserRoles.Guest)]
+        [HttpGet("myreviews")]
+        public async Task<IEnumerable<GuestReviewDto>> GetCurrentGuestReviews()
+        {
+            return await reviewManager.GetCurrentGuestReviews();
+        }
+
+        [Authorize(Policy = UserRoles.Guest)]
         [HttpPost("restaurant/{restaurantId}")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,8 +57,6 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { id = createdReview }, createdReview);
         }
 
-        [Authorize(Policy = UserRoles.Restaurant)]
-        [Authorize(Policy = UserRoles.Guest)]
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

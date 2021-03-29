@@ -11,6 +11,7 @@ namespace IRestaurant.DAL.Repositories
     {
         Task<ReviewDto> GetReview(int reviewId);
         Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId);
+        Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(string guestId);
         Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review);
         Task<ReviewDto> DeleteReview(int reviewId);
         Task<string> GetPubliserUserId(int reviewId);

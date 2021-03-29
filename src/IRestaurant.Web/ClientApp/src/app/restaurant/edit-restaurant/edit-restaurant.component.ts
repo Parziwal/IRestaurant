@@ -40,7 +40,7 @@ export class EditRestaurantComponent implements OnInit {
   }
 
   loadRestaurantData() {
-    this.restaurantService.getMyRestaurant().subscribe(
+    this.restaurantService.getMyRestaurantDetails().subscribe(
       (restaurantData: RestaurantDetails) => {
         this.restaurant = restaurantData;
         this.setFormInputs(restaurantData);

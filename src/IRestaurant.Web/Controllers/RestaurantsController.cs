@@ -28,7 +28,7 @@ namespace IRestaurant.Web.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantList([FromQuery] string restaurantName = null)
+        public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantOverviewList([FromQuery] string restaurantName = null)
         {
             return await restaurantManager.GetRestaurantOverviews(restaurantName);
         }
@@ -38,16 +38,16 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<RestaurantDto>> GetRestaurant(int restaurantId)
+        public async Task<ActionResult<RestaurantDetailsDto>> GetRestaurantDetails(int restaurantId)
         {
-            return await restaurantManager.GetRestaurant(restaurantId);
+            return await restaurantManager.GetRestaurantDetails(restaurantId);
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RestaurantDto>> GetMyRestaurant()
+        public async Task<ActionResult<RestaurantDetailsDto>> GetMyRestaurant()
         {
             return await restaurantManager.GetMyRestaurant();
         }
@@ -56,7 +56,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPut("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RestaurantDto>> EditMyRestaurant([FromBody]EditRestaurantDto editRestaurant)
+        public async Task<ActionResult<RestaurantDetailsDto>> EditMyRestaurant([FromBody]EditRestaurantDto editRestaurant)
         {
             return await restaurantManager.EditMyRestaurant(editRestaurant);
         }

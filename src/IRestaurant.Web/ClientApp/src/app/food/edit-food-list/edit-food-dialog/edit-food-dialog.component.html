@@ -12,7 +12,7 @@
         <mat-form-field appearance="outline" class="col-lg-4">
             <mat-label>Ár</mat-label>
             <input matInput type="number" class="right-align" formControlName="price" />
-            <span matSuffix>HUF</span>
+            <span matSuffix>Ft</span>
             <mat-error *ngIf="foodForm.get('price').invalid">{{
                 getErrorMessage("price")
                 }}</mat-error>
@@ -31,7 +31,7 @@
             <button type="submit" class="btn btn-primary btn-lg btn-block">{{ food ? "Mentés" : "Hozzáadás" }}</button>
         </div>
         <div class="col-md-4 mb-3">
-            <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="cancel()">Mégse</button>
+            <button type="button" class="btn btn-danger btn-lg btn-block" (click)="cancel()">Mégse</button>
         </div>
     </div>
 </form>

@@ -28,33 +28,33 @@ namespace IRestaurant.BL
             return await restaurantRepository.GetRestaurantOverviews(restaurantName);
         }
 
-        public async Task<RestaurantDto> GetRestaurant(int restaurantId)
+        public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
             if (!await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest, "A megadott azonosítóval rendelkező étterem jelenleg nem elérhető.");
             }
-            var restaurant = await restaurantRepository.GetRestaurant(restaurantId);
+            var restaurant = await restaurantRepository.GetRestaurantDetails(restaurantId);
 
             return restaurant;
         }
-        public async Task<RestaurantDto> GetMyRestaurant()
+        public async Task<RestaurantDetailsDto> GetMyRestaurant()
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
 
-            var restaurant = await restaurantRepository.GetRestaurant(ownerRestaurantId);
+            var restaurant = await restaurantRepository.GetRestaurantDetails(ownerRestaurantId);
             if (restaurant == null)
             {
                 throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
             }
             return restaurant;
         }
-        public async Task<RestaurantDto> CreateDefaultRestaurant(string ownerId)
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
         {
             return await restaurantRepository.CreateDefaultRestaurant(ownerId);
         }
-        public async Task<RestaurantDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
+        public async Task<RestaurantDetailsDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await GetUserRestaurantId(userId);
@@ -117,7 +117,7 @@ namespace IRestaurant.BL
 
         private async Task checkIfRestaurantDataNotEmpty(int restaurantId)
         {
-            var restaurant = await restaurantRepository.GetRestaurant(restaurantId);
+            var restaurant = await restaurantRepository.GetRestaurantDetails(restaurantId);
 
             if (string.IsNullOrEmpty(restaurant.Name)
                 || string.IsNullOrEmpty(restaurant.ShortDescription)

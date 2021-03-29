@@ -43,7 +43,12 @@
     </div>
     <div class="row mt-5">
         <div class="col">
-            <app-restaurant-menu [restaurantId]="restaurant.id"></app-restaurant-menu>
+            <app-restaurant-menu></app-restaurant-menu>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <app-restaurant-review-list [reviewsAvarageRating]="restaurant.rating"></app-restaurant-review-list>
         </div>
     </div>
 </ng-template>

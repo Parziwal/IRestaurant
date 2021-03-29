@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210324152505_InitialCreate")]
+    [Migration("20210328094619_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavouriteRestaurant");
+                    b.ToTable("FavouriteRestaurants");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>
@@ -278,6 +278,9 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasMaxLength(10000)
                         .HasColumnType("nvarchar(max)");
@@ -303,7 +306,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("FavouriteRestaurant");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>

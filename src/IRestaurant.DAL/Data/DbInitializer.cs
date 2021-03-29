@@ -17,6 +17,7 @@ namespace IRestaurant.DAL.Data
     {
         private static ApplicationDbContext _context;
         private static IServiceProvider _services;
+        private static ApplicationUser[] users;
         public static async Task Initialize(ApplicationDbContext context, IServiceProvider services)
         {
             context.Database.EnsureCreated();
@@ -36,7 +37,13 @@ namespace IRestaurant.DAL.Data
 
             await CreateRoles();
             await CreateUsersWithAddress();
-
+            await AddRoleToUsers();
+            for (int i = 2;i < users.Length;i++)
+            {
+                await ConfigureUserRestaurant(users[i]);
+                await AddReviewsToRestaurant(users[i].MyRestaurant);
+            }
+            
             logger.LogInformation("Finished seeding the database.");
         }
 
@@ -50,7 +57,7 @@ namespace IRestaurant.DAL.Data
 
         private static async Task CreateUsersWithAddress()
         {
-            var users = new ApplicationUser[]
+            users = new ApplicationUser[]
                 {
                     new ApplicationUser{ FullName="Carson Alexander", UserName="carson@email.hu", Email="carson@email.hu" },
                     new ApplicationUser{ FullName="Yan Li", UserName="yan@email.hu", Email="yan@email.hu"},
@@ -71,7 +78,7 @@ namespace IRestaurant.DAL.Data
             }
 
             _context.Users.AddRange(users);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var addresses = new List<UserAddress>();
             AddressOwned addressOwned = new AddressOwned
@@ -90,12 +97,10 @@ namespace IRestaurant.DAL.Data
             }
 
             _context.UserAddresses.AddRange(addresses);
-            _context.SaveChanges();
-
-            await AddRoleToUsers(users);
+            await _context.SaveChangesAsync();
         }
 
-        private static async Task AddRoleToUsers(ApplicationUser[] users)
+        private static async Task AddRoleToUsers()
         {
             var userManager = _services.GetRequiredService<UserManager<ApplicationUser>>();
             for (int i = 0; i < users.Length; i++)
@@ -103,7 +108,6 @@ namespace IRestaurant.DAL.Data
                 if (i > 1)
                 {
                     await userManager.AddToRoleAsync(users[i], UserRoles.Restaurant);
-                    await ConfigureUserRestaurant(users[i]);
                     continue;
                 }
                 await userManager.AddToRoleAsync(users[i], UserRoles.Guest);
@@ -170,6 +174,34 @@ namespace IRestaurant.DAL.Data
                     Restaurant = dbRestaurant
                 };
                 await _context.Foods.AddAsync(dbFood);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        private static async Task AddReviewsToRestaurant(Restaurant restaurant)
+        {
+            Random r = new Random();
+            for (int i = 0; i < 2; i++)
+            {
+                var dbReview = new Review
+                {
+                    Title = "Vestibulum mattis ullamcorper velit",
+                    Rating = r.NextDouble() * 4 + 1,
+                    CreatedAt = DateTime.Now,
+                    Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+                    "incididunt ut labore et dolore magna aliqua. Sodales neque sodales ut etiam sit amet nisl. At " +
+                    "erat pellentesque adipiscing commodo elit at imperdiet dui accumsan. Quam id leo in vitae turpis " +
+                    "massa sed elementum tempus. Urna id volutpat lacus laoreet non curabitur. Risus nec feugiat in " +
+                    "fermentum posuere urna nec. Mattis molestie a iaculis at erat pellentesque adipiscing commodo elit. " +
+                    "Id diam vel quam elementum pulvinar etiam non. Egestas fringilla phasellus faucibus scelerisque eleifend " +
+                    "donec pretium vulputate. Sed pulvinar proin gravida hendrerit lectus a. Tincidunt praesent semper feugiat " +
+                    "nibh sed pulvinar proin gravida hendrerit. Habitant morbi tristique senectus et netus et malesuada. Mauris " +
+                    "pharetra et ultrices neque ornare aenean euismod. Ac ut consequat semper viverra nam libero. Tempor id eu nisl " +
+                    "nunc. Sed faucibus turpis in eu mi bibendum neque egestas.",
+                    User = users[i],
+                    Restaurant = restaurant
+                };
+                await _context.Reviews.AddAsync(dbReview);
             }
             await _context.SaveChangesAsync();
         }
