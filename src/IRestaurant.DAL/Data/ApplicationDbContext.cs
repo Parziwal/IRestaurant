@@ -35,8 +35,8 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<OrderFood>().ToTable("OrderFood");
             modelBuilder.Entity<Restaurant>().ToTable("Restaurant");
             modelBuilder.Entity<Review>().ToTable("Review");
-            modelBuilder.Entity<Review>().ToTable("Invoice");
-            modelBuilder.Entity<Review>().ToTable("FavouriteRestaurant");
+            modelBuilder.Entity<Invoice>().ToTable("Invoice");
+            modelBuilder.Entity<FavouriteRestaurant>().ToTable("FavouriteRestaurant");
         }
     }
 }
