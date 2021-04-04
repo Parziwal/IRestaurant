@@ -5,4 +5,5 @@ export interface EditRestaurant {
     shortDescription: string;
     detailedDescription: string;
     address: Address;
+    image: File;
 }
