@@ -64,6 +64,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 Name = "",
                 ShortDescription = "",
                 DetailedDescription = "",
+                ImagePath = null,
                 Address = new AddressOwned {
                     ZipCode = 1000,
                     City = "",

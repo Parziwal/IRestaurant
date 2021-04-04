@@ -9,15 +9,10 @@ namespace IRestaurant.DAL.Models
 {
     public enum Status
     {
-        [Description("Feldolgozás alatt")]
-        PROCESSING,
-        [Description("Rendelés összeállítása")]
-        ORDER_COMPLETION,
-        [Description("Kiszállítás alatt")]
-        UNDER_DELIVERING,
-        [Description("Kiszállítva")]
-        DELIVERED,
-        [Description("Lemondva")]
-        CANCELLED
+        PROCESSING = 0,
+        ORDER_COMPLETION = 1,
+        UNDER_DELIVERING = 2,
+        DELIVERED = 3,
+        CANCELLED = 4
     }
 }

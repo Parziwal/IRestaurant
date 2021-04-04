@@ -38,7 +38,7 @@ namespace IRestaurant.BL
             }
 
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                "A megadott azonosítóval rendelkező étel megtekintése korátozva van.");
+                "A megadott azonosítóval rendelkező étel megtekintéséhez nincs jogosultságod.");
         }
 
         public async Task<IReadOnlyCollection<FoodDto>> GetRestaurantMenu(int restaurantId)

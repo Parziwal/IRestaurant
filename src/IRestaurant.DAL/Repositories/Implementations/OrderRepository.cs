@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
@@ -20,7 +22,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             this.invoiceRepository = invoiceRepository;
         }
 
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetUserOrders(string userId)
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetUserOrderOverviews(string userId)
         {
             return await dbContext.Orders
                 .Where(o => o.UserId == userId)
@@ -28,7 +30,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 .Include(o => o.OrderFoods)
                 .GetOrders();
         }
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrdersBelongsToRestaurant(int restaurantId)
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrderOverviewBelongsToRestaurant(int restaurantId)
         {
             return await dbContext.Orders
                 .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
@@ -36,67 +38,106 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 .Include(o => o.OrderFoods)
                 .GetOrders();
         }
-        public async Task<OrderDto> GetOrderOrNull(int orderId)
+        public async Task<OrderDto> GetOrderDetails(int orderId)
         {
             var dbOrder = await dbContext.Orders
                             .Include(o => o.Invoice)
                             .Include(o => o.OrderFoods.Select(of => of.Food))
                             .SingleOrDefaultAsync(o => o.Id == orderId);
 
-            return dbOrder?.GetOrder();
+            if (dbOrder == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
+            }
+
+            return dbOrder.GetOrder();
         }
 
         public async Task<OrderDto> CreateOrder(string userId, CreateOrder order)
         {
-            var dbOrder = new Order {
+            var dbOrder = new Order
+            {
                 Date = DateTime.Now,
                 PreferredDeliveryDate = order.PreferredDeliveryDate,
                 Status = Status.PROCESSING,
                 UserId = userId
             };
 
-            await dbContext.Orders.AddAsync(dbOrder);
-            await dbContext.SaveChangesAsync();
-
-            foreach (var orderFood in order.OrderFoods)
+            using (var transaction = new TransactionScope(TransactionScopeOption.Required,
+                 new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
+                 TransactionScopeAsyncFlowOption.Enabled))
             {
-                var dbFood = await dbContext.Foods
-                    .SingleOrDefaultAsync(f => f.Id == orderFood.FoodId && f.RestaurantId == order.RestaurantId);
+                await dbContext.Orders.AddAsync(dbOrder);
 
-                if (dbFood == null)
+                foreach (var orderFood in order.OrderFoods)
                 {
-                    continue;
+                    var dbFood = await dbContext.Foods
+                        .SingleOrDefaultAsync(f => f.Id == orderFood.FoodId && f.RestaurantId == order.RestaurantId);
+                    
+                    if (dbFood == null)
+                    {
+                        throw new EntityNotFoundException("A rendelésben szereplő étteremhez a megadott ételek közül egy vagy több nem található.");
+                    }
+
+                    var newOrderFood = new OrderFood
+                    {
+                        Amount = orderFood.Amount,
+                        Price = dbFood.Price,
+                        Order = dbOrder,
+                        Food = dbFood,
+                    };
+                    await dbContext.OrderFoods.AddAsync(newOrderFood);
                 }
+                await dbContext.SaveChangesAsync();
 
-                var newOrderFood = new OrderFood
-                {
-                    Amount = orderFood.Amount,
-                    Price = dbFood.Price,
-                    OrderId = dbOrder.Id,
-                    FoodId = orderFood.FoodId,
-                };
-                await dbContext.OrderFoods.AddAsync(newOrderFood);
+                await invoiceRepository.CreateInvoice(order.RestaurantId, order.AddressId);
+
+                transaction.Complete();
             }
-            await dbContext.SaveChangesAsync();
+           
 
-            await invoiceRepository.CreateInvoice(order.AddressId, order.RestaurantId);
-
-            return await GetOrderOrNull(dbOrder.Id);
+            return await GetOrderDetails(dbOrder.Id);
         }
 
         public async Task ChangeOrderStatus(int orderId, Status status)
         {
             var dbOrder = await dbContext.Orders
-                .SingleOrDefaultAsync(o => o.Id == orderId);
+                            .SingleOrDefaultAsync(o => o.Id == orderId);
 
             if (dbOrder == null)
             {
-                return;
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
             }
 
             dbOrder.Status = status;
 
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<string> GetOrderUserId(int orderId)
+        {
+            var dbOrder = await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId);
+
+            if (dbOrder == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
+            }
+
+            return dbOrder.UserId;
+        }
+
+        public async Task<int> GetOrderRestaurantId(int orderId)
+        {
+            var dbOrder = await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId);
+
+            if (dbOrder == null)
+            {
+                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
+            }
+
+            return dbOrder.OrderFoods.First().Food.RestaurantId;
         }
     }
     internal static class OrderRepositoryExtensions

@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,14 +17,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             this.dbContext = dbContext;
         }
-        public async Task<Invoice> CreateInvoice(int addressId, int restaurantId)
+        public async Task<Invoice> CreateInvoice(int restaurantId, int userAddressId)
         {
-            var dbUserAddress = await dbContext.UserAddresses.SingleOrDefaultAsync(ua => ua.Id == addressId);
+            var dbUserAddress = await dbContext.UserAddresses.SingleOrDefaultAsync(ua => ua.Id == userAddressId);
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
 
             if (dbUserAddress == null || dbRestaurant == null)
             {
-                return null;
+                throw new EntityNotFoundException("A megadott azonosítóval lakcím vagy étterem nem létezik.");
             }
 
             var dbInvoice = new Invoice
