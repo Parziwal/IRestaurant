@@ -15,7 +15,11 @@ export class RestaurantListComponent implements OnInit {
   constructor(private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
-    this.restaurantOverviews = this.restaurantService.getRestaurantOverviews();
+    this.getRestaurantList();
+  }
+
+  private getRestaurantList() {
+    this.restaurantOverviews = this.restaurantService.getRestaurantList();
   }
 
 }

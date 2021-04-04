@@ -12,18 +12,18 @@ import { environment } from 'src/environments/environment';
 })
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
-  userRole: Observable<UserRole>;;
+  userRole: Observable<UserRole>;
   isAuthenticated: Observable<boolean>;
 
   constructor(private authorizeService: AuthorizeService, private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authorizeService.isAuthenticated();
-    this.userRole = this.authorizeService.getUserRole();
+    this.getAuthenticationData();
   }
 
-  collapse() {
-    this.isExpanded = false;
+  private getAuthenticationData() {
+    this.isAuthenticated = this.authorizeService.isAuthenticated();
+    this.userRole = this.authorizeService.getUserRole();
   }
 
   toggle() {

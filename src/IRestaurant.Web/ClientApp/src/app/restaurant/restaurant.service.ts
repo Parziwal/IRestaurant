@@ -16,7 +16,7 @@ export class RestaurantService {
 
   constructor(private http: HttpClient) { }
 
-  getRestaurantOverviews(options?: {searchTerm?: string}) {
+  getRestaurantList(options?: {searchTerm?: string}) {
     let searchTerm = (options && options.searchTerm) || "";
     
     let params = new HttpParams();

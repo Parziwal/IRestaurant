@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { GuestReview } from '../models/guest-review-type';
 import { ReviewService } from '../review.service';
 
@@ -16,7 +18,8 @@ export class GuestReviewListComponent implements OnInit {
   faTrashAlt = faTrashAlt;
 
   constructor(private reviewService: ReviewService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getCurrentGuestReviews();
@@ -27,11 +30,20 @@ export class GuestReviewListComponent implements OnInit {
   }
 
   deleteReview(review: GuestReview) {
-    this.reviewService.deleteReview(review.id).subscribe(
-      () => {
-        this.toastr.success('Az értékelés törlésre került!');
-        this.getCurrentGuestReviews();
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      disableClose: false
+    });
+    dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.reviewService.deleteReview(review.id).subscribe(
+          () => {
+            this.toastr.success('Az értékelés törlésre került!');
+            this.getCurrentGuestReviews();
+          }
+        );
       }
-    );
+    });
   }
 }

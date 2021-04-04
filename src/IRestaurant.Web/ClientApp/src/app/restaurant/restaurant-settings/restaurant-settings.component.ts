@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RestaurantSettings } from '../models/restaurant-settings.type';
 import { RestaurantService } from '../restaurant.service';
 
@@ -7,17 +7,17 @@ import { RestaurantService } from '../restaurant.service';
   templateUrl: './restaurant-settings.component.html',
   styleUrls: ['./restaurant-settings.component.css']
 })
-export class RestaurantSettingsComponent implements OnInit {
+export class RestaurantSettingsComponent {
   showForUsers = false;
   isOrderAvailable = false;
 
   constructor(private restaurantService: RestaurantService) { }
 
   ngOnInit(): void {
-    this.loadRestaurantSettings();
+    this.getRestaurantSettings();
   }
 
-  loadRestaurantSettings() {
+  private getRestaurantSettings() {
     this.restaurantService.getMyRestaurantSettings().subscribe(
       (settings: RestaurantSettings) => {
         this.showForUsers = settings.showForUsers;

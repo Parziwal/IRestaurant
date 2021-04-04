@@ -19,10 +19,10 @@ export class RestaurantMenuComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadRestaurantMenu();
+    this.getRestaurantMenu();
   }
 
-  loadRestaurantMenu() {
+  private getRestaurantMenu() {
     this.route.params.subscribe(
       (params: Params) => {
         let id = +params['id'];

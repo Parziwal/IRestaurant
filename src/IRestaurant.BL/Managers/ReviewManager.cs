@@ -77,10 +77,8 @@ namespace IRestaurant.BL
         {
             string userId = userRepository.GetCurrentUserId();
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-            int reviewRestaurantId = await reviewRepository.GetRestaurantIdReviewBelongTo(reviewId);
 
-            if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+            if (publisherId == userId)
             {
                 await reviewRepository.DeleteReview(reviewId);
                 return;

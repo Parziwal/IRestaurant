@@ -24,7 +24,7 @@ export class EditRestaurantComponent implements OnInit {
     this.loadRestaurantData();
   }
 
-  initForm() {
+  private initForm() {
     this.restaurantForm = new FormGroup({
       name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
       shortDescription: new FormControl(null, [Validators.required, Validators.maxLength(300)]),
@@ -39,7 +39,7 @@ export class EditRestaurantComponent implements OnInit {
     });
   }
 
-  loadRestaurantData() {
+  private loadRestaurantData() {
     this.restaurantService.getMyRestaurantDetails().subscribe(
       (restaurantData: RestaurantDetails) => {
         this.restaurant = restaurantData;

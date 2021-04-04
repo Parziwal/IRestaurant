@@ -6,14 +6,7 @@ import { Review } from '../../models/review.type';
   templateUrl: './restaurant-review-list-item.component.html',
   styleUrls: ['./restaurant-review-list-item.component.css']
 })
-export class RestaurantReviewListItemComponent implements OnInit {
+export class RestaurantReviewListItemComponent {
 
-  @Input()
-  review: Review
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  @Input() review: Review
 }

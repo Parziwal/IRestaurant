@@ -27,10 +27,10 @@ export class EditFoodListComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.loadFoods();
+    this.getFoods();
   }
 
-  private loadFoods() {
+  private getFoods() {
     this.foods = this.foodService.getMyRestaurantMenu();
   }
 
@@ -41,7 +41,7 @@ export class EditFoodListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadFoods();
+        this.getFoods();
       }
     });
   }
@@ -54,7 +54,7 @@ export class EditFoodListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadFoods();
+        this.getFoods();
       }
     });
   }
@@ -70,7 +70,7 @@ export class EditFoodListComponent implements OnInit {
         this.foodService.removeFoodFromMenu(food.id).subscribe(
           response => {
             this.toastr.success("Az étel törlésre került!");
-            this.loadFoods();
+            this.getFoods();
           }
         ); 
       }

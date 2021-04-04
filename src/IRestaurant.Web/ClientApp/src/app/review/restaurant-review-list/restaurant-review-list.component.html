@@ -5,8 +5,10 @@
         <app-rating-bar [rating]="reviewsAvarageRating"></app-rating-bar>
         <p class="text-muted mt-3">Összesen {{(reviews | async)?.length}} értékelés</p>
         <hr>
-        <h4>Értékeld az éttermet</h4>
-        <button class="btn btn-primary btn-block mb-lg-0 mb-5" (click)="addReviewClicked()">Érékelés írása</button>
+        <ng-container *ngIf="(userRole | async) === 'Guest'">
+            <h4>Értékeld az éttermet</h4>
+            <button class="btn btn-primary btn-block mb-lg-0 mb-5" (click)="addReviewClicked()">Érékelés írása</button>
+        </ng-container>
     </div>
     <div class="col-lg-8">
         <app-restaurant-review-list-item *ngFor="let review of (reviews | async)" [review]="review">

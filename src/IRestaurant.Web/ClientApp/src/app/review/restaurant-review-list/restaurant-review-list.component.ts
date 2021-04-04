@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UserRole } from 'src/api-authorization/api-authorization.constants';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { Review } from '../models/review.type';
 import { ReviewService } from '../review.service';
 import { AddReviewDialogComponent } from './add-review-dialog/add-review-dialog.component';
@@ -16,15 +18,21 @@ export class RestaurantReviewListComponent implements OnInit {
   private restaurantId: number;
   reviews: Observable<Review[]> = new Observable();
   reviewsCount: number = 0;
-  @Input()
-  reviewsAvarageRating: number = 1;
+  @Input() reviewsAvarageRating: number = 1;
+  userRole: Observable<UserRole>;
 
   constructor(private reviewService: ReviewService,
+    private authorizeService: AuthorizeService,
     private route: ActivatedRoute,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getReviews();
+    this.getCurrentUserRole();
+  }
+
+  private getCurrentUserRole() {
+    this.userRole = this.authorizeService.getUserRole();
   }
 
   private getReviews() {
