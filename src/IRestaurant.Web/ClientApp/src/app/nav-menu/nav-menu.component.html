@@ -1,38 +1,43 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-      <div class="container-fluid">
-          <a class="navbar-brand" routerLink="">IRestaurant</a>
-          <button (click)="toggle()" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{show: isExpanded}">
-            <div class="navbar-nav">
-              <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
-              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
-                <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
-                <a class="nav-link" routerLink="myreviews" routerLinkActive="active">Értékeléseim</a>
-                <a class="nav-link" routerLink="kedvencek" routerLinkActive="active">Kedvencek</a>
-              </ng-container>
-              <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">
-                <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
-                <div class="nav-item dropdown" routerLinkActive="active" appDropdown>
-                  <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
-                    Étermem
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" appDropdownMenu>
-                    <li><a class="dropdown-item" routerLink="myrestaurant" routerLinkActive="active">Valós nézet</a></li>
-                    <li><a class="dropdown-item" routerLink="myrestaurant/edit" routerLinkActive="active">Szerkesztés</a></li>
-                    <li><a class="dropdown-item" routerLink="myrestaurant/menu" routerLinkActive="active">Étlap</a></li>
-                    <li><a class="dropdown-item" routerLink="myrestaurant/settings" routerLinkActive="active">Beállítások</a></li>
-                  </ul>
-                </div>
-              </ng-container>
-              <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="">IRestaurant</a>
+      <button (click)="toggle()" class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup" [ngClass]="{show: isExpanded}">
+        <div class="navbar-nav">
+          <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
+          <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
+            <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
+            <a class="nav-link" routerLink="myreviews" routerLinkActive="active">Értékeléseim</a>
+            <a class="nav-link" routerLink="restaurant/favourite" routerLinkActive="active">Kedvencek</a>
+          </ng-container>
+          <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">
+            <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
+            <div class="nav-item dropdown" routerLinkActive="active" appDropdown>
+              <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+                Étermem
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown" appDropdownMenu>
+                <li><a class="dropdown-item" routerLink="myrestaurant" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">Valós nézet</a></li>
+                <li><a class="dropdown-item" routerLink="myrestaurant/edit" routerLinkActive="active">Szerkesztés</a>
+                </li>
+                <li><a class="dropdown-item" routerLink="myrestaurant/menu" routerLinkActive="active">Étlap</a></li>
+                <li><a class="dropdown-item" routerLink="myrestaurant/settings"
+                    routerLinkActive="active">Beállítások</a></li>
+              </ul>
             </div>
-            <div class="navbar-collapse collapse d-inline-flex flex-sm-row-reverse">
-              <app-login-menu></app-login-menu>
-            </div>
-          </div>
+          </ng-container>
+          <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
         </div>
+        <div class="navbar-collapse collapse d-inline-flex flex-sm-row-reverse">
+          <app-login-menu></app-login-menu>
+        </div>
+      </div>
+    </div>
   </div>
 </nav>

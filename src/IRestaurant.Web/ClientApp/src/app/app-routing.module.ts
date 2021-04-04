@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'myrestaurant/settings', component: RestaurantSettingsComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant} },
   {path: 'myrestaurant/menu', component: EditFoodListComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant} },
   {path: 'myreviews', component: GuestReviewListComponent, canActivate: [RoleGuard], data: {role: UserRole.Guest} },
+  {path: 'restaurant/favourite', component: RestaurantListComponent, canActivate: [RoleGuard], data: {role: UserRole.Guest} },
   {path: '**', redirectTo: 'restaurant'}
 ];
 

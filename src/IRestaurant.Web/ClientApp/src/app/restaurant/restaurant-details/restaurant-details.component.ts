@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { faStar, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { UserRole } from 'src/api-authorization/api-authorization.constants';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { environment } from 'src/environments/environment';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
@@ -17,17 +20,26 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   restaurant: RestaurantDetails;
   restaurantId: number;
   private ratingChangedSub = new Subscription();
+  faStar = faStar;
+  userRole: Observable<UserRole>;
 
   constructor(private restaurantService: RestaurantService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastr: ToastrService,
+    private authorizeService: AuthorizeService) { }
 
   ngOnInit(): void {
+    this.getCurrentUserRole();
     this.getRestaurantId();
     this.subscribeToRatingChanged();
   }
 
   ngOnDestroy(): void {
     this.ratingChangedSub.unsubscribe();
+  }
+
+  private getCurrentUserRole() {
+    this.userRole = this.authorizeService.getUserRole();
   }
 
   private getRestaurantId() {
@@ -66,4 +78,11 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  addRestaurantToFavourite() {
+    this.restaurantService.addRestaurantToFavourite(this.restaurantId).subscribe(
+      () => {
+        this.toastr.success("Az étterem hozzáadásra került a kedvencekhez.");
+      }
+    );
+  }
 }

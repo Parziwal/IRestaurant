@@ -43,19 +43,31 @@ export class RestaurantService {
     return this.http.get<RestaurantSettings>(this.baseUrl + "myrestaurant/settings");
   }
 
-  ShowMyRestaurantForUsers() {
+  showMyRestaurantForUsers() {
     return this.http.patch(this.baseUrl + "myrestaurant/show", null);
   }
 
-  HideMyRestaurantForUsers() {
+  hideMyRestaurantForUsers() {
     return this.http.patch(this.baseUrl + "myrestaurant/hide", null);
   }
 
-  TurnOnOrderOption() {
+  turnOnOrderOption() {
     return this.http.patch(this.baseUrl + "myrestaurant/order/turnon", null);
   }
 
-  TurnOffOrderOption() {
+  turnOffOrderOption() {
     return this.http.patch(this.baseUrl + "myrestaurant/order/turnoff", null);
+  }
+
+  addRestaurantToFavourite(restaurantId: number) {
+    return this.http.post(`${this.baseUrl}favourite/add/${restaurantId}`, null);
+  }
+
+  removeRestaurantFromFavourite(restaurantId: number) {
+    return this.http.post(`${this.baseUrl}favourite/remove/${restaurantId}`, null);
+  }
+
+  getGuestFavouriteRestaurantList() {
+    return this.http.get<RestaurantOverview[]>(this.baseUrl + "favourite");
   }
 }
