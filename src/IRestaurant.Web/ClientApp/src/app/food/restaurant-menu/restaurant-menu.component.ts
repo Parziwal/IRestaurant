@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,22 +12,18 @@ import { Food } from '../models/food.type';
 })
 export class RestaurantMenuComponent implements OnInit {
 
+  @Input() restaurantId: number;
   restaurantMenu: Observable<Food[]> = new Observable();
   defaultFoodImgUrl = environment.defaultFoodImgUrl;
 
-  constructor(private foodService: FoodService,
-    private route: ActivatedRoute) { }
+  constructor(private foodService: FoodService) { }
 
   ngOnInit(): void {
     this.getRestaurantMenu();
   }
 
   private getRestaurantMenu() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        let id = +params['id'];
-        this.restaurantMenu = this.foodService.getRestaurantMenu(id);
-      });
+    this.restaurantMenu = this.foodService.getRestaurantMenu(this.restaurantId);
   }
 
 }

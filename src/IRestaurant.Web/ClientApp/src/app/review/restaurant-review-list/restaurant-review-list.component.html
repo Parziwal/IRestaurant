@@ -2,7 +2,7 @@
 <div class="row reviews-container">
     <div class="col-lg-4">
         <h3>Összesítve</h3>
-        <app-rating-bar [rating]="reviewsAvarageRating"></app-rating-bar>
+        <app-rating-bar [rating]="restaurantRating"></app-rating-bar>
         <p class="text-muted mt-3">Összesen {{(reviews | async)?.length}} értékelés</p>
         <hr>
         <ng-container *ngIf="(userRole | async) === 'Guest'">

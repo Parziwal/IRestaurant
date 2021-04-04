@@ -2,7 +2,6 @@
 <ng-template #form>
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-7">
-      <a [routerLink]="['/restaurant/details', restaurant.id]">Ugrás az étterem oldalára ></a>
       <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>Étterem neve</mat-label>

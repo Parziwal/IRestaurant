@@ -15,15 +15,14 @@ import { AddReviewDialogComponent } from './add-review-dialog/add-review-dialog.
 })
 export class RestaurantReviewListComponent implements OnInit {
 
-  private restaurantId: number;
+  @Input() restaurantId: number = -1;
+  @Input() restaurantRating: number = 1;
   reviews: Observable<Review[]> = new Observable();
   reviewsCount: number = 0;
-  @Input() reviewsAvarageRating: number = 1;
   userRole: Observable<UserRole>;
 
   constructor(private reviewService: ReviewService,
     private authorizeService: AuthorizeService,
-    private route: ActivatedRoute,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -36,12 +35,7 @@ export class RestaurantReviewListComponent implements OnInit {
   }
 
   private getReviews() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.restaurantId = +params['id'];
-        this.reviews = this.reviewService.getRestaurantReviews(this.restaurantId);
-      }
-    );
+    this.reviews = this.reviewService.getRestaurantReviews(this.restaurantId);
   }
 
   addReviewClicked() {

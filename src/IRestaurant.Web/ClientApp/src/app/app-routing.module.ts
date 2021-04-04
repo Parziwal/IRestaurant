@@ -12,6 +12,7 @@ import { GuestReviewListComponent } from './review/guest-review-list/guest-revie
 const routes: Routes = [
   {path: 'restaurant', component: RestaurantListComponent },
   {path: 'restaurant/details/:id', component: RestaurantDetailsComponent },
+  {path: 'myrestaurant', component: RestaurantDetailsComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant}},
   {path: 'myrestaurant/edit', component: EditRestaurantComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant} },
   {path: 'myrestaurant/settings', component: RestaurantSettingsComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant} },
   {path: 'myrestaurant/menu', component: EditFoodListComponent, canActivate: [RoleGuard], data: {role: UserRole.Restaurant} },
