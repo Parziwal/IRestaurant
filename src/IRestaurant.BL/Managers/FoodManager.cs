@@ -27,12 +27,17 @@ namespace IRestaurant.BL
 
         public async Task<FoodDto> GetFood(int foodId)
         {
-            string userId = userRepository.GetCurrentUserId();
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
-            if (ownerRestaurantId == foodRestaurantId
-                || await restaurantRepository.IsRestaurantAvailableForUsers(foodRestaurantId))
+            if (await restaurantRepository.IsRestaurantAvailableForUsers(foodRestaurantId))
+            {
+                return await foodRepository.GetFood(foodId);
+            }
+
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+
+            if (foodRestaurantId == ownerRestaurantId)
             {
                 return await foodRepository.GetFood(foodId);
             }
@@ -48,27 +53,29 @@ namespace IRestaurant.BL
                 return await foodRepository.GetRestaurantMenu(restaurantId);
             }
 
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+
+            if (restaurantId == ownerRestaurantId)
+            {
+                return await foodRepository.GetRestaurantMenu(restaurantId);
+            }
+
             return new List<FoodDto>();
         }
 
         public async Task<IReadOnlyCollection<FoodDto>> GetOwnerRestaurantMenu()
         {
             string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
-            {
-                return new List<FoodDto>();
-            }
-
-            return await foodRepository.GetRestaurantMenu((int)ownerRestaurantId);
+            return await GetRestaurantMenu(ownerRestaurantId);
         }
 
         public async Task<FoodDto> AddFoodToMenu(CreateFoodDto food)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             return await foodRepository.AddFoodToMenu(ownerRestaurantId, food);
         }
@@ -76,7 +83,7 @@ namespace IRestaurant.BL
         public async Task DeleteFoodFromMenu(int foodId)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)
@@ -92,7 +99,7 @@ namespace IRestaurant.BL
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)
@@ -102,18 +109,6 @@ namespace IRestaurant.BL
 
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
                     "A megadott azonosítóval rendelkező étel szerkesztéséhez nincs jogosultságod.");
-        }
-
-        private async Task<int> GetUserRestaurantId(string userId)
-        {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
-            }
-
-            return (int)ownerRestaurantId;
         }
     }
 }

@@ -36,9 +36,9 @@ namespace IRestaurant.BL
 
             string userId = userRepository.GetCurrentUserId();
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
 
-            if (publisherId == userId || (ownerRestaurantId != null && ownerRestaurantId == reviewRestaurantId))
+            if (publisherId == userId || ownerRestaurantId == reviewRestaurantId)
             {
                 return await reviewRepository.GetReview(reviewId);
             }
@@ -49,11 +49,15 @@ namespace IRestaurant.BL
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
         {
-            string userId = userRepository.GetCurrentUserId();
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
+            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
+            {
+                return await reviewRepository.GetRestaurantReviews(restaurantId);
+            }
 
-            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId)
-                || (ownerRestaurantId != null && ownerRestaurantId == restaurantId))
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+
+            if (restaurantId == ownerRestaurantId)
             {
                 return await reviewRepository.GetRestaurantReviews(restaurantId);
             }

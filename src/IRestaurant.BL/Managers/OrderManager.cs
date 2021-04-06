@@ -31,7 +31,7 @@ namespace IRestaurant.BL.Managers
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrdersBelongsToMyRestaurant()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             return await orderRepository.GetOrderOverviewBelongsToRestaurant(ownerRestaurantId);
         }
@@ -58,7 +58,7 @@ namespace IRestaurant.BL.Managers
         public async Task ChangeOrderStatus(int orderId, Status status)
         {
             string userId = userRepository.GetCurrentUserId();
-            int userRestaurantId = await GetUserRestaurantId(userId);
+            int userRestaurantId = await userRepository.GetUserRestaurantId(userId);
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
             if (userRestaurantId == orderRestaurantId)
@@ -68,18 +68,6 @@ namespace IRestaurant.BL.Managers
             }
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
                 "A megadott azonosítóval rendelkező rendelés státuszának megváltoztatásához nincs jogosultságod");
-        }
-
-        private async Task<int> GetUserRestaurantId(string userId)
-        {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
-            }
-
-            return (int)ownerRestaurantId;
         }
     }
 }

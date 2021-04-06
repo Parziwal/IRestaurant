@@ -1,4 +1,5 @@
-﻿using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.CustomExceptions;
+using IRestaurant.DAL.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,16 +22,21 @@ namespace IRestaurant.DAL.Repositories.Implementations
             this.accessor = accessor;
         }
 
-        public async Task<int?> GetUserRestaurantIdOrNull(string userId)
+        public async Task<int> GetUserRestaurantId(string userId)
         {
             var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.OwnerId == userId);
 
             if (dbRestaurant == null)
             {
-                return null;
+                throw new EntityNotFoundException("A felhasználóhoz étterem nem található.");
             }
 
             return dbRestaurant.Id;
+        }
+
+        public async Task<bool> UserHasRestaurant(string userId)
+        {
+            return await dbContext.Restaurants.SingleOrDefaultAsync(r => r.OwnerId == userId) != null;
         }
 
         public string GetCurrentUserId()

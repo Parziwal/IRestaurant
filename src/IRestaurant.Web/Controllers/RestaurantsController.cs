@@ -47,9 +47,10 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<RestaurantDetailsDto>> GetMyRestaurant()
         {
-            return await restaurantManager.GetMyRestaurant();
+            return await restaurantManager.GetMyRestaurantDetails();
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]

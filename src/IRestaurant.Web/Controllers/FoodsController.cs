@@ -41,6 +41,8 @@ namespace IRestaurant.Web.Controllers
 
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant/myrestaurant")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IEnumerable<FoodDto>> GetOwnerRestaurantMenu()
         {
             return await foodManager.GetOwnerRestaurantMenu();

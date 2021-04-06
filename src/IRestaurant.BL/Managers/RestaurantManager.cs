@@ -30,25 +30,28 @@ namespace IRestaurant.BL
 
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
-            if (!await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
+            if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
-                throw new ProblemDetailsException(StatusCodes.Status400BadRequest, "A megadott azonosítóval rendelkező étterem jelenleg nem elérhető.");
+               return await restaurantRepository.GetRestaurantDetails(restaurantId);
             }
-            var restaurant = await restaurantRepository.GetRestaurantDetails(restaurantId);
 
-            return restaurant;
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+
+            if (restaurantId == ownerRestaurantId)
+            {
+                return await restaurantRepository.GetRestaurantDetails(restaurantId);
+            }
+
+            throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                "A megadott azonosítóval rendelkező étterem megtekintéséhez nincs jogosultságod.");
         }
-        public async Task<RestaurantDetailsDto> GetMyRestaurant()
+        public async Task<RestaurantDetailsDto> GetMyRestaurantDetails()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
-            var restaurant = await restaurantRepository.GetRestaurantDetails(ownerRestaurantId);
-            if (restaurant == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "Az étterem nem található.");
-            }
-            return restaurant;
+            return await GetRestaurantDetails(ownerRestaurantId);
         }
         public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
         {
@@ -57,14 +60,14 @@ namespace IRestaurant.BL
         public async Task<RestaurantDetailsDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
         public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
         }
@@ -72,7 +75,7 @@ namespace IRestaurant.BL
         public async Task ChangeMyRestaurantShowStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
 
@@ -91,7 +94,7 @@ namespace IRestaurant.BL
         public async Task ChangeMyRestaurantOrderStatus(bool value)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
             
             await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
@@ -128,18 +131,6 @@ namespace IRestaurant.BL
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
                     "Az étterem elérhetővé tétele és/vagy a rendelési lehetőség engedélyezése nem lehetséges, amíg a kötelező adatok nem kerülnek kitöltésre.");
             }
-        }
-
-        private async Task<int> GetUserRestaurantId(string userId)
-        {
-            int? ownerRestaurantId = await userRepository.GetUserRestaurantIdOrNull(userId);
-
-            if (ownerRestaurantId == null)
-            {
-                throw new ProblemDetailsException(StatusCodes.Status404NotFound, "A felhasználóhoz étterem nem található.");
-            }
-
-            return (int)ownerRestaurantId;
         }
     }
 }
