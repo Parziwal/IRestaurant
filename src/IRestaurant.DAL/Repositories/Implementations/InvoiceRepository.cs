@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
-    class InvoiceRepository
+    public class InvoiceRepository : IInvoiceRepository
     {
         private readonly ApplicationDbContext dbContext;
         public InvoiceRepository(ApplicationDbContext dbContext)

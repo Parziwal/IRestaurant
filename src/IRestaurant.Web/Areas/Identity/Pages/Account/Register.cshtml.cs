@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using IRestaurant.BL;
+using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account

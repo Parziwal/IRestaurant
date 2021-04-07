@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Hellang.Middleware.ProblemDetails;
 
-namespace IRestaurant.BL
+namespace IRestaurant.BL.Managers
 {
     public class RestaurantManager
     {

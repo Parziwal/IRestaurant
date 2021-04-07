@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using IRestaurant.BL;
+using IRestaurant.BL.Managers;
 using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;

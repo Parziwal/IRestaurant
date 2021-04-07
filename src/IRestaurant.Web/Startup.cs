@@ -1,6 +1,7 @@
 using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.Services;
 using IRestaurant.BL;
+using IRestaurant.BL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
@@ -97,11 +98,6 @@ namespace IRestaurant.Web
                         Name = "Stedra Kristóf",
                         Email = string.Empty,
                     };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "Use under LICX",
-                        Url = "https://example.com/license"
-                    };
                 };
             });
 
@@ -109,10 +105,13 @@ namespace IRestaurant.Web
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
 
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
+            services.AddTransient<OrderManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

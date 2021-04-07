@@ -22,10 +22,10 @@ namespace IRestaurant.BL.Managers
             this.userRepository = userRepository;
         }
 
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetUserOrders()
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviews()
         {
             string userId = userRepository.GetCurrentUserId();
-            return await orderRepository.GetUserOrderOverviews(userId);
+            return await orderRepository.GetGuestOrderOverviews(userId);
         }
 
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrdersBelongsToMyRestaurant()

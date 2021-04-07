@@ -1,4 +1,5 @@
 ﻿using IRestaurant.BL.Managers;
+using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,13 +24,15 @@ namespace IRestaurant.Web.Controllers
             this.orderManager = orderManager;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<OrderOverviewDto>> GetUserOrders()
+        [Authorize(Policy = UserRoles.Guest)]
+        [HttpGet("guest")]
+        public async Task<IEnumerable<OrderOverviewDto>> GetGuestOrderOverviews()
         {
-            return await orderManager.GetUserOrders();
+            return await orderManager.GetGuestOrderOverviews();
         }
 
-        [HttpGet]
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpGet("restaurant")]
         public async Task<IEnumerable<OrderOverviewDto>> GetOrdersBelongsToMyRestaurant()
         {
             return await orderManager.GetOrdersBelongsToMyRestaurant();
@@ -47,7 +50,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderDto>> CreateOrder(CreateOrder order)
+        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody]CreateOrder order)
         {
             var createdOrder = await orderManager.CreateOrder(order);
             return CreatedAtAction(nameof(GetOrderDetails), new { id = createdOrder.Id }, createdOrder);
