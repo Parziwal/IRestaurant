@@ -1,6 +1,22 @@
-<div class="row">
-    <app-restaurant-list-item class="col-xl-3 col-lg-4 col-md-6"
-    *ngFor="let restaurantOverview of (restaurantOverviews | async)"
-    [restaurantOverview]="restaurantOverview">
-    </app-restaurant-list-item>
+<div class="row justify-content-center mb-3">
+    <div class="col-lg-8">
+        <mat-form-field appearance="outline">
+            <input matInput type="text" placeholder="Keresés" [(ngModel)]="searchTerm" (keyup)="getRestaurantList()" />
+            <button matSuffix class="btn btn-outline-danger clear-button" *ngIf="searchTerm"
+                (click)="clearBrowser()">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
+        </mat-form-field>
+    </div>
 </div>
+<app-spinner *ngIf="!(restaurantOverviews | async); else restaurantList"></app-spinner>
+<ng-template #restaurantList>
+    <div class="row">
+        <div *ngIf="(restaurantOverviews | async).length === 0" class="col-auto mx-auto">
+            <h1>Nincs találat</h1>
+          </div>
+        <app-restaurant-list-item class="col-xl-3 col-lg-4 col-md-6"
+            *ngFor="let restaurantOverview of (restaurantOverviews | async)" [restaurantOverview]="restaurantOverview">
+        </app-restaurant-list-item>
+    </div>
+</ng-template>

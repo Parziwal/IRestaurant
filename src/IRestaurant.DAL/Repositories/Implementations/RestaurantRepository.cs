@@ -157,12 +157,22 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbRestaurant.ShowForUsers;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId, string restaurantName = null)
         {
-            return await dbContext.Restaurants
-                   .Include(r => r.Reviews)
-                   .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId))
-                   .GetRestaurantOverviews();
+            if (string.IsNullOrEmpty(restaurantName))
+            {
+                return await dbContext.Restaurants
+                       .Include(r => r.Reviews)
+                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId))
+                       .GetRestaurantOverviews();
+            }
+            else
+            {
+                return await dbContext.Restaurants
+                       .Include(r => r.Reviews)
+                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId) && r.Name.Contains(restaurantName))
+                       .GetRestaurantOverviews();
+            }
         }
 
         public async Task AddRestaurantToUserFavourite(int restaurantId, string userId)

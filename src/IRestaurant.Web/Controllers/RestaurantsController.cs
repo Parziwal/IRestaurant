@@ -117,9 +117,9 @@ namespace IRestaurant.Web.Controllers
 
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("favourite")]
-        public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurants()
+        public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurants([FromQuery] string restaurantName = null)
         {
-            return await restaurantManager.GetUserFavouriteRestaurants();
+            return await restaurantManager.GetUserFavouriteRestaurants(restaurantName);
         }
 
         [Authorize(Policy = UserRoles.Guest)]

@@ -100,10 +100,10 @@ namespace IRestaurant.BL
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants()
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string restaurantName = null)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await restaurantRepository.GetUserFavouriteRestaurants(userId);
+            return await restaurantRepository.GetUserFavouriteRestaurants(userId, restaurantName);
         }
 
         public async Task AddRestaurantToUserFavourite(int restaurantId)

@@ -67,7 +67,7 @@ export class RestaurantService {
     return this.http.post(`${this.baseUrl}favourite/remove/${restaurantId}`, null);
   }
 
-  getGuestFavouriteRestaurantList() {
+  getGuestFavouriteRestaurantList(options?: {searchTerm?: string}) {
     return this.http.get<RestaurantOverview[]>(this.baseUrl + "favourite");
   }
 }
