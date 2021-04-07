@@ -10,4 +10,5 @@ export interface RestaurantDetails {
     restaurantAddress: Address;
     ownerName: string;
     isOrderAvailable: boolean;
+    isCurrentGuestFavourite: boolean;
 }

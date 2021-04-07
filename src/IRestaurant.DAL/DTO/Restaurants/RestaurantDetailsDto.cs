@@ -19,6 +19,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public AddressDto RestaurantAddress { get; set; }
         public string OwnerName { get; set; }
         public bool IsOrderAvailable { get; set; }
+        public bool IsCurrentGuestFavourite { get; set; }
 
         public RestaurantDetailsDto(Restaurant restaurant, ApplicationUser owner, double? rating)
         {

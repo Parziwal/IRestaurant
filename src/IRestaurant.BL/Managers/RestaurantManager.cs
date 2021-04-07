@@ -30,14 +30,15 @@ namespace IRestaurant.BL
 
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
+            string userId = userRepository.GetCurrentUserId();
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
-               return await restaurantRepository.GetRestaurantDetails(restaurantId);
+               var restaurantDetails = await restaurantRepository.GetRestaurantDetails(restaurantId);
+                restaurantDetails.IsCurrentGuestFavourite = await restaurantRepository.IsThisRestaurantGuestFavourite(restaurantId, userId);
+                return restaurantDetails;
             }
 
-            string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
-
             if (restaurantId == ownerRestaurantId)
             {
                 return await restaurantRepository.GetRestaurantDetails(restaurantId);

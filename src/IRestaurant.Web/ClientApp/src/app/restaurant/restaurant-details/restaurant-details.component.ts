@@ -21,6 +21,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   restaurantId: number;
   private ratingChangedSub = new Subscription();
   faStar = faStar;
+  faTrash = faTrashAlt;
   userRole: Observable<UserRole>;
 
   constructor(private restaurantService: RestaurantService,
@@ -81,7 +82,17 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   addRestaurantToFavourite() {
     this.restaurantService.addRestaurantToFavourite(this.restaurantId).subscribe(
       () => {
+        this.restaurant.isCurrentGuestFavourite = true;
         this.toastr.success("Az étterem hozzáadásra került a kedvencekhez.");
+      }
+    );
+  }
+
+  removeRestaurantFromFavourite() {
+    this.restaurantService.removeRestaurantFromFavourite(this.restaurantId).subscribe(
+      () => {
+        this.restaurant.isCurrentGuestFavourite = false;
+        this.toastr.success("Az étterem eltávolításra került a kedvencekből.");
       }
     );
   }

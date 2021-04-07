@@ -21,5 +21,6 @@ namespace IRestaurant.DAL.Repositories
         Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId, string restaurantName = null);
         Task AddRestaurantToUserFavourite(int restaurantId, string userId);
         Task RemoveRestaurantFromUserFavourite(int restaurantId, string userId);
+        Task<bool> IsThisRestaurantGuestFavourite(int restaurantId, string guestId);
     }
 }

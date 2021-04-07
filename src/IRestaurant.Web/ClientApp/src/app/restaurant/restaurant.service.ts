@@ -21,7 +21,6 @@ export class RestaurantService {
     
     let params = new HttpParams();
     params = params.append("restaurantName", searchTerm);
-
     return this.http.get<RestaurantOverview[]>(this.baseUrl, {
       params: params
     });
@@ -64,10 +63,16 @@ export class RestaurantService {
   }
 
   removeRestaurantFromFavourite(restaurantId: number) {
-    return this.http.post(`${this.baseUrl}favourite/remove/${restaurantId}`, null);
+    return this.http.delete(`${this.baseUrl}favourite/remove/${restaurantId}`);
   }
 
   getGuestFavouriteRestaurantList(options?: {searchTerm?: string}) {
-    return this.http.get<RestaurantOverview[]>(this.baseUrl + "favourite");
+    let searchTerm = (options && options.searchTerm) || "";
+    
+    let params = new HttpParams();
+    params = params.append("restaurantName", searchTerm);
+    return this.http.get<RestaurantOverview[]>(this.baseUrl + "favourite", {
+      params: params
+    });
   }
 }

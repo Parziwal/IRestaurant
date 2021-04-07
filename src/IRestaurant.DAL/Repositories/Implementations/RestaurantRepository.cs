@@ -184,6 +184,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
             dbContext.FavouriteRestaurants.Remove(dbFavourite);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> IsThisRestaurantGuestFavourite(int restaurantId, string guestId)
+        {
+            return await dbContext.FavouriteRestaurants
+                .SingleOrDefaultAsync(fr => fr.RestaurantId == restaurantId && fr.UserId == guestId) != null;
+        }
     }
 
     internal static class RestaurantRepositoryExtensions

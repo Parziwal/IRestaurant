@@ -4,8 +4,14 @@
         <div class="col-lg-4 text-center">
             <img class="img-fluid" [src]="restaurant.imagePath" [alt]="restaurant.name" />
             <button type="button" class="btn btn-warning btn-block w-50 mt-4 mx-auto"
-                *ngIf="(userRole | async) === 'Guest'" (click)="addRestaurantToFavourite()">
+                *ngIf="(userRole | async) === 'Guest' && !restaurant.isCurrentGuestFavourite"
+                (click)="addRestaurantToFavourite()">
                 <fa-icon [icon]="faStar"></fa-icon> Kedvenc
+            </button>
+            <button type="button" class="btn btn-danger btn-block w-50 mt-4 mx-auto"
+                *ngIf="(userRole | async) === 'Guest' && restaurant.isCurrentGuestFavourite"
+                (click)="removeRestaurantFromFavourite()">
+                <fa-icon [icon]="faTrash"></fa-icon> Kedvenc
             </button>
         </div>
         <div class="col-lg-8 mt-lg-0 mt-4">
