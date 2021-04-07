@@ -40,15 +40,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
         public async Task<OrderDto> GetOrderDetails(int orderId)
         {
-            var dbOrder = await dbContext.Orders
+            var dbOrder = (await dbContext.Orders
                             .Include(o => o.Invoice)
                             .Include(o => o.OrderFoods.Select(of => of.Food))
-                            .SingleOrDefaultAsync(o => o.Id == orderId);
-
-            if (dbOrder == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
-            }
+                            .SingleOrDefaultAsync(o => o.Id == orderId))
+                            .CheckIfOrderNull();
 
             return dbOrder.GetOrder();
         }
@@ -71,13 +67,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
                 foreach (var orderFood in order.OrderFoods)
                 {
-                    var dbFood = await dbContext.Foods
-                        .SingleOrDefaultAsync(f => f.Id == orderFood.FoodId && f.RestaurantId == order.RestaurantId);
-                    
-                    if (dbFood == null)
-                    {
-                        throw new EntityNotFoundException("A rendelésben szereplő étteremhez a megadott ételek közül egy vagy több nem található.");
-                    }
+                    var dbFood = (await dbContext.Foods
+                        .SingleOrDefaultAsync(f => f.Id == orderFood.FoodId && f.RestaurantId == order.RestaurantId))
+                        .CheckIfFoodNull("A rendelésben szereplő étteremhez a megadott ételek közül egy vagy több nem található.");
 
                     var newOrderFood = new OrderFood
                     {
@@ -101,41 +93,28 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task ChangeOrderStatus(int orderId, Status status)
         {
-            var dbOrder = await dbContext.Orders
-                            .SingleOrDefaultAsync(o => o.Id == orderId);
-
-            if (dbOrder == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
-            }
+            var dbOrder = (await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId))
+                            .CheckIfOrderNull();
 
             dbOrder.Status = status;
-
             await dbContext.SaveChangesAsync();
         }
 
         public async Task<string> GetOrderUserId(int orderId)
         {
-            var dbOrder = await dbContext.Orders
-                            .SingleOrDefaultAsync(o => o.Id == orderId);
-
-            if (dbOrder == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
-            }
+            var dbOrder = (await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId))
+                            .CheckIfOrderNull();
 
             return dbOrder.UserId;
         }
 
         public async Task<int> GetOrderRestaurantId(int orderId)
         {
-            var dbOrder = await dbContext.Orders
-                            .SingleOrDefaultAsync(o => o.Id == orderId);
-
-            if (dbOrder == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező rendelés nem létezik.");
-            }
+            var dbOrder = (await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId))
+                            .CheckIfOrderNull();
 
             return dbOrder.OrderFoods.First().Food.RestaurantId;
         }
@@ -155,6 +134,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         private static int CalculateOrderTotal(Order order)
         {
             return order.OrderFoods.Sum(of => of.Price);
+        }
+
+        public static Order CheckIfOrderNull(this Order order,
+            string errorMessage = "A rendelés nem található.")
+        {
+            if (order == null)
+            {
+                throw new EntityNotFoundException(errorMessage);
+            }
+            return order;
         }
     }
 }

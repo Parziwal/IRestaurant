@@ -21,12 +21,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> GetFood(int foodId)
         {
-            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
-
-            if (dbFood == null)
-            {
-                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
-            }
+            var dbFood = (await dbContext.Foods
+                                .SingleOrDefaultAsync(f => f.Id == foodId))
+                                .CheckIfFoodNull();
 
             return dbFood.GetFood();
         }
@@ -38,12 +35,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> AddFoodToMenu(int restaurantId, CreateFoodDto food)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étterem nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             var dbFood = new Food {
                 Name = food.Name,
@@ -60,12 +54,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> DeleteFoodFromMenu(int foodId)
         {
-            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
-
-            if (dbFood == null)
-            {
-                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
-            }
+            var dbFood = (await dbContext.Foods
+                            .SingleOrDefaultAsync(f => f.Id == foodId))
+                            .CheckIfFoodNull();
 
             dbContext.Remove(dbFood);
             await dbContext.SaveChangesAsync();
@@ -75,16 +66,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
-            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
-
-            if (dbFood == null)
-            {
-                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
-            }
+            var dbFood = (await dbContext.Foods
+                                .SingleOrDefaultAsync(f => f.Id == foodId))
+                                .CheckIfFoodNull();
 
             dbFood.Price = food.Price;
             dbFood.Description = food.Description;
-
             await dbContext.SaveChangesAsync();
 
             return dbFood.GetFood();
@@ -92,12 +79,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<int> GetFoodRestaurantId(int foodId)
         {
-            var dbFood = await dbContext.Foods.SingleOrDefaultAsync(f => f.Id == foodId);
-
-            if (dbFood == null)
-            {
-                throw new EntityNotFoundException("A megadott azonsítóval rendelkező étel nem létezik.");
-            }
+            var dbFood = (await dbContext.Foods
+                                .SingleOrDefaultAsync(f => f.Id == foodId))
+                                .CheckIfFoodNull();
 
             return dbFood.RestaurantId;
         }
@@ -113,6 +97,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public static FoodDto GetFood(this Food food)
         {
             return new FoodDto(food);
+        }
+
+        public static Food CheckIfFoodNull(this Food food,
+            string errorMessage = "Az étel nem található.")
+        {
+            if (food == null)
+            {
+                throw new EntityNotFoundException(errorMessage);
+            }
+            return food;
         }
     }
 }

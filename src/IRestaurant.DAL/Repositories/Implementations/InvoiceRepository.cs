@@ -19,13 +19,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
         public async Task<Invoice> CreateInvoice(int restaurantId, int userAddressId)
         {
-            var dbUserAddress = await dbContext.UserAddresses.SingleOrDefaultAsync(ua => ua.Id == userAddressId);
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbUserAddress == null || dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval lakcím vagy étterem nem létezik.");
-            }
+            var dbUserAddress = (await dbContext.UserAddresses
+                                    .SingleOrDefaultAsync(ua => ua.Id == userAddressId))
+                                    .CheckIfUserAddressNull();
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             var dbInvoice = new Invoice
             {

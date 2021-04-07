@@ -39,26 +39,20 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
-            var dbRestaurant = await dbContext.Restaurants
+            var dbRestaurant = (await dbContext.Restaurants
                                     .Include(r => r.Owner)
                                     .Include(r => r.Reviews)
-                                    .SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             return dbRestaurant.GetRestaurant();
         }
 
         public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
         {
-            var dbOwner = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == ownerId);
-            if (dbOwner == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
-            }
+            var dbOwner = (await dbContext.Users
+                                .SingleOrDefaultAsync(u => u.Id == ownerId))
+                                .CheckIfUserNull();
 
             var dbRestaurant = new Restaurant {
                 Name = "",
@@ -84,15 +78,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
         {
-            var dbRestaurant = await dbContext.Restaurants
+            var dbRestaurant = (await dbContext.Restaurants
                                     .Include(r => r.Owner)
                                     .Include(r => r.Reviews)
-                                    .SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             dbRestaurant.Name = editRestaurant.Name;
             dbRestaurant.ShortDescription = editRestaurant.ShortDescription;
@@ -109,24 +99,18 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
         public async Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             return new RestaurantSettingsDto(dbRestaurant);
         }
 
         public async Task ChangeShowForUsersStatus(int restaurantId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             dbRestaurant.ShowForUsers = value;
             await dbContext.SaveChangesAsync();
@@ -134,12 +118,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task ChangeOrderAvailableStatus(int restaurantId, bool value)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             dbRestaurant.IsOrderAvailable = value;
             await dbContext.SaveChangesAsync();
@@ -147,12 +128,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<bool> IsRestaurantAvailableForUsers(int restaurantId)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
             return dbRestaurant.ShowForUsers;
         }
@@ -177,17 +155,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task AddRestaurantToUserFavourite(int restaurantId, string userId)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
-
-            var dbUser = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
-            if (dbUser == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
-            }
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
+            var dbUser = (await dbContext.Users
+                        .SingleOrDefaultAsync(u => u.Id == userId))
+                        .CheckIfUserNull();
 
             if (await dbContext.FavouriteRestaurants.AnyAsync(fr => fr.Restaurant == dbRestaurant && fr.User == dbUser))
             {
@@ -204,11 +177,9 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task RemoveRestaurantFromUserFavourite(int restaurantId, string userId)
         {
-            var dbFavourite = await dbContext.FavouriteRestaurants.SingleOrDefaultAsync(fr => fr.RestaurantId == restaurantId && fr.UserId == userId);
-            if (dbFavourite == null)
-            {
-                throw new EntityNotFoundException("A felhasználó kedvenc étteremei között a megadott azonosítóval étterem nem található.");
-            }
+            var dbFavourite = (await dbContext.FavouriteRestaurants
+                .SingleOrDefaultAsync(fr => fr.RestaurantId == restaurantId && fr.UserId == userId))
+                .CheckIfFavouriteRestaurantNull();
 
             dbContext.FavouriteRestaurants.Remove(dbFavourite);
             await dbContext.SaveChangesAsync();
@@ -235,6 +206,26 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 return null;
             }
             return Math.Round(restaurant.Reviews.Average(r => r.Rating), 2);
+        }
+
+        public static Restaurant CheckIfRestaurantNull(this Restaurant restaurant,
+            string errorMessage = "Az étterem nem található.")
+        {
+            if (restaurant == null)
+            {
+                throw new EntityNotFoundException(errorMessage);
+            }
+            return restaurant;
+        }
+
+        public static FavouriteRestaurant CheckIfFavouriteRestaurantNull(this FavouriteRestaurant favouriteRestaurant, 
+            string errorMessage = "A felhasználó kedvenc étterme nem található.")
+        {
+            if (favouriteRestaurant == null)
+            {
+                throw new EntityNotFoundException(errorMessage);
+            }
+            return favouriteRestaurant;
         }
     }
 }

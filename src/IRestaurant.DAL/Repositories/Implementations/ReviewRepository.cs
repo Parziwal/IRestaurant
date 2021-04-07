@@ -21,14 +21,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> GetReview(int reviewId)
         {
-            var dbReview = await dbContext.Reviews
-                .Include(r => r.User)
-                .SingleOrDefaultAsync(r => r.Id == reviewId);
-
-            if (dbReview == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
+            var dbReview = (await dbContext.Reviews
+                                .Include(r => r.User)
+                                .SingleOrDefaultAsync(r => r.Id == reviewId))
+                                .CheckIfReviewNull();
 
             return dbReview.GetReview();
         }
@@ -50,18 +46,13 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
         {
-            var dbRestaurant = await dbContext.Restaurants.SingleOrDefaultAsync(r => r.Id == restaurantId);
+            var dbRestaurant = (await dbContext.Restaurants
+                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .CheckIfRestaurantNull();
 
-            if (dbRestaurant == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező étterem nem létezik.");
-            }
-
-            var dbUser = await dbContext.Users.SingleOrDefaultAsync(u => u.Id == userId);
-            if (dbUser == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval felhasználó nem létezik.");
-            }
+            var dbUser = (await dbContext.Users
+                                .SingleOrDefaultAsync(u => u.Id == userId))
+                                .CheckIfUserNull();
 
             var dbReview = new Review {
                 Title = review.Title,
@@ -80,14 +71,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<ReviewDto> DeleteReview(int reviewId)
         {
-            var dbReview = await dbContext.Reviews
-                .Include(r => r.User)
-                .SingleOrDefaultAsync(r => r.Id == reviewId);
-
-            if (dbReview == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
-            }
+            var dbReview = (await dbContext.Reviews
+                                .Include(r => r.User)
+                                .SingleOrDefaultAsync(r => r.Id == reviewId))
+                                .CheckIfReviewNull();
 
             dbContext.Reviews.Remove(dbReview);
             await dbContext.SaveChangesAsync();
@@ -97,24 +84,18 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<string> GetPubliserUserId(int reviewId)
         {
-            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
-
-            if (dbReview == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
-            }
+            var dbReview = (await dbContext.Reviews
+                                .SingleOrDefaultAsync(r => r.Id == reviewId))
+                                .CheckIfReviewNull();
 
             return dbReview.UserId;
         }
 
         public async Task<int> GetRestaurantIdReviewBelongTo(int reviewId)
         {
-            var dbReview = await dbContext.Reviews.SingleOrDefaultAsync(r => r.Id == reviewId);
-
-            if (dbReview == null)
-            {
-                throw new EntityNotFoundException("A megadott azonosítóval rendelkező értékelés nem létezik.");
-            }
+            var dbReview = (await dbContext.Reviews
+                                .SingleOrDefaultAsync(r => r.Id == reviewId))
+                                .CheckIfReviewNull();
 
             return dbReview.RestaurantId;
         }
@@ -141,6 +122,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public static GuestReviewDto GetGuestReview(this Review review)
         {
             return new GuestReviewDto(review, review.Restaurant);
+        }
+
+        public static Review CheckIfReviewNull(this Review review,
+            string errorMessage = "Az értékelés nem található.")
+        {
+            if (review == null)
+            {
+                throw new EntityNotFoundException(errorMessage);
+            }
+            return review;
         }
     }
 }
