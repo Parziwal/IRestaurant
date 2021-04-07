@@ -3,6 +3,7 @@ using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -42,6 +43,7 @@ namespace IRestaurant.DAL.Data
             {
                 await ConfigureUserRestaurant(users[i]);
                 await AddReviewsToRestaurant(users[i].MyRestaurant);
+                await CreateOrders(users[i].MyRestaurant);
             }
             
             logger.LogInformation("Finished seeding the database.");
@@ -203,6 +205,32 @@ namespace IRestaurant.DAL.Data
                 };
                 await _context.Reviews.AddAsync(dbReview);
             }
+            await _context.SaveChangesAsync();
+        }
+
+        private static async Task CreateOrders(Restaurant restaurant)
+        {
+            Random r = new Random();
+            var foods = await _context.Foods.Where(f => f.Restaurant == restaurant).ToListAsync();
+            for (int i = 0; i < 2; i++)
+            {
+                var dbOrder = new Order
+                {
+                    Date = DateTime.Now,
+                    PreferredDeliveryDate = DateTime.Now.AddDays(10),
+                    Status = Status.PROCESSING,
+                    User = users[i]
+                };
+                await _context.Orders.AddAsync(dbOrder);
+
+                foreach (var food in foods)
+                {
+                    var orderFood = new OrderFood { Food = food, Order = dbOrder, Amount = r.Next(1, 4), Price = food.Price };
+                    await _context.OrderFoods.AddAsync(orderFood);
+                }
+
+            }
+
             await _context.SaveChangesAsync();
         }
     }
