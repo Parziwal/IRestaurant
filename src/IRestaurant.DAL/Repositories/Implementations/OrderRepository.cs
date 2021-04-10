@@ -42,7 +42,8 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             var dbOrder = (await dbContext.Orders
                             .Include(o => o.Invoice)
-                            .Include(o => o.OrderFoods.Select(of => of.Food))
+                            .Include(o => o.OrderFoods)
+                            .ThenInclude(of => of.Food)
                             .SingleOrDefaultAsync(o => o.Id == orderId))
                             .CheckIfOrderNull();
 
@@ -82,7 +83,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 }
                 await dbContext.SaveChangesAsync();
 
-                await invoiceRepository.CreateInvoice(order.RestaurantId, order.AddressId);
+                await invoiceRepository.CreateInvoice(dbOrder.Id, order.RestaurantId, order.AddressId);
 
                 transaction.Complete();
             }
@@ -133,7 +134,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         private static int CalculateOrderTotal(Order order)
         {
-            return order.OrderFoods.Sum(of => of.Price);
+            return order.OrderFoods.Sum(of => of.Price * of.Amount);
         }
 
         public static Order CheckIfOrderNull(this Order order,

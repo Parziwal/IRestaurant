@@ -9,6 +9,6 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IInvoiceRepository
     {
-        Task<Invoice> CreateInvoice(int addressId, int restaurantId);
+        Task<Invoice> CreateInvoice(int orderId, int addressId, int restaurantId);
     }
 }

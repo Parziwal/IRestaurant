@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210328094619_InitialCreate")]
+    [Migration("20210410114152_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace IRestaurant.DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
@@ -110,7 +110,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavouriteRestaurants");
+                    b.ToTable("FavouriteRestaurant");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>
@@ -171,7 +171,7 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
@@ -306,7 +306,7 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FavouriteRestaurant");
+                    b.ToTable("Review");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
@@ -627,7 +627,7 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.HasKey("InvoiceId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("Invoice");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceId");
@@ -659,7 +659,7 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.HasKey("InvoiceId");
 
-                            b1.ToTable("Invoices");
+                            b1.ToTable("Invoice");
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceId");
@@ -767,7 +767,7 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
                 {
                     b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
-                        .WithMany("Addresses")
+                        .WithMany("UserAddresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -862,8 +862,6 @@ namespace IRestaurant.DAL.Migrations
 
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("FavouriteRestaurants");
 
                     b.Navigation("MyRestaurant");
@@ -871,6 +869,8 @@ namespace IRestaurant.DAL.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("UserAddresses");
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Food", b =>

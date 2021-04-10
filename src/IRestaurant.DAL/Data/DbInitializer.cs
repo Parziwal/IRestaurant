@@ -83,18 +83,18 @@ namespace IRestaurant.DAL.Data
             await _context.SaveChangesAsync();
 
             var addresses = new List<UserAddress>();
-            AddressOwned addressOwned = new AddressOwned
+            foreach (var user in users)
             {
-                ZipCode = 1022,
-                City = "Budapest",
-                Street = "Lévay u. 5",
-                PhoneNumber = "06-30-124-7898"
-            };
-            foreach(var user in users)
-            {
-                addresses.Add(new UserAddress {
+                addresses.Add(new UserAddress
+                {
                     User = user,
-                    Address = addressOwned
+                    Address = new AddressOwned
+                    {
+                        ZipCode = 1022,
+                        City = "Budapest",
+                        Street = "Lévay u. 5",
+                        PhoneNumber = "06-30-124-7898"
+                    }
                 });
             }
 
@@ -218,17 +218,45 @@ namespace IRestaurant.DAL.Data
                 {
                     Date = DateTime.Now,
                     PreferredDeliveryDate = DateTime.Now.AddDays(10),
-                    Status = Status.PROCESSING,
+                    Status = (Status)r.Next(0, 5),
                     User = users[i]
                 };
                 await _context.Orders.AddAsync(dbOrder);
 
+                int j = 0;
                 foreach (var food in foods)
                 {
+                    if (j > 5)
+                    {
+                        break;
+                    }
+                    j++;
                     var orderFood = new OrderFood { Food = food, Order = dbOrder, Amount = r.Next(1, 4), Price = food.Price };
                     await _context.OrderFoods.AddAsync(orderFood);
                 }
 
+                var userAddress = users[i].UserAddresses.First().Address;
+                var restaurantAddress = restaurant.Address;
+                var dbInvoice = new Invoice
+                {
+                    UserFullName =  users[i].FullName,
+                    UserAddress = new AddressOwned { 
+                        ZipCode = userAddress.ZipCode,
+                        City = userAddress.City,
+                        Street = userAddress.Street,
+                        PhoneNumber = userAddress.PhoneNumber,
+                    },
+                    RestaurantName = restaurant.Name,
+                    RestaurantAddress = new AddressOwned {
+                        ZipCode = restaurantAddress.ZipCode,
+                        City = restaurantAddress.City,
+                        Street = restaurantAddress.Street,
+                        PhoneNumber = restaurantAddress.PhoneNumber,
+                    },
+                    Order = dbOrder
+                };
+
+                await _context.Invoices.AddAsync(dbInvoice);
             }
 
             await _context.SaveChangesAsync();

@@ -17,9 +17,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             this.dbContext = dbContext;
         }
-        public async Task<Invoice> CreateInvoice(int restaurantId, int userAddressId)
+        public async Task<Invoice> CreateInvoice(int orderId, int restaurantId, int userAddressId)
         {
             var dbUserAddress = (await dbContext.UserAddresses
+                                    .Include(ua => ua.User)
                                     .SingleOrDefaultAsync(ua => ua.Id == userAddressId))
                                     .CheckIfUserAddressNull();
             var dbRestaurant = (await dbContext.Restaurants
@@ -31,7 +32,8 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 UserFullName = dbUserAddress.User.FullName,
                 UserAddress = dbUserAddress.Address,
                 RestaurantName = dbRestaurant.Name,
-                RestaurantAddress = dbRestaurant.Address
+                RestaurantAddress = dbRestaurant.Address,
+                OrderId = orderId
             };
 
             await dbContext.Invoices.AddAsync(dbInvoice);
