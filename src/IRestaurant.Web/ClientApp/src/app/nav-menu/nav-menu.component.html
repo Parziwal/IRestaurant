@@ -11,12 +11,12 @@
         <div class="navbar-nav">
           <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
           <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Guest'">
-            <a class="nav-link" routerLink="rendeleseim" routerLinkActive="active">Rendeléseim</a>
+            <a class="nav-link" routerLink="order" routerLinkActive="active">Rendeléseim</a>
             <a class="nav-link" routerLink="myreviews" routerLinkActive="active">Értékeléseim</a>
             <a class="nav-link" routerLink="restaurant/favourite" routerLinkActive="active">Kedvencek</a>
           </ng-container>
           <ng-container *ngIf="(isAuthenticated | async) && (userRole | async) === 'Restaurant'">
-            <a class="nav-link" routerLink="rendelesek" routerLinkActive="active">Rendelések</a>
+            <a class="nav-link" routerLink="order" routerLinkActive="active">Rendelések</a>
             <div class="nav-item dropdown" routerLinkActive="active" appDropdown>
               <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
                 Étermem

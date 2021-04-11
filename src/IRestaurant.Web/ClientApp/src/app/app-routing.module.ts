@@ -1,8 +1,11 @@
-import { NgModule } from "@angular/core";
+import { Component, NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { UserRole } from "src/api-authorization/api-authorization.constants";
+import { AuthorizeGuard } from "src/api-authorization/authorize.guard";
 import { RoleGuard } from "src/api-authorization/role.guard";
 import { EditFoodListComponent } from "./food/edit-food-list/edit-food-list.component";
+import { OrderDetailsComponent } from "./order/order-details/order-details.component";
+import { OrderListComponent } from "./order/order-list/order-list.component";
 import { EditRestaurantComponent } from "./restaurant/edit-restaurant/edit-restaurant.component";
 import { RestaurantListType } from "./restaurant/models/restaurant-list-type.type";
 import { RestaurantDetailsComponent } from "./restaurant/restaurant-details/restaurant-details.component";
@@ -57,6 +60,15 @@ const routes: Routes = [
     component: GuestReviewListComponent,
     canActivate: [RoleGuard],
     data: { role: UserRole.Guest },
+  },
+  {
+    path: "order",
+    component: OrderListComponent,
+    canActivate: [AuthorizeGuard]
+  },
+  {
+    path: "order/details/:id",
+    component: OrderDetailsComponent
   },
   { path: "**", redirectTo: "restaurant" },
 ];

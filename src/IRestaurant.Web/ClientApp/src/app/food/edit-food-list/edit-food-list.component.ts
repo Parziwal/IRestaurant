@@ -60,9 +60,7 @@ export class EditFoodListComponent implements OnInit {
   }
 
   deleteFood(food: Food) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: false
-    });
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"
 
     dialogRef.afterClosed().subscribe(result => {

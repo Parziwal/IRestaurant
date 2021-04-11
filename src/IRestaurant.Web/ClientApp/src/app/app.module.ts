@@ -32,6 +32,12 @@ import { RestaurantReviewListComponent } from './review/restaurant-review-list/r
 import { RestaurantReviewListItemComponent } from './review/restaurant-review-list/restaurant-review-list-item/restaurant-review-list-item.component';
 import { AddReviewDialogComponent } from './review/restaurant-review-list/add-review-dialog/add-review-dialog.component';
 import { GuestReviewListComponent } from './review/guest-review-list/guest-review-list.component';
+import { OrderListComponent } from './order/order-list/order-list.component';
+import { OrderListItemComponent } from './order/order-list/order-list-item/order-list-item.component';
+import { InProgressOrdersPipe } from './order/order-list/pipes/processing-orders.pipe';
+import { ClosedOrdersPipe } from './order/order-list/pipes/closed-orders.pipe';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
+import { ChangeOrderStatusDialogComponent } from './order/order-list/order-list-item/change-order-status-dialog/change-order-status-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +59,13 @@ import { GuestReviewListComponent } from './review/guest-review-list/guest-revie
     RestaurantReviewListComponent,
     RestaurantReviewListItemComponent,
     AddReviewDialogComponent,
-    GuestReviewListComponent
+    GuestReviewListComponent,
+    OrderListComponent,
+    OrderListItemComponent,
+    InProgressOrdersPipe,
+    ClosedOrdersPipe,
+    OrderDetailsComponent,
+    ChangeOrderStatusDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
