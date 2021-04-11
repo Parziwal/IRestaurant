@@ -17,5 +17,6 @@ namespace IRestaurant.DAL.Repositories
         Task ChangeOrderStatus(int orderId, Status status);
         Task<string> GetOrderUserId(int orderId);
         Task<int> GetOrderRestaurantId(int orderId);
+        Task<Status> GetOrderStatus(int orderId);
     }
 }

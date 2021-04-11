@@ -87,7 +87,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
                 transaction.Complete();
             }
-           
 
             return await GetOrderDetails(dbOrder.Id);
         }
@@ -114,10 +113,20 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<int> GetOrderRestaurantId(int orderId)
         {
             var dbOrder = (await dbContext.Orders
+                            .Include(o => o.OrderFoods)
+                            .ThenInclude(of => of.Food)
                             .SingleOrDefaultAsync(o => o.Id == orderId))
                             .CheckIfOrderNull();
 
             return dbOrder.OrderFoods.First().Food.RestaurantId;
+        }
+
+        public async Task<Status> GetOrderStatus(int orderId)
+        {
+            var dbOrder = (await dbContext.Orders
+                            .SingleOrDefaultAsync(o => o.Id == orderId))
+                            .CheckIfOrderNull();
+            return dbOrder.Status;
         }
     }
     internal static class OrderRepositoryExtensions

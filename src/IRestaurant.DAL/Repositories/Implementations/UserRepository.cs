@@ -27,7 +27,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             var dbRestaurant = (await dbContext.Restaurants
                                     .SingleOrDefaultAsync(r => r.OwnerId == userId))
-                                    .CheckIfRestaurantNull("A megadott azonosítóval felhasználó nem található.");
+                                    .CheckIfRestaurantNull();
 
             return dbRestaurant.Id;
         }

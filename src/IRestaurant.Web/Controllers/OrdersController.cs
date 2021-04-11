@@ -47,6 +47,7 @@ namespace IRestaurant.Web.Controllers
             return await orderManager.GetOrderDetails(orderId);
         }
 
+        [Authorize(Policy = UserRoles.Guest)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -40,8 +40,10 @@ namespace IRestaurant.BL.Managers
         {
             string userId = userRepository.GetCurrentUserId();
             string orderUserId = await orderRepository.GetOrderUserId(orderId);
+            int userRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
-            if (userId == orderUserId)
+            if (userId == orderUserId || userRestaurantId == orderRestaurantId)
             {
                 return await orderRepository.GetOrderDetails(orderId);
             }
@@ -57,11 +59,19 @@ namespace IRestaurant.BL.Managers
 
         public async Task ChangeOrderStatus(int orderId, Status status)
         {
+            Status orderStatus = await orderRepository.GetOrderStatus(orderId);
+            if (status == Status.CANCELLED && orderStatus == Status.PROCESSING)
+            {
+                await orderRepository.ChangeOrderStatus(orderId, status);
+                return;
+            }
+
             string userId = userRepository.GetCurrentUserId();
             int userRestaurantId = await userRepository.GetUserRestaurantId(userId);
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
-            if (userRestaurantId == orderRestaurantId)
+            if (userRestaurantId == orderRestaurantId &&
+                orderStatus < status && orderStatus != Status.CANCELLED)
             {
                 await orderRepository.ChangeOrderStatus(orderId, status);
                 return;
