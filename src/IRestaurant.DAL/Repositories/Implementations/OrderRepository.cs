@@ -56,7 +56,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             {
                 Date = DateTime.Now,
                 PreferredDeliveryDate = order.PreferredDeliveryDate,
-                Status = Status.PROCESSING,
+                Status = OrderStatus.PROCESSING,
                 UserId = userId
             };
 
@@ -91,7 +91,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return await GetOrderDetails(dbOrder.Id);
         }
 
-        public async Task ChangeOrderStatus(int orderId, Status status)
+        public async Task ChangeOrderStatus(int orderId, OrderStatus status)
         {
             var dbOrder = (await dbContext.Orders
                             .SingleOrDefaultAsync(o => o.Id == orderId))
@@ -121,7 +121,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbOrder.OrderFoods.First().Food.RestaurantId;
         }
 
-        public async Task<Status> GetOrderStatus(int orderId)
+        public async Task<OrderStatus> GetOrderStatus(int orderId)
         {
             var dbOrder = (await dbContext.Orders
                             .SingleOrDefaultAsync(o => o.Id == orderId))

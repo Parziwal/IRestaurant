@@ -13,7 +13,7 @@ namespace IRestaurant.DAL.DTO.Orders
         public int Id { get; }
         public DateTime Date { get; }
         public DateTime PreferredDeliveryDate { get; }
-        public Status Status { get; }
+        public OrderStatus Status { get; }
         public int Total { get; }
         public string UserFullName { get; }
         public AddressDto UserAddress { get; }

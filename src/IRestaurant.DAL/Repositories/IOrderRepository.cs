@@ -14,9 +14,9 @@ namespace IRestaurant.DAL.Repositories
         Task<IReadOnlyCollection<OrderOverviewDto>> GetOrderOverviewBelongsToRestaurant(int restaurantId);
         Task<OrderDto> GetOrderDetails(int orderId);
         Task<OrderDto> CreateOrder(string userId, CreateOrder order);
-        Task ChangeOrderStatus(int orderId, Status status);
+        Task ChangeOrderStatus(int orderId, OrderStatus status);
         Task<string> GetOrderUserId(int orderId);
         Task<int> GetOrderRestaurantId(int orderId);
-        Task<Status> GetOrderStatus(int orderId);
+        Task<OrderStatus> GetOrderStatus(int orderId);
     }
 }

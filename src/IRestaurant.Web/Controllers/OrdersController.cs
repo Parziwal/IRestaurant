@@ -61,7 +61,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> ChangeOrderStatus(int orderId, [FromQuery] Status status)
+        public async Task<ActionResult> ChangeOrderStatus(int orderId, [FromQuery] OrderStatus status)
         {
             await orderManager.ChangeOrderStatus(orderId, status);
             return Ok();

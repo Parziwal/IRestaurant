@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Models
 {
-    public enum Status
+    public enum OrderStatus
     {
         PROCESSING = 0,
         ORDER_COMPLETION = 1,

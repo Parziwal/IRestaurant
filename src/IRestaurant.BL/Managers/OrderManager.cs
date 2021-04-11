@@ -57,10 +57,10 @@ namespace IRestaurant.BL.Managers
             return await orderRepository.CreateOrder(userId, order);
         }
 
-        public async Task ChangeOrderStatus(int orderId, Status status)
+        public async Task ChangeOrderStatus(int orderId, OrderStatus status)
         {
-            Status orderStatus = await orderRepository.GetOrderStatus(orderId);
-            if (status == Status.CANCELLED && orderStatus == Status.PROCESSING)
+            OrderStatus orderStatus = await orderRepository.GetOrderStatus(orderId);
+            if (status == OrderStatus.CANCELLED && orderStatus == OrderStatus.PROCESSING)
             {
                 await orderRepository.ChangeOrderStatus(orderId, status);
                 return;
@@ -71,13 +71,14 @@ namespace IRestaurant.BL.Managers
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
             if (userRestaurantId == orderRestaurantId &&
-                orderStatus < status && orderStatus != Status.CANCELLED)
+                orderStatus < status && orderStatus != OrderStatus.CANCELLED)
             {
                 await orderRepository.ChangeOrderStatus(orderId, status);
                 return;
             }
             throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                "A megadott azonosítóval rendelkező rendelés státuszának megváltoztatásához nincs jogosultságod");
+                "A megadott azonosítóval rendelkező rendelés státuszának megváltoztatásához nincs jogosultságod," +
+                "vagy egy korábbi állapotba való visszaálítása nem lehetséges.");
         }
     }
 }

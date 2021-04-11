@@ -218,7 +218,7 @@ namespace IRestaurant.DAL.Data
                 {
                     Date = DateTime.Now,
                     PreferredDeliveryDate = DateTime.Now.AddDays(10),
-                    Status = (Status)r.Next(0, 5),
+                    Status = (OrderStatus)r.Next(0, 5),
                     User = users[i]
                 };
                 await _context.Orders.AddAsync(dbOrder);
