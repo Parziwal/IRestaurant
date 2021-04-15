@@ -35,16 +35,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
                 .ToOrderOverviewDtoList();
         }
-        public async Task<OrderDto> GetOrderDetails(int orderId)
+        public async Task<OrderDetailsDto> GetOrderDetails(int orderId)
         {
             var dbOrder = (await dbContext.Orders
                             .SingleOrDefaultAsync(o => o.Id == orderId))
                             .CheckIfOrderNull();
             
-            return await dbContext.Entry(dbOrder).ToOrderDto();
+            return await dbContext.Entry(dbOrder).ToOrderDetailsDto();
         }
 
-        public async Task<OrderDto> CreateOrder(string userId, CreateOrder order)
+        public async Task<OrderDetailsDto> CreateOrder(string userId, CreateOrder order)
         {
             var dbOrder = new Order
             {
@@ -82,7 +82,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 transaction.Complete();
             }
 
-            return await dbContext.Entry(dbOrder).ToOrderDto();
+            return await dbContext.Entry(dbOrder).ToOrderDetailsDto();
         }
 
         public async Task ChangeOrderStatus(int orderId, OrderStatus status)
@@ -127,20 +127,18 @@ namespace IRestaurant.DAL.Repositories.Implementations
     {
         public static async Task<IReadOnlyCollection<OrderOverviewDto>> ToOrderOverviewDtoList(this IQueryable<Order> orders)
         {
-            return await orders.Select(o => new OrderOverviewDto(o, SumOrderFoodsTotal(o.OrderFoods), o.Invoice)).ToListAsync();
+            return await orders
+                        .Include(o => o.OrderFoods)
+                        .Include(o => o.Invoice)
+                        .Select(o => new OrderOverviewDto(o)).ToListAsync();
         }
 
-        public static async Task<OrderDto> ToOrderDto(this EntityEntry<Order> order)
+        public static async Task<OrderDetailsDto> ToOrderDetailsDto(this EntityEntry<Order> order)
         {
             await order.Reference(o => o.Invoice).LoadAsync();
-            await order.Collection(o => o.OrderFoods).LoadAsync();
-            order.Collection(o => o.OrderFoods).Query().Include(of => of.Food);
-            return new OrderDto(order.Entity, SumOrderFoodsTotal(order.Entity.OrderFoods), order.Entity.Invoice, order.Entity.OrderFoods);
-        }
-
-        private static int SumOrderFoodsTotal(ICollection<OrderFood> orderFoods)
-        {
-            return orderFoods.Sum(of => of.Price * of.Amount);
+            await order.Collection(o => o.OrderFoods).Query()
+                        .Include(of => of.Food).LoadAsync();
+            return new OrderDetailsDto(order.Entity);
         }
 
         public static Order CheckIfOrderNull(this Order order,

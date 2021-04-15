@@ -189,25 +189,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
     {
         public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> ToRestaurantOverviewDtoList(this IQueryable<Restaurant> restaurants)
         {
-            return await restaurants.Select(r => new RestaurantOverviewDto(r, AgregateReviewsRating(r.Reviews)))
-                                    .ToListAsync();
+            return await restaurants
+                        .Include(r => r.Reviews)
+                        .Select(r => new RestaurantOverviewDto(r)).ToListAsync();
         }
 
         public static async Task<RestaurantDetailsDto> ToRestaurantDetailsDto(this EntityEntry<Restaurant> restaurant)
         {
             await restaurant.Collection(r => r.Reviews).LoadAsync();
             await restaurant.Reference(r => r.Owner).LoadAsync();
-            return new RestaurantDetailsDto(restaurant.Entity, restaurant.Entity.Owner, AgregateReviewsRating(restaurant.Entity.Reviews));
-        }
-
-        private static double? AgregateReviewsRating(ICollection<Review> reviews)
-        {
-            bool hasReview = reviews == null ? false : reviews.Any();
-            if (!hasReview)
-            {
-                return null;
-            }
-            return Math.Round(reviews.Average(r => r.Rating), 2);
+            return new RestaurantDetailsDto(restaurant.Entity);
         }
 
         public static Restaurant CheckIfRestaurantNull(this Restaurant restaurant,

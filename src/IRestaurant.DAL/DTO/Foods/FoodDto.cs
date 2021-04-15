@@ -10,11 +10,11 @@ namespace IRestaurant.DAL.DTO.Foods
 {
     public class FoodDto
     {
-        public int Id { get; }
-        public string Name { get; }
-        public int Price { get; }
-        public string Description { get; }
-        public string ImagePath { get; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public string Description { get; set; }
+        public string ImagePath { get; set; }
 
         public FoodDto(Food food)
         {

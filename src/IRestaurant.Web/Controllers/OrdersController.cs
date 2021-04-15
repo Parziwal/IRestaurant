@@ -42,7 +42,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrderDto>> GetOrderDetails(int orderId)
+        public async Task<ActionResult<OrderDetailsDto>> GetOrderDetails(int orderId)
         {
             return await orderManager.GetOrderDetails(orderId);
         }
@@ -51,7 +51,7 @@ namespace IRestaurant.Web.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody]CreateOrder order)
+        public async Task<ActionResult<OrderDetailsDto>> CreateOrder([FromBody]CreateOrder order)
         {
             var createdOrder = await orderManager.CreateOrder(order);
             return CreatedAtAction(nameof(GetOrderDetails), new { id = createdOrder.Id }, createdOrder);

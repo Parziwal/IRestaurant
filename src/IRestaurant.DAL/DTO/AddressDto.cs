@@ -10,10 +10,10 @@ namespace IRestaurant.DAL.DTO
 {
     public class AddressDto
     {
-        public int ZipCode { get; }
-        public string City { get; }
-        public string Street { get; }
-        public string PhoneNumber { get; }
+        public int ZipCode { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PhoneNumber { get; set; }
 
         public AddressDto(AddressOwned address)
         {

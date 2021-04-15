@@ -21,16 +21,16 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public bool IsOrderAvailable { get; set; }
         public bool IsCurrentGuestFavourite { get; set; }
 
-        public RestaurantDetailsDto(Restaurant restaurant, ApplicationUser owner, double? rating)
+        public RestaurantDetailsDto(Restaurant restaurant)
         {
             this.Id = restaurant.Id;
             this.Name = restaurant.Name;
-            this.Rating = rating;
+            this.Rating = restaurant.Reviews.Any() ? Math.Round(restaurant.Reviews.Average(r => r.Rating), 2) : null;
             this.ShortDescription = restaurant.ShortDescription;
             this.DetailedDescription = restaurant.DetailedDescription;
             this.ImagePath = restaurant.ImagePath;
             this.RestaurantAddress = new AddressDto(restaurant.Address);
-            this.OwnerName = owner.FullName;
+            this.OwnerName = restaurant.Owner.FullName;
             this.IsOrderAvailable = restaurant.IsOrderAvailable;
         }
     }

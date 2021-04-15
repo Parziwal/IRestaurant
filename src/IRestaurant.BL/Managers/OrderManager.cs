@@ -36,7 +36,7 @@ namespace IRestaurant.BL.Managers
             return await orderRepository.GetOrderOverviewBelongsToRestaurant(ownerRestaurantId);
         }
 
-        public async Task<OrderDto> GetOrderDetails(int orderId)
+        public async Task<OrderDetailsDto> GetOrderDetails(int orderId)
         {
             string userId = userRepository.GetCurrentUserId();
             string orderUserId = await orderRepository.GetOrderUserId(orderId);
@@ -51,7 +51,7 @@ namespace IRestaurant.BL.Managers
                 "A megadott azonosítóval rendelkező rendelés megtekintéséhez nincs jogosultságod");
         }
 
-        public async Task<OrderDto> CreateOrder(CreateOrder order)
+        public async Task<OrderDetailsDto> CreateOrder(CreateOrder order)
         {
             string userId = userRepository.GetCurrentUserId();
             return await orderRepository.CreateOrder(userId, order);

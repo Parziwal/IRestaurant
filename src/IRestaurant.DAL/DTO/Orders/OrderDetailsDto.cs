@@ -1,13 +1,14 @@
 ﻿using IRestaurant.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO.Orders
 {
-    public class OrderOverviewDto
+    public class OrderDetailsDto
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
@@ -15,9 +16,12 @@ namespace IRestaurant.DAL.DTO.Orders
         public OrderStatus Status { get; set; }
         public int Total { get; set; }
         public string UserFullName { get; set; }
+        public AddressDto UserAddress { get; set; }
         public string RestaurantName { get; set; }
+        public AddressDto RestaurantAddress { get; set; }
+        public List<OrderFoodDto> OrderFoods { get; set; }
 
-        public OrderOverviewDto(Order order)
+        public OrderDetailsDto(Order order)
         {
             this.Id = order.Id;
             this.Date = order.Date;
@@ -25,7 +29,10 @@ namespace IRestaurant.DAL.DTO.Orders
             this.Status = order.Status;
             this.Total = order.OrderFoods.Sum(of => of.Amount * of.Price);
             this.UserFullName = order.Invoice.UserFullName;
+            this.UserAddress = new AddressDto(order.Invoice.UserAddress);
             this.RestaurantName = order.Invoice.RestaurantName;
+            this.RestaurantAddress = new AddressDto(order.Invoice.RestaurantAddress);
+            this.OrderFoods = order.OrderFoods.Select(of => new OrderFoodDto(of)).ToList();
         }
     }
 }

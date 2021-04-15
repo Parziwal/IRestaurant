@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IRestaurant.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,11 +17,11 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public string ImagePath { get; set; }
         public string City { get; set; }
 
-        public RestaurantOverviewDto(Models.Restaurant restaurant, double? rating)
+        public RestaurantOverviewDto(Restaurant restaurant)
         {
             this.Id = restaurant.Id;
             this.Name = restaurant.Name;
-            this.Rating = rating;
+            this.Rating = restaurant.Reviews.Any() ? Math.Round(restaurant.Reviews.Average(r => r.Rating), 2) : null;
             this.ShortDescription = restaurant.ShortDescription;
             this.ImagePath = restaurant.ImagePath;
             this.City = restaurant.Address.City;
