@@ -42,7 +42,7 @@ namespace IRestaurant.Web.Controllers
 
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("myreviews")]
-        public async Task<IEnumerable<GuestReviewDto>> GetCurrentGuestReviews()
+        public async Task<IEnumerable<ReviewDto>> GetCurrentGuestReviews()
         {
             return await reviewManager.GetCurrentGuestReviews();
         }

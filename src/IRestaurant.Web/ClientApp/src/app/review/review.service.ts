@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CreateReview } from './models/create-review.type';
-import { GuestReview } from './models/guest-review-type';
 import { Review } from './models/review.type';
 
 @Injectable({
@@ -18,7 +17,7 @@ export class ReviewService {
   }
 
   getCurrentGuestReviews() {
-    return this.http.get<GuestReview[]>(this.baseUrl + "myreviews");
+    return this.http.get<Review[]>(this.baseUrl + "myreviews");
   }
 
   addReviewToRestaurant(restaurantId: number, createdReview: CreateReview) {

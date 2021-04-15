@@ -65,7 +65,7 @@ namespace IRestaurant.BL.Managers
             return new List<ReviewDto>();
         }
 
-        public async Task<IReadOnlyCollection<GuestReviewDto>> GetCurrentGuestReviews()
+        public async Task<IReadOnlyCollection<ReviewDto>> GetCurrentGuestReviews()
         {
             string userId = userRepository.GetCurrentUserId();
             return await reviewRepository.GetGuestReviews(userId);

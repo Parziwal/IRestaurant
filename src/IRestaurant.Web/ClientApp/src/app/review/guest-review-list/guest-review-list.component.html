@@ -3,7 +3,7 @@
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <div class="review-header">
-                    <h4><a [routerLink]="['/restaurant/details', review.reviewedRestaurantId]">{{ review.reviewedRestaurantName }}</a></h4>
+                    <h4><a [routerLink]="['/restaurant/details', review.restaurantId]">{{ review.restaurantName }}</a></h4>
                     <h5>{{ review.title }}</h5>
                     <h6 class="mb-2 text-muted">{{ review.createdAt | date: "yyyy.MM.dd"}}</h6>
                     <app-rating-bar [rating]="review.rating"></app-rating-bar>

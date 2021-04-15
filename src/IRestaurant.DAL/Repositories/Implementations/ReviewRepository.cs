@@ -36,11 +36,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 .ToReviewDtoList();
         }
 
-        public async Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(string guestId)
+        public async Task<IReadOnlyCollection<ReviewDto>> GetGuestReviews(string guestId)
         {
             return await dbContext.Reviews
                 .Where(r => r.UserId == guestId)
-                .ToGuestReviewDtoList();
+                .ToReviewDtoList();
         }
 
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
@@ -102,24 +102,17 @@ namespace IRestaurant.DAL.Repositories.Implementations
     {
         public static async Task<IReadOnlyCollection<ReviewDto>> ToReviewDtoList(this IQueryable<Review> reviews)
         {
-            return await reviews.Select(r => new ReviewDto(r, r.User)).ToListAsync();
+            return await reviews
+                    .Include(r => r.User)
+                    .Include(r => r.Restaurant)
+                    .Select(r => new ReviewDto(r)).ToListAsync();
         }
 
         public static async Task<ReviewDto> ToReviewDto(this EntityEntry<Review> review)
         {
             await review.Reference(r => r.User).LoadAsync();
-            return new ReviewDto(review.Entity, review.Entity.User);
-        }
-
-        public static async Task<IReadOnlyCollection<GuestReviewDto>> ToGuestReviewDtoList(this IQueryable<Review> review)
-        {
-            return await review.Select(r => new GuestReviewDto(r, r.Restaurant)).ToListAsync();
-        }
-
-        public static async Task<GuestReviewDto> ToGuestReview(this EntityEntry<Review> review)
-        {
             await review.Reference(r => r.Restaurant).LoadAsync();
-            return new GuestReviewDto(review.Entity, review.Entity.Restaurant);
+            return new ReviewDto(review.Entity);
         }
 
         public static Review CheckIfReviewNull(this Review review,

@@ -4,7 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { GuestReview } from '../models/guest-review-type';
+import { Review } from '../models/review.type';
 import { ReviewService } from '../review.service';
 
 @Component({
@@ -14,7 +14,7 @@ import { ReviewService } from '../review.service';
 })
 export class GuestReviewListComponent implements OnInit {
 
-  guestReviews: Observable<GuestReview[]> = new Observable();
+  guestReviews: Observable<Review[]> = new Observable();
   faTrashAlt = faTrashAlt;
 
   constructor(private reviewService: ReviewService,
@@ -29,7 +29,7 @@ export class GuestReviewListComponent implements OnInit {
     this.guestReviews = this.reviewService.getCurrentGuestReviews();
   }
 
-  deleteReview(review: GuestReview) {
+  deleteReview(review: Review) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       disableClose: false
     });
