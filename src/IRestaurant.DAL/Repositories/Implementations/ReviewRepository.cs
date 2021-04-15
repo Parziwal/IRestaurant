@@ -3,6 +3,7 @@ using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,26 +23,24 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<ReviewDto> GetReview(int reviewId)
         {
             var dbReview = (await dbContext.Reviews
-                                .Include(r => r.User)
                                 .SingleOrDefaultAsync(r => r.Id == reviewId))
                                 .CheckIfReviewNull();
 
-            return dbReview.GetReview();
+            return await dbContext.Entry(dbReview).ToReviewDto();
         }
 
         public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
         {
             return await dbContext.Reviews
-                .Include(r => r.User)
-                .Where(r => r.RestaurantId == restaurantId).GetReviews();
+                .Where(r => r.RestaurantId == restaurantId)
+                .ToReviewDtoList();
         }
 
         public async Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(string guestId)
         {
             return await dbContext.Reviews
-                .Include(r => r.User)
-                .Include(r => r.Restaurant)
-                .Where(r => r.UserId == guestId).GetGuestReviews();
+                .Where(r => r.UserId == guestId)
+                .ToGuestReviewDtoList();
         }
 
         public async Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review)
@@ -66,20 +65,17 @@ namespace IRestaurant.DAL.Repositories.Implementations
             await dbContext.AddAsync(dbReview);
             await dbContext.SaveChangesAsync();
 
-            return dbReview.GetReview();
+            return await dbContext.Entry(dbReview).ToReviewDto();
         }
 
-        public async Task<ReviewDto> DeleteReview(int reviewId)
+        public async Task DeleteReview(int reviewId)
         {
             var dbReview = (await dbContext.Reviews
-                                .Include(r => r.User)
                                 .SingleOrDefaultAsync(r => r.Id == reviewId))
                                 .CheckIfReviewNull();
 
             dbContext.Reviews.Remove(dbReview);
             await dbContext.SaveChangesAsync();
-
-            return dbReview.GetReview();
         }
 
         public async Task<string> GetPubliserUserId(int reviewId)
@@ -104,24 +100,26 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
     internal static class ReviewRepositoryExtensions
     {
-        public static async Task<IReadOnlyCollection<ReviewDto>> GetReviews(this IQueryable<Review> review)
+        public static async Task<IReadOnlyCollection<ReviewDto>> ToReviewDtoList(this IQueryable<Review> reviews)
         {
-            return await review.Select(r => GetReview(r)).ToListAsync();
+            return await reviews.Select(r => new ReviewDto(r, r.User)).ToListAsync();
         }
 
-        public static ReviewDto GetReview(this Review review)
+        public static async Task<ReviewDto> ToReviewDto(this EntityEntry<Review> review)
         {
-            return new ReviewDto(review, review.User);
+            await review.Reference(r => r.User).LoadAsync();
+            return new ReviewDto(review.Entity, review.Entity.User);
         }
 
-        public static async Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(this IQueryable<Review> review)
+        public static async Task<IReadOnlyCollection<GuestReviewDto>> ToGuestReviewDtoList(this IQueryable<Review> review)
         {
-            return await review.Select(r => GetGuestReview(r)).ToListAsync();
+            return await review.Select(r => new GuestReviewDto(r, r.Restaurant)).ToListAsync();
         }
 
-        public static GuestReviewDto GetGuestReview(this Review review)
+        public static async Task<GuestReviewDto> ToGuestReview(this EntityEntry<Review> review)
         {
-            return new GuestReviewDto(review, review.Restaurant);
+            await review.Reference(r => r.Restaurant).LoadAsync();
+            return new GuestReviewDto(review.Entity, review.Entity.Restaurant);
         }
 
         public static Review CheckIfReviewNull(this Review review,

@@ -3,6 +3,7 @@ using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
                                 .SingleOrDefaultAsync(f => f.Id == foodId))
                                 .CheckIfFoodNull();
 
-            return dbFood.GetFood();
+            return await dbContext.Entry(dbFood).ToFoodDto();
         }
 
         public async Task<IReadOnlyCollection<FoodDto>> GetRestaurantMenu(int restaurantId)
         {
-            return await dbContext.Foods.Where(f => f.RestaurantId == restaurantId).GetFoods();
+            return await dbContext.Foods
+                        .Where(f => f.RestaurantId == restaurantId)
+                        .ToFoodDtoList();
         }
 
         public async Task<FoodDto> AddFoodToMenu(int restaurantId, CreateFoodDto food)
@@ -49,10 +52,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
             await dbContext.Foods.AddAsync(dbFood);
             await dbContext.SaveChangesAsync();
 
-            return dbFood.GetFood();
+            return await dbContext.Entry(dbFood).ToFoodDto();
         }
 
-        public async Task<FoodDto> DeleteFoodFromMenu(int foodId)
+        public async Task DeleteFoodFromMenu(int foodId)
         {
             var dbFood = (await dbContext.Foods
                             .SingleOrDefaultAsync(f => f.Id == foodId))
@@ -60,8 +63,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             dbContext.Remove(dbFood);
             await dbContext.SaveChangesAsync();
-
-            return dbFood.GetFood();
         }
 
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
@@ -74,7 +75,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             dbFood.Description = food.Description;
             await dbContext.SaveChangesAsync();
 
-            return dbFood.GetFood();
+            return await dbContext.Entry(dbFood).ToFoodDto();
         }
 
         public async Task<int> GetFoodRestaurantId(int foodId)
@@ -89,14 +90,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
     internal static class FoodRepositoryExtensions
     {
-        public static async Task<IReadOnlyCollection<FoodDto>> GetFoods(this IQueryable<Food> foods)
+        public static async Task<IReadOnlyCollection<FoodDto>> ToFoodDtoList(this IQueryable<Food> foods)
         {
-            return await foods.Select(f => GetFood(f)).ToListAsync();
+            return await foods.Select(f => new FoodDto(f)).ToListAsync();
         }
 
-        public static FoodDto GetFood(this Food food)
+        public static async Task<FoodDto> ToFoodDto(this EntityEntry<Food> food)
         {
-            return new FoodDto(food);
+            return new FoodDto(food.Entity);
         }
 
         public static Food CheckIfFoodNull(this Food food,

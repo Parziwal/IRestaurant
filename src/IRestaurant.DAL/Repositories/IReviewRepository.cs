@@ -13,7 +13,7 @@ namespace IRestaurant.DAL.Repositories
         Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId);
         Task<IReadOnlyCollection<GuestReviewDto>> GetGuestReviews(string guestId);
         Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review);
-        Task<ReviewDto> DeleteReview(int reviewId);
+        Task DeleteReview(int reviewId);
         Task<string> GetPubliserUserId(int reviewId);
         Task<int> GetRestaurantIdReviewBelongTo(int reviewId);
     }

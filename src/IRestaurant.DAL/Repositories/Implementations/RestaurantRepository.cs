@@ -3,6 +3,7 @@ using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,28 +25,24 @@ namespace IRestaurant.DAL.Repositories.Implementations
             if (string.IsNullOrEmpty(restaurantName))
             {
                 return await dbContext.Restaurants
-                    .Include(r => r.Reviews)
                     .Where(r => r.ShowForUsers)
-                    .GetRestaurantOverviews();
+                    .ToRestaurantOverviewDtoList();
             }
             else
             {
                 return await dbContext.Restaurants
-                    .Include(r => r.Reviews)
                     .Where(r => r.Name.Contains(restaurantName) && r.ShowForUsers)
-                    .GetRestaurantOverviews();
+                    .ToRestaurantOverviewDtoList();
             }
         }
 
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
             var dbRestaurant = (await dbContext.Restaurants
-                                    .Include(r => r.Owner)
-                                    .Include(r => r.Reviews)
                                     .SingleOrDefaultAsync(r => r.Id == restaurantId))
                                     .CheckIfRestaurantNull();
 
-            return dbRestaurant.GetRestaurant();
+            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
 
         public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
@@ -73,14 +70,12 @@ namespace IRestaurant.DAL.Repositories.Implementations
             await dbContext.AddAsync(dbRestaurant);
             await dbContext.SaveChangesAsync();
 
-            return dbRestaurant.GetRestaurant();
+            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
 
         public async Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant)
         {
             var dbRestaurant = (await dbContext.Restaurants
-                                    .Include(r => r.Owner)
-                                    .Include(r => r.Reviews)
                                     .SingleOrDefaultAsync(r => r.Id == restaurantId))
                                     .CheckIfRestaurantNull();
 
@@ -95,7 +90,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
             await dbContext.SaveChangesAsync();
 
-            return dbRestaurant.GetRestaurant();
+            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
         public async Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId)
         {
@@ -140,16 +135,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
             if (string.IsNullOrEmpty(restaurantName))
             {
                 return await dbContext.Restaurants
-                       .Include(r => r.Reviews)
                        .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId))
-                       .GetRestaurantOverviews();
+                       .ToRestaurantOverviewDtoList();
             }
             else
             {
                 return await dbContext.Restaurants
-                       .Include(r => r.Reviews)
                        .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == userId) && r.Name.Contains(restaurantName))
-                       .GetRestaurantOverviews();
+                       .ToRestaurantOverviewDtoList();
             }
         }
 
@@ -194,24 +187,27 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
     internal static class RestaurantRepositoryExtensions
     {
-        public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(this IQueryable<Restaurant> restaurants)
+        public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> ToRestaurantOverviewDtoList(this IQueryable<Restaurant> restaurants)
         {
-            return await restaurants.Select(r => new RestaurantOverviewDto(r, CalculateRestaurantRating(r))).ToListAsync();
+            return await restaurants.Select(r => new RestaurantOverviewDto(r, AgregateReviewsRating(r.Reviews)))
+                                    .ToListAsync();
         }
 
-        public static RestaurantDetailsDto GetRestaurant(this Restaurant restaurant)
+        public static async Task<RestaurantDetailsDto> ToRestaurantDetailsDto(this EntityEntry<Restaurant> restaurant)
         {
-            return new RestaurantDetailsDto(restaurant, restaurant.Owner, CalculateRestaurantRating(restaurant));
+            await restaurant.Collection(r => r.Reviews).LoadAsync();
+            await restaurant.Reference(r => r.Owner).LoadAsync();
+            return new RestaurantDetailsDto(restaurant.Entity, restaurant.Entity.Owner, AgregateReviewsRating(restaurant.Entity.Reviews));
         }
 
-        private static double? CalculateRestaurantRating(Restaurant restaurant)
+        private static double? AgregateReviewsRating(ICollection<Review> reviews)
         {
-            bool hasReview = restaurant.Reviews == null ? false : restaurant.Reviews.Any();
+            bool hasReview = reviews == null ? false : reviews.Any();
             if (!hasReview)
             {
                 return null;
             }
-            return Math.Round(restaurant.Reviews.Average(r => r.Rating), 2);
+            return Math.Round(reviews.Average(r => r.Rating), 2);
         }
 
         public static Restaurant CheckIfRestaurantNull(this Restaurant restaurant,

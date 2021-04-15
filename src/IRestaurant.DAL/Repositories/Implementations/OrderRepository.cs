@@ -3,6 +3,7 @@ using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,28 +27,21 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.Orders
                 .Where(o => o.UserId == userId)
-                .Include(o => o.Invoice)
-                .Include(o => o.OrderFoods)
-                .GetOrders();
+                .ToOrderOverviewDtoList();
         }
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrderOverviewBelongsToRestaurant(int restaurantId)
         {
             return await dbContext.Orders
                 .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
-                .Include(o => o.Invoice)
-                .Include(o => o.OrderFoods)
-                .GetOrders();
+                .ToOrderOverviewDtoList();
         }
         public async Task<OrderDto> GetOrderDetails(int orderId)
         {
             var dbOrder = (await dbContext.Orders
-                            .Include(o => o.Invoice)
-                            .Include(o => o.OrderFoods)
-                            .ThenInclude(of => of.Food)
                             .SingleOrDefaultAsync(o => o.Id == orderId))
                             .CheckIfOrderNull();
-
-            return dbOrder.GetOrder();
+            
+            return await dbContext.Entry(dbOrder).ToOrderDto();
         }
 
         public async Task<OrderDto> CreateOrder(string userId, CreateOrder order)
@@ -88,7 +82,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                 transaction.Complete();
             }
 
-            return await GetOrderDetails(dbOrder.Id);
+            return await dbContext.Entry(dbOrder).ToOrderDto();
         }
 
         public async Task ChangeOrderStatus(int orderId, OrderStatus status)
@@ -131,19 +125,22 @@ namespace IRestaurant.DAL.Repositories.Implementations
     }
     internal static class OrderRepositoryExtensions
     {
-        public static async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrders(this IQueryable<Order> orders)
+        public static async Task<IReadOnlyCollection<OrderOverviewDto>> ToOrderOverviewDtoList(this IQueryable<Order> orders)
         {
-            return await orders.Select(o => new OrderOverviewDto(o, CalculateOrderTotal(o), o.Invoice)).ToListAsync();
+            return await orders.Select(o => new OrderOverviewDto(o, SumOrderFoodsTotal(o.OrderFoods), o.Invoice)).ToListAsync();
         }
 
-        public static OrderDto GetOrder(this Order order)
+        public static async Task<OrderDto> ToOrderDto(this EntityEntry<Order> order)
         {
-            return new OrderDto(order, CalculateOrderTotal(order), order.Invoice, order.OrderFoods);
+            await order.Reference(o => o.Invoice).LoadAsync();
+            await order.Collection(o => o.OrderFoods).LoadAsync();
+            order.Collection(o => o.OrderFoods).Query().Include(of => of.Food);
+            return new OrderDto(order.Entity, SumOrderFoodsTotal(order.Entity.OrderFoods), order.Entity.Invoice, order.Entity.OrderFoods);
         }
 
-        private static int CalculateOrderTotal(Order order)
+        private static int SumOrderFoodsTotal(ICollection<OrderFood> orderFoods)
         {
-            return order.OrderFoods.Sum(of => of.Price * of.Amount);
+            return orderFoods.Sum(of => of.Price * of.Amount);
         }
 
         public static Order CheckIfOrderNull(this Order order,

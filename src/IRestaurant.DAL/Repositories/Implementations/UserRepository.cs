@@ -28,7 +28,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
             var dbRestaurant = (await dbContext.Restaurants
                                     .SingleOrDefaultAsync(r => r.OwnerId == userId))
                                     .CheckIfRestaurantNull();
-
             return dbRestaurant.Id;
         }
 
