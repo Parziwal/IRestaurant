@@ -1,4 +1,4 @@
-import { Address } from "src/app/shared/models/address.type";
+import { UserAddress } from "src/app/shared/models/user-address.type";
 
 export interface RestaurantDetails {
     id: number;
@@ -7,7 +7,7 @@ export interface RestaurantDetails {
     shortDescription: string;
     detailedDescription: string;
     imagePath: string;
-    restaurantAddress: Address;
+    restaurantAddress: UserAddress;
     ownerName: string;
     isOrderAvailable: boolean;
     isCurrentGuestFavourite: boolean;

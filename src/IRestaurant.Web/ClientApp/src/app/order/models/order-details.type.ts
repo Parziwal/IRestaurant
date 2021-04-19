@@ -1,4 +1,4 @@
-import { Address } from "src/app/shared/models/address.type";
+import { UserAddress } from "src/app/shared/models/user-address.type";
 import { OrderFood } from "./order-food.type";
 
 export interface OrderDetails {
@@ -9,8 +9,8 @@ export interface OrderDetails {
     statusInString: string;
     total: number;
     userFullName: string;
-    userAddress: Address;
+    userAddress: UserAddress;
     restaurantName: string;
-    restaurantAddress: Address;
+    restaurantAddress: UserAddress;
     orderFoods: OrderFood[];
 }

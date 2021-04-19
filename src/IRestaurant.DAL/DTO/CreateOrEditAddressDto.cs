@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO
 {
-    public class EditAddressDto
+    public class CreateOrEditAddressDto
     {
         [Required]
         [Range(1000, 9999)]

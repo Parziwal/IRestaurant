@@ -1,4 +1,4 @@
-export interface Address {
+export interface UserAddress {
     zipCode: number;
     city: string;
     street: string;

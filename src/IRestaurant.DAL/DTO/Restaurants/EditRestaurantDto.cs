@@ -20,6 +20,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public string DetailedDescription { get; set; }
         public IFormFile Image { get; set; }
         [Required]
-        public EditAddressDto Address { get; set; }
+        public CreateOrEditAddressDto Address { get; set; }
     }
 }
