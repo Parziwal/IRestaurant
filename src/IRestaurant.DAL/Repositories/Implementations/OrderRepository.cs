@@ -23,13 +23,13 @@ namespace IRestaurant.DAL.Repositories.Implementations
             this.invoiceRepository = invoiceRepository;
         }
 
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviews(string userId)
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string userId)
         {
             return await dbContext.Orders
                 .Where(o => o.UserId == userId)
                 .ToOrderOverviewDtoList();
         }
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrderOverviewBelongsToRestaurant(int restaurantId)
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId)
         {
             return await dbContext.Orders
                 .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)

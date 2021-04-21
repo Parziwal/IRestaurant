@@ -23,9 +23,9 @@ namespace IRestaurant.BL.Managers
             this.userRepository = userRepository;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
         {
-            return await restaurantRepository.GetRestaurantOverviews(restaurantName);
+            return await restaurantRepository.GetRestaurantOverviewList(restaurantName);
         }
 
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
@@ -101,10 +101,10 @@ namespace IRestaurant.BL.Managers
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string restaurantName = null)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await restaurantRepository.GetUserFavouriteRestaurants(userId, restaurantName);
+            return await restaurantRepository.GetUserFavouriteRestaurantList(userId, restaurantName);
         }
 
         public async Task AddRestaurantToUserFavourite(int restaurantId)

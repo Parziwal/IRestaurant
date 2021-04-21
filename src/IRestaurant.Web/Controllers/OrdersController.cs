@@ -28,14 +28,14 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("guest")]
         public async Task<IEnumerable<OrderOverviewDto>> GetGuestOrderOverviews()
         {
-            return await orderManager.GetGuestOrderOverviews();
+            return await orderManager.GetGuestOrderOverviewList();
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant")]
         public async Task<IEnumerable<OrderOverviewDto>> GetOrdersBelongsToMyRestaurant()
         {
-            return await orderManager.GetOrdersBelongsToMyRestaurant();
+            return await orderManager.GetMyRestaurantOrderOverviewList();
         }
 
         [HttpGet("{orderId}")]

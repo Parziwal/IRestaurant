@@ -22,18 +22,18 @@ namespace IRestaurant.BL.Managers
             this.userRepository = userRepository;
         }
 
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviews()
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList()
         {
             string userId = userRepository.GetCurrentUserId();
-            return await orderRepository.GetGuestOrderOverviews(userId);
+            return await orderRepository.GetGuestOrderOverviewList(userId);
         }
 
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetOrdersBelongsToMyRestaurant()
+        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetMyRestaurantOrderOverviewList()
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
-            return await orderRepository.GetOrderOverviewBelongsToRestaurant(ownerRestaurantId);
+            return await orderRepository.GetRestaurantOrderOverviewList(ownerRestaurantId);
         }
 
         public async Task<OrderDetailsDto> GetOrderDetails(int orderId)

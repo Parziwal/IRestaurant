@@ -10,8 +10,8 @@ namespace IRestaurant.DAL.Repositories
     public interface IReviewRepository
     {
         Task<ReviewDto> GetReview(int reviewId);
-        Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId);
-        Task<IReadOnlyCollection<ReviewDto>> GetGuestReviews(string guestId);
+        Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviewList(int restaurantId);
+        Task<IReadOnlyCollection<ReviewDto>> GetGuestReviewList(string guestId);
         Task<ReviewDto> AddReviewToRestaurant(string userId, int restaurantId, CreateReviewDto review);
         Task DeleteReview(int reviewId);
         Task<string> GetPubliserUserId(int reviewId);

@@ -28,23 +28,23 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ReviewDto>> GetById(int reviewId)
+        public async Task<ActionResult<ReviewDto>> GetReview(int reviewId)
         {
             return await reviewManager.GetReview(reviewId);
         }
 
         [AllowAnonymous]
         [HttpGet("restaurant/{restaurantId}")]
-        public async Task<IEnumerable<ReviewDto>> GetRestraurantReviews(int restaurantId)
+        public async Task<IEnumerable<ReviewDto>> GetRestraurantReviewList(int restaurantId)
         {
-            return await reviewManager.GetRestaurantReviews(restaurantId);
+            return await reviewManager.GetRestaurantReviewList(restaurantId);
         }
 
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("myreviews")]
-        public async Task<IEnumerable<ReviewDto>> GetCurrentGuestReviews()
+        public async Task<IEnumerable<ReviewDto>> GetCurrentGuestReviewList()
         {
-            return await reviewManager.GetCurrentGuestReviews();
+            return await reviewManager.GetCurrentGuestReviewList();
         }
 
         [Authorize(Policy = UserRoles.Guest)]
@@ -54,7 +54,7 @@ namespace IRestaurant.Web.Controllers
         public async Task<ActionResult<ReviewDto>> AddReviewToRestaurant(int restaurantId, [FromBody] CreateReviewDto review)
         {
             var createdReview = await reviewManager.AddReviewToRestaurant(restaurantId, review);
-            return CreatedAtAction(nameof(GetById), new { id = createdReview }, createdReview);
+            return CreatedAtAction(nameof(GetReview), new { id = createdReview.Id }, createdReview);
         }
 
         [HttpDelete("{reviewId}")]

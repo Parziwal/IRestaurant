@@ -27,7 +27,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<FoodDto>> Get(int foodId)
+        public async Task<ActionResult<FoodDto>> GetFood(int foodId)
         {
            return await foodManager.GetFood(foodId);
         }

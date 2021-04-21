@@ -30,7 +30,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet]
         public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantOverviewList([FromQuery] string restaurantName = null)
         {
-            return await restaurantManager.GetRestaurantOverviews(restaurantName);
+            return await restaurantManager.GetRestaurantOverviewList(restaurantName);
         }
 
         [AllowAnonymous]
@@ -119,7 +119,7 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("favourite")]
         public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurants([FromQuery] string restaurantName = null)
         {
-            return await restaurantManager.GetUserFavouriteRestaurants(restaurantName);
+            return await restaurantManager.GetUserFavouriteRestaurantList(restaurantName);
         }
 
         [Authorize(Policy = UserRoles.Guest)]

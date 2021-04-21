@@ -29,14 +29,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return await dbContext.Entry(dbReview).ToReviewDto();
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
+        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviewList(int restaurantId)
         {
             return await dbContext.Reviews
                 .Where(r => r.RestaurantId == restaurantId)
                 .ToReviewDtoList();
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetGuestReviews(string guestId)
+        public async Task<IReadOnlyCollection<ReviewDto>> GetGuestReviewList(string guestId)
         {
             return await dbContext.Reviews
                 .Where(r => r.UserId == guestId)

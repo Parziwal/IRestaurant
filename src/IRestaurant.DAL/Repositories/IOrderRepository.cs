@@ -10,8 +10,8 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IOrderRepository
     {
-        Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviews(string userId);
-        Task<IReadOnlyCollection<OrderOverviewDto>> GetOrderOverviewBelongsToRestaurant(int restaurantId);
+        Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string userId);
+        Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId);
         Task<OrderDetailsDto> GetOrderDetails(int orderId);
         Task<OrderDetailsDto> CreateOrder(string userId, CreateOrder order);
         Task ChangeOrderStatus(int orderId, OrderStatus status);

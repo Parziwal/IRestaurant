@@ -47,11 +47,11 @@ namespace IRestaurant.BL.Managers
                 "A megadott azonosítóval rendelkező értékelés megtekintése korlátozva van.");
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviews(int restaurantId)
+        public async Task<IReadOnlyCollection<ReviewDto>> GetRestaurantReviewList(int restaurantId)
         {
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
-                return await reviewRepository.GetRestaurantReviews(restaurantId);
+                return await reviewRepository.GetRestaurantReviewList(restaurantId);
             }
 
             string userId = userRepository.GetCurrentUserId();
@@ -59,16 +59,16 @@ namespace IRestaurant.BL.Managers
 
             if (restaurantId == ownerRestaurantId)
             {
-                return await reviewRepository.GetRestaurantReviews(restaurantId);
+                return await reviewRepository.GetRestaurantReviewList(restaurantId);
             }
 
             return new List<ReviewDto>();
         }
 
-        public async Task<IReadOnlyCollection<ReviewDto>> GetCurrentGuestReviews()
+        public async Task<IReadOnlyCollection<ReviewDto>> GetCurrentGuestReviewList()
         {
             string userId = userRepository.GetCurrentUserId();
-            return await reviewRepository.GetGuestReviews(userId);
+            return await reviewRepository.GetGuestReviewList(userId);
         }
 
         public async Task<ReviewDto> AddReviewToRestaurant(int restaurantId, CreateReviewDto review)

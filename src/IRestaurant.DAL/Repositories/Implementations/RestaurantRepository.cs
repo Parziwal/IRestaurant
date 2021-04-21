@@ -20,7 +20,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             this.dbContext = dbContext;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
         {
             if (string.IsNullOrEmpty(restaurantName))
             {
@@ -130,7 +130,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return dbRestaurant.ShowForUsers;
         }
 
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId, string restaurantName = null)
+        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string userId, string restaurantName = null)
         {
             if (string.IsNullOrEmpty(restaurantName))
             {

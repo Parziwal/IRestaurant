@@ -10,7 +10,7 @@ namespace IRestaurant.DAL.Repositories
 {
     public interface IRestaurantRepository
     {
-        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviews(string restaurantName = null);
+        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null);
         Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId);
         Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId);
         Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant);
@@ -18,7 +18,7 @@ namespace IRestaurant.DAL.Repositories
         Task ChangeShowForUsersStatus(int restaurantId, bool value);
         Task ChangeOrderAvailableStatus(int restaurantId, bool value);
         Task<bool> IsRestaurantAvailableForUsers(int restaurantId);
-        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurants(string userId, string restaurantName = null);
+        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string userId, string restaurantName = null);
         Task AddRestaurantToUserFavourite(int restaurantId, string userId);
         Task RemoveRestaurantFromUserFavourite(int restaurantId, string userId);
         Task<bool> IsThisRestaurantGuestFavourite(int restaurantId, string guestId);
