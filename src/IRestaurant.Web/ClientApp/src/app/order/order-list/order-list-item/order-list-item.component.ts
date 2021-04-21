@@ -41,7 +41,7 @@ export class OrderListItemComponent implements OnInit {
 
   onCancelOrder() {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
-    dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"
+    dialogRef.componentInstance.confirmMessage = "Biztosan le szeretnéd mondani a rendelést?"
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) {

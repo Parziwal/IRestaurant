@@ -1,4 +1,7 @@
-<h2 class="menu-title">Étlap</h2>
+<div class="menu-header">
+    <h2 class="m-0">Étlap</h2>
+    <button type="button" class="btn btn-success" (click)="onOrderClicked()">Rendelés az étlapról</button>
+</div>
 <mat-accordion class="row justify-content-center">
     <div class="col-lg-6 my-1" *ngFor="let food of (restaurantMenu | async)">
         <mat-expansion-panel hideToggle>

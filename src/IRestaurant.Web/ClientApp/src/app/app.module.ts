@@ -38,6 +38,10 @@ import { InProgressOrdersPipe } from './order/order-list/pipes/processing-orders
 import { ClosedOrdersPipe } from './order/order-list/pipes/closed-orders.pipe';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { ChangeOrderStatusDialogComponent } from './order/order-list/order-list-item/change-order-status-dialog/change-order-status-dialog.component';
+import { CreateOrderComponent } from './order/create-order/create-order.component';
+import { ChooseFoodsComponent } from './order/create-order/choose-foods/choose-foods.component';
+import { DeliveryDetailsComponent } from './order/create-order/delivery-details/delivery-details.component';
+import { OrderFinalizationComponent } from './order/create-order/order-finalization/order-finalization.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,11 @@ import { ChangeOrderStatusDialogComponent } from './order/order-list/order-list-
     InProgressOrdersPipe,
     ClosedOrdersPipe,
     OrderDetailsComponent,
-    ChangeOrderStatusDialogComponent
+    ChangeOrderStatusDialogComponent,
+    CreateOrderComponent,
+    ChooseFoodsComponent,
+    DeliveryDetailsComponent,
+    OrderFinalizationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

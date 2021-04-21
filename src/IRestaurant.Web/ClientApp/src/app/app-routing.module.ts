@@ -4,6 +4,7 @@ import { UserRole } from "src/api-authorization/api-authorization.constants";
 import { AuthorizeGuard } from "src/api-authorization/authorize.guard";
 import { RoleGuard } from "src/api-authorization/role.guard";
 import { EditFoodListComponent } from "./food/edit-food-list/edit-food-list.component";
+import { CreateOrderComponent } from "./order/create-order/create-order.component";
 import { OrderDetailsComponent } from "./order/order-details/order-details.component";
 import { OrderListComponent } from "./order/order-list/order-list.component";
 import { EditRestaurantComponent } from "./restaurant/edit-restaurant/edit-restaurant.component";
@@ -28,9 +29,14 @@ const routes: Routes = [
       restaurantListType: RestaurantListType.Favourite,
     },
   },
-  { 
-    path: "restaurant/details/:id", 
-    component: RestaurantDetailsComponent },
+  {
+    path: "restaurant/details/:id",
+    component: RestaurantDetailsComponent
+  },
+  {
+    path: "restaurant/details/:id/order",
+    component: CreateOrderComponent
+  },
   {
     path: "myrestaurant",
     component: RestaurantDetailsComponent,
@@ -77,4 +83,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

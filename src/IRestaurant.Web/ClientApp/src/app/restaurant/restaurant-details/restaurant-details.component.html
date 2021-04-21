@@ -23,10 +23,10 @@
             <div class="row">
                 <div class="col restaurant-address">
                     <p><i>Tulajdonos: {{ restaurant.ownerName }}</i></p>
-                    <p class="m-0"><b>Cím</b></p>
+                    <h3>Cím</h3>
                     <ul>
-                        <li>{{ restaurant.restaurantAddress.city }}, {{ restaurant.restaurantAddress.zipCode }}</li>
-                        <li>{{ restaurant.restaurantAddress.street }}</li>
+                        <li>Város: {{ restaurant.restaurantAddress.city }}, {{ restaurant.restaurantAddress.zipCode }}</li>
+                        <li>Utca: {{ restaurant.restaurantAddress.street }}</li>
                         <li>Tel.: {{ restaurant.restaurantAddress.phoneNumber }}</li>
                     </ul>
                 </div>

@@ -1,8 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CreateOrder } from './models/create-order.type';
+import { DeliveryDetials } from './models/delivery-details.type';
 import { OrderDetails } from './models/order-details.type';
+import { OrderFoodWithId } from './models/order-food-with-id.type';
 import { OrderOverview } from './models/order-overview.type';
 import { OrderStatus } from './models/order-status.type';
 
@@ -11,6 +15,8 @@ import { OrderStatus } from './models/order-status.type';
 })
 export class OrderService {
   private baseUrl = environment.apiUrl + "orders/";
+  chosenFoodsChange = new Subject<OrderFoodWithId[]>();
+  deliveryDetailsChange = new Subject<DeliveryDetials>();
 
   constructor(private http: HttpClient) { }
 
@@ -51,6 +57,10 @@ export class OrderService {
     return this.http.patch(this.baseUrl + orderId, null, {
       params: params
     });
+  }
+
+  createOrder(createdOrder: CreateOrder) {
+    return this.http.post(this.baseUrl, createdOrder);
   }
 
   getOrderStatusInString(status: OrderStatus) {
