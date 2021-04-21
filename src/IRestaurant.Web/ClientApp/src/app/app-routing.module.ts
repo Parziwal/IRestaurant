@@ -35,7 +35,9 @@ const routes: Routes = [
   },
   {
     path: "restaurant/details/:id/order",
-    component: CreateOrderComponent
+    component: CreateOrderComponent,
+    canActivate: [RoleGuard],
+    data: { role: UserRole.Guest },
   },
   {
     path: "myrestaurant",
