@@ -67,9 +67,9 @@ namespace IRestaurant.Web.Controllers
         [HttpPost("myrestaurant/image")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UploadImageToMyRestaurant([FromForm] UploadImageDto uploadedImage)
+        public async Task<ActionResult> UploadMyRestaurantImage([FromForm] UploadImageDto uploadedImage)
         {
-            string relativeImagePath = await restaurantManager.UploadImageToMyRestaurant(uploadedImage);
+            string relativeImagePath = await restaurantManager.UploadMyRestaurantImage(uploadedImage);
             return Ok(new { relativeImagePath });
         }
 

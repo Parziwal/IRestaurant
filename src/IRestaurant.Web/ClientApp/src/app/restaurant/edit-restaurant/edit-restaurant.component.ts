@@ -108,7 +108,7 @@ export class EditRestaurantComponent implements OnInit {
   }
 
   onImagePicked(pickedImage: File) {
-    this.restaurantService.uploadImageToMyRestaurant(pickedImage).subscribe(
+    this.restaurantService.uploadImageMyRestaurant(pickedImage).subscribe(
       (imageData: {relativeImagePath: string}) => {
         this.restaurant.imagePath = imageData.relativeImagePath
         this.toastr.success("Az étterem profil képe feltöltésre került.")

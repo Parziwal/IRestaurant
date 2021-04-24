@@ -15,7 +15,7 @@ namespace IRestaurant.DAL.Repositories
         Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId);
         Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId);
         Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant);
-        Task<string> UploadImageToRestaurant(int restaurantId, UploadImageDto uploadedImage);
+        Task<string> UploadRestaurantImage(int restaurantId, UploadImageDto uploadedImage);
         Task DeleteRestaurantImage(int restaurantId);
         Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId);
         Task ChangeShowForUsersStatus(int restaurantId, bool value);

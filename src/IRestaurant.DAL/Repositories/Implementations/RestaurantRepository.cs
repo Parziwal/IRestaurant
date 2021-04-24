@@ -95,7 +95,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
 
-        public async Task<string> UploadImageToRestaurant(int restaurantId, UploadImageDto uploadedImage)
+        public async Task<string> UploadRestaurantImage(int restaurantId, UploadImageDto uploadedImage)
         {
             var dbRestaurant = (await dbContext.Restaurants
                         .SingleOrDefaultAsync(r => r.Id == restaurantId))

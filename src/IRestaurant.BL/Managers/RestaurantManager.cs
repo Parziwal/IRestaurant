@@ -67,12 +67,12 @@ namespace IRestaurant.BL.Managers
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
 
-        public async Task<string> UploadImageToMyRestaurant(UploadImageDto uploadedImage)
+        public async Task<string> UploadMyRestaurantImage(UploadImageDto uploadedImage)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
-            return await restaurantRepository.UploadImageToRestaurant(ownerRestaurantId, uploadedImage);
+            return await restaurantRepository.UploadRestaurantImage(ownerRestaurantId, uploadedImage);
         }
 
         public async Task DeleteMyRestaurantImage()

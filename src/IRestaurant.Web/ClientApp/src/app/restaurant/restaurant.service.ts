@@ -38,7 +38,7 @@ export class RestaurantService {
     return this.http.put<RestaurantDetails>(this.baseUrl + "myrestaurant", editedRestaurant);
   }
 
-  uploadImageToMyRestaurant(image: File) {
+  uploadImageMyRestaurant(image: File) {
     const imageFormData = new FormData();
     imageFormData.append('imageFile', image);
     return this.http.post<{relativeImagePath: string}>(this.baseUrl + "myrestaurant/image", imageFormData);
