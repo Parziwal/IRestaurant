@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 import { updateImportEqualsDeclaration } from 'typescript';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
@@ -106,5 +107,22 @@ export class EditRestaurantComponent implements OnInit {
         phoneNumber: restaurantData.restaurantAddress.phoneNumber
       }
     });
+  }
+
+  onImagePicked(pickedImage: File) {
+    this.restaurantService.uploadImageToMyRestaurant(pickedImage).subscribe(
+      (imageData: {relativeImagePath: string}) => {
+        this.restaurant.imagePath = imageData.relativeImagePath
+        this.toastr.success("Az étterem profil képe feltöltésre került.")
+      }
+    );
+  }
+
+  onImageDeleted() {
+    this.restaurantService.deleteMyRestaurantImage().subscribe(
+      () => {
+        this.toastr.success("Az étterem profil képe törlésre került.")
+      }
+    );
   }
 }

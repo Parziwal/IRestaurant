@@ -55,7 +55,7 @@ namespace IRestaurant.Web.Controllers
         public async Task<ActionResult<FoodDto>> AddFoodToRestaurantMenu([FromBody] CreateFoodDto food)
         {
             var createdFood =  await foodManager.AddFoodToMenu(food);
-            return CreatedAtAction(nameof(Get), new { id = createdFood.Id }, createdFood);
+            return CreatedAtAction(nameof(GetFood), new { id = createdFood.Id }, createdFood);
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]

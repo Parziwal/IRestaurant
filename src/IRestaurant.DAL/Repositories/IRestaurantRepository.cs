@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IRestaurant.DAL;
+using IRestaurant.DAL.DTO;
 using IRestaurant.DAL.DTO.Restaurants;
 
 namespace IRestaurant.DAL.Repositories
@@ -14,6 +15,8 @@ namespace IRestaurant.DAL.Repositories
         Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId);
         Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId);
         Task<RestaurantDetailsDto> EditRestaurant(int restaurantId, EditRestaurantDto editRestaurant);
+        Task<string> UploadImageToRestaurant(int restaurantId, UploadImageDto uploadedImage);
+        Task DeleteRestaurantImage(int restaurantId);
         Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId);
         Task ChangeShowForUsersStatus(int restaurantId, bool value);
         Task ChangeOrderAvailableStatus(int restaurantId, bool value);

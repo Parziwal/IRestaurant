@@ -38,6 +38,16 @@ export class RestaurantService {
     return this.http.put<RestaurantDetails>(this.baseUrl + "myrestaurant", editedRestaurant);
   }
 
+  uploadImageToMyRestaurant(image: File) {
+    const imageFormData = new FormData();
+    imageFormData.append('imageFile', image);
+    return this.http.post<{relativeImagePath: string}>(this.baseUrl + "myrestaurant/image", imageFormData);
+  }
+
+  deleteMyRestaurantImage() {
+    return this.http.delete(this.baseUrl + "myrestaurant/image");
+  }
+
   getMyRestaurantSettings() {
     return this.http.get<RestaurantSettings>(this.baseUrl + "myrestaurant/settings");
   }

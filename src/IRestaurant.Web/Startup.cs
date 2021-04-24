@@ -107,6 +107,7 @@ namespace IRestaurant.Web
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+            services.AddTransient<IImageRepository, ImageRepository>();
 
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();

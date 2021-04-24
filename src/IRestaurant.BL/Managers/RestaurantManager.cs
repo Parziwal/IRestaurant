@@ -9,6 +9,7 @@ using System.Transactions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Hellang.Middleware.ProblemDetails;
+using IRestaurant.DAL.DTO;
 
 namespace IRestaurant.BL.Managers
 {
@@ -65,6 +66,23 @@ namespace IRestaurant.BL.Managers
 
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
+
+        public async Task<string> UploadImageToMyRestaurant(UploadImageDto uploadedImage)
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+
+            return await restaurantRepository.UploadImageToRestaurant(ownerRestaurantId, uploadedImage);
+        }
+
+        public async Task DeleteMyRestaurantImage()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+
+            await restaurantRepository.DeleteRestaurantImage(ownerRestaurantId);
+        }
+
         public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
         {
             string userId = userRepository.GetCurrentUserId();

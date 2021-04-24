@@ -42,6 +42,7 @@ import { CreateOrderComponent } from './order/create-order/create-order.componen
 import { ChooseFoodsComponent } from './order/create-order/choose-foods/choose-foods.component';
 import { DeliveryDetailsComponent } from './order/create-order/delivery-details/delivery-details.component';
 import { OrderFinalizationComponent } from './order/create-order/order-finalization/order-finalization.component';
+import { ImagePickerComponent } from './shared/components/image-picker/image-picker.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { OrderFinalizationComponent } from './order/create-order/order-finalizat
     CreateOrderComponent,
     ChooseFoodsComponent,
     DeliveryDetailsComponent,
-    OrderFinalizationComponent
+    OrderFinalizationComponent,
+    ImagePickerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

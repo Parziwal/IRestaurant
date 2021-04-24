@@ -1,5 +1,6 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO;
 using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
     public class RestaurantRepository : IRestaurantRepository
     {
         private readonly ApplicationDbContext dbContext;
-        public RestaurantRepository(ApplicationDbContext dbContext)
+        private readonly IImageRepository imageRepository;
+        public RestaurantRepository(ApplicationDbContext dbContext, IImageRepository imageRepository)
         {
             this.dbContext = dbContext;
+            this.imageRepository = imageRepository;
         }
 
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
@@ -86,12 +89,39 @@ namespace IRestaurant.DAL.Repositories.Implementations
             dbRestaurant.Address.City = editRestaurant.Address.City;
             dbRestaurant.Address.Street = editRestaurant.Address.Street;
             dbRestaurant.Address.PhoneNumber = editRestaurant.Address.PhoneNumber;
-            //TODO: képfeltöltés
 
             await dbContext.SaveChangesAsync();
 
             return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
+
+        public async Task<string> UploadImageToRestaurant(int restaurantId, UploadImageDto uploadedImage)
+        {
+            var dbRestaurant = (await dbContext.Restaurants
+                        .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                        .CheckIfRestaurantNull();
+
+            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "Restaurant");
+            imageRepository.DeleteImage(dbRestaurant.ImagePath);
+            dbRestaurant.ImagePath = relativeImagePath;
+
+            await dbContext.SaveChangesAsync();
+
+            return relativeImagePath;
+        }
+
+        public async Task DeleteRestaurantImage(int restaurantId)
+        {
+            var dbRestaurant = (await dbContext.Restaurants
+                        .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                        .CheckIfRestaurantNull();
+
+            imageRepository.DeleteImage(dbRestaurant.ImagePath);
+            dbRestaurant.ImagePath = null;
+
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<RestaurantSettingsDto> GetRestaurantSettings(int restaurantId)
         {
             var dbRestaurant = (await dbContext.Restaurants

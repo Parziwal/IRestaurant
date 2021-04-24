@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO;
 
 namespace IRestaurant.Web.Controllers
 {
@@ -60,6 +61,26 @@ namespace IRestaurant.Web.Controllers
         public async Task<ActionResult<RestaurantDetailsDto>> EditMyRestaurant([FromBody]EditRestaurantDto editRestaurant)
         {
             return await restaurantManager.EditMyRestaurant(editRestaurant);
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpPost("myrestaurant/image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UploadImageToMyRestaurant([FromForm] UploadImageDto uploadedImage)
+        {
+            string relativeImagePath = await restaurantManager.UploadImageToMyRestaurant(uploadedImage);
+            return Ok(new { relativeImagePath });
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpDelete("myrestaurant/image")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteMyRestauantImage()
+        {
+            await restaurantManager.DeleteMyRestaurantImage();
+            return NoContent();
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]

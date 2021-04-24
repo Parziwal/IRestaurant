@@ -2,6 +2,11 @@
 <ng-template #form>
   <div class="row justify-content-center">
     <div class="col-md-10 col-lg-7">
+      <p class="mb-2">Étterem profil képe</p>
+      <app-image-picker [imagePreview]="restaurant.imagePath" (imagePicked)="onImagePicked($event)"
+        (imageDeleted)="onImageDeleted()">
+      </app-image-picker>
+      <hr>
       <form [formGroup]="restaurantForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>Étterem neve</mat-label>
@@ -28,6 +33,7 @@
             getErrorMessage("detailedDescription")
             }}</mat-error>
         </mat-form-field>
+
         <div formGroupName="address" class="row">
           <mat-form-field appearance="outline" class="col-md-4">
             <mat-label>Irányítószám</mat-label>
@@ -58,6 +64,7 @@
               }}</mat-error>
           </mat-form-field>
         </div>
+
         <div class="row justify-content-between">
           <div class="col-md-4 mb-3">
             <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!restaurantDataChanged">Mentés</button>
@@ -66,6 +73,7 @@
             <button type="button" class="btn btn-secondary btn-lg btn-block" (click)="restoreClicked()">Visszaállítás</button>
           </div>
         </div>
+
       </form>
     </div>
   </div>
