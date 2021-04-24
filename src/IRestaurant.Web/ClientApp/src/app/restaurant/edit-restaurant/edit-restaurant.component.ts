@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
-import { updateImportEqualsDeclaration } from 'typescript';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
 

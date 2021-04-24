@@ -1,7 +1,10 @@
 <form [formGroup]="imageForm">
     <div class="row">
-        <div *ngIf="imagePreview != null" class="col-12 d-flex justify-content-center">
-            <img class="img-fluid image-preview" [src]="imagePreview">
+        <div class="col-12 d-flex justify-content-center">
+            <img *ngIf="imagePreview != null" class="img-fluid image-preview" [src]="imagePreview">
+            <div *ngIf="imagePreview == null" class="col-12 empty-image">
+                Nincs kiválasztott kép
+            </div>
         </div>
         <div class="col-12">
             <input type="file" class="d-none" #filePicker accept="image/*" (change)="onImagePicked($event)">

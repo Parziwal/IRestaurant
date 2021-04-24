@@ -1,5 +1,6 @@
 ﻿using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO;
 using IRestaurant.DAL.DTO.Foods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -56,6 +57,28 @@ namespace IRestaurant.Web.Controllers
         {
             var createdFood =  await foodManager.AddFoodToMenu(food);
             return CreatedAtAction(nameof(GetFood), new { id = createdFood.Id }, createdFood);
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpPost("{foodId}/image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> UploadFoodImage(int foodId, [FromForm] UploadImageDto uploadedImage)
+        {
+            string relativeImagePath = await foodManager.UploadFoodImage(foodId, uploadedImage);
+            return Ok(new { relativeImagePath });
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpDelete("{foodId}/image")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> DeleteFoodImage(int foodId)
+        {
+            await foodManager.DeleteFoodImage(foodId);
+            return NoContent();
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]

@@ -1,4 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
+using IRestaurant.DAL.DTO;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -78,6 +79,37 @@ namespace IRestaurant.BL.Managers
             int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             return await foodRepository.AddFoodToMenu(ownerRestaurantId, food);
+        }
+
+        public async Task<string> UploadFoodImage(int foodId, UploadImageDto uploadedImage)
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
+
+            if (ownerRestaurantId == foodRestaurantId)
+            {
+                return await foodRepository.UploadFoodImage(foodId, uploadedImage);
+            }
+
+            throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "A megadott azonosítóval rendelkező étel képének megváltoztatásához nincs jogosultságod.");
+        }
+
+        public async Task DeleteFoodImage(int foodId)
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
+
+            if (ownerRestaurantId == foodRestaurantId)
+            {
+                await foodRepository.DeleteFoodImage(foodId);
+                return;
+            }
+
+            throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                   "A megadott azonosítóval rendelkező étel képének törléséhez nincs jogosultságod.");
         }
 
         public async Task DeleteFoodFromMenu(int foodId)

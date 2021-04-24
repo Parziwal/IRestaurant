@@ -43,6 +43,7 @@ import { ChooseFoodsComponent } from './order/create-order/choose-foods/choose-f
 import { DeliveryDetailsComponent } from './order/create-order/delivery-details/delivery-details.component';
 import { OrderFinalizationComponent } from './order/create-order/order-finalization/order-finalization.component';
 import { ImagePickerComponent } from './shared/components/image-picker/image-picker.component';
+import { UploadFoodImageDialogComponent } from './food/edit-food-list/upload-food-image-dialog/upload-food-image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ImagePickerComponent } from './shared/components/image-picker/image-pic
     ChooseFoodsComponent,
     DeliveryDetailsComponent,
     OrderFinalizationComponent,
-    ImagePickerComponent
+    ImagePickerComponent,
+    UploadFoodImageDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

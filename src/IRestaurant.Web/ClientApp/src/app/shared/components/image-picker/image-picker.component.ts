@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { mimeType } from '../../validators/mime-type.validator';
 
 @Component({

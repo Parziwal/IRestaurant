@@ -30,6 +30,16 @@ export class FoodService {
     return this.http.post<Food>(this.baseUrl, createdFood);
   }
 
+  uploadFoodImage(foodId: number, image: File) {
+    const imageFormData = new FormData();
+    imageFormData.append('imageFile', image);
+    return this.http.post<{relativeImagePath: string}>(`${this.baseUrl}${foodId}/image`, imageFormData);
+  }
+
+  deleteFoodImage(foodId: number) {
+    return this.http.delete(`${this.baseUrl}${foodId}/image`);
+  }
+
   editFood(foodId: number, editedFood: EditFood) {
     return this.http.put<Food>(this.baseUrl + foodId, editedFood);
   }

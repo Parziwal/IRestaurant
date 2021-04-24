@@ -1,5 +1,6 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
     public class FoodRepository : IFoodRepository
     {
         private readonly ApplicationDbContext dbContext;
-        public FoodRepository(ApplicationDbContext dbContext)
+        private readonly IImageRepository imageRepository;
+        public FoodRepository(ApplicationDbContext dbContext, IImageRepository imageRepository)
         {
             this.dbContext = dbContext;
+            this.imageRepository = imageRepository;
         }
 
         public async Task<FoodDto> GetFood(int foodId)
@@ -53,6 +56,33 @@ namespace IRestaurant.DAL.Repositories.Implementations
             await dbContext.SaveChangesAsync();
 
             return await dbContext.Entry(dbFood).ToFoodDto();
+        }
+
+        public async Task<string> UploadFoodImage(int foodId, UploadImageDto uploadedImage)
+        {
+            var dbFood = (await dbContext.Foods
+                        .SingleOrDefaultAsync(f => f.Id == foodId))
+                        .CheckIfFoodNull();
+
+            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "Food");
+            imageRepository.DeleteImage(dbFood.ImagePath);
+            dbFood.ImagePath = relativeImagePath;
+
+            await dbContext.SaveChangesAsync();
+
+            return relativeImagePath;
+        }
+
+        public async Task DeleteFoodImage(int foodId)
+        {
+            var dbFood = (await dbContext.Foods
+                        .SingleOrDefaultAsync(f => f.Id == foodId))
+                        .CheckIfFoodNull();
+
+            imageRepository.DeleteImage(dbFood.ImagePath);
+            dbFood.ImagePath = null;
+
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteFoodFromMenu(int foodId)

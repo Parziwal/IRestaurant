@@ -21,6 +21,9 @@
         </mat-expansion-panel-header>
         <p class="text-muted food-details">{{ food.description }}</p>
         <mat-action-row>
+            <button type="button" class="btn btn-success p-3 mr-3" (click)="onImageUpload(food)">
+                <fa-icon [icon]="faUpload"></fa-icon> Kép feltöltés
+            </button>
             <button type="button" class="btn btn-primary p-3 mr-3" (click)="editFood(food)">
                 <fa-icon [icon]="faEdit"></fa-icon> Szerkesztés
             </button>
