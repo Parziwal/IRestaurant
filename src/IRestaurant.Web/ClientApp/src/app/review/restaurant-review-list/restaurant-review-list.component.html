@@ -11,6 +11,9 @@
         </ng-container>
     </div>
     <div class="col-lg-8">
+        <div *ngIf="(reviews | async)?.length === 0">
+            <h1 class="text-center mt-3">Nincs találat</h1>
+        </div>
         <app-restaurant-review-list-item *ngFor="let review of (reviews | async)" [review]="review">
         </app-restaurant-review-list-item>
     </div>
