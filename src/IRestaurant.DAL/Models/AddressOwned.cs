@@ -22,6 +22,7 @@ namespace IRestaurant.DAL.Models
         public string Street { get; set; }
         [Required]
         [Phone]
+        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}")]
         public string PhoneNumber { get; set; }
     }
 }
