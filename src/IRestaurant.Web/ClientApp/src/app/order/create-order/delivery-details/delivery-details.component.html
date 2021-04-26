@@ -4,7 +4,8 @@
             <div class="row">
                 <mat-form-field appearance="outline" class="col-12">
                     <mat-label>Kívánt kiszállítási dátum</mat-label>
-                    <input matInput type="datetime-local" formControlName="preferredDeliveryDate">
+                    <input matInput type="datetime-local" formControlName="preferredDeliveryDate"
+                        [min]="minDateTime | date: 'yyyy-MM-ddThh:mm'">
                     <mat-error *ngIf="deliveryForm.get('preferredDeliveryDate').invalid">{{
                       getErrorMessage("preferredDeliveryDate")
                       }}</mat-error>

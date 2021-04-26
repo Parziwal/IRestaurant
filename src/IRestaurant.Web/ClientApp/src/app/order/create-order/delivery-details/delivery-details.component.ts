@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UserAddressWithId } from 'src/app/shared/models/user-address-with-id.type';
+import { dateTimeMin } from 'src/app/shared/validators/date-time-min.validator';
 import { UserService } from 'src/app/user/user.service';
 import { OrderService } from '../../order.service';
 
@@ -16,6 +17,8 @@ export class DeliveryDetailsComponent implements OnInit {
   selectedAddressId: number = -1;
   guestAddresses: Observable<UserAddressWithId[]> = new Observable();
   @Output()  completed = new EventEmitter<boolean>();
+  minHourAfterOrder: number = 6;
+  minDateTime: Date = new Date(new Date().setHours(new Date().getHours() + this.minHourAfterOrder));
 
   constructor(private userService: UserService,
     private orderService: OrderService) { }
@@ -27,7 +30,7 @@ export class DeliveryDetailsComponent implements OnInit {
 
   private initForm() {
     this.deliveryForm = new FormGroup({
-        preferredDeliveryDate: new FormControl(null, [Validators.required]),
+        preferredDeliveryDate: new FormControl(null, [Validators.required, dateTimeMin(this.minDateTime)]),
         address: new FormGroup({
           zipCode: new FormControl(null, [Validators.required, Validators.min(1000), Validators.max(9999)]),
           city: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
@@ -75,6 +78,9 @@ export class DeliveryDetailsComponent implements OnInit {
     if (this.deliveryForm.get(controlName).hasError("min")) {
       return `A mező értéke nem lehet kisebb mint ${this.deliveryForm.get(controlName).errors.min.min}!`;
     }
+    if (this.deliveryForm.get(controlName).hasError("dateTimeMin")) {
+      return `A kívánt kiszállítási időnek minimum ${this.minHourAfterOrder} órával a rendelés leadása után kell lennie!`;
+    }
   }
 
   onSubmit() {
@@ -96,3 +102,4 @@ export class DeliveryDetailsComponent implements OnInit {
     }});
   }
 }
+

@@ -15,6 +15,7 @@ namespace IRestaurant.BL.Managers
     {
         private readonly IOrderRepository orderRepository;
         private readonly IUserRepository userRepository;
+        private const int minHourAfterOrder = 6;
         public OrderManager(IOrderRepository orderRepository,
             IUserRepository userRepository)
         {
@@ -53,6 +54,12 @@ namespace IRestaurant.BL.Managers
 
         public async Task<OrderDetailsDto> CreateOrder(CreateOrder order)
         {
+            if (order.PreferredDeliveryDate > new DateTime().AddHours(minHourAfterOrder))
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                $"A kívánt kiszállítási időnek minimum {minHourAfterOrder} órával a rendelés leadása után kell lennie.");
+            }
+
             string userId = userRepository.GetCurrentUserId();
             return await orderRepository.CreateOrder(userId, order);
         }

@@ -26,6 +26,7 @@ export class RestaurantMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRestaurantMenu();
+    this.getCurrentUserRole();
   }
 
   private getRestaurantMenu() {
