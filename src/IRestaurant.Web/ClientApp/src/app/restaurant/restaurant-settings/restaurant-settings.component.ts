@@ -27,16 +27,15 @@ export class RestaurantSettingsComponent {
   }
 
   showForUsersStatusChanged() {
-    this.isOrderAvailable = this.showForUsers;
     if (this.showForUsers) {
       this.restaurantService.showMyRestaurantForUsers().subscribe(
         ok => {},
         error => {
           this.showForUsers = !this.showForUsers
-          this.isOrderAvailable = this.showForUsers;
         }
       );
     } else {
+      this.isOrderAvailable = this.showForUsers;
       this.restaurantService.hideMyRestaurantForUsers().subscribe(
         ok => {},
         error => {

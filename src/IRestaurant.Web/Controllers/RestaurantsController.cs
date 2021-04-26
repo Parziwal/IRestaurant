@@ -99,7 +99,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> ShowMyRestaurantForUsers()
         {
-            await restaurantManager.ChangeMyRestaurantShowStatus(true);
+            await restaurantManager.ShowMyRestaurantForUsers();
             return Ok();
         }
 
@@ -110,7 +110,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> HideMyRestaurantFromUsers()
         {
-            await restaurantManager.ChangeMyRestaurantShowStatus(false);
+            await restaurantManager.HideMyRestaurantForUsers();
             return Ok();
         }
 
@@ -121,7 +121,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOnOrderOption()
         {
-            await restaurantManager.ChangeMyRestaurantOrderStatus(true);
+            await restaurantManager.TurnOnMyRestaurantOrderStatus();
             return Ok();
         }
 
@@ -132,7 +132,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
-            await restaurantManager.ChangeMyRestaurantOrderStatus(false);
+            await restaurantManager.TurnOffMyRestaurantOrderStatus();
             return Ok();
         }
 

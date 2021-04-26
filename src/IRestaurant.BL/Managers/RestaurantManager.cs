@@ -17,11 +17,14 @@ namespace IRestaurant.BL.Managers
     {
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
+        private readonly IFoodRepository foodRepository;
         public RestaurantManager(IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IFoodRepository foodRepository)
         {
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.foodRepository = foodRepository;
         }
 
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
@@ -91,32 +94,58 @@ namespace IRestaurant.BL.Managers
             return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
         }
 
-        public async Task ChangeMyRestaurantShowStatus(bool value)
+        public async Task ShowMyRestaurantForUsers()
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
+
+            await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, true);
+        }
+
+        public async Task HideMyRestaurantForUsers()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
 
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
               new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
               TransactionScopeAsyncFlowOption.Enabled))
             {
-                await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, value);
-                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+                await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, false);
+                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
 
                 transaction.Complete();
             }
         }
 
-        public async Task ChangeMyRestaurantOrderStatus(bool value)
+        public async Task TurnOnMyRestaurantOrderStatus()
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
-            
-            await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
-            await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, value);
+
+            if (!await restaurantRepository.IsRestaurantAvailableForUsers(ownerRestaurantId))
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "A rendelési lehetőség engedélyezése nem lehetséges, amíg az étterem nem elérető.");
+            }
+            if ((await foodRepository.GetRestaurantMenu(ownerRestaurantId)).Count == 0)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "A rendelési lehetőség engedélyezése nem lehetséges, amíg az étlap üres.");
+            }
+
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, true);
+        }
+
+        public async Task TurnOffMyRestaurantOrderStatus()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
         }
 
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string restaurantName = null)
@@ -148,7 +177,7 @@ namespace IRestaurant.BL.Managers
                 || string.IsNullOrEmpty(restaurant.RestaurantAddress.PhoneNumber))
             {
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                    "Az étterem elérhetővé tétele és/vagy a rendelési lehetőség engedélyezése nem lehetséges, amíg a kötelező adatok nem kerülnek kitöltésre.");
+                    "Az étterem elérhetővé tétele nem lehetséges, amíg a kötelező adatok nem kerülnek kitöltésre.");
             }
         }
     }
