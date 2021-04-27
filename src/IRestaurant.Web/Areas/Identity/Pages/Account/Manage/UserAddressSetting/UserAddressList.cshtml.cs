@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace IRestaurant.Areas.Identity.Pages.Account.Manage.UserAddressSetting
+namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
     public class UserAddressListModel : PageModel
     {
