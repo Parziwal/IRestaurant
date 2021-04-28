@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
+    [Authorize(Policy = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
