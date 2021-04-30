@@ -1,8 +1,5 @@
-﻿using IRestaurant.DAL.DTO;
-using System;
+﻿using IRestaurant.DAL.DTO.Addresses;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories

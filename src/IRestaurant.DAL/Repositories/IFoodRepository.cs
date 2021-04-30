@@ -1,9 +1,6 @@
-﻿using IRestaurant.DAL.DTO;
-using IRestaurant.DAL.DTO.Foods;
-using System;
+﻿using IRestaurant.DAL.DTO.Foods;
+using IRestaurant.DAL.DTO.Images;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories

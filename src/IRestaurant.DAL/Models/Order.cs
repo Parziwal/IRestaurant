@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.Models
     {
         public int Id { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime CreatedAt { get; set; }
         [Required]
         public DateTime PreferredDeliveryDate { get; set; }
         [Required]

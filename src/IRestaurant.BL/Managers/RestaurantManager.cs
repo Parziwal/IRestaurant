@@ -1,15 +1,11 @@
 ﻿using IRestaurant.DAL.Repositories;
 using IRestaurant.DAL.DTO.Restaurants;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 using Hellang.Middleware.ProblemDetails;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Images;
 
 namespace IRestaurant.BL.Managers
 {

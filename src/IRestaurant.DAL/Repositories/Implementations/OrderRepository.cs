@@ -48,7 +48,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             var dbOrder = new Order
             {
-                Date = DateTime.Now,
+                CreatedAt = DateTime.Now,
                 PreferredDeliveryDate = order.PreferredDeliveryDate,
                 Status = OrderStatus.PROCESSING,
                 UserId = userId

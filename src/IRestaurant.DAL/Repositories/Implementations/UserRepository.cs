@@ -1,15 +1,13 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories.Implementations

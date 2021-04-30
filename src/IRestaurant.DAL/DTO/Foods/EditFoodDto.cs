@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO.Foods
 {
@@ -16,6 +12,5 @@ namespace IRestaurant.DAL.DTO.Foods
         [Required]
         [StringLength(1000)]
         public string Description { get; set; }
-        public IFormFile Image { get; set; }
     }
 }

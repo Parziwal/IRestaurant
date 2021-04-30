@@ -1,12 +1,9 @@
 ﻿using IRestaurant.DAL.Repositories;
-using IRestaurant.DAL.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
+using IRestaurant.DAL.DTO.Addresses;
 
 namespace IRestaurant.BL.Managers
 {

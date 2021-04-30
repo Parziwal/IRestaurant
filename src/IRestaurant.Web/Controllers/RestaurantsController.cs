@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Images;
 
 namespace IRestaurant.Web.Controllers
 {

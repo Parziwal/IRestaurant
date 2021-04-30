@@ -216,7 +216,7 @@ namespace IRestaurant.DAL.Data
             {
                 var dbOrder = new Order
                 {
-                    Date = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                     PreferredDeliveryDate = DateTime.Now.AddDays(10),
                     Status = (OrderStatus)r.Next(0, 5),
                     User = users[i]

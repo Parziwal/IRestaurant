@@ -1,12 +1,10 @@
 ﻿using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
-using IRestaurant.DAL.DTO;
+using IRestaurant.DAL.DTO.Addresses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers

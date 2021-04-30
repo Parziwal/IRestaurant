@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using IRestaurant.DAL.DTO.Addresses;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO.Restaurants
 {
@@ -18,7 +14,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public string ShortDescription { get; set; }
         [StringLength(10000)]
         public string DetailedDescription { get; set; }
-        public IFormFile Image { get; set; }
         [Required]
         public CreateOrEditAddressDto Address { get; set; }
     }

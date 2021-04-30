@@ -1,10 +1,8 @@
-﻿using IRestaurant.DAL.Models;
+﻿using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.DTO.Orders
 {
@@ -24,7 +22,7 @@ namespace IRestaurant.DAL.DTO.Orders
         public OrderDetailsDto(Order order)
         {
             this.Id = order.Id;
-            this.Date = order.Date;
+            this.Date = order.CreatedAt;
             this.PreferredDeliveryDate = order.PreferredDeliveryDate;
             this.Status = order.Status;
             this.Total = order.OrderFoods.Sum(of => of.Amount * of.Price);
