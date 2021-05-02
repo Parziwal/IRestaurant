@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
+    [Authorize(Roles = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;

@@ -86,10 +86,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task DeleteFoodFromMenu(int foodId)
         {
             var dbFood = (await dbContext.Foods
+                            .Include(f => f.OrderFoods)
                             .SingleOrDefaultAsync(f => f.Id == foodId))
                             .CheckIfFoodNull();
 
-            dbContext.Remove(dbFood);
+            if (dbFood.OrderFoods.Any())
+            {
+                dbFood.IsDeleted = true;
+            }
+            else
+            {
+                dbContext.Remove(dbFood);
+            }
+            
             await dbContext.SaveChangesAsync();
         }
 

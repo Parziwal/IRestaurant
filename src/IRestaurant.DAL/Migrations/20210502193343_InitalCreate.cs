@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace IRestaurant.DAL.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -198,7 +198,7 @@ namespace IRestaurant.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PreferredDeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
@@ -273,15 +273,15 @@ namespace IRestaurant.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserFullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    UserAddress_ZipCode = table.Column<int>(type: "int", nullable: true),
-                    UserAddress_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    UserAddress_Street = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    UserAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserAddress_ZipCode = table.Column<int>(type: "int", nullable: false),
+                    UserAddress_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    UserAddress_Street = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    UserAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RestaurantName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RestaurantAddress_ZipCode = table.Column<int>(type: "int", nullable: true),
-                    RestaurantAddress_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RestaurantAddress_Street = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    RestaurantAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RestaurantAddress_ZipCode = table.Column<int>(type: "int", nullable: false),
+                    RestaurantAddress_City = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    RestaurantAddress_Street = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    RestaurantAddress_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -301,7 +301,7 @@ namespace IRestaurant.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RestaurantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -312,7 +312,7 @@ namespace IRestaurant.DAL.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FavouriteRestaurant_Restaurant_RestaurantId",
                         column: x => x.RestaurantId,
@@ -331,6 +331,7 @@ namespace IRestaurant.DAL.Migrations
                     Price = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     RestaurantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -393,7 +394,7 @@ namespace IRestaurant.DAL.Migrations
                         column: x => x.FoodId,
                         principalTable: "Food",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrderFood_Order_OrderId",
                         column: x => x.OrderId,

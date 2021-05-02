@@ -100,6 +100,7 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -125,6 +126,9 @@ namespace IRestaurant.DAL.Migrations
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -179,7 +183,7 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("PreferredDeliveryDate")
@@ -573,7 +577,9 @@ namespace IRestaurant.DAL.Migrations
 
                     b.HasOne("IRestaurant.DAL.Models.ApplicationUser", "User")
                         .WithMany("FavouriteRestaurants")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Restaurant");
 
@@ -665,9 +671,11 @@ namespace IRestaurant.DAL.Migrations
 
                     b.Navigation("Order");
 
-                    b.Navigation("RestaurantAddress");
+                    b.Navigation("RestaurantAddress")
+                        .IsRequired();
 
-                    b.Navigation("UserAddress");
+                    b.Navigation("UserAddress")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
@@ -685,9 +693,7 @@ namespace IRestaurant.DAL.Migrations
                 {
                     b.HasOne("IRestaurant.DAL.Models.Food", "Food")
                         .WithMany("OrderFoods")
-                        .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FoodId");
 
                     b.HasOne("IRestaurant.DAL.Models.Order", "Order")
                         .WithMany("OrderFoods")

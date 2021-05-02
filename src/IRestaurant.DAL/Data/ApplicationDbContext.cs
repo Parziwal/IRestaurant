@@ -37,6 +37,9 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Review>().ToTable("Review");
             modelBuilder.Entity<Invoice>().ToTable("Invoice");
             modelBuilder.Entity<FavouriteRestaurant>().ToTable("FavouriteRestaurant");
+
+            modelBuilder.Entity<Food>().HasMany(f => f.OrderFoods).WithOne(of => of.Food).IsRequired(false);
+            modelBuilder.Entity<Food>().HasQueryFilter(e => !e.IsDeleted);
         }
     }
 }

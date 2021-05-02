@@ -112,6 +112,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<int> GetOrderRestaurantId(int orderId)
         {
             var dbOrder = (await dbContext.Orders
+                            .IgnoreQueryFilters()
                             .Include(o => o.OrderFoods)
                             .ThenInclude(of => of.Food)
                             .SingleOrDefaultAsync(o => o.Id == orderId))
