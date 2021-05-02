@@ -46,6 +46,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         public async Task<OrderDetailsDto> CreateOrder(string userId, CreateOrder order)
         {
+            if (!order.OrderFoods.Any())
+            {
+                throw new EntityNotFoundException("A rendelésben egyetlen tétel sem szerepel.");
+            }
+
             var dbOrder = new Order
             {
                 CreatedAt = DateTime.Now,
