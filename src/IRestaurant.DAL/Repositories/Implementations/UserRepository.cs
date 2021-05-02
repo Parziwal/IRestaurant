@@ -67,6 +67,32 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return await dbContext.Entry(dbUserAddress).ToAddressWithIdDto();
         }
 
+        public async Task<AddressWithIdDto> EditUserAddress(int addressId, CreateOrEditAddressDto address)
+        {
+            var dbUserAddress = (await dbContext.UserAddresses
+                            .SingleOrDefaultAsync(ua => ua.Id == addressId))
+                            .CheckIfUserAddressNull();
+
+            dbUserAddress.Address.ZipCode = address.ZipCode;
+            dbUserAddress.Address.City = address.City;
+            dbUserAddress.Address.Street = address.Street;
+            dbUserAddress.Address.PhoneNumber = address.PhoneNumber;
+
+            await dbContext.SaveChangesAsync();
+
+            return await dbContext.Entry(dbUserAddress).ToAddressWithIdDto();
+        }
+
+        public async Task DeleteUserAddress(int addressId)
+        {
+            var dbUserAddress = (await dbContext.UserAddresses
+                            .SingleOrDefaultAsync(ua => ua.Id == addressId))
+                            .CheckIfUserAddressNull();
+
+            dbContext.Remove(dbUserAddress);
+            await dbContext.SaveChangesAsync();
+        }
+
         public async Task<string> GetUserAddressUserId(int addressId)
         {
             var dbUserAddress = (await dbContext.UserAddresses

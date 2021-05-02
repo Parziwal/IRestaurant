@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
+using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,21 +14,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
-    [Authorize(Policy = UserRoles.Guest)]
+    [Authorize(Roles = UserRoles.Guest)]
     public class UserAddressListModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IUserRepository userRepository;
 
         public UserAddressListModel(
             UserManager<ApplicationUser> userManager,
-            ApplicationDbContext dbContext)
+            IUserRepository userRepository)
         {
             this.userManager = userManager;
-            this.dbContext = dbContext;
+            this.userRepository = userRepository;
         }
 
-        public List<UserAddress> UserAddressList { get; set; }
+        public List<AddressWithIdDto> UserAddressList { get; set; }
         public async Task<IActionResult> OnGet()
         {
             var currentUser = await userManager.GetUserAsync(User);
@@ -35,9 +37,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                 return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
             }
 
-            UserAddressList = await dbContext.UserAddresses
-                                    .Where(ua => ua.User == currentUser)
-                                    .ToListAsync();
+            UserAddressList = (await userRepository.GetUserAddressList(currentUser.Id)).ToList();
             return Page();
         }
 
@@ -48,16 +48,8 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
             {
                 return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
             }
-            var dbUserAddress = await dbContext.UserAddresses
-                                .SingleOrDefaultAsync(ua => ua.Id == addressId && ua.User == currentUser);
 
-            if (dbUserAddress == null)
-            {                
-                return NotFound($"Az alábbi azonosítóval rendelkezõ cím nem található: '{addressId}'.");
-            }
-
-            dbContext.Remove(dbUserAddress);
-            await dbContext.SaveChangesAsync();
+            await userRepository.DeleteUserAddress(addressId);
 
             return RedirectToPage("UserAddressList");
         }

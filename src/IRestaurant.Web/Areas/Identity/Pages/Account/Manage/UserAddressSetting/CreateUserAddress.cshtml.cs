@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
+using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,22 +16,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
-    [Authorize(Policy = UserRoles.Guest)]
+    [Authorize(Roles = UserRoles.Guest)]
     public class CreateUserAddressModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IUserRepository userRepository;
 
         public CreateUserAddressModel(
             UserManager<ApplicationUser> userManager,
-            ApplicationDbContext context)
+            IUserRepository userRepository)
         {
             this.userManager = userManager;
-            this.dbContext = context;
+            this.userRepository = userRepository;
         }
 
         [BindProperty]
-        public AddressOwned UserAddress { get; set; }
+        public CreateOrEditAddressDto UserAddress { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -44,14 +46,8 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                 return Page();
             }
 
-            var dbUserAddress = new UserAddress
-            {
-                Address = UserAddress,
-                User = currentUser
-            };
-            dbContext.UserAddresses.Add(dbUserAddress);
+            await userRepository.CreatetUserAddress(currentUser.Id, UserAddress);
 
-            await dbContext.SaveChangesAsync();
             return RedirectToPage("UserAddressList");
         }
     }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
+using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,24 +14,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
-    [Authorize(Policy = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext dbContext;
+        private readonly IUserRepository userRepository;
 
         public EditUserAddressModel(
             UserManager<ApplicationUser> userManager,
-            ApplicationDbContext context)
+            IUserRepository userRepository)
         {
             this.userManager = userManager;
-            this.dbContext = context;
+            this.userRepository = userRepository;
         }
 
         [BindProperty]
         public int UserAddressId { get; set; }
         [BindProperty]
-        public AddressOwned UserAddress { get; set; }
+        public CreateOrEditAddressDto UserAddress { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int addressId)
         {
@@ -39,43 +40,33 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                 return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
             }
 
+            var addressWithId = await userRepository.GetUserAddress(addressId);
             UserAddressId = addressId;
-            UserAddress = (await dbContext.UserAddresses
-                                .SingleOrDefaultAsync(ua => ua.Id == addressId && ua.User == currentUser)).Address;
-            if (UserAddress == null)
+            UserAddress = new CreateOrEditAddressDto
             {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ cím nem található: '{addressId}'.");
-            }
+                ZipCode = addressWithId.ZipCode,
+                City = addressWithId.City,
+                Street = addressWithId.Street,
+                PhoneNumber = addressWithId.PhoneNumber
+            };
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             var currentUser = await userManager.GetUserAsync(User);
             if (currentUser == null)
             {
                 return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
             }
-            var dbUserAddress = await dbContext.UserAddresses
-                   .SingleOrDefaultAsync(ua => ua.Id == UserAddressId && ua.User == currentUser);
-            if (dbUserAddress == null)
-            {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ cím nem található: '{UserAddressId}'.");
-            }
 
-            if (!ModelState.IsValid)
-            {
-                UserAddress = dbUserAddress.Address;
-                return Page();
-            }
-
-            dbUserAddress.Address.ZipCode = UserAddress.ZipCode;
-            dbUserAddress.Address.City = UserAddress.City;
-            dbUserAddress.Address.Street = UserAddress.Street;
-            dbUserAddress.Address.PhoneNumber = UserAddress.PhoneNumber;
-
-            await dbContext.SaveChangesAsync();
+            await userRepository.EditUserAddress(UserAddressId, UserAddress);
 
             return RedirectToPage("UserAddressList");
         }

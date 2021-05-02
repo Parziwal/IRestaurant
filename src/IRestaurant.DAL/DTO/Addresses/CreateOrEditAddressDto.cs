@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IRestaurant.DAL.DTO.Addresses
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CreateOrEditAddressDto
     {
         [Required]
