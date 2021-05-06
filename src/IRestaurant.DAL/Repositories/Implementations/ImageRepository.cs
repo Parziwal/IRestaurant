@@ -10,15 +10,29 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
+    /// <summary>
+    /// A képkezelésért felelős osztály, ami biztosítja a képek feltöltését a megadott könyvtárban, illetve azok törlését.
+    /// </summary>
     public class ImageRepository : IImageRepository
     {
         private readonly IWebHostEnvironment webHostEnvironment;
         private const string BaseImageFolder = "Images";
+
+        /// <summary>
+        /// A webes körnnyzeti változó inicializációja a konstruktorban.
+        /// </summary>
+        /// <param name="webHostEnvironment">Információt nyújt a webes környzetről, amin az alkalmazás fut.</param>
         public ImageRepository(IWebHostEnvironment webHostEnvironment)
         {
             this.webHostEnvironment = webHostEnvironment;
         }
 
+        /// <summary>
+        /// A képfájl feltöltése a megadott könyvtárba.
+        /// </summary>
+        /// <param name="image">A képfájl.</param>
+        /// <param name="folderName">A könyvtár neve.</param>
+        /// <returns>A kép relatív elérési útja.</returns>
         public async Task<string> UploadImage([AllowImageOnly] IFormFile image, string folderName)
         {
             string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, BaseImageFolder, folderName);
@@ -33,6 +47,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
             return relativePath;
         }
 
+        /// <summary>
+        /// Az elérési útvonalon lévő kép törlése, ha létezik.
+        /// </summary>
+        /// <param name="relativeImagePath"></param>
         public void DeleteImage(string relativeImagePath)
         {
             string fullImagePath = Path.Combine(webHostEnvironment.WebRootPath, relativeImagePath == null ? "" : relativeImagePath);

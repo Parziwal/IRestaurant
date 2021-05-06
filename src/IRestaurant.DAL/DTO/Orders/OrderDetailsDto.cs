@@ -6,29 +6,35 @@ using System.Linq;
 
 namespace IRestaurant.DAL.DTO.Orders
 {
-    public class OrderDetailsDto
+    /// <summary>
+    /// A rendelés részletes adatai ebben a formátumban kerülnek visszaküldésre a kliensnek.
+    /// </summary>
+    public class OrderDetailsDto : OrderOverviewDto
     {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public DateTime PreferredDeliveryDate { get; set; }
-        public OrderStatus Status { get; set; }
-        public int Total { get; set; }
-        public string UserFullName { get; set; }
+        /// <summary>
+        /// A rendelést leadó felhasználó számlázási/kiszállítási címe.
+        /// </summary>
         public AddressDto UserAddress { get; set; }
-        public string RestaurantName { get; set; }
+
+        /// <summary>
+        /// Az étterem címe, ahonnét rendeltek.
+        /// </summary>
         public AddressDto RestaurantAddress { get; set; }
+
+        /// <summary>
+        /// A rendelt tételek listája.
+        /// </summary>
         public List<OrderFoodDto> OrderFoods { get; set; }
 
-        public OrderDetailsDto(Order order)
+
+        /// <summary>
+        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
+        /// </summary>
+        /// <param name="order">Rendelés adatait tartalmazó modell osztály.</param>
+
+        public OrderDetailsDto(Order order) : base(order)
         {
-            this.Id = order.Id;
-            this.Date = order.CreatedAt;
-            this.PreferredDeliveryDate = order.PreferredDeliveryDate;
-            this.Status = order.Status;
-            this.Total = order.OrderFoods.Sum(of => of.Amount * of.Price);
-            this.UserFullName = order.Invoice.UserFullName;
             this.UserAddress = new AddressDto(order.Invoice.UserAddress);
-            this.RestaurantName = order.Invoice.RestaurantName;
             this.RestaurantAddress = new AddressDto(order.Invoice.RestaurantAddress);
             this.OrderFoods = order.OrderFoods.Select(of => new OrderFoodDto(of)).ToList();
         }

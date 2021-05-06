@@ -10,13 +10,30 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
+    /// <summary>
+    /// A rendelésekhez kapcsolódó számla adatok létrehozásáért felelős.
+    /// </summary>
     public class InvoiceRepository : IInvoiceRepository
     {
         private readonly ApplicationDbContext dbContext;
+
+        /// <summary>
+        /// Az adatbázis inicializációja a konstruktorban.
+        /// </summary>
+        /// <param name="dbContext">Az adatbázis.</param>
         public InvoiceRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
+
+        /// <summary>
+        /// A megadott paraméterek alapján a rendeléshez tartozó számla létrehozása.
+        /// Ha az étterem vagy a cím nem található, akkor azt kivételben jelezzük.
+        /// </summary>
+        /// <param name="orderId">A rendelés azonosítója.</param>
+        /// <param name="userAddressId">A felhasználó által megadott számlázási cím azonosítója.</param>
+        /// <param name="restaurantId">Az étterem azonosítója, ahonnét rendeltek.</param>
+        /// <returns>A létrehozott számla.</returns>
         public async Task<Invoice> CreateInvoice(int orderId, int restaurantId, int userAddressId)
         {
             var dbUserAddress = (await dbContext.UserAddresses

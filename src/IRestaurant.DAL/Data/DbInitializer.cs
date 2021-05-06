@@ -14,11 +14,20 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Data
 {
+    /// <summary>
+    /// Az adatbázis feltöltése teszt adatokkal.
+    /// </summary>
     public class DbInitializer
     {
         private static ApplicationDbContext _context;
         private static IServiceProvider _services;
         private static ApplicationUser[] users;
+
+        /// <summary>
+        /// Az átadott adatbázis feltöltése teszt adatokkal.
+        /// </summary>
+        /// <param name="context">Az feltöltendő adatbázis.</param>
+        /// <param name="services">A szolgáltatás objektumok lekérésére.</param>
         public static async Task Initialize(ApplicationDbContext context, IServiceProvider services)
         {
             context.Database.EnsureCreated();

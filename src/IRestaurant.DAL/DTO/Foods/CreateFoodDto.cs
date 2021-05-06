@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IRestaurant.DAL.DTO.Foods
 {
-    public class CreateFoodDto
+    /// <summary>
+    /// Az ételek létrehozásához az adatokat ezen formátumban várjuk a klienstől.
+    /// A szerkesztéshez képest itt megendedjük a név beállítását.
+    /// </summary>
+    public class CreateFoodDto : EditFoodDto
     {
+        /// <summary>
+        /// Az étel neve.
+        /// </summary>
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int Price { get; set; }
-        [Required]
-        [StringLength(1000)]
-        public string Description { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace IRestaurant.BL.Managers
                 return restaurantDetails;
             }
 
-            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
             if (restaurantId == ownerRestaurantId)
             {
                 return await restaurantRepository.GetRestaurantDetails(restaurantId);
@@ -50,7 +50,7 @@ namespace IRestaurant.BL.Managers
         public async Task<RestaurantDetailsDto> GetMyRestaurantDetails()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await GetRestaurantDetails(ownerRestaurantId);
         }
@@ -61,7 +61,7 @@ namespace IRestaurant.BL.Managers
         public async Task<RestaurantDetailsDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
         }
@@ -69,7 +69,7 @@ namespace IRestaurant.BL.Managers
         public async Task<string> UploadMyRestaurantImage(UploadImageDto uploadedImage)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await restaurantRepository.UploadRestaurantImage(ownerRestaurantId, uploadedImage);
         }
@@ -77,7 +77,7 @@ namespace IRestaurant.BL.Managers
         public async Task DeleteMyRestaurantImage()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             await restaurantRepository.DeleteRestaurantImage(ownerRestaurantId);
         }
@@ -85,7 +85,7 @@ namespace IRestaurant.BL.Managers
         public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
         }
@@ -93,7 +93,7 @@ namespace IRestaurant.BL.Managers
         public async Task ShowMyRestaurantForUsers()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             await checkIfRestaurantDataNotEmpty(ownerRestaurantId);
 
@@ -103,7 +103,7 @@ namespace IRestaurant.BL.Managers
         public async Task HideMyRestaurantForUsers()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             using (var transaction = new TransactionScope(
               TransactionScopeOption.Required,
@@ -120,7 +120,7 @@ namespace IRestaurant.BL.Managers
         public async Task TurnOnMyRestaurantOrderStatus()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             if (!await restaurantRepository.IsRestaurantAvailableForUsers(ownerRestaurantId))
             {
@@ -139,7 +139,7 @@ namespace IRestaurant.BL.Managers
         public async Task TurnOffMyRestaurantOrderStatus()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
         }
@@ -147,19 +147,19 @@ namespace IRestaurant.BL.Managers
         public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string restaurantName = null)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await restaurantRepository.GetUserFavouriteRestaurantList(userId, restaurantName);
+            return await restaurantRepository.GetGuestFavouriteRestaurantList(userId, restaurantName);
         }
 
         public async Task AddRestaurantToUserFavourite(int restaurantId)
         {
             string userId = userRepository.GetCurrentUserId();
-            await restaurantRepository.AddRestaurantToUserFavourite(restaurantId, userId);
+            await restaurantRepository.AddRestaurantToGuestFavourite(restaurantId, userId);
         }
 
         public async Task RemoveRestaurantFromUserFavourite(int restaurantId)
         {
             string userId = userRepository.GetCurrentUserId();
-            await restaurantRepository.RemoveRestaurantFromUserFavourite(restaurantId, userId);
+            await restaurantRepository.RemoveRestaurantFromGuestFavourite(restaurantId, userId);
         }
 
         private async Task checkIfRestaurantDataNotEmpty(int restaurantId)

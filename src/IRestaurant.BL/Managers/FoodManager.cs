@@ -32,7 +32,7 @@ namespace IRestaurant.BL.Managers
             }
 
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
 
             if (foodRestaurantId == ownerRestaurantId)
             {
@@ -51,7 +51,7 @@ namespace IRestaurant.BL.Managers
             }
 
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
 
             if (restaurantId == ownerRestaurantId)
             {
@@ -64,7 +64,7 @@ namespace IRestaurant.BL.Managers
         public async Task<IReadOnlyCollection<FoodDto>> GetOwnerRestaurantMenu()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await GetRestaurantMenu(ownerRestaurantId);
         }
@@ -72,7 +72,7 @@ namespace IRestaurant.BL.Managers
         public async Task<FoodDto> AddFoodToMenu(CreateFoodDto food)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await foodRepository.AddFoodToMenu(ownerRestaurantId, food);
         }
@@ -80,7 +80,7 @@ namespace IRestaurant.BL.Managers
         public async Task<string> UploadFoodImage(int foodId, UploadImageDto uploadedImage)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)
@@ -95,7 +95,7 @@ namespace IRestaurant.BL.Managers
         public async Task DeleteFoodImage(int foodId)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)
@@ -111,7 +111,7 @@ namespace IRestaurant.BL.Managers
         public async Task DeleteFoodFromMenu(int foodId)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)
@@ -127,7 +127,7 @@ namespace IRestaurant.BL.Managers
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
             if (ownerRestaurantId == foodRestaurantId)

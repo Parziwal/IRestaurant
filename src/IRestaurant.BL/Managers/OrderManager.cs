@@ -35,7 +35,7 @@ namespace IRestaurant.BL.Managers
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetMyRestaurantOrderOverviewList()
         {
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int ownerRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
 
             return await orderRepository.GetRestaurantOrderOverviewList(ownerRestaurantId);
         }
@@ -44,7 +44,7 @@ namespace IRestaurant.BL.Managers
         {
             string userId = userRepository.GetCurrentUserId();
             string orderUserId = await orderRepository.GetOrderUserId(orderId);
-            int userRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int userRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
             if (userId == orderUserId || userRestaurantId == orderRestaurantId)
@@ -84,7 +84,7 @@ namespace IRestaurant.BL.Managers
             }
 
             string userId = userRepository.GetCurrentUserId();
-            int userRestaurantId = await userRepository.GetUserRestaurantId(userId);
+            int userRestaurantId = await userRepository.GetOwnerRestaurantId(userId);
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
 
             if (userRestaurantId == orderRestaurantId &&

@@ -36,7 +36,7 @@ namespace IRestaurant.BL.Managers
 
             string userId = userRepository.GetCurrentUserId();
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
-            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
 
             if (publisherId == userId || ownerRestaurantId == reviewRestaurantId)
             {
@@ -55,7 +55,7 @@ namespace IRestaurant.BL.Managers
             }
 
             string userId = userRepository.GetCurrentUserId();
-            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetUserRestaurantId(userId) : -1;
+            int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetOwnerRestaurantId(userId) : -1;
 
             if (restaurantId == ownerRestaurantId)
             {

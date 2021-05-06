@@ -41,10 +41,12 @@ export class ChooseFoodsComponent implements OnInit {
     if (amount.value == "" || amount.valueAsNumber < 1) {
       return;
     }
-    let chosenFood = {id: food.id, 
+    let chosenFood = {
+      id: food.id, 
+      foodName: food.name,
       amount: amount.valueAsNumber,
-      name: food.name,
-      price: food.price};
+      price: food.price
+    };
 
     let chosenFoodIndex = this.chosenFoods.findIndex(f => f.id === food.id);
     if (chosenFoodIndex === -1) {

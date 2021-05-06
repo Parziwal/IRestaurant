@@ -10,25 +10,72 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Data
 {
+    /// <summary>
+    /// Az adatbázist reprezentáló osztály. Egy hidat képez az entitás osztályok és az adatbázis között,
+    /// ő felelős az adatbázissal való interakcióért.
+    /// </summary>
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
+        /// <summary>
+        /// A felhasználói címeket tartalamzó tábla.
+        /// </summary>
         public DbSet<UserAddress> UserAddresses { get; set; }
+
+        /// <summary>
+        /// Az ételeket tartalamzó tábla.
+        /// </summary>
         public DbSet<Food> Foods { get; set; }
+
+        /// <summary>
+        /// A rendeléseket tartalmazó tábla.
+        /// </summary>
         public DbSet<Order> Orders { get; set; }
+
+        /// <summary>
+        /// A rendelési tételeket tartalmazó tábla.
+        /// </summary>
         public DbSet<OrderFood> OrderFoods { get; set; }
+
+        /// <summary>
+        /// Az étteremeket tartalmazó tábla.
+        /// </summary>
         public DbSet<Restaurant> Restaurants { get; set; }
+
+        /// <summary>
+        /// Az értékeléseket tartalmazó tábla.
+        /// </summary>
         public DbSet<Review> Reviews { get; set; }
+
+        /// <summary>
+        /// A számlákat tartalmazó tábla.
+        /// </summary>
         public DbSet<Invoice> Invoices { get; set; }
+
+        /// <summary>
+        /// A felhasználók kedvenc éttermeit tartalmazó tábla.
+        /// </summary>
         public DbSet<FavouriteRestaurant> FavouriteRestaurants { get; set; }
+
+        /// <summary>
+        /// Az adatbázist reprezentáló osztály konstruktora.
+        /// </summary>
+        /// <param name="options">DbContext által használandó opciók.</param>
+        /// <param name="operationalStoreOptions">Konfigurált példányok lekérésére szolgál.</param>
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        /// <summary>
+        /// Az entitás osztályok konfigurálása.
+        /// </summary>
+        /// <param name="modelBuilder">Definiálja az entitásokat, közöttük lévő kapcsolatokat, és azt, hogy miként térképezik fel az adatbázist.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            //A táblák nevének beállítása
             modelBuilder.Entity<UserAddress>().ToTable("UserAddress");
             modelBuilder.Entity<Food>().ToTable("Food");
             modelBuilder.Entity<Order>().ToTable("Order");
@@ -38,6 +85,7 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Invoice>().ToTable("Invoice");
             modelBuilder.Entity<FavouriteRestaurant>().ToTable("FavouriteRestaurant");
 
+            //Query filter beállítása a Food modellen a "soft delete" funkció megvalósítása miatt.
             modelBuilder.Entity<Food>().HasMany(f => f.OrderFoods).WithOne(of => of.Food).IsRequired(false);
             modelBuilder.Entity<Food>().HasQueryFilter(e => !e.IsDeleted);
         }
