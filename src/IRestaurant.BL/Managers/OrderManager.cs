@@ -15,12 +15,15 @@ namespace IRestaurant.BL.Managers
     {
         private readonly IOrderRepository orderRepository;
         private readonly IUserRepository userRepository;
+        private readonly IRestaurantRepository restaurantRepository;
         private const int minHourAfterOrder = 6;
         public OrderManager(IOrderRepository orderRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IRestaurantRepository restaurantRepository)
         {
             this.orderRepository = orderRepository;
             this.userRepository = userRepository;
+            this.restaurantRepository = restaurantRepository;
         }
 
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList()
@@ -54,10 +57,17 @@ namespace IRestaurant.BL.Managers
 
         public async Task<OrderDetailsDto> CreateOrder(CreateOrder order)
         {
-            if (order.PreferredDeliveryDate > new DateTime().AddHours(minHourAfterOrder))
+            if (order.PreferredDeliveryDate < new DateTime().AddHours(minHourAfterOrder))
             {
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                $"A kívánt kiszállítási időnek minimum {minHourAfterOrder} órával a rendelés leadása után kell lennie.");
+                    $"A kívánt kiszállítási időnek minimum {minHourAfterOrder} órával a rendelés leadása után kell lennie.");
+            }
+
+            var restaurantSettings = await restaurantRepository.GetRestaurantSettings(order.RestaurantId);
+            if (!restaurantSettings.IsOrderAvailable)
+            {
+                throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                    "A megadott étteremnél a rendelési lehetőség jelenleg nem elérhető.");
             }
 
             string userId = userRepository.GetCurrentUserId();
