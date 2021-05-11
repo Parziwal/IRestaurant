@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// A felhasználóhoz kapcsolódó adatok kezeléséért és módosításáért felelős.
+    /// A felhasználóhoz kapcsolódó adatok eléréséért és kezeléséért felelős.
     /// </summary>
     public class UserRepository : IUserRepository
     {
@@ -177,7 +177,8 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
         public string GetCurrentUserId()
         {
-            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                        accessor.HttpContext.User.FindFirstValue("sub");
         }
     }
 
