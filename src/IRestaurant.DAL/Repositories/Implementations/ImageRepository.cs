@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// A képkezelésért felelős osztály, ami biztosítja a képek feltöltését a megadott könyvtárban, illetve azok törlését.
+    /// A képkezelésért felelős, biztosítja a képek feltöltését a megadott könyvtárban, illetve azok törlését.
     /// </summary>
     public class ImageRepository : IImageRepository
     {

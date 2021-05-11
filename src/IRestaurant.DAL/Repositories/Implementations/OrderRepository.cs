@@ -14,7 +14,7 @@ using System.Transactions;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért felelős.
+    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért és az adatok lekéréséért felelős.
     /// </summary>
     public class OrderRepository : IOrderRepository
     {

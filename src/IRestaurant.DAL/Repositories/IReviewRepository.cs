@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// Az étteremhez tartozó értékelések kezeléséért felelős.
+    /// Az étteremhez tartozó értékelések lekéréséért és kezeléséért felelős.
     /// </summary>
     public interface IReviewRepository
     {

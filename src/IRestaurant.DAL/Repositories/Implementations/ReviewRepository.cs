@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// Az étteremhez tartozó értékelések kezeléséért felelős.
+    /// Az étteremhez tartozó értékelések lekéréséért és kezeléséért felelős.
     /// </summary>
     public class ReviewRepository : IReviewRepository
     {

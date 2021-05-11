@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért felelős.
+    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért és az adatok lekéréséért felelős.
     /// </summary>
     public interface IOrderRepository
     {

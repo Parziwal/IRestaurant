@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// A felhasználóhoz kapcsolódó adatok kezeléséért és módosításáért felelős.
+    /// A felhasználóhoz kapcsolódó adatok eléréséért és kezeléséért felelős.
     /// </summary>
     public interface IUserRepository
     {
