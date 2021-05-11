@@ -16,13 +16,13 @@ Az alkalmazás lényege, hogy a felhasználók, azaz a vendégek házhoz tudják
 
 A projekt egy három rétegű webalkalmazás:
 
-- `IRestaurant.Web`: ASP.NET Core webalkalmazás; ez a belépési pont, ami kiszolgálja a web szervert
+- `IRestaurant.Web`: ASP.NET Core webalkalmazás, az alkalmazás belépési pontja
   - Tartalmaz egy Angulat kliens alkalmazást
   - És kiszolgálja a REST kéréseket
-- `IRestaurant.BL`: Az üzleti logikai réteg, kezeli az üzleti folyamatokat
+- `IRestaurant.BL`: Az üzleti logikai réteg, kezeli az üzleti folyamatokat és összetettebb adatmódosítási feladatokat valósítja meg
 - `IRestaurant.DAL`: Az adatelérési réteg
   - Enity Framework Core használ az adateléréshez
-  - De becsomagolja a műveleteket _repository_ tervezési minta segítségével
+  - De becsomagolja a műveleteket _Repository_ tervezési minta segítségével
  
 ## Az alkalmazás funkcionalitásának leírása
 
