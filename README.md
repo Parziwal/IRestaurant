@@ -19,7 +19,7 @@ A projekt egy három rétegű webalkalmazás:
 - `IRestaurant.Web`: ASP.NET Core webalkalmazás, az alkalmazás belépési pontja
   - Tartalmaz egy Angulat kliens alkalmazást
   - És kiszolgálja a REST kéréseket
-- `IRestaurant.BL`: Az üzleti logikai réteg, kezeli az üzleti folyamatokat és összetettebb adatmódosítási feladatokat valósítja meg
+- `IRestaurant.BL`: Az üzleti logikai réteg, kezeli az üzleti folyamatokat és összetettebb adatmódosítási feladatokat valósít meg
 - `IRestaurant.DAL`: Az adatelérési réteg
   - Enity Framework Core használ az adateléréshez
   - De becsomagolja a műveleteket _Repository_ tervezési minta segítségével
