@@ -15,10 +15,10 @@ namespace IRestaurant.Web.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewsController : ControllerBase
+    public class ReviewController : ControllerBase
     {
         private readonly ReviewManager reviewManager;
-        public ReviewsController(ReviewManager reviewManager)
+        public ReviewController(ReviewManager reviewManager)
         {
             this.reviewManager = reviewManager;
         }
@@ -38,6 +38,13 @@ namespace IRestaurant.Web.Controllers
         public async Task<IEnumerable<ReviewDto>> GetRestraurantReviewList(int restaurantId)
         {
             return await reviewManager.GetRestaurantReviewList(restaurantId);
+        }
+
+        [Authorize(Policy = UserRoles.Restaurant)]
+        [HttpGet("restaurant/myrestaurant")]
+        public async Task<IEnumerable<ReviewDto>> GetMyRestraurantReviewList()
+        {
+            return await reviewManager.GetMyRestaurantReviewList();
         }
 
         [Authorize(Policy = UserRoles.Guest)]

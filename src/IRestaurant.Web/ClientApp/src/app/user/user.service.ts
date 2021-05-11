@@ -9,7 +9,7 @@ import { UserAddress } from '../shared/models/user-address.type';
 })
 export class UserService {
 
-  private baseUrl = environment.apiUrl + "users/";
+  private baseUrl = environment.apiUrl + "useraddress/";
 
   constructor(private http: HttpClient) { }
 

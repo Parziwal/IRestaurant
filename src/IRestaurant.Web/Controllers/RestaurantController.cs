@@ -13,11 +13,11 @@ namespace IRestaurant.Web.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class RestaurantsController : ControllerBase
+    public class RestaurantController : ControllerBase
     {
         private readonly RestaurantManager restaurantManager;
 
-        public RestaurantsController(RestaurantManager restaurantManager)
+        public RestaurantController(RestaurantManager restaurantManager)
         {
             this.restaurantManager = restaurantManager;
         }
@@ -44,7 +44,7 @@ namespace IRestaurant.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<RestaurantDetailsDto>> GetMyRestaurant()
+        public async Task<ActionResult<RestaurantDetailsDto>> GetMyRestaurantDetails()
         {
             return await restaurantManager.GetMyRestaurantDetails();
         }
@@ -72,7 +72,7 @@ namespace IRestaurant.Web.Controllers
         [HttpDelete("myrestaurant/image")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteMyRestauantImage()
+        public async Task<ActionResult> DeleteMyRestaurantImage()
         {
             await restaurantManager.DeleteMyRestaurantImage();
             return NoContent();

@@ -11,7 +11,7 @@ import { RestaurantSettings } from './models/restaurant-settings.type';
   providedIn: 'root'
 })
 export class RestaurantService {
-  private baseUrl = environment.apiUrl + "restaurants/";
+  private baseUrl = environment.apiUrl + "restaurant/";
   restaurantRatingChanged = new Subject();
 
   constructor(private http: HttpClient) { }

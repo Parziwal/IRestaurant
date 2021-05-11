@@ -15,11 +15,11 @@ namespace IRestaurant.Web.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly OrderManager orderManager;
 
-        public OrdersController(OrderManager orderManager)
+        public OrderController(OrderManager orderManager)
         {
             this.orderManager = orderManager;
         }

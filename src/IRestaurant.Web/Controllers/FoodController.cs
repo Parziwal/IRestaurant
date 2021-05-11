@@ -13,10 +13,10 @@ namespace IRestaurant.Web.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class FoodsController : ControllerBase
+    public class FoodController : ControllerBase
     {
         private readonly FoodManager foodManager;
-        public FoodsController(FoodManager foodManager)
+        public FoodController(FoodManager foodManager)
         {
             this.foodManager = foodManager;
         }
@@ -42,9 +42,9 @@ namespace IRestaurant.Web.Controllers
         [HttpGet("restaurant/myrestaurant")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IEnumerable<FoodDto>> GetOwnerRestaurantMenu()
+        public async Task<IEnumerable<FoodDto>> GetMyRestaurantMenu()
         {
-            return await foodManager.GetOwnerRestaurantMenu();
+            return await foodManager.GetMyRestaurantMenu();
         }
 
         [Authorize(Policy = UserRoles.Restaurant)]

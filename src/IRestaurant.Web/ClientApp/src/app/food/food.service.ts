@@ -10,7 +10,7 @@ import { Food } from './models/food.type';
 })
 export class FoodService {
 
-  private baseUrl = environment.apiUrl + "foods/";
+  private baseUrl = environment.apiUrl + "food/";
 
   constructor(private http: HttpClient) { }
   

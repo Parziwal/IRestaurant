@@ -14,7 +14,7 @@ import { OrderStatus } from './models/order-status.type';
   providedIn: 'root'
 })
 export class OrderService {
-  private baseUrl = environment.apiUrl + "orders/";
+  private baseUrl = environment.apiUrl + "order/";
   chosenFoodsChange = new Subject<OrderFoodWithId[]>();
   deliveryDetailsChange = new Subject<DeliveryDetials>();
 

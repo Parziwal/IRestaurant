@@ -8,7 +8,7 @@ import { Review } from './models/review.type';
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl = environment.apiUrl + "reviews/";
+  private baseUrl = environment.apiUrl + "review/";
 
   constructor(private http: HttpClient) { }
 
