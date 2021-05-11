@@ -153,7 +153,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// </summary>
         /// <param name="ownerId">A tfelhasználó/tulajdonos egyedi azonosítója.</param>
         /// <returns>A tulajdonos étteremének azonosítója.</returns>
-        public async Task<int> GetOwnerRestaurantId(string userId)
+        public async Task<int> GetMyRestaurantId(string userId)
         {
             var dbRestaurant = (await dbContext.Restaurants
                                     .SingleOrDefaultAsync(r => r.OwnerId == userId))

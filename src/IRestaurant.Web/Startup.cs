@@ -1,12 +1,12 @@
 using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.Services;
-using IRestaurant.BL;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using IRestaurant.DAL.Repositories.Implementations;
+using IRestaurant.Web.ProfileServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -113,7 +113,7 @@ namespace IRestaurant.Web
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
             services.AddTransient<OrderManager>();
-            services.AddTransient<UserManager>();
+            services.AddTransient<UserAddressManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
