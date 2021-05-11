@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
+using Hellang.Middleware.ProblemDetails;
+using IRestaurant.DAL.CustomExceptions;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account
 {
@@ -101,7 +103,15 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, Input.Role);
                     if (Input.Role == UserRoles.Restaurant)
                     {
-                        await restaurantManager.CreateDefaultRestaurant(user.Id);
+                        try
+                        {
+                            await restaurantManager.CreateDefaultRestaurant();
+                        }
+                        catch (Exception)
+                        {
+                            await _userManager.DeleteAsync(user);
+                            return Page();
+                        }
                     }
 
                     _logger.LogInformation("User created a new account with password.");
