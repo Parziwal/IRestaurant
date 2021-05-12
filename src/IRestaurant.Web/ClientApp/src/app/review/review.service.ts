@@ -20,8 +20,8 @@ export class ReviewService {
     return this.http.get<Review[]>(this.baseUrl + "myreviews");
   }
 
-  addReviewToRestaurant(restaurantId: number, createdReview: CreateReview) {
-    return this.http.post<Review>(this.baseUrl + "restaurant/" + restaurantId, createdReview);
+  addReviewToRestaurant(createdReview: CreateReview) {
+    return this.http.post<Review>(this.baseUrl, createdReview);
   }
 
   deleteReview(reviewId: number) {

@@ -37,8 +37,8 @@ export class AddReviewDialogComponent implements OnInit {
       return;
     }
 
-    this.reviewService.addReviewToRestaurant(this.restaurantId, this.reviewForm.value).subscribe(
-      response => {
+    this.reviewService.addReviewToRestaurant({...this.reviewForm.value, restaurantId: this.restaurantId }).subscribe(
+      () => {
           this.dialogRef.close(true);
           this.restaurantService.restaurantRatingChanged.next();
           this.toastr.success('Az értékelés hozzáadásra került!');

@@ -9,18 +9,30 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
 {
-    [Authorize]
+    /// <summary>
+    /// A vendégek saját lakcímeinek lekérdezése és újak létrehozása.
+    /// </summary>
+    [Authorize(Policy = UserRoles.Guest)]
     [Route("api/[controller]")]
     [ApiController]
     public class UserAddressController : ControllerBase
     {
         private readonly UserAddressManager userAddressManager;
+
+        /// <summary>
+        /// A szükséges üzleti logikai függőségek elkérése.
+        /// </summary>
+        /// <param name="userAddressManager">A vendég lakcímeit kezeli.</param>
         public UserAddressController(UserAddressManager userAddressManager)
         {
             this.userAddressManager = userAddressManager;
         }
 
-        [Authorize(Policy = UserRoles.Guest)]
+        /// <summary>
+        /// A megadott azonosítójú lakcím lekérdezése.
+        /// </summary>
+        /// <param name="addressId">A lakcím azonsítója.</param>
+        /// <returns>A lakcím adatai.</returns>
         [HttpGet("{addressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,14 +42,21 @@ namespace IRestaurant.Web.Controllers
             return await userAddressManager.GetUserAddress(addressId);
         }
 
-        [Authorize(Policy = UserRoles.Guest)]
+        /// <summary>
+        /// Az aktuális vendég összes lakcímének lekérdezése.
+        /// </summary>
+        /// <returns>Az aktuális vendég lakcímeinek listája.</returns>
         [HttpGet]
         public async Task<IEnumerable<AddressWithIdDto>> GetCurrentGuestAddressList()
         {
             return await userAddressManager.GetCurrentGuestAddressList();
         }
 
-        [Authorize(Policy = UserRoles.Guest)]
+        /// <summary>
+        /// Lakcím létrehozása az aktuális felhasználóhoz.
+        /// </summary>
+        /// <param name="address">A létrehozandó lakcím adatai.</param>
+        /// <returns>A létrehozott lakcím.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

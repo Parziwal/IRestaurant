@@ -12,17 +12,30 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
 {
+    /// <summary>
+    /// A étteremek értékeléseinek lekérdezése, új értékelés hozzáadása és a meglévő törlése.
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReviewController : ControllerBase
     {
         private readonly ReviewManager reviewManager;
+
+        /// <summary>
+        /// A szükséges üzleti logikai függőségek elkérése.
+        /// </summary>
+        /// <param name="reviewManager">Az értékeléseket kezeli.</param>
         public ReviewController(ReviewManager reviewManager)
         {
             this.reviewManager = reviewManager;
         }
 
+        /// <summary>
+        /// A megadott azonosítójú rendelés lekérése.
+        /// </summary>
+        /// <param name="reviewId">Az értékelés azonosítója.</param>
+        /// <returns>Az értékelés adatai.</returns>
         [AllowAnonymous]
         [HttpGet("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -33,6 +46,11 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetReview(reviewId);
         }
 
+        /// <summary>
+        /// A megadott étteremhez tartozó értékelések lekérése.
+        /// </summary>
+        /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <returns>Az étteremhez tartozó értékelések listája.</returns>
         [AllowAnonymous]
         [HttpGet("restaurant/{restaurantId}")]
         public async Task<IEnumerable<ReviewDto>> GetRestraurantReviewList(int restaurantId)
@@ -40,6 +58,10 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetRestaurantReviewList(restaurantId);
         }
 
+        /// <summary>
+        /// Az aktuális felhasználóhoz tartozó étterem értékeléseinek lekérése.
+        /// </summary>
+        /// <returns>Az aktuális felhasználó éttermének értékelései.</returns>
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant/myrestaurant")]
         public async Task<IEnumerable<ReviewDto>> GetMyRestraurantReviewList()
@@ -47,6 +69,10 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetMyRestaurantReviewList();
         }
 
+        /// <summary>
+        /// Az aktuális vendég által írt értékelések lekérése.
+        /// </summary>
+        /// <returns>Az aktuális vendég értékelései.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("myreviews")]
         public async Task<IEnumerable<ReviewDto>> GetCurrentGuestReviewList()
@@ -54,16 +80,25 @@ namespace IRestaurant.Web.Controllers
             return await reviewManager.GetCurrentGuestReviewList();
         }
 
+        /// <summary>
+        /// Értékelés létrehozása az aktuális vendég által a megadott adatok alapján.
+        /// </summary>
+        /// <param name="review">A lérehozandó értékelés adatai.</param>
+        /// <returns>A létrehozott értékelés.</returns>
         [Authorize(Policy = UserRoles.Guest)]
-        [HttpPost("restaurant/{restaurantId}")]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ReviewDto>> AddReviewToRestaurant(int restaurantId, [FromBody] CreateReviewDto review)
+        public async Task<ActionResult<ReviewDto>> AddReviewToRestaurant([FromBody] CreateReviewDto review)
         {
-            var createdReview = await reviewManager.AddReviewToRestaurant(restaurantId, review);
+            var createdReview = await reviewManager.AddReviewToRestaurant(review);
             return CreatedAtAction(nameof(GetReview), new { id = createdReview.Id }, createdReview);
         }
 
+        /// <summary>
+        /// A megadott azonosítójú értékelés törlése.
+        /// </summary>
+        /// <param name="reviewId">Az értékelés azonosítója.</param>
         [HttpDelete("{reviewId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
