@@ -38,7 +38,7 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Az aktuális vendég rendeléseinek lekérdezése.
+        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése.
         /// </summary>
         /// <returns>A bejelentkezett vendég rendelési.</returns>
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList()
@@ -48,7 +48,7 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Az aktuális felhasználó étterméhez tartozó rendelések lekérdezése.
+        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak lekérdezése.
         /// </summary>
         /// <returns>Az étteremhez beérkező rendelések.</returns>
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetMyRestaurantOrderOverviewList()

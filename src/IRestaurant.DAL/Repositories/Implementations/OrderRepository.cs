@@ -33,10 +33,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott vendéghez tartozó rendelések listájánal lekérése.
+        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <returns>A vendég rendelései.</returns>
+        /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId)
         {
             return await dbContext.Orders
@@ -45,10 +45,10 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott étteremhez tartozó rendelések listájánal lekérése.
+        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        /// <returns>A rendelések listája.</returns>
+        /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         public async Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId)
         {
             return await dbContext.Orders

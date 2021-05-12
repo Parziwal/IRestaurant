@@ -36,7 +36,7 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// A megadott azonosítójú rendelés lekérése, ha az értékeléshez tartozó étterem elérhető,
+        /// A megadott azonosítójú értékelés lekérése, ha az értékeléshez tartozó étterem elérhető,
         /// vagy az aktuális felhasználó írta az értékelést, vagy az aktuális felhasználó az értékeléshez
         /// tartozó étterem tulajdonosa.
         /// </summary>
@@ -111,15 +111,14 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Értékelés hozzáadása a megadott étteremhez.
+        /// Értékelés létrehozása az aktuális vendég által a megadott adatok alapján.
         /// </summary>
-        /// <param name="restaurantId">Az étterem azonosítója.</param>
         /// <param name="review">A létrehozandó értékelés adatai.</param>
         /// <returns>A létrehozott értékelés adatai.</returns>
-        public async Task<ReviewDto> AddReviewToRestaurant(int restaurantId, CreateReviewDto review)
+        public async Task<ReviewDto> AddReviewToRestaurant(CreateReviewDto review)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await reviewRepository.AddReviewToRestaurant(userId, restaurantId, review);
+            return await reviewRepository.AddReviewToRestaurant(userId, review);
         }
 
         /// <summary>

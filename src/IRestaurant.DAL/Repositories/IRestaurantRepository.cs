@@ -11,7 +11,7 @@ namespace IRestaurant.DAL.Repositories
     public interface IRestaurantRepository
     {
         /// <summary>
-        /// A megadott névre illeszkedő éttermek listájának lekérése.
+        /// A megadott névre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
         /// <param name="restaurantName">Az keresett étterem neve.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>

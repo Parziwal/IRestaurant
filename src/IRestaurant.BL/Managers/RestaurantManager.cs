@@ -36,7 +36,7 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő éttermek listájának lekérése.
+        /// A megadott névre illeszkedő elérhető éttermek áttekintő adatainak lekérdezése.
         /// </summary>
         /// <param name="restaurantName">Az keresett étterem neve.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
@@ -116,7 +116,7 @@ namespace IRestaurant.BL.Managers
         /// <summary>
         /// Kép feltöltése az aktuális felhasználóhoz tartozó étteremhez.
         /// </summary>
-        /// <param name="uploadedImage">A képet tartalmazó osztály.</param>
+        /// <param name="uploadedImage">A feltöltendő kép.</param>
         /// <returns>A kép relatív elérési útvonala.</returns>
         public async Task<string> UploadMyRestaurantImage(UploadImageDto uploadedImage)
         {
