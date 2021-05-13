@@ -133,8 +133,6 @@ namespace IRestaurant.BL.Managers
         /// <summary>
         /// A megadott azonosítóval rendelkező étel képének törlése, ha az étel ugyanahhoz
         /// az étteremhez tartozik, mint amit az aktuális felhasználó birtokol.
-        /// Ha az étteremhez tartozó utolsó étel is törlésre kerül, akkor a rendelési opció
-        /// automatikusan kikapcsolásra kerül.
         /// </summary>
         /// <param name="foodId">Az étel azonosítója.</param>
         public async Task DeleteFoodImage(int foodId)
@@ -146,13 +144,6 @@ namespace IRestaurant.BL.Managers
             if (ownerRestaurantId == foodRestaurantId)
             {
                 await foodRepository.DeleteFoodImage(foodId);
-
-                int foodCount = (await foodRepository.GetRestaurantMenu(ownerRestaurantId)).Count;
-                if (foodCount == 0)
-                {
-                    await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
-                }
-
                 return;
             }
 
@@ -163,6 +154,8 @@ namespace IRestaurant.BL.Managers
         /// <summary>
         /// A megadott azonosítójú étel törlése, ha az étel ugyanahhoz
         /// az étteremhez tartozik, mint amit az aktuális felhasználó birtokol.
+        /// Ha az étteremhez tartozó utolsó étel is törlésre kerül, akkor a rendelési opció
+        /// automatikusan kikapcsolásra kerül.
         /// </summary>
         /// <param name="foodId">Az étel azonosítója.</param>
         public async Task DeleteFoodFromMenu(int foodId)
@@ -174,6 +167,13 @@ namespace IRestaurant.BL.Managers
             if (ownerRestaurantId == foodRestaurantId)
             {
                 await foodRepository.DeleteFoodFromMenu(foodId);
+
+                int foodCount = (await foodRepository.GetRestaurantMenu(ownerRestaurantId)).Count;
+                if (foodCount == 0)
+                {
+                    await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
+                }
+
                 return;
             }
 
