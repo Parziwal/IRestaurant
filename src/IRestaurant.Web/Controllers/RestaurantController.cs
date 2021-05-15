@@ -189,7 +189,7 @@ namespace IRestaurant.Web.Controllers
         /// Ha a keresett név null, akkor az összes kedvenc étteremet visszaadja.
         /// </summary>
         /// <param name="restaurantName">A keresett étterem neve.</param>
-        /// <returns></returns>
+        /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("favourite")]
         public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList([FromQuery] string restaurantName = null)
