@@ -11,8 +11,11 @@ import { RestaurantService } from '../restaurant.service';
 })
 export class EditRestaurantComponent implements OnInit {
 
+  /** Az étterem űrlapja. */
   restaurantForm: FormGroup;
+  /** Az étterem részletes adatai betöltésre kerültek. */
   restaurantDataLoaded: boolean = false;
+  /** Az étterem részletes adatai. */
   restaurant: RestaurantDetails;
 
   constructor(private restaurantService: RestaurantService,
@@ -48,6 +51,9 @@ export class EditRestaurantComponent implements OnInit {
     );
   }
 
+  /**
+   * Az étterem adatainak módosítása, ha az űrlap adatai validak.
+   */
   onSubmit() {
     if (this.restaurantForm.invalid) {
       return;
@@ -60,6 +66,11 @@ export class EditRestaurantComponent implements OnInit {
       });
   }
 
+  /**
+   * A paraméterként átadott vezérlő neve alapján a hozzá tartozó hibaüzenet lekérdezése.
+   * @param controlName A vezérlő neve.
+   * @returns A hibaüzenet.
+   */
   getErrorMessage(controlName: string) {
     if (this.restaurantForm.get(controlName).hasError("required")) {
       return "A mező kitöltése kötelező!";
@@ -78,6 +89,9 @@ export class EditRestaurantComponent implements OnInit {
     }
   }
 
+  /**
+   * Megadja, hogy az étterem adatai megváltoztak-e az eredeti állapothoz képest.
+   */
   get restaurantDataChanged() {
     return this.restaurantForm.value.name !== this.restaurant.name
           || this.restaurantForm.value.shortDescription !== this.restaurant.shortDescription
@@ -88,6 +102,9 @@ export class EditRestaurantComponent implements OnInit {
           || this.restaurantForm.value.address.phoneNumber !== this.restaurant.restaurantAddress.phoneNumber;
   }
 
+  /**
+   * A visszaállítási gombra kattintva az eredeti adatok betöltése.
+   */
   restoreClicked() {
     this.setFormInputs(this.restaurant);
   }

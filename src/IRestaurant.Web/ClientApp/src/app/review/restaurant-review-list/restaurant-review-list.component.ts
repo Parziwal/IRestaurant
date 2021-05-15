@@ -15,10 +15,15 @@ import { AddReviewDialogComponent } from './add-review-dialog/add-review-dialog.
 })
 export class RestaurantReviewListComponent implements OnInit {
 
+  /** Az étterem azonosítója, akinek az értékelésit lekérdezzük. */
   @Input() restaurantId: number = -1;
+  /** Az étterem aggregált értékelése. */
   @Input() restaurantRating: number = 1;
+  /** Az étteremhez tartozó értékelések. */
   reviews: Observable<Review[]> = new Observable();
+  /** Az értékelések száma. */
   reviewsCount: number = 0;
+  /** Az aktuális felhasználó szerepköre. */
   userRole: Observable<UserRole>;
 
   constructor(private reviewService: ReviewService,
@@ -38,6 +43,10 @@ export class RestaurantReviewListComponent implements OnInit {
     this.reviews = this.reviewService.getRestaurantReviews(this.restaurantId);
   }
 
+  /**
+   * A jelenlegi étteremhez értékelés létrehozása egy dialógus ablak segítségével.
+   * Ha az értékelés létrehozása sikeres volt frissítjük az értékelések listáját. 
+   */
   addReviewClicked() {
     const dialogRef = this.dialog.open(AddReviewDialogComponent, {
       data: this.restaurantId,

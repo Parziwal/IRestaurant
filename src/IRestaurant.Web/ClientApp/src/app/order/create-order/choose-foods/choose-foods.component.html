@@ -28,7 +28,7 @@
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between" *ngFor="let chosenFood of chosenFoods">
                 <div>
-                    <p>{{ chosenFood.name }}</p>
+                    <p>{{ chosenFood.foodName }}</p>
                     <p>{{ chosenFood.amount }} x {{ chosenFood.price | currency : 'Ft' : 'symbol' : '1.0-0' }}</p>
                 </div>
                 <button type="button" class="btn btn-outline-danger chosen-food-delete"

@@ -1,15 +1,15 @@
 <mat-horizontal-stepper linear labelPosition="bottom" #stepper>
     <mat-step [editable]="!orderFinalizationCompleted" [completed]="chooseFoodCompleted">
         <ng-template matStepLabel>Ételek kiválasztása</ng-template>
-        <app-choose-foods (completed)="chooseFoodCompleted = $event"></app-choose-foods>
+        <app-choose-foods (chooseFoodCompleted)="chooseFoodCompleted = $event"></app-choose-foods>
     </mat-step>
     <mat-step [editable]="!orderFinalizationCompleted" [completed]="deliveryDetailsCompleted">
         <ng-template matStepLabel>Kiszállítási adatok</ng-template>
-        <app-delivery-details (completed)="deliveryDetailsCompleted = $event"></app-delivery-details>
+        <app-delivery-details (deliveryDetailsCompleted)="deliveryDetailsCompleted = $event"></app-delivery-details>
     </mat-step>
     <mat-step [editable]="false" [completed]="orderFinalizationCompleted">
         <ng-template matStepLabel>Rendelés véglegesítése</ng-template>
-        <app-order-finalization (completed)="orderCompleted($event)"></app-order-finalization>
+        <app-order-finalization (orderFinalizationCompleted)="orderCompleted($event)"></app-order-finalization>
     </mat-step>
     <mat-step [editable]="false">
         <ng-template matStepLabel>Kész</ng-template>

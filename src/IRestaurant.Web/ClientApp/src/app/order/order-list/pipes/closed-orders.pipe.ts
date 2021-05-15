@@ -7,6 +7,11 @@ import { OrderStatus } from '../../models/order-status.type';
 })
 export class ClosedOrdersPipe implements PipeTransform {
 
+  /**
+   * A paraméterként kapott rendelések közül a már lezártak lekérdezése.
+   * @param orderOverviews A rendelések áttekintő adatainak listája.
+   * @returns A lezárt rendelések.
+   */
   transform(orderOverviews: OrderOverview[]): OrderOverview[] {
     if (orderOverviews == null) {
       return null;

@@ -18,7 +18,9 @@ import { ChangeOrderStatusDialogComponent } from './change-order-status-dialog/c
 })
 export class OrderListItemComponent implements OnInit {
 
+  /** A rendelés áttekintő adatai. */
   @Input() orderOverview: OrderOverview;
+  /** Az aktuális felhasználó szerepköre. */
   userRole: Observable<UserRole>;
 
   constructor(private router: Router,
@@ -35,10 +37,17 @@ export class OrderListItemComponent implements OnInit {
     this.userRole = this.authorizeService.getUserRole();
   }
 
+  /**
+   * A részletes gombra kattintva a rendelés részletes oldalára való navigálás.
+   */
   onDetailsButtonClicked() {
     this.router.navigate(['/order/details', this.orderOverview.id]);
   }
 
+  /**
+   * A komponenshez tartozó rendelés lemondása. Ehhez egy megerősítő dialógus ablak feldobása, aminek
+   * jóváhagyása esetén az töröljük a rendelést.
+   */
   onCancelOrder() {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.componentInstance.confirmMessage = "Biztosan le szeretnéd mondani a rendelést?"
@@ -56,6 +65,10 @@ export class OrderListItemComponent implements OnInit {
     });
   }
 
+  /**
+   * A komponenshez tartozó rendelés státuszának módosítása. Ehhez egy dialógus ablak feldobása,
+   * ahol ki lehet választani a megfelelő státuszt.
+   */
   onOrderStatusChange() {
     const dialogRef = this.dialog.open(ChangeOrderStatusDialogComponent, {
       data: this.orderOverview,

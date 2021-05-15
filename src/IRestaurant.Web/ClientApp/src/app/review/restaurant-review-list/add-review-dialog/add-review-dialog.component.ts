@@ -12,6 +12,7 @@ import { ReviewService } from '../../review.service';
 })
 export class AddReviewDialogComponent implements OnInit {
 
+  /** Az értékeléshez tartozó űrlap. */
   reviewForm: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<AddReviewDialogComponent>,
@@ -32,6 +33,10 @@ export class AddReviewDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Az értékelés adatait tartalmazó űrlap elküldése, ha a megadott értékek érvényesek.
+   * Ha a művelet sikeressen lefutott, akkor ezt visszajelezzük a dialógus ablakon keresztül.
+   */
   onSubmit() {
     if (this.reviewForm.invalid) {
       return;
@@ -46,10 +51,11 @@ export class AddReviewDialogComponent implements OnInit {
     );
   }
 
-  cancel() {
-    this.dialogRef.close(false);
-  }
-
+  /**
+   * A paraméterként átadott vezérlő neve alapján a hozzá tartozó hibaüzenet lekérdezése.
+   * @param controlName A vezérlő neve.
+   * @returns A hibaüzenet.
+   */
   getErrorMessage(controlName: string) {
     if (this.reviewForm.get(controlName).hasError("required")) {
       return "A mező kitöltése kötelező!";
@@ -63,5 +69,13 @@ export class AddReviewDialogComponent implements OnInit {
     if (this.reviewForm.get(controlName).hasError("max")) {
       return `A mező értéke nem lehet nagyobb mint ${this.reviewForm.get(controlName).errors.max.max}!`;
     }
+  }
+
+  
+  /**
+   * A dialógus ablak bezárása, és visszajelzés, hogy nem hoztak létre értékelést.
+   */
+   cancel() {
+    this.dialogRef.close(false);
   }
 }

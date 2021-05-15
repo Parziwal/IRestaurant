@@ -10,9 +10,13 @@ import { mimeType } from '../../validators/mime-type.validator';
 })
 export class ImagePickerComponent implements OnInit {
 
+  /** A kép előnézetének elérési útvonala. */
   @Input() imagePreview: string;
+  /** Jelzi, ha a felhasználó kiválasztott egy képet. */
   @Output() imagePicked = new EventEmitter<File>();
+  /** Jelzi, ha a felhasználó törölte a képet. */
   @Output() imageDeleted = new EventEmitter();
+  /** A kép feltöltését tartalmazó űtlap. */
   imageForm: FormGroup;
 
   constructor() { }
@@ -21,6 +25,11 @@ export class ImagePickerComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * A képfeltöltő űtlap inicializálása.
+   * A form státuszának változása estén, ha a form valid, akkor kiolvassuk a képet
+   * és egy esemény formájában értesítjük a felíratkozottakat a képfájl megváltozásáról.
+   */
   private initForm() {
     this.imageForm = new FormGroup({
       image: new FormControl(null, [Validators.required], [mimeType])
@@ -42,6 +51,9 @@ export class ImagePickerComponent implements OnInit {
     );
   }
 
+  /**
+   * A kép kiválasztásakor a képfájl betöltése a formba és az űrlap validálásának frissítése.
+   */
   onImagePicked(event: Event) {
     this.imageForm.get('image').markAsTouched();
     const imageFile = (event.target as HTMLInputElement).files[0];
@@ -49,6 +61,9 @@ export class ImagePickerComponent implements OnInit {
     this.imageForm.get('image').updateValueAndValidity();
   }
 
+  /**
+   * A kép törlésének jelzése.
+   */
   onImageDeleted() {
     this.imagePreview = null;
     this.imageDeleted.emit();

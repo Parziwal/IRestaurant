@@ -1,6 +1,10 @@
 import { AbstractControl } from '@angular/forms';
 import { Observable, Observer, of } from 'rxjs';
 
+/**
+ * Validátor, ami ellenőrzi, hogy a megadott fájl valóban kép-e, ha nem akkor
+ * a fájlt hibásnak jelzi.
+ */
 export const mimeType = (
     control: AbstractControl
 ): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> => {

@@ -14,11 +14,16 @@ import { OrderService } from '../../order.service';
 })
 export class ChooseFoodsComponent implements OnInit {
 
+  /** Az étteremhez tartozó ételek listája, amiből a vendégek rendelhetnek. */
   foods: Observable<Food[]> = new Observable();
+  /** A vendég által kiválasztott ételek listája. */
   chosenFoods: OrderFoodWithId[] = [];
+  /** Hozzáadás ikon. */
   faPlus = faPlus;
+  /** Törlés ikon. */
   faTimes = faTimes
-  @Output()  completed = new EventEmitter<boolean>();
+  /** Jelzi, ha a felhasználó már választott ki ételt. */
+  @Output() chooseFoodCompleted = new EventEmitter<boolean>();
 
   constructor(private foodService: FoodService,
     private orderService: OrderService,
@@ -37,14 +42,20 @@ export class ChooseFoodsComponent implements OnInit {
     );
   }
 
-  addFoodToList(food: Food, amount: HTMLInputElement) {
-    if (amount.value == "" || amount.valueAsNumber < 1) {
+  /**
+   * A vendég által kiválasztott étel hozzáadása a listához, ha adott meg darabszámot,
+   * és az legalább 1.
+   * @param food A kiválasztott étel.
+   * @param amount A darabszámot tartalmazó HTML elem.
+   */
+  addFoodToList(food: Food, amountHTMLElement: HTMLInputElement) {
+    if (amountHTMLElement.value == "" || amountHTMLElement.valueAsNumber < 1) {
       return;
     }
     let chosenFood = {
       id: food.id, 
       foodName: food.name,
-      amount: amount.valueAsNumber,
+      amount: amountHTMLElement.valueAsNumber,
       price: food.price
     };
 
@@ -55,20 +66,27 @@ export class ChooseFoodsComponent implements OnInit {
       this.chosenFoods[chosenFoodIndex].amount += chosenFood.amount;
     }
 
-    amount.value = '';
+    amountHTMLElement.value = '';
     
-    this.completed.emit(true);
+    this.chooseFoodCompleted.emit(true);
   }
 
+  /**
+   * A paraméterként megadott étel törlése a vendég rendelési listájától.
+   * @param orderFood A törlendő étel.
+   */
   deleteFoodFromList(orderFood: OrderFoodWithId) {
     let orderFoodIndex = this.chosenFoods.findIndex(f => f.id === orderFood.id);
     this.chosenFoods.splice(orderFoodIndex, 1);
 
     if (this.chosenFoods.length == 0) {
-      this.completed.emit(false);
+      this.chooseFoodCompleted.emit(false);
     }
   }
 
+  /**
+   * A vendég által kiválasztott ételek összértéke.
+   */
   get chosenFoodsTotal(): number {
     let total = 0;
     this.chosenFoods.forEach(f => {
@@ -77,6 +95,9 @@ export class ChooseFoodsComponent implements OnInit {
     return total;
   }
 
+  /**
+   * A következő gombra való kattintáskor értesítjük a felíratkozottakat a kiválasztott ételek megváltozásáról.
+   */
   onNextClikced() {
     this.orderService.chosenFoodsChange.next(this.chosenFoods);
   }

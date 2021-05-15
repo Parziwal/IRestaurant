@@ -14,14 +14,21 @@ import { OrderStatus } from './models/order-status.type';
   providedIn: 'root'
 })
 export class OrderService {
+
   private baseUrl = environment.apiUrl + "order/";
+  /** A rendelés létrehozásakor megadott ételek változásának jelzése. */
   chosenFoodsChange = new Subject<OrderFoodWithId[]>();
+  /** A kiszállítási adatok megváltozásának jelzése. */
   deliveryDetailsChange = new Subject<DeliveryDetials>();
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * A jelenlegi vendég rendeléseinek lekérése.
+   * @returns A vendég rendeléseinek listája.
+   */
   getCurrentGuestOrderList() {
-    return this.http.get<OrderOverview[]>(this.baseUrl + "guest").pipe(map(
+    return this.http.get<OrderOverview[]>(`${this.baseUrl}guest`).pipe(map(
       (orderOverviews) => {
         return orderOverviews.map(order => {
           order.statusInString = this.getOrderStatusInString(order.status)
@@ -31,8 +38,12 @@ export class OrderService {
     ));
   }
 
+  /**
+   * Az aktuális felhasználóhoz tartozó étterem rendeléseinek lekérése.
+   * @returns Az étterem rendeléseinek listája.
+   */
   getResturantOrderList() {
-    return this.http.get<OrderOverview[]>(this.baseUrl + "restaurant").pipe(map(
+    return this.http.get<OrderOverview[]>(`${this.baseUrl}restaurant`).pipe(map(
       (orderOverviews) => {
         return orderOverviews.map(order => {
           order.statusInString = this.getOrderStatusInString(order.status)
@@ -42,8 +53,13 @@ export class OrderService {
     ));
   }
 
+  /**
+   * A megadott azonosítójú rendelés részletes adatainak lekérése.
+   * @param orderId A rendelés azonosítója.
+   * @returns A rendelés részletes adatai.
+   */
   getOrderDetails(orderId: number) {
-    return this.http.get<OrderDetails>(this.baseUrl + orderId).pipe(map(
+    return this.http.get<OrderDetails>(`${this.baseUrl}${orderId}`).pipe(map(
       (orderDetails) => {
         orderDetails.statusInString = this.getOrderStatusInString(orderDetails.status);
         return orderDetails;
@@ -51,18 +67,33 @@ export class OrderService {
     ));
   }
 
+  /**
+   * A megadott rendelés státuszának módosítása.
+   * @param orderId A rendelés azonosítója.
+   * @param status A beállítandó státusz.
+   */
   setOrderStatus(orderId: number, status: OrderStatus) {
     let params = new HttpParams();
     params = params.append("status", status.toString());
-    return this.http.patch(this.baseUrl + orderId, null, {
+    return this.http.patch(`${this.baseUrl}${orderId}`, null, {
       params: params
     });
   }
 
+  /**
+   * A paraméterként megadott rendelés létrehozása.
+   * @param createdOrder A létrehozandó rendelés adatai.
+   * @returns A létrehozott rendelés részletes adatai.
+   */
   createOrder(createdOrder: CreateOrder) {
-    return this.http.post(this.baseUrl, createdOrder);
+    return this.http.post<OrderDetails>(this.baseUrl, createdOrder);
   }
 
+  /**
+   * A megadott státuszhoz tartozó szöveg lekérdezése.
+   * @param status A státusz.
+   * @returns A státusz szövege.
+   */
   getOrderStatusInString(status: OrderStatus) {
     switch(status) {
       case OrderStatus.PROCESSING:

@@ -7,8 +7,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/hu';
-registerLocaleData(localeFr, 'hu');
+import localeHu from '@angular/common/locales/hu';
+registerLocaleData(localeHu, 'hu');
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';

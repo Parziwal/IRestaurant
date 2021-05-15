@@ -6,6 +6,12 @@ import { OrderStatus } from '../../models/order-status.type';
   name: 'inProgressOrders'
 })
 export class InProgressOrdersPipe implements PipeTransform {
+
+  /**
+   * A paraméterként kapott rendelések közül a még folyamatban lévőek lekérdezése.
+   * @param orderOverviews A rendelések áttekintő adatainak listája.
+   * @returns A folyamatban lévő rendelések.
+   */
   transform(orderOverviews: OrderOverview[]): OrderOverview[] {
     if (orderOverviews == null) {
       return null;

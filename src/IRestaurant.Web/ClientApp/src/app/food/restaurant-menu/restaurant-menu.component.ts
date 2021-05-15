@@ -14,9 +14,13 @@ import { Food } from '../models/food.type';
 })
 export class RestaurantMenuComponent implements OnInit {
 
+  /** Az étterem azonosítója, amihez tartozó ételeket lekérdezi. */
   @Input() restaurantId: number;
+  /** Az étteremhez tartozó ételek. */
   restaurantMenu: Observable<Food[]> = new Observable();
+  /** Ha egy ételhez nem tartozik kép, akkor ezt jelenítjük meg alapméretezettként. */
   defaultFoodImgUrl = environment.defaultFoodImgUrl;
+  /** Az aktuális felhasználó szerepköre. */
   userRole: Observable<UserRole>;
 
   constructor(private foodService: FoodService,
@@ -37,6 +41,9 @@ export class RestaurantMenuComponent implements OnInit {
     this.userRole = this.authorizeService.getUserRole();
   }
 
+  /** 
+   * Ha a rendelés gombra kattintottunk, akkor átnavigálunk a rendelés oldalra.
+  */
   onOrderClicked() {
     this.router.navigate(["order"], {relativeTo: this.route});
   }

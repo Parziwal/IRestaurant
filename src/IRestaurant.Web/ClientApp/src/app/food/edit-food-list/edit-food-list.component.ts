@@ -18,11 +18,17 @@ import { UploadFoodImageDialogComponent } from './upload-food-image-dialog/uploa
 })
 export class EditFoodListComponent implements OnInit {
 
-  foods: Observable<Food[]> = new Observable()
+  /** Az étteremhez tartozó ételek listája. */
+  foods: Observable<Food[]> = new Observable();
+  /** Ha egy ételhez nem tartozik kép, akkor ezt jelenítjük meg alapméretezettként. */
   defaultFoodImgUrl = environment.defaultFoodImgUrl;
+  /** Szerkesztés ikon. */
   faEdit = faEdit;
+  /** Törlés ikon. */
   faTrashAlt = faTrashAlt;
+  /** Hozzáadás ikon. */
   faPlusSquare = faPlusSquare;
+  /** Feltöltés ikon. */
   faUpload = faUpload;
 
   constructor(private foodService: FoodService,
@@ -37,6 +43,10 @@ export class EditFoodListComponent implements OnInit {
     this.foods = this.foodService.getMyRestaurantMenu();
   }
 
+  /**
+   * Az étel hozzáadásakor a megfelelő dialógus ablak megnyitása, és sikeres hozzáadás esetén
+   * az ételek újratöltése az oldalon.
+   */
   addFood() {
     const dialogRef = this.dialog.open(EditFoodDialogComponent, {
       width: "500px"
@@ -49,6 +59,11 @@ export class EditFoodListComponent implements OnInit {
     });
   }
 
+  /**
+   * A paraméterként megadott étel szerkesztése. Ehhez a megfelelő dialódus ablak megnyitása, és a
+   * művelet sikeres elvégzése után az ételek újratöltése az oldalon.
+   * @param food A szerkesztendó étel.
+   */
   editFood(food: Food) {
     const dialogRef = this.dialog.open(EditFoodDialogComponent, {
       data: food,
@@ -62,6 +77,11 @@ export class EditFoodListComponent implements OnInit {
     });
   }
 
+  /**
+   * A paraméterként átadott étel törlése. Ehhez egy megerősítő dialógus ablak feldobása, aminek
+   * jóváhagyása esetén az ételt töröljük.
+   * @param food 
+   */
   deleteFood(food: Food) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
     dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"

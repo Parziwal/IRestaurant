@@ -26,6 +26,9 @@ export class NavMenuComponent implements OnInit {
     this.userRole = this.authorizeService.getUserRole();
   }
 
+  /**
+   * Kisebb képernyős nézetnél a menü lenyitása és bezárása.
+   */
   toggle() {
     this.isExpanded = !this.isExpanded;
   }

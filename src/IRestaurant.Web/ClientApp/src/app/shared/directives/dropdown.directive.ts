@@ -5,6 +5,10 @@ import { Directive, HostListener, HostBinding, ElementRef, ContentChild } from '
     selector: '[appDropdownMenu]'
 })
 
+/**
+ * A Bootstrap-es lenyiló menük kinyitását és becsukását végzi.
+ * Ezt a "dropdown-menu" class-al rendelkező elemre kell tenni.
+ */
 export class DropdownMenuDirective {
     @HostBinding('class.show') isOpen = false;
 }
@@ -13,10 +17,15 @@ export class DropdownMenuDirective {
     selector: '[appDropdown]'
 })
 
+/**
+ * A Bootstrap-es lenyiló menük kinyitását és becsukását végzi.
+ * Ezt a "dropdown" class-al rendelkező elemre kell tenni.
+ */
 export class DropdownDirective {
     @ContentChild(DropdownMenuDirective) private dropdownMenu!: DropdownMenuDirective;
 
     @HostBinding('class.show') private isOpen = false;
+
     @HostListener('document: click', ['$event']) private toggelOpen(event: Event) {
         this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
         this.dropdownMenu.isOpen = this.isOpen;

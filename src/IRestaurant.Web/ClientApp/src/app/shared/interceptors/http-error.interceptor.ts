@@ -16,6 +16,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
   constructor(private toastr: ToastrService) {}
 
+  /**
+   * Ha a http kérés során  hiba lép fel, akkor elkapja azt, kiszedi a hibaüzenetet,
+   * majd ezt egy toast formájában közli a felhasználóval.
+   */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {

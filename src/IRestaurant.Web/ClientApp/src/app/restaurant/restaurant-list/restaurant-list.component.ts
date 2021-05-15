@@ -13,10 +13,13 @@ import { RestaurantService } from '../restaurant.service';
 })
 export class RestaurantListComponent implements OnInit {
 
+  /** Az étterem áttekintő adatai. */
   restaurantOverviews: Observable<RestaurantOverview[]> = new Observable();
-  private restaurantListType: RestaurantListType = RestaurantListType.All;
+  /** A keresési kifejezés. */
   searchTerm: string;
-  faTimes = faTimes
+  /** Törlési ikon. */
+  faTimes = faTimes;
+  private restaurantListType: RestaurantListType = RestaurantListType.All;
 
   constructor(private restaurantService: RestaurantService,
     private route: ActivatedRoute) { }
@@ -36,6 +39,11 @@ export class RestaurantListComponent implements OnInit {
     );
   }
 
+  /**
+   * A megadott névre illeszkedő éttermek áttekintő adatainak lekérdezése.
+   * A lista típusától függően, amit az útvonal adat része tartalmaz, az összes étterem,
+   * vagy csak az aktuális vendég kedvenceinek lekérése.
+   */
   getRestaurantList() {
     let options = {searchTerm: this.searchTerm};
     if (this.restaurantListType === RestaurantListType.Favourite) {
@@ -45,6 +53,9 @@ export class RestaurantListComponent implements OnInit {
     } 
   }
 
+  /**
+   * A kereső mező törlése és az éttermek listájának frissítése.
+   */
   clearBrowser() {
     this.searchTerm = "";
     this.getRestaurantList();
