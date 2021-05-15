@@ -12,6 +12,7 @@ import { Food } from '../../models/food.type';
 })
 export class EditFoodDialogComponent implements OnInit {
 
+  /** Az ételhez tartozó űrlap. */
   foodForm: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<EditFoodDialogComponent>,
@@ -42,6 +43,13 @@ export class EditFoodDialogComponent implements OnInit {
     }
   }
 
+  /**
+   * A form elküldése, ha minden megadott adat valid.
+   * Ha a dialógus ablaknak adtak át egy étel típusú objektumot, akkor az azt jelenti, hogy az
+   * ételt szerkesztjük, ha pedig nem, akkor az azt, hogy új ételt hozunk létre. Mind a két esetben
+   * a FoodService megfelelő metódusát hívjuk meg, és ha sikeresen lefutottak a műveletek, akkor
+   * ezt a dialógus ablak bezárásakor visszajelezzük.
+   */
   onSubmit() {
     if (this.foodForm.invalid) {
       return;
@@ -49,19 +57,24 @@ export class EditFoodDialogComponent implements OnInit {
 
     if (!this.food) {
       this.foodService.addFoodToRestaurantMenu(this.foodForm.value).subscribe(
-        (foodData: Food) => {
+        () => {
           this.dialogRef.close(true);
           this.toastr.success('Az étel hozzáadásra került!');
         });
     } else {
       this.foodService.editFood(this.food.id, this.foodForm.value).subscribe(
-        (foodData: Food) => {
+        () => {
           this.dialogRef.close(true);
           this.toastr.success('Az étel módosítása sikerült!');
         });
     }
   }
 
+  /**
+   * A paraméterként átadott vezérlő neve alapján a hozzá tartozó hibaüzenet lekérdezése.
+   * @param controlName A vezérlő neve.
+   * @returns A hibaüzenet.
+   */
   getErrorMessage(controlName: string) {
     if (this.foodForm.get(controlName).hasError("required")) {
       return "A mező kitöltése kötelező!";
@@ -74,6 +87,9 @@ export class EditFoodDialogComponent implements OnInit {
     }
   }
 
+  /**
+   * A dialógus ablak bezárása, és visszajelzés, hogy nem történt módosítás az étlapon.
+   */
   cancel() {
     this.dialogRef.close(false);
   }

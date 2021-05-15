@@ -8,16 +8,26 @@ import { MatStepper } from '@angular/material/stepper';
 })
 export class CreateOrderComponent {
 
+  /** A vendég kiválasztotta-e már az ételeket. */
   chooseFoodCompleted: boolean = false;
+  /** A vengég megadta-e már a szállítási adatait. */
   deliveryDetailsCompleted: boolean = false;
+  /** A rendelés véglegesítésre került. */
   orderFinalizationCompleted: boolean = false;
+  /** A léptető HTML elem. */
   @ViewChild("stepper") stepper: MatStepper;
+  /** A létrehozott rendelés azonosítója. */
   createdOrderId: number = -1;
 
-  orderCompleted(createdOrder: {orderId: number}) {
+  /**
+   * A létrehozott rendelés azonosítójának beállítása és a rendelés véglegesítése.
+   * A léptető elemet egy kis idő eltelte után kell meghívni, hogy először tudja érzékelni
+   * a rendelés véglegesítése státusz megváltozását, különben nem fog a következő oldalra lépni.
+   * @param createdOrderId A létrehozott rendelés azonosítója.
+   */
+  orderCompleted(createdOrderId: number) {
     this.orderFinalizationCompleted = true;
-    this.createdOrderId = createdOrder.orderId;
+    this.createdOrderId = createdOrderId;
     setTimeout(() => this.stepper.next(), 10)
-    
   }
 }

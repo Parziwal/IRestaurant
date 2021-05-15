@@ -1,12 +1,12 @@
 using Hellang.Middleware.ProblemDetails;
 using IdentityServer4.Services;
-using IRestaurant.BL;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using IRestaurant.DAL.Repositories.Implementations;
+using IRestaurant.Web.ProfileServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,38 +29,39 @@ namespace IRestaurant.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Ez a metódus futási idõben hívódik meg. A szolgáltatások beregisztrálására használatos.
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
+                    //Az adatbázis migrációs fájlok áthelyezése a DAL rétegbe.
                     x => x.MigrationsAssembly("IRestaurant.DAL")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                //A Role service beregisztrálása a szerepkörök használatához.
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            //Hogy a felhasználó szerepkörét (role) le tudjuk kérdezni oidc kliens segítségével:
-            //Ezáltal a role megjelenik az access tokenben kliens oldalon.
+            //A felhasználó szerepkörének (role) tokenbe helyezése.
             services.AddTransient<IProfileService, UserRoleProfileService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
-            //Restaurant és Guest claim policy beregisztrálása manuálisan, mivel
-            //a beépített szerepkör alapú engedélyezés nem mûködött megfelelõen,
-            //403-as státuszkódú hibákat dobott a megfelelõ szerepkörrel rendelkezõ felhasználóknak is.
+            //Restaurant és Guest claim policy beregisztrálása manuálisan.
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(UserRoles.Restaurant, policy =>
                     policy.RequireClaim(ClaimTypes.Role, UserRoles.Restaurant
-                ));
+                    ));
                 options.AddPolicy(UserRoles.Guest, policy =>
                     policy.RequireClaim(ClaimTypes.Role, UserRoles.Guest
                 ));
@@ -68,13 +69,14 @@ namespace IRestaurant.Web
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            // In production, the Angular files will be served from this directory
+
+            //Production módban az Angular fájlok ebbõl a könyvtárból lesznek kiszolgálva.
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            //ProblemDetails Middleware-hez szükséges szolgáltatások hozzáadása, és konfigurálása
+            //ProblemDetails Middleware-hez szükséges szolgáltatások hozzáadása, és konfigurálása.
             services.AddProblemDetails(options => {
                 // Ez 404 Not Found státusz kódra cseréli EntityNotFoundException-t.
                 options.MapToStatusCode<EntityNotFoundException>(StatusCodes.Status404NotFound);
@@ -82,9 +84,10 @@ namespace IRestaurant.Web
                 options.MapToStatusCode<EntityAlreadyExistsException>(StatusCodes.Status400BadRequest);
             });
 
+            //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
             services.AddHttpContextAccessor();
 
-            // A Swagger szolgáltatás beregisztrálása a Swagger middleware használatához
+            // A Swagger szolgáltatás beregisztrálása a Swagger middleware használatához.
             services.AddSwaggerDocument(config =>
             {
                 config.PostProcess = document =>
@@ -101,6 +104,7 @@ namespace IRestaurant.Web
                 };
             });
 
+            //A DAL rétegbeli repository osztályok beregisztrálása.
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
@@ -109,14 +113,17 @@ namespace IRestaurant.Web
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
 
+            //A BL rétegbeli manager osztályok beregisztrálása.
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
             services.AddTransient<OrderManager>();
-            services.AddTransient<UserManager>();
+            services.AddTransient<UserAddressManager>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Ez a metódus futási idõben hívódik meg. A HTTP kérési pipline konfigurációjára használatos.
+        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -127,7 +134,6 @@ namespace IRestaurant.Web
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -160,13 +166,11 @@ namespace IRestaurant.Web
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
+                    //Az Angular kliens alkalmazás és a szerver futásának szétválasztása.
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });

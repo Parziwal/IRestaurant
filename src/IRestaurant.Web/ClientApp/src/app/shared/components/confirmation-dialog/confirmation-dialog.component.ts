@@ -8,6 +8,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 
 export class ConfirmationDialogComponent {
+
+  /** A megerősítő dilógus ablak szövege. */
   confirmMessage: string;
 
   constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>) {}

@@ -16,11 +16,14 @@ import { OrderService } from '../../order.service';
 })
 export class OrderFinalizationComponent implements OnInit, OnDestroy {
 
+  /** A kiszállítási adatok. */
   deliveryDetails: DeliveryDetials;
+  /** A vendég által kiválasztott ételek listája. */
   orderFoods: OrderFoodWithId[] = [];
-  orderFoodsChangeSub: Subscription;
-  deliveryDetailsChangeSub: Subscription;
-  @Output() completed = new EventEmitter<{orderId: number}>();
+  /** A rendelés véglegesítésnek jelzése és a rendelési azonosító átadása. */
+  @Output() orderFinalizationCompleted = new EventEmitter<number>();
+  private orderFoodsChangeSub: Subscription;
+  private deliveryDetailsChangeSub: Subscription;
 
   constructor(private orderService: OrderService,
     private route: ActivatedRoute,
@@ -35,6 +38,9 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
     this.deliveryDetailsChangeSub.unsubscribe();
   }
 
+  /**
+   * A rendelés összértékének kiszámítása.
+   */
   get orderFoodsTotal(): number {
     let total = 0;
     this.orderFoods.forEach(f => {
@@ -56,6 +62,10 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * A rendelés gombra kattintva a rendelés létrehozása az elvárt formátumban, majd
+   * az OrderService segítségével a rendelés leadása.
+   */
   onOrderClicked() {
     let createdOrder = <CreateOrder> {
       preferredDeliveryDate: this.deliveryDetails.preferredDeliveryDate,
@@ -66,7 +76,7 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
     this.orderService.createOrder(createdOrder).subscribe(
       (createdOrder: OrderDetails) => {
         this.toastr.success("A rendelés rögzítése megtörtént.");
-        this.completed.emit({orderId: createdOrder.id});
+        this.orderFinalizationCompleted.emit(createdOrder.id);
       }
     );
   }

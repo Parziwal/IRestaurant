@@ -31,7 +31,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő éttermek listájának lekérése.
+        /// A megadott névre illeszkedő éttermek áttekintő adatainak lekérése.
         /// Ha a név paraméter null, akkor az összes elérhető éttermet visszaadjuk.
         /// </summary>
         /// <param name="restaurantName">Az étterem neve.</param>

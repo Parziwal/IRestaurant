@@ -8,8 +8,9 @@ import { RestaurantService } from '../restaurant.service';
   styleUrls: ['./restaurant-settings.component.css']
 })
 export class RestaurantSettingsComponent {
-  showForUsers = false;
-  isOrderAvailable = false;
+
+  /** Az étterem beállítási adatai. */
+  restaurantSettings: RestaurantSettings;
 
   constructor(private restaurantService: RestaurantService) { }
 
@@ -19,46 +20,52 @@ export class RestaurantSettingsComponent {
 
   private getRestaurantSettings() {
     this.restaurantService.getMyRestaurantSettings().subscribe(
-      (settings: RestaurantSettings) => {
-        this.showForUsers = settings.showForUsers;
-        this.isOrderAvailable = settings.isOrderAvailable;
+      (restaurantSettings: RestaurantSettings) => {
+        this.restaurantSettings = restaurantSettings;
       }
     );
   }
 
+  /**
+   * Az étterem elérhetőségi státuszának megváltozásakor hívódik meg, és elmenti a változtatásokat.
+   * Ha az étterem elrejtésre kerül, akkor automatikusan a rendelési lehetőség is kikapcsolásra kerül.
+   */
   showForUsersStatusChanged() {
-    if (this.showForUsers) {
+    if (this.restaurantSettings.showForUsers) {
       this.restaurantService.showMyRestaurantForUsers().subscribe(
         ok => {},
         error => {
-          this.showForUsers = !this.showForUsers
+          this.restaurantSettings.showForUsers = !this.restaurantSettings.showForUsers;
         }
       );
     } else {
-      this.isOrderAvailable = this.showForUsers;
+      this.restaurantSettings.isOrderAvailable = this.restaurantSettings.showForUsers;
       this.restaurantService.hideMyRestaurantForUsers().subscribe(
         ok => {},
         error => {
-          this.showForUsers = !this.showForUsers
-          this.isOrderAvailable = this.showForUsers;
+          this.restaurantSettings.showForUsers = !this.restaurantSettings.showForUsers
+          this.restaurantSettings.isOrderAvailable = this.restaurantSettings.showForUsers;
         }
       );
     }
   }
 
+  /**
+   * Az étterem rendelési státuszának megváltozásakor hívódik meg, és elmenti a változtatásokat.
+   */
   isOrderAvailableStatusChanged() {
-    if (this.isOrderAvailable) {
+    if (this.restaurantSettings.isOrderAvailable) {
       this.restaurantService.turnOnOrderOption().subscribe(
         ok => {},
         error => {
-          this.isOrderAvailable = !this.isOrderAvailable;
+          this.restaurantSettings.isOrderAvailable = !this.restaurantSettings.isOrderAvailable;
         }
       );
     } else {
       this.restaurantService.turnOffOrderOption().subscribe(
         ok => {},
         error => {
-          this.isOrderAvailable = !this.isOrderAvailable;
+          this.restaurantSettings.isOrderAvailable = !this.restaurantSettings.isOrderAvailable;
         }
       );
     }

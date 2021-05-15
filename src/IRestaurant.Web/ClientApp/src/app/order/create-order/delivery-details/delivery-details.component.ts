@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UserAddressWithId } from 'src/app/shared/models/user-address-with-id.type';
 import { dateTimeMin } from 'src/app/shared/validators/date-time-min.validator';
-import { UserService } from 'src/app/user/user.service';
+import { UserAddressService } from 'src/app/user/user-address.service';
 import { OrderService } from '../../order.service';
 
 @Component({
@@ -13,14 +13,20 @@ import { OrderService } from '../../order.service';
 })
 export class DeliveryDetailsComponent implements OnInit {
 
+  /** A kiszállítási adatok űrlapja. */
   deliveryForm: FormGroup;
+  /** A kiválasztott számlázási cím azonosítója. A -1 új címet jelent. */
   selectedAddressId: number = -1;
+  /** A vendég számlázási címeit tartalmazó lista. */
   guestAddresses: Observable<UserAddressWithId[]> = new Observable();
-  @Output()  completed = new EventEmitter<boolean>();
-  minHourAfterOrder: number = 6;
+  /** Jelzi, ha a felhasználó már megadta a kiszállítási adatait. */
+  @Output()  deliveryDetailsCompleted = new EventEmitter<boolean>();
+  /** A kívánt kiszállítási időnek minimum a megadott órával a rendelés leadása után kell lennie. */
+  minHourAfterOrder: number = 1;
+  /** A kívánt kiszállítási időnek megadható minimum dátum. */
   minDateTime: Date = new Date(new Date().setHours(new Date().getHours() + this.minHourAfterOrder));
 
-  constructor(private userService: UserService,
+  constructor(private userAddressService: UserAddressService,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
@@ -28,6 +34,11 @@ export class DeliveryDetailsComponent implements OnInit {
     this.getGuestAddresses();
   }
 
+  /**
+   * A kiszállítási űrlap inicializálása.
+   * Minden egyes az űrlapot érintő változásnál megnézzük, hogy a form valid-e, és ennek
+   * megfelelően jelezzük, hogy a felhasználó már megadta-e a kiszállítási adatait.
+   */
   private initForm() {
     this.deliveryForm = new FormGroup({
         preferredDeliveryDate: new FormControl(null, [Validators.required, dateTimeMin(this.minDateTime)]),
@@ -41,17 +52,23 @@ export class DeliveryDetailsComponent implements OnInit {
 
     this.deliveryForm.valueChanges.subscribe(() => {
       if (this.deliveryForm.valid) {
-        this.completed.emit(true);
+        this.deliveryDetailsCompleted.emit(true);
       } else {
-        this.completed.emit(false);
+        this.deliveryDetailsCompleted.emit(false);
       }
     });
   }
 
   private getGuestAddresses() {
-    this.guestAddresses = this.userService.getCurrentGuestAddressList();
+    this.guestAddresses = this.userAddressService.getCurrentGuestAddressList();
   }
 
+  /**
+   * Ha a vendég kiválasztott egy címet a listából, akkor a form cím részének szerkesztését letiltjuk,
+   * és betöltjük a kiválasztott címet. Ha pedig null a megadott paraméter, akkor kiürítjük a form
+   * cím részét és újra engedélyezzük a szerkesztést.
+   * @param address A vendég számlázási/szállítási címe. Ha null, akkor az azt jelenti, hogy a vendég új címet akat felvenni,
+   */
   onAddressSelected(address: UserAddressWithId) {
     if (address == null) {
       this.deliveryForm.controls.address.reset();
@@ -68,6 +85,11 @@ export class DeliveryDetailsComponent implements OnInit {
     this.deliveryForm.controls.address.disable();
   }
 
+    /**
+   * A paraméterként átadott vezérlő neve alapján a hozzá tartozó hibaüzenet lekérdezése.
+   * @param controlName A vezérlő neve.
+   * @returns A hibaüzenet.
+   */
   getErrorMessage(controlName: string) {
     if (this.deliveryForm.get(controlName).hasError("required")) {
       return "A mező kitöltése kötelező!";
@@ -83,9 +105,14 @@ export class DeliveryDetailsComponent implements OnInit {
     }
   }
 
+  /**
+   * Az űrlap elküldése. Ha a kiválasztott cím azonosítója -1, akkor az azt jelenti, hogy a vendég egy új
+   * címet vett fel és ezesetben először létrehozzuk a címet, majd jelezzük, hogy a rendelési adatok megváltoztak.
+   * Ha a kiválasztott cím azonosítója nem -1, akkor simán jelezzük, hogy a rendelési adatok megváltoztak.
+   */
   onSubmit() {
     if (this.selectedAddressId == -1) {
-      this.userService.createUserAddress(this.deliveryForm.controls.address.value).subscribe(
+      this.userAddressService.createUserAddress(this.deliveryForm.controls.address.value).subscribe(
         (createdAddress: UserAddressWithId) => {
           this.changeDeliveryDetails(createdAddress.id);
         }
@@ -97,8 +124,11 @@ export class DeliveryDetailsComponent implements OnInit {
 
   private changeDeliveryDetails(addressId: number) {
     this.orderService.deliveryDetailsChange.next(
-      {...this.deliveryForm.value, 
-      address: {...this.deliveryForm.controls.address.value, id: addressId 
+      {
+        ...this.deliveryForm.value, 
+        address: {
+          ...this.deliveryForm.controls.address.value,
+          id: addressId 
     }});
   }
 }

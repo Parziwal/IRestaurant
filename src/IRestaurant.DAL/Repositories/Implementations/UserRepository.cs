@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// A felhasználóhoz kapcsolódó adatok kezeléséért és módosításáért felelős.
+    /// A felhasználóhoz kapcsolódó adatok eléréséért és kezeléséért felelős.
     /// </summary>
     public class UserRepository : IUserRepository
     {
@@ -153,7 +153,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// </summary>
         /// <param name="ownerId">A tfelhasználó/tulajdonos egyedi azonosítója.</param>
         /// <returns>A tulajdonos étteremének azonosítója.</returns>
-        public async Task<int> GetOwnerRestaurantId(string userId)
+        public async Task<int> GetMyRestaurantId(string userId)
         {
             var dbRestaurant = (await dbContext.Restaurants
                                     .SingleOrDefaultAsync(r => r.OwnerId == userId))
@@ -177,7 +177,8 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
         public string GetCurrentUserId()
         {
-            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                        accessor.HttpContext.User.FindFirstValue("sub");
         }
     }
 

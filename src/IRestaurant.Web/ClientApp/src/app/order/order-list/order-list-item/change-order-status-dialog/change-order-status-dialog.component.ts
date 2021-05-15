@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { OrderOverview } from 'src/app/order/models/order-overview.type';
@@ -13,7 +12,9 @@ import { OrderService } from 'src/app/order/order.service';
 })
 export class ChangeOrderStatusDialogComponent implements OnInit {
 
+  /** A rendelés jelenleg kiválasztott státusza. */
   selectedStatus: OrderStatus;
+  /** A lehetséges rendelési státuszok listája a hozzá tartozó szöveges reprezentációval. */
   orderStatuses = [
     {status: OrderStatus.ORDER_COMPLETION, statusInString: ""},
     {status: OrderStatus.UNDER_DELIVERING, statusInString: ""},
@@ -30,6 +31,9 @@ export class ChangeOrderStatusDialogComponent implements OnInit {
     this.setUpOrderStatuses();
   }
 
+  /**
+   * A lehetséges rendelési státuszok meghatározása, amire a rendelés módosítható.
+   */
   private setUpOrderStatuses() {
     this.orderStatuses.splice(0, this.orderOverview.status);
     if (this.orderOverview.status !== OrderStatus.PROCESSING) {
@@ -40,7 +44,11 @@ export class ChangeOrderStatusDialogComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  /**
+   * A rendelés státuszának elmentése a felhasználó által kiválasztottra, majd a dialógus ablak bezárása
+   * és a kiválasztott státusz visszaadása.
+   */
+  onSaveOrderStatus() {
     this.orderService.setOrderStatus(this.orderOverview.id, this.selectedStatus).subscribe(
       () => {
         this.dialogRef.close(this.selectedStatus);
@@ -49,6 +57,9 @@ export class ChangeOrderStatusDialogComponent implements OnInit {
     );
   }
 
+  /**
+   * A dialógus ablak bezárása, és visszajelzés, hogy nem történt módosítás.
+   */
   cancel() {
     this.dialogRef.close(null);
   }

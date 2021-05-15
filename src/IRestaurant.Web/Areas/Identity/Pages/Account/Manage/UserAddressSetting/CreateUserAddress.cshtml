@@ -6,6 +6,7 @@
 }
 
 <h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="ErrorMessage" />
 <div class="row">
     <div class="col-md-6">
         <form id="address-form" method="post">
@@ -31,7 +32,7 @@
                 <span asp-validation-for="UserAddress.PhoneNumber" class="text-danger"></span>
             </div>
             <button id="update-address-button" type="submit" class="btn btn-primary">Add</button>
-            <a class="btn btn-danger" asp-page="AllAddress">Cancel</a>
+            <a class="btn btn-danger" asp-page="UserAddressList">Cancel</a>
         </form>
     </div>
 </div>

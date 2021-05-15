@@ -2,30 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Managers;
+using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
-using IRestaurant.DAL.Models;
-using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 {
     [Authorize(Roles = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserRepository userRepository;
+        private readonly UserAddressManager userAddressManager;
 
         public EditUserAddressModel(
-            UserManager<ApplicationUser> userManager,
-            IUserRepository userRepository)
+            UserAddressManager userAddressManager)
         {
-            this.userManager = userManager;
-            this.userRepository = userRepository;
+            this.userAddressManager = userAddressManager;
         }
 
         [BindProperty]
@@ -33,23 +29,32 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
         [BindProperty]
         public CreateOrEditAddressDto UserAddress { get; set; }
 
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int addressId)
         {
-            var currentUser = await userManager.GetUserAsync(User);
-            if (currentUser == null)
+            try
             {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
+                var addressWithId = await userAddressManager.GetUserAddress(addressId);
+                UserAddressId = addressId;
+                UserAddress = new CreateOrEditAddressDto
+                {
+                    ZipCode = addressWithId.ZipCode,
+                    City = addressWithId.City,
+                    Street = addressWithId.Street,
+                    PhoneNumber = addressWithId.PhoneNumber
+                };
             }
-
-            var addressWithId = await userRepository.GetUserAddress(addressId);
-            UserAddressId = addressId;
-            UserAddress = new CreateOrEditAddressDto
+            catch (ProblemDetailsException ex)
             {
-                ZipCode = addressWithId.ZipCode,
-                City = addressWithId.City,
-                Street = addressWithId.Street,
-                PhoneNumber = addressWithId.PhoneNumber
-            };
+                ErrorMessage = ex.Details.Title;
+            }
+            catch (EntityNotFoundException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
 
             return Page();
         }
@@ -61,13 +66,18 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                 return Page();
             }
 
-            var currentUser = await userManager.GetUserAsync(User);
-            if (currentUser == null)
+            try
             {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
+                await userAddressManager.EditUserAddress(UserAddressId, UserAddress);
             }
-
-            await userRepository.EditUserAddress(UserAddressId, UserAddress);
+            catch (ProblemDetailsException ex)
+            {
+                ErrorMessage = ex.Details.Title;
+            }
+            catch (EntityNotFoundException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
 
             return RedirectToPage("UserAddressList");
         }

@@ -8,5 +8,6 @@ import { Review } from '../../models/review.type';
 })
 export class RestaurantReviewListItemComponent {
 
+  /** Az értékelés adatai. */
   @Input() review: Review
 }

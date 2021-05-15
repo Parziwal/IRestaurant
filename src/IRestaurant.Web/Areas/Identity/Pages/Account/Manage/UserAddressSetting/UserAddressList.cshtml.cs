@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Managers;
+using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
-using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,39 +19,45 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
     [Authorize(Roles = UserRoles.Guest)]
     public class UserAddressListModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserRepository userRepository;
+        private readonly UserAddressManager userAddressManager;
 
-        public UserAddressListModel(
-            UserManager<ApplicationUser> userManager,
-            IUserRepository userRepository)
+        public UserAddressListModel(UserAddressManager userAddressManager)
         {
-            this.userManager = userManager;
-            this.userRepository = userRepository;
+            this.userAddressManager = userAddressManager;
         }
 
         public List<AddressWithIdDto> UserAddressList { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public async Task<IActionResult> OnGet()
         {
-            var currentUser = await userManager.GetUserAsync(User);
-            if (currentUser == null)
+            try
             {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
+                UserAddressList = (await userAddressManager.GetCurrentGuestAddressList()).ToList();
+            } catch(EntityNotFoundException ex)
+            {
+                ErrorMessage = ex.Message;
             }
-
-            UserAddressList = (await userRepository.GetUserAddressList(currentUser.Id)).ToList();
+            
             return Page();
         }
 
         public async Task<IActionResult> OnGetDelete(int addressId)
         {
-            var currentUser = await userManager.GetUserAsync(User);
-            if (currentUser == null)
+            try
             {
-                return NotFound($"Az alábbi azonosítóval rendelkezõ felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
+                await userAddressManager.DeleteUserAddress(addressId);
+            } 
+            catch (ProblemDetailsException ex)
+            {
+                ErrorMessage = ex.Details.Title;
             }
-
-            await userRepository.DeleteUserAddress(addressId);
+            catch (EntityNotFoundException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
 
             return RedirectToPage("UserAddressList");
         }

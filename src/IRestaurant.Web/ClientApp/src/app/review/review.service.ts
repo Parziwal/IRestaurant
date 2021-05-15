@@ -8,22 +8,40 @@ import { Review } from './models/review.type';
   providedIn: 'root'
 })
 export class ReviewService {
-  private baseUrl = environment.apiUrl + "reviews/";
+  private baseUrl = environment.apiUrl + "review/";
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * A megadott azonosítójú étteremhez tartozó értékelések lekérése.
+   * @param restaurantId Az étterem azonosítója.
+   * @returns Az étterem értékeléseinek listája.
+   */
   getRestaurantReviews(restaurantId: number) {
-    return this.http.get<Review[]>(this.baseUrl + "restaurant/" + restaurantId);
+    return this.http.get<Review[]>(`${this.baseUrl}restaurant/${restaurantId}`);
   }
 
+  /**
+   * Az aktuális vendég által írt értékelések megjelenítése.
+   * @returns Az aktuális vendég értékelései.
+   */
   getCurrentGuestReviews() {
-    return this.http.get<Review[]>(this.baseUrl + "myreviews");
+    return this.http.get<Review[]>(`${this.baseUrl}myreviews`);
   }
 
-  addReviewToRestaurant(restaurantId: number, createdReview: CreateReview) {
-    return this.http.post<Review>(this.baseUrl + "restaurant/" + restaurantId, createdReview);
+  /**
+   * Értékelés létrehozása az aktuális vendég által a megadott adatok alapján.
+   * @param createdReview A létrehozandó értékelés.
+   * @returns A létrehozott értékelés.
+   */
+  addReviewToRestaurant(createdReview: CreateReview) {
+    return this.http.post<Review>(this.baseUrl, createdReview);
   }
 
+  /**
+   * A megadott azonosítójú értékelés törlése.
+   * @param reviewId Az értékelés azonosítója.
+   */
   deleteReview(reviewId: number) {
     return this.http.delete(this.baseUrl + reviewId);
   }

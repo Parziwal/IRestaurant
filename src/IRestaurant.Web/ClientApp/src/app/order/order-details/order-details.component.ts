@@ -10,6 +10,7 @@ import { OrderService } from '../order.service';
 })
 export class OrderDetailsComponent implements OnInit {
 
+  /** A rendelés részletes adatai. */
   orderDetails: OrderDetails;
 
   constructor(private orderService: OrderService,
@@ -26,7 +27,6 @@ export class OrderDetailsComponent implements OnInit {
         this.orderService.getOrderDetails(orderId).subscribe(
           (orderData: OrderDetails) => {
             this.orderDetails = orderData;
-            console.log(orderData);
           }
         );
       }

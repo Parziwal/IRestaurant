@@ -9,6 +9,11 @@ namespace IRestaurant.DAL.DTO.Reviews
     public class CreateReviewDto
     {
         /// <summary>
+        /// Az étterem egyedi azonosítója.
+        /// </summary>
+        public int RestaurantId { get; set; }
+
+        /// <summary>
         /// Az értékelés osztályzata egy 1-től 5-ig terjedő skálán.
         /// </summary>
         [Required]

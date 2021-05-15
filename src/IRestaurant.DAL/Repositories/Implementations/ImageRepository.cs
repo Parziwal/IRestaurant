@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// A képkezelésért felelős osztály, ami biztosítja a képek feltöltését a megadott könyvtárban, illetve azok törlését.
+    /// A képkezelésért felelős, biztosítja a képek feltöltését a megadott könyvtárban, illetve azok törlését.
     /// </summary>
     public class ImageRepository : IImageRepository
     {
@@ -36,6 +36,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<string> UploadImage([AllowImageOnly] IFormFile image, string folderName)
         {
             string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, BaseImageFolder, folderName);
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+            
             string uniqueFileName = Path.GetFileNameWithoutExtension(image.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
             string fullPath = Path.Combine(uploadFolder, uniqueFileName);
             using (var fileStream = new FileStream(fullPath, FileMode.Create))

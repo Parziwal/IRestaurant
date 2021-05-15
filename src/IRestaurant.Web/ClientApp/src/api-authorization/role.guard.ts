@@ -11,7 +11,7 @@ import { AuthorizeService } from './authorize.service';
 
 /**
  * Ezen osztály segítségével kontrolálhatjuk, hogy mely oldalakhoz férhetnek hozzá az egyes felhasználók,
- * a szerpekörüknek megfelelően. Az útvonalválasztónak átadott data objektumban tároljuk, a kívánt
+ * a szerpekörüknek megfelelően. Az útvonalválasztónak átadott data objektumban tároljuk a kívánt
  * szerepkört, akinek jogosultsága van az oldal megtekintéséshez.
  */
 export class RoleGuard implements CanActivate {

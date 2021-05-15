@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// Az éttermekhez tartozó ételekkel kapcsolatos adatok kezeléséért felelős.
+    /// Az éttermekhez tartozó ételekkel kapcsolatos adatok lekéréséért és kezeléséért felelős.
     /// </summary>
     public interface IFoodRepository
     {

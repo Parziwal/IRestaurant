@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért felelős.
+    /// A rendeléshez kapcsolódó adatokon való műveletek elvégzéséért és az adatok lekéréséért felelős.
     /// </summary>
     public interface IOrderRepository
     {
         /// <summary>
-        /// A megadott vendéghez tartozó rendelések listájánal lekérése.
+        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <returns>A vendég rendelései.</returns>
+        /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId);
 
         /// <summary>
-        /// A megadott étteremhez tartozó rendelések listájánal lekérése.
+        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        /// <returns>A rendelések listája.</returns>
+        /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId);
 
         /// <summary>

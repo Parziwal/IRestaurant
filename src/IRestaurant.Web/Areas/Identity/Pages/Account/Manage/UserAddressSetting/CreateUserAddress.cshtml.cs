@@ -4,6 +4,9 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Managers;
+using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
@@ -19,34 +22,36 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
     [Authorize(Roles = UserRoles.Guest)]
     public class CreateUserAddressModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly IUserRepository userRepository;
+        private readonly UserAddressManager userAddressManager;
 
         public CreateUserAddressModel(
-            UserManager<ApplicationUser> userManager,
-            IUserRepository userRepository)
+            UserAddressManager userAddressManager)
         {
-            this.userManager = userManager;
-            this.userRepository = userRepository;
+            this.userAddressManager = userAddressManager;
         }
 
         [BindProperty]
         public CreateOrEditAddressDto UserAddress { get; set; }
 
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            var currentUser = await userManager.GetUserAsync(User);
-            if (currentUser == null)
-            {
-                return NotFound();
-            }
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            await userRepository.CreatetUserAddress(currentUser.Id, UserAddress);
+            try
+            {
+                await userAddressManager.CreateUserAddress(UserAddress);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                ErrorMessage = ex.Message;
+            }
 
             return RedirectToPage("UserAddressList");
         }

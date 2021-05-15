@@ -14,6 +14,7 @@ import { OrderService } from '../order.service';
 })
 export class OrderListComponent implements OnInit {
 
+  /** A rendelések áttekintő adatainak listája. */
   orderOverviews: Observable<OrderOverview[]> = new Observable();
 
   constructor(private orderService: OrderService,
@@ -23,6 +24,9 @@ export class OrderListComponent implements OnInit {
     this.getOrderList();
   }
 
+  /**
+   * A rendelések áttekintő adatainak lekérdezése a felhasználó szerepkörétől függően.
+   */
   private getOrderList() {
     this.authorizeService.getUserRole().subscribe(
       (role: UserRole) => {

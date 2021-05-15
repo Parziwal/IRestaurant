@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories.Implementations
 {
     /// <summary>
-    /// Az étteremhez tartozó értékelések kezeléséért felelős.
+    /// Az étteremhez tartozó értékelések lekéréséért és kezeléséért felelős.
     /// </summary>
     public class ReviewRepository : IReviewRepository
     {
@@ -68,17 +68,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// Felhasználói értékelés hozzáadása a megadott éttermehez.
+        /// A megadott adatok alapján az értékelés létrehozása.
         /// Ha a megadott azonosítóval étterem vagy felhasználó nem található, akkor kivételt dobunk.
         /// </summary>
-        /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <param name="guestId">A vendég azonosítója, aki az értékelést írta.</param>
         /// <param name="review">A létrehozandó értékelés adatai.</param>
         /// <returns>A létrehozott értékelés adatai.</returns>
-        public async Task<ReviewDto> AddReviewToRestaurant(string guestId, int restaurantId, CreateReviewDto review)
+        public async Task<ReviewDto> AddReviewToRestaurant(string guestId, CreateReviewDto review)
         {
             var dbRestaurant = (await dbContext.Restaurants
-                                    .SingleOrDefaultAsync(r => r.Id == restaurantId))
+                                    .SingleOrDefaultAsync(r => r.Id == review.RestaurantId))
                                     .CheckIfRestaurantNull();
 
             var dbUser = (await dbContext.Users

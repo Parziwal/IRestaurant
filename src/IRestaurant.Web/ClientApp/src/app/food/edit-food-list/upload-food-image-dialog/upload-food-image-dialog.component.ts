@@ -17,6 +17,11 @@ export class UploadFoodImageDialogComponent {
     private foodService: FoodService,
     private toastr: ToastrService) { }
 
+  /**
+   * A kiválasztott kép feltöltése a szerverre, és a visszakapott relatív elérési út
+   * beállítása az ételnek.
+   * @param image A feltöltendő képfájl.
+   */
   onImagePicked(image: File) {
     this.foodService.uploadFoodImage(this.food.id, image).subscribe(
       (imageData: {relativeImagePath: string}) => {
@@ -27,6 +32,9 @@ export class UploadFoodImageDialogComponent {
     );
   }
 
+  /**
+   * Az ételhez tartozó kép és relatíve elérési út törlése.
+   */
   onImageDeleted() {
     this.foodService.deleteFoodImage(this.food.id).subscribe(
       () => {

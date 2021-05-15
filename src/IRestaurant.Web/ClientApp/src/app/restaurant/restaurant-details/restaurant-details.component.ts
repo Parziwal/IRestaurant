@@ -17,12 +17,17 @@ import { RestaurantService } from '../restaurant.service';
 })
 export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
+  /** Az étterem részletes adatai. */
   restaurant: RestaurantDetails;
+  /** Az étterem azonosítója. */
   restaurantId: number;
-  private ratingChangedSub = new Subscription();
+  /** Csillag ikon. */
   faStar = faStar;
+  /** Törlés ikon. */
   faTrash = faTrashAlt;
+  /** Az aktuális felhasználó szerepköre. */
   userRole: Observable<UserRole>;
+  private ratingChangedSub = new Subscription();
 
   constructor(private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -31,8 +36,9 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getCurrentUserRole();
-    this.getRestaurantId();
     this.subscribeToRatingChanged();
+    this.getRestaurantId();
+    this.getRestaurantDetails();
   }
 
   ngOnDestroy(): void {
@@ -47,7 +53,6 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(
       (params: Params) => {
         this.restaurantId = +params['id'];
-        this.getRestaurantDetails();
       }
     );
   }
@@ -58,6 +63,12 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Az étterem részletes adatainak lekérése.
+   * Ha az aktuális felhasználó szerepköre étterem és az útvonal adat részének role mezője
+   * az étterem szerepkört tartalmazza, akkor a felhasználó saját éttermének adatait kérjük le,
+   * egyébként pedig az étterem azonosítója alapján kérjük le az adatokat.
+   */
   private getRestaurantDetails() {
     let restaurantDetails: Observable<RestaurantDetails>;
     if (this.route.snapshot.data.role === UserRole.Restaurant) {
@@ -79,6 +90,10 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Az aktuális étterem hozzáadása a jelenlegi vendég kedvencei közé.
+   * Csak vendég szerepkörrel rendelkező felhasználók esetén használható.
+   */
   addRestaurantToFavourite() {
     this.restaurantService.addRestaurantToFavourite(this.restaurantId).subscribe(
       () => {
@@ -88,6 +103,10 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Az aktuális étterem eltávolítása a jelenlegi vendég a kedvencek közül.
+   * Csak vendég szerepkörrel rendelkező felhasználók esetén használható.
+   */
   removeRestaurantFromFavourite() {
     this.restaurantService.removeRestaurantFromFavourite(this.restaurantId).subscribe(
       () => {

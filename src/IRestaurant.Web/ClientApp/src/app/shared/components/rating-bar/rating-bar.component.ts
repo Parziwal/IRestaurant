@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class RatingBarComponent {
 
+  /** Az értékelés értéke. */
   @Input()
   rating: number = null;
 }

@@ -57,7 +57,7 @@ namespace IRestaurant.DAL.Data
         public DbSet<FavouriteRestaurant> FavouriteRestaurants { get; set; }
 
         /// <summary>
-        /// Az adatbázist reprezentáló osztály konstruktora.
+        /// Az adatbázishoz szükséges beállítási adatok elkérése.
         /// </summary>
         /// <param name="options">DbContext által használandó opciók.</param>
         /// <param name="operationalStoreOptions">Konfigurált példányok lekérésére szolgál.</param>

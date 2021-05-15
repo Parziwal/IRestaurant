@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// Az étteremhez tartozó értékelések kezeléséért felelős.
+    /// Az étteremhez tartozó értékelések lekéréséért és kezeléséért felelős.
     /// </summary>
     public interface IReviewRepository
     {
@@ -34,13 +34,12 @@ namespace IRestaurant.DAL.Repositories
         Task<IReadOnlyCollection<ReviewDto>> GetGuestReviewList(string guestId);
 
         /// <summary>
-        /// Felhasználói értékelés hozzáadása a megadott éttermehez.
+        /// A megadott adatok alapján az értékelés létrehozása.
         /// </summary>
-        /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <param name="guestId">A vendég azonosítója, aki az értékelést írta.</param>
         /// <param name="review">A létrehozandó értékelés adatai.</param>
         /// <returns>A létrehozott értékelés adatai.</returns>
-        Task<ReviewDto> AddReviewToRestaurant(string guestId, int restaurantId, CreateReviewDto review);
+        Task<ReviewDto> AddReviewToRestaurant(string guestId, CreateReviewDto review);
 
         /// <summary>
         /// A megadott azonosítójú értékelés törlése.

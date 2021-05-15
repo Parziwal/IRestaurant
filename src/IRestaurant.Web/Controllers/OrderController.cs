@@ -12,18 +12,29 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Web.Controllers
 {
+    /// <summary>
+    /// A rendeléselhez kapcsolódó adatok lekérdezése, módosítása és új rendelés létrehozása.
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly OrderManager orderManager;
 
-        public OrdersController(OrderManager orderManager)
+        /// <summary>
+        /// A szükséges üzleti logikai függőségek elkérése.
+        /// </summary>
+        /// <param name="orderManager">A rendeléseket kezeli.</param>
+        public OrderController(OrderManager orderManager)
         {
             this.orderManager = orderManager;
         }
 
+        /// <summary>
+        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése.
+        /// </summary>
+        /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("guest")]
         public async Task<IEnumerable<OrderOverviewDto>> GetGuestOrderOverviewList()
@@ -31,6 +42,10 @@ namespace IRestaurant.Web.Controllers
             return await orderManager.GetGuestOrderOverviewList();
         }
 
+        /// <summary>
+        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak lekérdezése.
+        /// </summary>
+        /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant")]
         public async Task<IEnumerable<OrderOverviewDto>> GetMyRestaurantOrderList()
@@ -38,6 +53,11 @@ namespace IRestaurant.Web.Controllers
             return await orderManager.GetMyRestaurantOrderOverviewList();
         }
 
+        /// <summary>
+        /// A megadott azonosítójú rendelés részletes adatainak lekérdezése.
+        /// </summary>
+        /// <param name="orderId">A rendelés azonosítója.</param>
+        /// <returns>A rendelés részletes adatai.</returns>
         [HttpGet("{orderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -47,6 +67,11 @@ namespace IRestaurant.Web.Controllers
             return await orderManager.GetOrderDetails(orderId);
         }
 
+        /// <summary>
+        /// Rendelés létrehozása az aktuális vendéghez a megadott adatok alapján.
+        /// </summary>
+        /// <param name="order">A rendelés adatait.</param>
+        /// <returns>a létrehozott rendelés részletes adatai.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -58,6 +83,11 @@ namespace IRestaurant.Web.Controllers
             return CreatedAtAction(nameof(GetOrderDetails), new { id = createdOrder.Id }, createdOrder);
         }
 
+        /// <summary>
+        /// A megadott azonosítójú rendelés státuszának módosítása.
+        /// </summary>
+        /// <param name="orderId">A rendelés azonosítója.</param>
+        /// <param name="status">A beállítandó státusz.</param>
         [HttpPatch("{orderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

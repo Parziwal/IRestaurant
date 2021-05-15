@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Repositories
 {
     /// <summary>
-    /// A felhasználóhoz kapcsolódó adatok kezeléséért és módosításáért felelős.
+    /// A felhasználóhoz kapcsolódó adatok eléréséért és kezeléséért felelős.
     /// </summary>
     public interface IUserRepository
     {
@@ -57,7 +57,7 @@ namespace IRestaurant.DAL.Repositories
         /// </summary>
         /// <param name="ownerId">A tfelhasználó/tulajdonos egyedi azonosítója.</param>
         /// <returns>A tulajdonos étteremének azonosítója.</returns>
-        Task<int> GetOwnerRestaurantId(string ownerId);
+        Task<int> GetMyRestaurantId(string ownerId);
 
         /// <summary>
         /// Megnézi, hogy a megadott felhasználóhoz tartozik-e étterem.
