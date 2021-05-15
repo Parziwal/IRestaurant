@@ -36,6 +36,11 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<string> UploadImage([AllowImageOnly] IFormFile image, string folderName)
         {
             string uploadFolder = Path.Combine(webHostEnvironment.WebRootPath, BaseImageFolder, folderName);
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+            
             string uniqueFileName = Path.GetFileNameWithoutExtension(image.FileName) + "_" + Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
             string fullPath = Path.Combine(uploadFolder, uniqueFileName);
             using (var fileStream = new FileStream(fullPath, FileMode.Create))
