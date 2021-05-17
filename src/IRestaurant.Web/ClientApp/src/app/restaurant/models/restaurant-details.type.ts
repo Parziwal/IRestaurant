@@ -8,7 +8,7 @@ export interface RestaurantDetails {
     detailedDescription: string;
     imagePath: string;
     restaurantAddress: UserAddress;
-    ownerName: string;
+    ownerFullName: string;
     isOrderAvailable: boolean;
     isCurrentGuestFavourite: boolean;
 }
