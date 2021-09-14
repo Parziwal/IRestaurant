@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using AuthServer.Infrastructure.Services;
+using IdentityServer4.Services;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Builder;
@@ -53,6 +55,8 @@ namespace IRestaurant.Auth
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            services.AddTransient<IProfileService, IdentityClaimsProfileService>();
         }
 
         public void Configure(IApplicationBuilder app)
@@ -63,8 +67,6 @@ namespace IRestaurant.Auth
             }
 
             app.UseStaticFiles();
-
-
 
             app.UseRouting();
             app.UseIdentityServer();

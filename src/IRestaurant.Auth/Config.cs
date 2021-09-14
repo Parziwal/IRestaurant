@@ -35,6 +35,7 @@ namespace IRestaurant.Auth
 
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireClientSecret = false,
+                    RequirePkce = true,
 
                     RedirectUris = {"http://localhost:4200/auth-callback"},
                     PostLogoutRedirectUris = {"http://localhost:4200/"},
