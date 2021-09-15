@@ -37,8 +37,8 @@ namespace IRestaurant.Auth
                     RequireClientSecret = false,
                     RequirePkce = true,
 
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/"},
+                    RedirectUris = {"http://localhost:4200"},
+                    PostLogoutRedirectUris = {"http://localhost:4200"},
                     AllowedCorsOrigins = {"http://localhost:4200"},
 
                     AllowAccessTokensViaBrowser = true,

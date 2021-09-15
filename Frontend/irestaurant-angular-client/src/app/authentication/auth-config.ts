@@ -1,0 +1,33 @@
+import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
+import { environment } from "src/environments/environment";
+
+export const authConfig: AuthConfig = {
+    // Az SPA azonosítója. Az SPA ezzel az azonosítóval van beregisztrálva az auth serveren
+    clientId: 'irestaurant_angular_spa',
+
+    // Identity Provider URL
+    issuer: environment.authServerURL,
+    requireHttps: true,
+
+    // Az SPA URL-je, miután a felhasználó be- és kijelentkezett
+    redirectUri: window.location.origin,
+    postLogoutRedirectUri: window.location.origin,
+
+    //Code flow authentikáció használata
+    responseType: 'code',
+
+    // A kliens scope-jának beállítása
+    // Az első három az OIDC által definiált, az utolsó a REST API hozzáférés
+    scope: 'openid profile email irestaurant.api',
+
+    useSilentRefresh: true,
+    skipIssuerCheck: true,
+};
+
+export function configureAuth(oauthService: OAuthService) {
+    return async () => {
+        oauthService.configure(authConfig);
+        oauthService.setupAutomaticSilentRefresh();
+        return oauthService.loadDiscoveryDocumentAndTryLogin();
+    };
+}
