@@ -1,8 +1,0 @@
-<div class="card" *ngIf="review">
-    <div class="card-body">
-        <h5 class="card-title">{{ review.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ review.userFullName }} - {{ review.createdAt | date: "yyyy.MM.dd"}}</h6>
-        <app-rating-bar [rating]="review.rating"></app-rating-bar>
-        <p class="card-text mt-3 text-justify">{{ review.description }}</p>
-    </div>
-</div>
