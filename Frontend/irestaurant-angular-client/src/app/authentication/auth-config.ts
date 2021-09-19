@@ -1,4 +1,4 @@
-import { AuthConfig, OAuthService } from "angular-oauth2-oidc";
+import { AuthConfig } from "angular-oauth2-oidc";
 import { environment } from "src/environments/environment";
 
 export const authConfig: AuthConfig = {
@@ -23,11 +23,3 @@ export const authConfig: AuthConfig = {
     useSilentRefresh: true,
     skipIssuerCheck: true,
 };
-
-export function configureAuth(oauthService: OAuthService) {
-    return async () => {
-        oauthService.configure(authConfig);
-        oauthService.setupAutomaticSilentRefresh();
-        return oauthService.loadDiscoveryDocumentAndTryLogin();
-    };
-}

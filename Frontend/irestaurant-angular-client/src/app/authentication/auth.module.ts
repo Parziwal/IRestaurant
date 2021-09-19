@@ -1,8 +1,8 @@
 import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OAuthModule, OAuthService } from 'angular-oauth2-oidc';
-import { configureAuth } from './auth-config';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { authModuleConfig } from './auth-module-config';
+import { AuthService, initializeAuthService } from './auth.service';
 
 @NgModule({
   declarations: [],
@@ -15,8 +15,8 @@ import { authModuleConfig } from './auth-module-config';
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: configureAuth,
-      deps: [OAuthService],
+      useFactory: initializeAuthService,
+      deps: [AuthService],
       multi: true,
     },
   ]

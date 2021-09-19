@@ -1,0 +1,7 @@
+<div class="progress" [ngClass]="{'d-flex justify-content-center': rating === null}">
+    <div *ngIf="rating" class="progress-bar" role="progressbar" [style]="'width: ' + rating * 20 + '%;'" aria-valuenow="25"
+        aria-valuemin="0" aria-valuemax="100">
+        {{ (rating | number: '1.0-1') + " / 5" }}
+    </div>
+    <p *ngIf="rating === null" class="text-muted text-center">Nincs értékelés</p>
+</div>

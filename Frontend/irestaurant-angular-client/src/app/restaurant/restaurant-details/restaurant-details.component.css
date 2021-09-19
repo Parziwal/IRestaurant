@@ -1,0 +1,20 @@
+img {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.details-header {
+    background-color: rgb(129, 194, 161);
+    padding: 60px 10px 40px 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.restaurant-address ul {
+    list-style-type: none;
+}
+
+.detailed-description-title {
+    margin-bottom: 10px;
+    border-bottom: 2px solid gray;
+}

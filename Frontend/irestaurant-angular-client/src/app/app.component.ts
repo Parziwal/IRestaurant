@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from './authentication/auth.service';
-import { TopsecretService } from './topsecret.service';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +10,14 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private authService: AuthService, private secret: TopsecretService, private spinner: NgxSpinnerService) {}
+  constructor(private authService: AuthService, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
+    this.spinner.show();
     if (!this.authService.hasValidToken()) {
       this.spinner.show();
       this.authService.login();
-      this.authService.tokenReceivedEvent().toPromise().finally(() => this.spinner.hide());
+      this.authService.tokenReceivedEvent().toPromise().finally(() => console.log("jj"));
     }
-    this.secret.fetchTopSecretData().subscribe(result => {
-      console.log(result);
-    });
   }
 }

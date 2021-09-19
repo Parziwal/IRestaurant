@@ -12,15 +12,26 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AuthServer.Infrastructure.Services
 {
+    /// <summary>
+    /// A felhasználó fontosabb adatainak tokenbe helyezéséért felelős.
+    /// </summary>
     public class IdentityClaimsProfileService : IProfileService
     {
         private readonly UserManager<ApplicationUser> userManager;
 
+        /// <summary>
+        /// Az tagváltó inicializációja.
+        /// </summary>
+        /// <param name="userManager">A felhasználó kezeléshez biztosít egy API-kat.</param>
         public IdentityClaimsProfileService(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// A felhasználó fontosabb adatainak meghatározása, amit majd a tokenbe fogunk helyezni.
+        /// </summary>
+        /// <param name="context">A felhasználó claim-jeinek lekérése.</param>
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var sub = context.Subject.GetSubjectId();
@@ -39,6 +50,10 @@ namespace AuthServer.Infrastructure.Services
             context.IssuedClaims.AddRange(claims);
         }
 
+        /// <summary>
+        /// Jelzi, hogy a felhasználó engedélyezett-e a token elkérésére.
+        /// </summary>
+        /// <param name="context">Megállapítja, hogy a felhasználó elkérheti-e a tokent.</param>
         public async Task IsActiveAsync(IsActiveContext context)
         {
             var sub = context.Subject.GetSubjectId();

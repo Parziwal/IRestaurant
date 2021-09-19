@@ -27,12 +27,18 @@ namespace IRestaurant.Auth
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"),
+                    //Az adatbázis migrációs fájlok áthelyezése a DAL rétegbe.
+                    x => x.MigrationsAssembly("IRestaurant.DAL")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -48,17 +54,22 @@ namespace IRestaurant.Auth
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
-                .AddInMemoryApiScopes(Config.ApiScopes)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
+                .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
+                .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
+                .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
+            //A felhasználó fontosabb adatainak tokenbe helyezése (pl.: role).
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
         }
 
+        /// <summary>
+        /// Ez a metódus futási időben hívódik meg. A HTTP kérési pipline konfigurációjára használatos.
+        /// </summary>
         public void Configure(IApplicationBuilder app)
         {
             if (Environment.IsDevelopment())
