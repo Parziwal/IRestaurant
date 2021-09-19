@@ -1,0 +1,20 @@
+<h2 class="review-title">Értékelés</h2>
+<div class="row reviews-container">
+    <div class="col-lg-4">
+        <h3>Összesítve</h3>
+        <app-rating-bar [rating]="restaurantRating"></app-rating-bar>
+        <p class="text-muted mt-3">Összesen {{(reviews | async)?.length}} értékelés</p>
+        <hr>
+        <ng-container *ngIf="(userRole | async) === 'Guest'">
+            <h4>Értékeld az éttermet</h4>
+            <button class="btn btn-primary btn-lg col-12 mb-lg-0 mb-5" (click)="addReviewClicked()">Érékelés írása</button>
+        </ng-container>
+    </div>
+    <div class="col-lg-8">
+        <div *ngIf="(reviews | async)?.length === 0">
+            <h1 class="text-center mt-3">Nincs találat</h1>
+        </div>
+        <app-restaurant-review-list-item *ngFor="let review of (reviews | async)" [review]="review">
+        </app-restaurant-review-list-item>
+    </div>
+</div>

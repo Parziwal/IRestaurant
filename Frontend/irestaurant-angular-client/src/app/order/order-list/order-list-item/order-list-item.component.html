@@ -1,0 +1,41 @@
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title class="row">
+            <div class="col-lg-3 col-md-5" *ngIf="(userRole | async) === 'Restaurant'">
+                <h5>Felhasználó</h5>
+                <p>{{ orderOverview.userFullName }}</p>
+            </div>
+            <div class="col-lg-3 col-md-5" *ngIf="(userRole | async) === 'Guest'">
+                <h5>Étterem</h5>
+                <p>{{ orderOverview.restaurantName }}</p>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5>Összeg</h5>
+                <p>{{ orderOverview.total | currency : 'Ft' : 'symbol' : '1.0-0'}}</p>
+            </div>
+            <div class="col-lg-2 col-md-3">
+                <h5>Státusz</h5>
+                <p>{{orderOverview.statusInString}}</p>
+            </div>
+            <div class="col-lg-2 col-md-5">
+                <h5>Rendelés ideje</h5>
+                <p>{{ orderOverview.createdAt | date: "yyyy.MM.dd"}}</p>
+            </div>
+            <div class="col-lg-3 col-md-7">
+                <h5>Kívánt kiszállítási idő</h5>
+                <p>{{ orderOverview.preferredDeliveryDate | date: "yyyy.MM.dd HH:mm"}}</p>
+            </div>
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-action-row>
+        <button class="btn btn-primary p-3 me-3" (click)="onDetailsButtonClicked()">Részletek</button>
+        <button *ngIf="(userRole | async) === 'Guest' && orderOverview.status === 0"
+            class="btn btn-danger p-3 me-3" (click)="onCancelOrder()">
+            Rendelés lemondása
+        </button>
+        <button *ngIf="(userRole | async) === 'Restaurant' && orderOverview.status < 3"
+            class="btn btn-info p-3 me-3" (click)="onOrderStatusChange()">
+            Státusz módosítása
+        </button>
+    </mat-action-row>
+</mat-expansion-panel>
