@@ -13,24 +13,34 @@
 }
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User)
+        && @Url.RouteUrl(ViewContext.RouteData.Values) != "/Identity/Account/Logout")
     {
+        @if (@Url.RouteUrl(ViewContext.RouteData.Values) != "/Identity/Account/Manage")
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profil</a>
+            </li>
+        }
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profil</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@returnUrl">
                 <button type="submit" class="nav-link btn btn-link">Kijelentkezés</button>
             </form>
         </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@returnUrl">Regisztráció</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl">Bejelentkezés</a>
-        </li>
+        @if (@Url.RouteUrl(ViewContext.RouteData.Values) != "/Identity/Account/Login")
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl">Bejelentkezés</a>
+            </li>
+        }
+        @if (@Url.RouteUrl(ViewContext.RouteData.Values) != "/Identity/Account/Register")
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@returnUrl">Regisztráció</a>
+            </li>
+        }
     }
 </ul>

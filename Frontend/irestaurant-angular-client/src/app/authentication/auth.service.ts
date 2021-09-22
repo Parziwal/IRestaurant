@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { authConfig } from './auth-config';
 import { UserRole } from './user-roles';
 
@@ -51,6 +52,12 @@ export class AuthService {
 
   public login() { this.oauthService.initLoginFlow(); }
   public logout() { this.oauthService.logOut(); }
+  public register() { 
+    window.location.href = `${environment.authServerURL}/Identity/Account/Register?ReturnUrl=${window.location.origin}`;
+  }
+  public navigateToProfilePage() { 
+    window.location.href = `${environment.authServerURL}/Identity/Account/Manage?ReturnUrl=${window.location.origin}`;
+  }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
 

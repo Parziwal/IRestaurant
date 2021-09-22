@@ -41,6 +41,28 @@
           <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
         </li>
       </ul>
+      <div class="d-flex" *ngIf="(userRole | async) === 'NotAuthorized'; else authorizedMenu">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <button class="btn btn-link nav-link" (click)="login()">Bejelentkezés</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-link nav-link" (click)="register()">Regisztráció</button>
+          </li>
+        </ul>
+      </div>
+      <ng-template #authorizedMenu>
+        <div class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <button class="btn btn-link nav-link" (click)="navigateToProfile()">Profil</button>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-link nav-link" (click)="logout()">Kijelentkezés</button>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
     </div>
   </div>
 </nav>
