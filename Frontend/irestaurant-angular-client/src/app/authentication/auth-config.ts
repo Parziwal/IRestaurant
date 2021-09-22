@@ -12,6 +12,7 @@ export const authConfig: AuthConfig = {
     // Az SPA URL-je, miután a felhasználó be- és kijelentkezett
     redirectUri: window.location.origin,
     postLogoutRedirectUri: window.location.origin,
+    logoutUrl: window.location.origin,
 
     //Code flow authentikáció használata
     responseType: 'code',

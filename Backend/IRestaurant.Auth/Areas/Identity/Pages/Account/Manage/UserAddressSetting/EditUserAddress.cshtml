@@ -1,0 +1,44 @@
+﻿@page
+@model EditUserAddressModel
+@{
+    ViewData["Title"] = "Cím szerkesztése";
+    ViewData["ActivePage"] = ManageNavPages.UserAddressList;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" for="ErrorMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="address-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="UserAddressId" type="hidden" />
+            <div class="form-group">
+                <label asp-for="UserAddress.ZipCode">Irányítószám</label>
+                <input asp-for="UserAddress.ZipCode" class="form-control" />
+                <span asp-validation-for="UserAddress.ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserAddress.City">Város</label>
+                <input asp-for="UserAddress.City" class="form-control" />
+                <span asp-validation-for="UserAddress.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserAddress.Street">Utca, házszám</label>
+                <input asp-for="UserAddress.Street" class="form-control" />
+                <span asp-validation-for="UserAddress.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserAddress.PhoneNumber">Telefonszám</label>
+                <input asp-for="UserAddress.PhoneNumber" class="form-control" pattern="[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}"/>
+                <span asp-validation-for="UserAddress.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-address-button" type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-danger" asp-page="UserAddressList">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
