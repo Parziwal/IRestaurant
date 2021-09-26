@@ -43,6 +43,7 @@ import { ImagePickerComponent } from './shared/components/image-picker/image-pic
 import { UploadFoodImageDialogComponent } from './food/edit-food-list/upload-food-image-dialog/upload-food-image-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
+import { FooterComponent } from './footer/footer.component';
 
 registerLocaleData(localeHu, 'hu');
 
@@ -79,7 +80,8 @@ registerLocaleData(localeHu, 'hu');
     DeliveryDetailsComponent,
     OrderFinalizationComponent,
     ImagePickerComponent,
-    UploadFoodImageDialogComponent
+    UploadFoodImageDialogComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
