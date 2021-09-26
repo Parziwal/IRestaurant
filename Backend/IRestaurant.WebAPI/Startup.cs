@@ -49,15 +49,15 @@ namespace IRestaurant.WebAPI
             services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {
-                options.Audience = "irestaurant_web_api";
-                options.Authority = "https://localhost:5000";
+                options.Audience = Configuration.GetSection("IRestaurantWebAPI:Audience").Value;
+                options.Authority = Configuration.GetSection("IRestaurantWebAPI:Authority").Value;
             });
 
             //Scope és szerepkör szerinti policy létrehozása.
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IRESTAURANT_API_SCOPE, policy => {
-                    policy.RequireClaim("scope", "irestaurant.api");
+                    policy.RequireClaim("scope", Configuration.GetSection("IRestaurantWebAPI:Scope").Value);
                 });
                 options.AddPolicy(UserRoles.Restaurant, policy =>
                     policy.RequireClaim(ClaimTypes.Role, UserRoles.Restaurant
@@ -71,7 +71,7 @@ namespace IRestaurant.WebAPI
             {
                 options.AddPolicy(DEFAULT_CORS_POLICY, policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200")
+                    policy.WithOrigins(Configuration.GetSection("IRestaurantWebAPI:AllowedCorsOrigins").Get<string[]>())
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -146,7 +146,10 @@ namespace IRestaurant.WebAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireAuthorization(IRESTAURANT_API_SCOPE);
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}")
+                .RequireAuthorization(IRESTAURANT_API_SCOPE);
             });
         }
     }
