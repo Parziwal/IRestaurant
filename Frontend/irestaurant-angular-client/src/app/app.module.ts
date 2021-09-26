@@ -1,10 +1,12 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { registerLocaleData } from '@angular/common';
+import localeHu from '@angular/common/locales/hu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +44,7 @@ import { UploadFoodImageDialogComponent } from './food/edit-food-list/upload-foo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 
+registerLocaleData(localeHu, 'hu');
 
 @NgModule({
   declarations: [
@@ -91,7 +94,9 @@ import { AngularMaterialModule } from './angular-material.module';
     FontAwesomeModule,
     AngularMaterialModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'hu' },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

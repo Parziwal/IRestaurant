@@ -43,6 +43,6 @@ export class ReviewService {
    * @param reviewId Az értékelés azonosítója.
    */
   deleteReview(reviewId: number) {
-    return this.http.delete(this.reviewAPIURL + reviewId);
+    return this.http.delete(`${this.reviewAPIURL}/${reviewId}`);
   }
 }

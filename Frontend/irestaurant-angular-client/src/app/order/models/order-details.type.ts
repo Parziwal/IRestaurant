@@ -3,7 +3,7 @@ import { OrderFood } from "./order-food.type";
 
 export interface OrderDetails {
     id: number;
-    date: Date;
+    createdAt: Date;
     preferredDeliveryDate: Date;
     status: number;
     statusInString: string;

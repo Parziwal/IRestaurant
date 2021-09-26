@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline">
     <mat-label>Rendelés állapota</mat-label>
-    <mat-select [(ngModel)]="selectedStatus">
+    <mat-select [(value)]="selectedStatus">
         <mat-option *ngFor="let status of orderStatuses" [value]="status.status">
             {{ status.statusInString }}
         </mat-option>

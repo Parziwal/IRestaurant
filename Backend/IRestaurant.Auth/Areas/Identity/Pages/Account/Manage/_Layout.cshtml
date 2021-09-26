@@ -7,22 +7,7 @@
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
-
-    string returnUrl = null;
-    var query = ViewContext.HttpContext.Request.Query;
-    if (query.ContainsKey("returnUrl"))
-    {
-        returnUrl = query["returnUrl"];
-    }
 }
-
-@if(@returnUrl != null)
-{
-    <div class="mb-4">
-        <a href="@returnUrl"><h5><i class="fas fa-chevron-left"></i> Vissza a főoldalra</h5></a>
-    </div>
-}
-
 
 <div class="ml-4">
     <h2>Profil beállításai</h2>

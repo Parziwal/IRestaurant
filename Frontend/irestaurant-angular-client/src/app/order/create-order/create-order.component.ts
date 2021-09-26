@@ -28,6 +28,6 @@ export class CreateOrderComponent {
   orderCompleted(createdOrderId: number) {
     this.orderFinalizationCompleted = true;
     this.createdOrderId = createdOrderId;
-    setTimeout(() => this.stepper.next(), 10)
+    setTimeout(() => this.stepper.next(), 1);
   }
 }

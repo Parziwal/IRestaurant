@@ -3,15 +3,15 @@
     <div class="row details-header">
         <div class="col-lg-5 text-center">
             <img class="img-fluid" [src]="restaurant.imagePath" [alt]="restaurant.name" />
-            <button type="button" class="btn btn-warning btn-lg col-12 w-50 mt-4 mx-auto"
+            <button type="button" class="btn btn-warning btn-lg col-lg-4 col-6 mt-4 mx-auto"
                 *ngIf="(userRole | async) === 'Guest' && !restaurant.isCurrentGuestFavourite"
-                (click)="addRestaurantToFavourite()">
-                <fa-icon [icon]="faStar"></fa-icon> Kedvenc
+                (click)="addRestaurantToFavourite()" title="Hozzáadás a kedvencekhez">
+                <fa-icon [icon]="faStar"></fa-icon>
             </button>
-            <button type="button" class="btn btn-danger btn-lg col-12 w-50 mt-4 mx-auto"
+            <button type="button" class="btn btn-danger btn-lg col-lg-4 col-6 mt-4 mx-auto"
                 *ngIf="(userRole | async) === 'Guest' && restaurant.isCurrentGuestFavourite"
-                (click)="removeRestaurantFromFavourite()">
-                <fa-icon [icon]="faTrash"></fa-icon> Kedvenc
+                (click)="removeRestaurantFromFavourite()" title="Eltávolítás a kedvencekből">
+                <fa-icon [icon]="faMinusCircle"></fa-icon>
             </button>
         </div>
         <div class="col-lg-7 mt-lg-0 mt-4">
@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                 <div class="col restaurant-address">
-                    <p><i>Tulajdonos: {{ restaurant.ownerFullName }}</i></p>
+                    <p><b>Tulajdonos: {{ restaurant.ownerFullName }}</b></p>
                     <h3>Cím</h3>
                     <ul>
                         <li>Város: {{ restaurant.restaurantAddress.city }}, {{ restaurant.restaurantAddress.zipCode }}</li>

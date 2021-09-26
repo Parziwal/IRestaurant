@@ -29,7 +29,6 @@ export class NavMenuComponent implements OnInit {
    */
   toggle() {
     this.isExpanded = !this.isExpanded;
-    this.authService.logout();
   }
 
   /**
@@ -38,14 +37,6 @@ export class NavMenuComponent implements OnInit {
   login() {
     this.spinner.show();
     this.authService.login();
-  }
-
-  /**
-   * A felhasználó átnavigálása a regisztrációs oldalra.
-   */
-  register() {
-    this.spinner.show();
-    this.authService.register();
   }
 
   /**

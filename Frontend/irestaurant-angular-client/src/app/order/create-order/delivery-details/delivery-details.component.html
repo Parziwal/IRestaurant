@@ -13,7 +13,7 @@
                 <div formGroupName="address">
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Szállítási cím</mat-label>
-                        <mat-select [(ngModel)]="selectedAddressId">
+                        <mat-select [(value)]="selectedAddressId">
                             <mat-option [value]="-1" (click)="onAddressSelected(null)">Új</mat-option>
                             <mat-option *ngFor="let address of (guestAddresses | async)" [value]="address.id"
                                 (click)="onAddressSelected(address)">

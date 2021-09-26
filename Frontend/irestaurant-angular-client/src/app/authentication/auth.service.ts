@@ -52,9 +52,6 @@ export class AuthService {
 
   public login() { this.oauthService.initLoginFlow(); }
   public logout() { this.oauthService.logOut(); }
-  public register() { 
-    window.location.href = `${environment.authServerURL}/Identity/Account/Register?ReturnUrl=${window.location.origin}`;
-  }
   public navigateToProfilePage() { 
     window.location.href = `${environment.authServerURL}/Identity/Account/Manage?ReturnUrl=${window.location.origin}`;
   }
