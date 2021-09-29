@@ -15,7 +15,7 @@ import { OrderStatus } from './models/order-status.type';
 })
 export class OrderService {
 
-  private orderAPIURL = environment.webAPIURL + "/order";
+  private orderApiUrl = environment.webApiUrl + "/api/order";
   /** A rendelés létrehozásakor megadott ételek változásának jelzése. */
   chosenFoodsChange = new Subject<OrderFoodWithId[]>();
   /** A kiszállítási adatok megváltozásának jelzése. */
@@ -28,7 +28,7 @@ export class OrderService {
    * @returns A vendég rendeléseinek listája.
    */
   getCurrentGuestOrderList() {
-    return this.http.get<OrderOverview[]>(`${this.orderAPIURL}/guest`).pipe(map(
+    return this.http.get<OrderOverview[]>(`${this.orderApiUrl}/guest`).pipe(map(
       (orderOverviews) => {
         return orderOverviews.map(order => {
           order.statusInString = this.getOrderStatusInString(order.status)
@@ -43,7 +43,7 @@ export class OrderService {
    * @returns Az étterem rendeléseinek listája.
    */
   getResturantOrderList() {
-    return this.http.get<OrderOverview[]>(`${this.orderAPIURL}/restaurant`).pipe(map(
+    return this.http.get<OrderOverview[]>(`${this.orderApiUrl}/restaurant`).pipe(map(
       (orderOverviews) => {
         return orderOverviews.map(order => {
           order.statusInString = this.getOrderStatusInString(order.status)
@@ -59,7 +59,7 @@ export class OrderService {
    * @returns A rendelés részletes adatai.
    */
   getOrderDetails(orderId: number) {
-    return this.http.get<OrderDetails>(`${this.orderAPIURL}/${orderId}`).pipe(map(
+    return this.http.get<OrderDetails>(`${this.orderApiUrl}/${orderId}`).pipe(map(
       (orderDetails) => {
         orderDetails.statusInString = this.getOrderStatusInString(orderDetails.status);
         return orderDetails;
@@ -75,7 +75,7 @@ export class OrderService {
   setOrderStatus(orderId: number, status: OrderStatus) {
     let params = new HttpParams();
     params = params.append("status", status.toString());
-    return this.http.patch(`${this.orderAPIURL}/${orderId}`, null, {
+    return this.http.patch(`${this.orderApiUrl}/${orderId}`, null, {
       params: params
     });
   }
@@ -86,7 +86,7 @@ export class OrderService {
    * @returns A létrehozott rendelés részletes adatai.
    */
   createOrder(createdOrder: CreateOrder) {
-    return this.http.post<OrderDetails>(this.orderAPIURL, createdOrder);
+    return this.http.post<OrderDetails>(this.orderApiUrl, createdOrder);
   }
 
   /**

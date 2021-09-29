@@ -1,18 +1,22 @@
-<div class="row justify-content-center">
-    <div class="col-lg-8 col-md-10">
-        <div>
-            <h1>Megjelenítés a listában</h1>
-            <mat-slide-toggle [(ngModel)]="restaurantSettings.showForUsers" (change)="showForUsersStatusChanged()">
-                Étterem <span *ngIf="restaurantSettings.showForUsers">elérhető</span>
-                <span *ngIf="!restaurantSettings.showForUsers">elrejtve</span>
-            </mat-slide-toggle>
-        </div>
-        <div>
-            <h1>Rendelés beállítása</h1>
-            <mat-slide-toggle [(ngModel)]="restaurantSettings.isOrderAvailable" (change)="isOrderAvailableStatusChanged()">
-                Rendelés <span *ngIf="restaurantSettings.isOrderAvailable">engedélyezve</span>
-                <span *ngIf="!restaurantSettings.isOrderAvailable">letiltva</span>
-            </mat-slide-toggle>
+<app-spinner *ngIf="!restaurantSettings; else settings"></app-spinner>
+<ng-template #settings>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div>
+                <h1>Megjelenítés a listában</h1>
+                <mat-slide-toggle [(ngModel)]="restaurantSettings.showForUsers" (change)="showForUsersStatusChanged()">
+                    Étterem <span *ngIf="restaurantSettings.showForUsers">elérhető</span>
+                    <span *ngIf="!restaurantSettings.showForUsers">elrejtve</span>
+                </mat-slide-toggle>
+            </div>
+            <div>
+                <h1>Rendelés beállítása</h1>
+                <mat-slide-toggle [(ngModel)]="restaurantSettings.isOrderAvailable" (change)="isOrderAvailableStatusChanged()">
+                    Rendelés <span *ngIf="restaurantSettings.isOrderAvailable">engedélyezve</span>
+                    <span *ngIf="!restaurantSettings.isOrderAvailable">letiltva</span>
+                </mat-slide-toggle>
+            </div>
         </div>
     </div>
-</div>
+</ng-template>
+

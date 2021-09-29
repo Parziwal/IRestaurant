@@ -6,7 +6,7 @@ export const authConfig: AuthConfig = {
     clientId: 'irestaurant_angular_spa',
 
     // Identity Provider URL
-    issuer: environment.authServerURL,
+    issuer: environment.authServerUrl,
     requireHttps: true,
 
     // Az SPA URL-je, miután a felhasználó be- és kijelentkezett

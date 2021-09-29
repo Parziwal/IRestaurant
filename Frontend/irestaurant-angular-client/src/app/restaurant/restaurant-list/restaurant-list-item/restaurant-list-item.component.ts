@@ -10,11 +10,14 @@ import { RestaurantOverview } from '../../models/restaurant-overview.type';
 })
 export class RestaurantListItemComponent {
 
+  /** Az étterem áttekintő adatai. */
   @Input() restaurantOverview!: RestaurantOverview;
-  defaultRestaurantImgUrl = environment.defaultRestaurantImgUrl;
 
   constructor(private router: Router) { }
 
+  /**
+   * A felhasználó átnavigálása az étteremhez tartozó részletes oldalra.
+   */
   onItemClicked() {
     this.router.navigate(['/restaurant/details', this.restaurantOverview.id]);
   }

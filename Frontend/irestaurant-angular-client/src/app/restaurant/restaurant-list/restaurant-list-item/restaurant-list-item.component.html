@@ -1,10 +1,10 @@
 <div class="card" (click)="onItemClicked()" *ngIf="restaurantOverview">
-  <img [src]="restaurantOverview.imagePath === null ? defaultRestaurantImgUrl : restaurantOverview.imagePath"
+  <img [src]="restaurantOverview.imagePath"
     class="card-img-top mx-auto" [alt]="restaurantOverview.name" />
   <div class="card-body">
     <h5 class="card-title">{{ restaurantOverview.name }}</h5>
     <app-rating-bar [rating]="restaurantOverview.rating"></app-rating-bar>
-    <p class="card-text text-justify">
+    <p class="card-text text-justify mt-3">
       {{ restaurantOverview.shortDescription }}
     </p>
   </div>

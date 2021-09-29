@@ -9,7 +9,7 @@ import { UserAddress } from '../shared/models/user-address.type';
 })
 export class UserAddressService {
 
-  private userAddressAPIURL = environment.webAPIURL + "/useraddress/";
+  private userAddressApiUrl = environment.webApiUrl + "/api/useraddress/";
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class UserAddressService {
    * @returns Az aktuális vendég lakcími.
    */
   getCurrentGuestAddressList() {
-    return this.http.get<UserAddressWithId[]>(this.userAddressAPIURL);
+    return this.http.get<UserAddressWithId[]>(this.userAddressApiUrl);
   }
 
   /**
@@ -27,6 +27,6 @@ export class UserAddressService {
    * @returns A létrehozott lakcím.
    */
   createUserAddress(address: UserAddress) {
-    return this.http.post<UserAddressWithId>(this.userAddressAPIURL, address);
+    return this.http.post<UserAddressWithId>(this.userAddressApiUrl, address);
   }
 }

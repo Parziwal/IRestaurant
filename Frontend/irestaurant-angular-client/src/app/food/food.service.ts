@@ -1,26 +1,62 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CreateFood } from './models/create-food.type';
 import { EditFood } from './models/edit-food.type';
 import { Food } from './models/food.type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FoodService {
+  private foodApiUrl = environment.webApiUrl + '/api/food';
 
-  private foodAPIURL = environment.webAPIURL + "/food";
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-  
   /**
    * A megadott azonosítójú étel lekérése.
    * @param foodId Az étel azonosítója.
    * @returns Az étel adatai.
    */
   getFood(foodId: number) {
-    return this.http.get<Food>(`${this.foodAPIURL}/${foodId}`);
+    return this.http.get<Food>(`${this.foodApiUrl}/${foodId}`).pipe(
+      map((foodData) => {
+        if (foodData.imagePath?.startsWith('http')) {
+          return foodData;
+        }
+        foodData.imagePath =
+          foodData.imagePath === null
+            ? environment.defaultFoodImgUrl
+            : `${environment.webApiUrl}/${foodData.imagePath}`;
+        return foodData;
+      })
+    );
+  }
+
+  /**
+   * A megadott azonosítójú étteremhez tartozó ételek lekérdezése.
+   * Ha az azonosító 'myrestaurant', akkor a felhasználó saját éttermének ételeit kéri le.
+   * @param restaurntId Az étterem azonosítója.
+   * @returns Az étterem ételeinek listája.
+   */
+  private getRestaurantMenuBase(restaurntId: number | string) {
+    return this.http
+      .get<Food[]>(`${this.foodApiUrl}/restaurant/${restaurntId}`)
+      .pipe(
+        map((foodList) => {
+          return foodList.map((food) => {
+            if (food.imagePath?.startsWith('http')) {
+              return food;
+            }
+            food.imagePath =
+              food.imagePath === null
+                ? environment.defaultFoodImgUrl
+                : `${environment.webApiUrl}/${food.imagePath}`;
+            return food;
+          });
+        })
+      );
   }
 
   /**
@@ -29,7 +65,7 @@ export class FoodService {
    * @returns Az étterem ételeinek listája.
    */
   getRestaurantMenu(restaurntId: number) {
-    return this.http.get<Food[]>(`${this.foodAPIURL}/restaurant/${restaurntId}`);
+    return this.getRestaurantMenuBase(restaurntId);
   }
 
   /**
@@ -37,7 +73,7 @@ export class FoodService {
    * @returns A felhasználó étterméhez tartozó ételek.
    */
   getMyRestaurantMenu() {
-    return this.http.get<Food[]>(`${this.foodAPIURL}/restaurant/myrestaurant`);
+    return this.getRestaurantMenuBase('myrestaurant');
   }
 
   /**
@@ -45,7 +81,7 @@ export class FoodService {
    *  @returns A létrehozott étel adatai.
    */
   addFoodToRestaurantMenu(createdFood: CreateFood) {
-    return this.http.post<Food>(this.foodAPIURL, createdFood);
+    return this.http.post<Food>(this.foodApiUrl, createdFood);
   }
 
   /**
@@ -57,7 +93,23 @@ export class FoodService {
   uploadFoodImage(foodId: number, image: File) {
     const imageFormData = new FormData();
     imageFormData.append('imageFile', image);
-    return this.http.post<{relativeImagePath: string}>(`${this.foodAPIURL}/${foodId}/image`, imageFormData);
+    return this.http
+      .post<{ relativeImagePath: string }>(
+        `${this.foodApiUrl}/${foodId}/image`,
+        imageFormData
+      )
+      .pipe(
+        map((image) => {
+          if (image.relativeImagePath.startsWith('http')) {
+            return image;
+          }
+          image.relativeImagePath =
+            image.relativeImagePath === null
+              ? environment.defaultRestaurantImgUrl
+              : `${environment.webApiUrl}/${image.relativeImagePath}`;
+          return image;
+        })
+      );
   }
 
   /**
@@ -65,7 +117,7 @@ export class FoodService {
    * @param foodId Az étel azonosítója.
    */
   deleteFoodImage(foodId: number) {
-    return this.http.delete(`${this.foodAPIURL}/${foodId}/image`);
+    return this.http.delete(`${this.foodApiUrl}/${foodId}/image`);
   }
 
   /**
@@ -75,7 +127,7 @@ export class FoodService {
    * @returns Az étel módosított adatai.
    */
   editFood(foodId: number, editedFood: EditFood) {
-    return this.http.put<Food>(`${this.foodAPIURL}/${foodId}`, editedFood);
+    return this.http.put<Food>(`${this.foodApiUrl}/${foodId}`, editedFood);
   }
 
   /**
@@ -83,6 +135,6 @@ export class FoodService {
    * @param foodId Az étel azonosítója.
    */
   removeFoodFromMenu(foodId: number) {
-    return this.http.delete(`${this.foodAPIURL}/${foodId}`);
+    return this.http.delete(`${this.foodApiUrl}/${foodId}`);
   }
 }

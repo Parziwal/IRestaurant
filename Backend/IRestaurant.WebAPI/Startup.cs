@@ -129,6 +129,7 @@ namespace IRestaurant.WebAPI
             app.UseProblemDetails();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             //A Swagger generátor és a Swagger UI middleware beregisztrálása
             app.UseOpenApi();

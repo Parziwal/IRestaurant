@@ -19,8 +19,6 @@ export class EditFoodListComponent implements OnInit {
 
   /** Az étteremhez tartozó ételek listája. */
   foods: Observable<Food[]> = new Observable();
-  /** Ha egy ételhez nem tartozik kép, akkor ezt jelenítjük meg alapméretezettként. */
-  defaultFoodImgUrl = environment.defaultFoodImgUrl;
   /** Szerkesztés ikon. */
   faEdit = faEdit;
   /** Törlés ikon. */

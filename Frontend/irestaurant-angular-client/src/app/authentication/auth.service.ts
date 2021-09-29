@@ -53,7 +53,7 @@ export class AuthService {
   public login() { this.oauthService.initLoginFlow(); }
   public logout() { this.oauthService.logOut(); }
   public navigateToProfilePage() { 
-    window.location.href = `${environment.authServerURL}/Identity/Account/Manage?ReturnUrl=${window.location.origin}`;
+    window.location.href = `${environment.authServerUrl}/Identity/Account/Manage?ReturnUrl=${window.location.origin}`;
   }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }

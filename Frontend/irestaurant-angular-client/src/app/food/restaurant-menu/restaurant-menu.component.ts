@@ -18,8 +18,6 @@ export class RestaurantMenuComponent implements OnInit {
   @Input() restaurantId!: number;
   /** Az étteremhez tartozó ételek. */
   restaurantMenu: Observable<Food[]> = new Observable();
-  /** Ha egy ételhez nem tartozik kép, akkor ezt jelenítjük meg alapméretezettként. */
-  defaultFoodImgUrl = environment.defaultFoodImgUrl;
   /** Az aktuális felhasználó szerepköre. */
   userRole!: Observable<UserRole>;
 

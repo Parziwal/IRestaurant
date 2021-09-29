@@ -65,27 +65,28 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   /**
    * Az étterem részletes adatainak lekérése.
-   * Ha az aktuális felhasználó szerepköre étterem és az útvonal adat részének role mezője
-   * az étterem szerepkört tartalmazza, akkor a felhasználó saját éttermének adatait kérjük le,
+   * Ha az aktuális felhasználó szerepköre étterem, akkor a felhasználó saját éttermének adatait kérjük le,
    * egyébként pedig az étterem azonosítója alapján kérjük le az adatokat.
    */
   private getRestaurantDetails() {
-    let restaurantDetails: Observable<RestaurantDetails>;
-    if (this.route.snapshot.data.role === UserRole.Restaurant) {
-      restaurantDetails = this.restaurantService.getMyRestaurantDetails().pipe(tap(
-        (restaurantData: RestaurantDetails) => {
-          this.restaurantId = restaurantData.id;
+    let restaurantDetails: Observable<RestaurantDetails> = new Observable();
+    this.authService.currentUserRole.subscribe(
+      role => {
+        if (role === UserRole.Restaurant) {
+          restaurantDetails = this.restaurantService.getMyRestaurantDetails().pipe(tap(
+            (restaurantData: RestaurantDetails) => {
+              this.restaurantId = restaurantData.id;
+            }
+          ));
+        } else {
+          restaurantDetails = this.restaurantService.getRestaurantDetails(this.restaurantId);
         }
-      ));
-    } else {
-      restaurantDetails = this.restaurantService.getRestaurantDetails(this.restaurantId);
-    }
+      }
+    );
+    
     restaurantDetails.subscribe(
       (restaurantData: RestaurantDetails) => { 
         this.restaurant = restaurantData;
-        if (this.restaurant.imagePath == null) {
-          this.restaurant.imagePath = environment.defaultRestaurantImgUrl;
-        }
       }
     );
   }

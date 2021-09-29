@@ -8,7 +8,7 @@ import { Review } from './models/review.type';
   providedIn: 'root'
 })
 export class ReviewService {
-  private reviewAPIURL = environment.webAPIURL + "/review";
+  private reviewApiUrl = environment.webApiUrl + "/api/review";
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +18,7 @@ export class ReviewService {
    * @returns Az étterem értékeléseinek listája.
    */
   getRestaurantReviews(restaurantId: number) {
-    return this.http.get<Review[]>(`${this.reviewAPIURL}/restaurant/${restaurantId}`);
+    return this.http.get<Review[]>(`${this.reviewApiUrl}/restaurant/${restaurantId}`);
   }
 
   /**
@@ -26,7 +26,7 @@ export class ReviewService {
    * @returns Az aktuális vendég értékelései.
    */
   getCurrentGuestReviews() {
-    return this.http.get<Review[]>(`${this.reviewAPIURL}/myreviews`);
+    return this.http.get<Review[]>(`${this.reviewApiUrl}/myreviews`);
   }
 
   /**
@@ -35,7 +35,7 @@ export class ReviewService {
    * @returns A létrehozott értékelés.
    */
   addReviewToRestaurant(createdReview: CreateReview) {
-    return this.http.post<Review>(this.reviewAPIURL, createdReview);
+    return this.http.post<Review>(this.reviewApiUrl, createdReview);
   }
 
   /**
@@ -43,6 +43,6 @@ export class ReviewService {
    * @param reviewId Az értékelés azonosítója.
    */
   deleteReview(reviewId: number) {
-    return this.http.delete(`${this.reviewAPIURL}/${reviewId}`);
+    return this.http.delete(`${this.reviewApiUrl}/${reviewId}`);
   }
 }
