@@ -6,7 +6,10 @@ nav.navbar {
 
 .navbar-brand {
   margin-right: 40px;
-  padding: 16px;
+}
+
+.navbar-brand img {
+  height: 60px;
 }
 
 .navbar-nav .nav-link {
