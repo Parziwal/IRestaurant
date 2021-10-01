@@ -90,9 +90,17 @@ namespace IRestaurant.WebAPI
             //ProblemDetails Middleware-hez szükséges szolgáltatások hozzáadása, és konfigurálása.
             services.AddProblemDetails(options => {
                 // Ez 404 Not Found státusz kódra cseréli EntityNotFoundException-t.
-                options.MapToStatusCode<EntityNotFoundException>(StatusCodes.Status404NotFound);
+                options.Map<EntityNotFoundException>((context, exception) => {
+                    var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status404NotFound);
+                    problemDetails.Title = exception.Message;
+                    return problemDetails;
+                });
                 // Ez 400 Bad Request státusz kódra cseréli EntityAlreadyExistsException-t.
-                options.MapToStatusCode<EntityAlreadyExistsException>(StatusCodes.Status400BadRequest);
+                options.Map<EntityNotFoundException>((context, exception) => {
+                    var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status400BadRequest);
+                    problemDetails.Title = exception.Message;
+                    return problemDetails;
+                });
             });
 
             //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
