@@ -24,8 +24,8 @@ export class UploadFoodImageDialogComponent {
    */
   onImagePicked(image: File) {
     this.foodService.uploadFoodImage(this.food.id, image).subscribe(
-      (imageData: {relativeImagePath: string}) => {
-        this.food.imagePath = imageData.relativeImagePath;
+      image => {
+        this.food.imagePath = image.relativeImagePath;
         this.toastr.success("Az étel képe feltöltésre került.");
         this.dialogRef.close();
       }

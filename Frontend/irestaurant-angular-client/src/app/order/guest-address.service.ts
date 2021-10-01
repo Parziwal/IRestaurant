@@ -7,9 +7,9 @@ import { UserAddress } from '../shared/models/user-address.type';
 @Injectable({
   providedIn: 'root'
 })
-export class UserAddressService {
+export class GuestAddressService {
 
-  private userAddressApiUrl = environment.webApiUrl + "/api/useraddress/";
+  private userAddressApiUrl = environment.webApiUrl + "/api/guestaddress/";
 
   constructor(private http: HttpClient) { }
 

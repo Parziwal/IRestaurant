@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
@@ -98,6 +98,7 @@ registerLocaleData(localeHu, 'hu');
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'hu' },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

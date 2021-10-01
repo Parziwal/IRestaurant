@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { UserAddressWithId } from 'src/app/shared/models/user-address-with-id.type';
 import { dateTimeMin } from 'src/app/shared/validators/date-time-min.validator';
-import { UserAddressService } from 'src/app/user/user-address.service';
+import { GuestAddressService } from 'src/app/order/guest-address.service';
 import { OrderService } from '../../order.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class DeliveryDetailsComponent implements OnInit {
   /** A kívánt kiszállítási időnek megadható minimum dátum. */
   minDateTime: Date = new Date(new Date().setHours(new Date().getHours() + this.minHourAfterOrder));
 
-  constructor(private userAddressService: UserAddressService,
+  constructor(private guestAddressService: GuestAddressService,
     private orderService: OrderService) { }
 
   ngOnInit(): void {
@@ -60,7 +60,7 @@ export class DeliveryDetailsComponent implements OnInit {
   }
 
   private getGuestAddresses() {
-    this.guestAddresses = this.userAddressService.getCurrentGuestAddressList();
+    this.guestAddresses = this.guestAddressService.getCurrentGuestAddressList();
   }
 
   /**
@@ -114,7 +114,7 @@ export class DeliveryDetailsComponent implements OnInit {
    */
   onSubmit() {
     if (this.selectedAddressId == -1) {
-      this.userAddressService.createUserAddress(this.deliveryForm.controls.address.value).subscribe(
+      this.guestAddressService.createUserAddress(this.deliveryForm.controls.address.value).subscribe(
         (createdAddress: UserAddressWithId) => {
           this.changeDeliveryDetails(createdAddress.id);
         }
