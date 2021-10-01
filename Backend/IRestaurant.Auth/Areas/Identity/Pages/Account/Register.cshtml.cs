@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
+using IdentityServer4.Services;
 
 namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 {
@@ -28,6 +29,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
         private readonly IEmailSender emailSender;
         private readonly UserManager userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IIdentityServerInteractionService interactionService;
 
         public RegisterModel(
             UserManager<ApplicationUser> applicationUserManager,
@@ -35,7 +37,8 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             UserManager userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            IIdentityServerInteractionService interactionService)
         {
             this.applicationUserManager = applicationUserManager;
             this.signInManager = signInManager;
@@ -43,6 +46,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
             this.emailSender = emailSender;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.interactionService = interactionService;
         }
 
         [BindProperty]
@@ -133,7 +137,11 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                     else
                     {
                         await signInManager.SignInAsync(user, isPersistent: false);
-                        return Redirect(returnUrl);
+                        if (interactionService.IsValidReturnUrl(returnUrl))
+                        {
+                            return Redirect(returnUrl);
+                        }
+                        return LocalRedirect("~/Identity/Account/Manage");
                     }
                 }
                 foreach (var error in result.Errors)
