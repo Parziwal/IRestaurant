@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Hellang.Middleware.ProblemDetails;
 using IRestaurant.BL.Managers;
-using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
 using Microsoft.AspNetCore.Authorization;
@@ -16,12 +12,12 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
     [Authorize(Roles = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
-        private readonly UserAddressManager userAddressManager;
+        private readonly UserManager userManager;
 
         public EditUserAddressModel(
-            UserAddressManager userAddressManager)
+            UserManager userManager)
         {
-            this.userAddressManager = userAddressManager;
+            this.userManager = userManager;
         }
 
         [BindProperty]
@@ -29,15 +25,11 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
         [BindProperty]
         public CreateOrEditAddressDto UserAddress { get; set; }
 
-
-        [TempData]
-        public string ErrorMessage { get; set; }
-
         public async Task<IActionResult> OnGetAsync(int addressId)
         {
             try
             {
-                var addressWithId = await userAddressManager.GetUserAddress(addressId);
+                var addressWithId = await userManager.GetUserAddress(addressId);
                 UserAddressId = addressId;
                 UserAddress = new CreateOrEditAddressDto
                 {
@@ -47,13 +39,9 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                     PhoneNumber = addressWithId.PhoneNumber
                 };
             }
-            catch (ProblemDetailsException ex)
+            catch (Exception)
             {
-                ErrorMessage = ex.Details.Title;
-            }
-            catch (EntityNotFoundException ex)
-            {
-                ErrorMessage = ex.Message;
+                ModelState.AddModelError("Error", "Hiba történt a lakcím betöltése során, kérem próbálja újra.");
             }
 
             return Page();
@@ -68,15 +56,11 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 
             try
             {
-                await userAddressManager.EditUserAddress(UserAddressId, UserAddress);
+                await userManager.EditUserAddress(UserAddressId, UserAddress);
             }
-            catch (ProblemDetailsException ex)
+            catch (Exception)
             {
-                ErrorMessage = ex.Details.Title;
-            }
-            catch (EntityNotFoundException ex)
-            {
-                ErrorMessage = ex.Message;
+                ModelState.AddModelError("Error", "Hiba történt a lakcímek mentése során, kérem próbálja újra.");
             }
 
             return RedirectToPage("UserAddressList");

@@ -7,10 +7,14 @@
 
 <h4>@ViewData["Title"]</h4>
 
+@if (!ModelState.IsValid)
+{
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
+}
+
 <p>
     <a asp-page="./CreateUserAddress" class="btn btn-success"><i class="fas fa-plus-square"></i> Új cím hozzáadása</a>
 </p>
-<partial name="_StatusMessage" for="ErrorMessage" />
 <table class="table">
     <thead>
         <tr>
@@ -41,7 +45,7 @@
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-                    <a asp-page="./EditUserAddress" asp-route-addressId="@item.Id" class="btn btn-primary"><i class="fas fa-edit"></i></a> 
+                    <a asp-page="./EditUserAddress" asp-route-addressId="@item.Id" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                     <a asp-page="./UserAddressList" onclick="return confirm('Biztosan törölni szeretnéd a címet?');" asp-page-handler="Delete" asp-route-addressId="@item.Id" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>

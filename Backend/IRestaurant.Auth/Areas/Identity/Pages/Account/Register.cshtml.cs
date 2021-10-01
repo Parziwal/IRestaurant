@@ -16,34 +16,32 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
-using Hellang.Middleware.ProblemDetails;
-using IRestaurant.DAL.CustomExceptions;
 
 namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
-        private readonly RestaurantManager restaurantManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly UserManager<ApplicationUser> applicationUserManager;
+        private readonly ILogger<RegisterModel> logger;
+        private readonly IEmailSender emailSender;
+        private readonly UserManager userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
         public RegisterModel(
-            UserManager<ApplicationUser> userManager,
+            UserManager<ApplicationUser> applicationUserManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RestaurantManager restaurantManager,
+            UserManager userManager,
             RoleManager<IdentityRole> roleManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
-            this.restaurantManager = restaurantManager;
+            this.applicationUserManager = applicationUserManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
+            this.emailSender = emailSender;
+            this.userManager = userManager;
             this.roleManager = roleManager;
         }
 
@@ -82,17 +80,17 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await applicationUserManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     if (!await roleManager.RoleExistsAsync(Input.Role))
@@ -100,23 +98,24 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         await roleManager.CreateAsync(new IdentityRole(Input.Role));
                     }
 
-                    await _userManager.AddToRoleAsync(user, Input.Role);
+                    await applicationUserManager.AddToRoleAsync(user, Input.Role);
                     if (Input.Role == UserRoles.Restaurant)
                     {
                         try
                         {
-                            await restaurantManager.CreateDefaultRestaurant();
+                            await userManager.CreateDefaultRestaurantForCurrentUser();
                         }
                         catch (Exception)
                         {
-                            await _userManager.DeleteAsync(user);
+                            await applicationUserManager.DeleteAsync(user);
+                            ModelState.AddModelError("Error", "Hiba történt a regisztráció során, kérlem próbálja újra.");
                             return Page();
                         }
                     }
 
-                    _logger.LogInformation("User created a new account with password.");
+                    logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var code = await applicationUserManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -124,16 +123,16 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    await emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    if (applicationUserManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        await signInManager.SignInAsync(user, isPersistent: false);
                         return Redirect(returnUrl);
                     }
                 }

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\IRestaurant.BL\IRestaurant.BL.csproj" />
     <ProjectReference Include="..\IRestaurant.DAL\IRestaurant.DAL.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-	  <Folder Include="wwwroot\" />
-  </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,42 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             this.dbContext = dbContext;
             this.accessor = accessor;
+        }
+
+        /// <summary>
+        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
+        /// Ha a megadott azonosítóval felhasználó nem található, akkor kivételt dobunk.
+        /// </summary>
+        /// <param name="userId">A felhasználó/tulajdonos azonosítója.</param>
+        /// <returns>Az étterem részletes adatai.</returns>
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForUser(string userId)
+        {
+            var dbOwner = (await dbContext.Users
+                                .SingleOrDefaultAsync(u => u.Id == userId))
+                                .CheckIfUserNull();
+
+            var dbRestaurant = new Restaurant
+            {
+                Name = "",
+                ShortDescription = "",
+                DetailedDescription = "",
+                ImagePath = null,
+                Address = new AddressOwned
+                {
+                    ZipCode = 1000,
+                    City = "",
+                    Street = "",
+                    PhoneNumber = ""
+                },
+                ShowForUsers = false,
+                IsOrderAvailable = false,
+                OwnerId = userId
+            };
+
+            await dbContext.AddAsync(dbRestaurant);
+            await dbContext.SaveChangesAsync();
+
+            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
 
         /// <summary>

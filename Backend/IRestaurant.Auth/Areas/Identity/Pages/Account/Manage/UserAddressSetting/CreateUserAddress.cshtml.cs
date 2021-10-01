@@ -1,6 +1,6 @@
+using System;
 using System.Threading.Tasks;
 using IRestaurant.BL.Managers;
-using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
 using Microsoft.AspNetCore.Authorization;
@@ -12,20 +12,16 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
     [Authorize(Roles = UserRoles.Guest)]
     public class CreateUserAddressModel : PageModel
     {
-        private readonly UserAddressManager userAddressManager;
+        private readonly UserManager userManager;
 
         public CreateUserAddressModel(
-            UserAddressManager userAddressManager)
+            UserManager userManager)
         {
-            this.userAddressManager = userAddressManager;
+            this.userManager = userManager;
         }
 
         [BindProperty]
         public CreateOrEditAddressDto UserAddress { get; set; }
-
-
-        [TempData]
-        public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -36,11 +32,11 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 
             try
             {
-                await userAddressManager.CreateUserAddress(UserAddress);
+                await userManager.CreateUserAddress(UserAddress);
             }
-            catch (EntityNotFoundException ex)
+            catch (Exception)
             {
-                ErrorMessage = ex.Message;
+                ModelState.AddModelError("Error", "Hiba történt a lakcímek létrehozása során, kérem próbálja újra.");
             }
 
             return RedirectToPage("UserAddressList");

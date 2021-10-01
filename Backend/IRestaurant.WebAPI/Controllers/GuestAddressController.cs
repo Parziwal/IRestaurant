@@ -15,17 +15,17 @@ namespace IRestaurant.WebAPI.Controllers
     [Authorize(Policy = UserRoles.Guest)]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserAddressController : ControllerBase
+    public class GuestAddressController : ControllerBase
     {
-        private readonly UserAddressManager userAddressManager;
+        private readonly UserManager userManager;
 
         /// <summary>
         /// A szükséges üzleti logikai függőségek elkérése.
         /// </summary>
-        /// <param name="userAddressManager">A vendég lakcímeit kezeli.</param>
-        public UserAddressController(UserAddressManager userAddressManager)
+        /// <param name="userManager">A felhasználó adatait kezeli.</param>
+        public GuestAddressController(UserManager userManager)
         {
-            this.userAddressManager = userAddressManager;
+            this.userManager = userManager;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AddressWithIdDto>> GetUserAddress(int addressId)
         {
-            return await userAddressManager.GetUserAddress(addressId);
+            return await userManager.GetUserAddress(addressId);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace IRestaurant.WebAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<AddressWithIdDto>> GetCurrentGuestAddressList()
         {
-            return await userAddressManager.GetCurrentGuestAddressList();
+            return await userManager.GetCurrentGuestAddressList();
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AddressWithIdDto>> GetUserAddress([FromBody] CreateOrEditAddressDto address)
         {
-            var createdAddress = await userAddressManager.CreateUserAddress(address);
+            var createdAddress = await userManager.CreateUserAddress(address);
             return CreatedAtAction(nameof(GetUserAddress), new { id = createdAddress.Id }, createdAddress);
         }
     }

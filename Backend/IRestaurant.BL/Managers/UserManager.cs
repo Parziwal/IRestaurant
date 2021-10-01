@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.DTO.Restaurants;
 
 namespace IRestaurant.BL.Managers
 {
     /// <summary>
-    /// A felhasználói lakcímek lekérdezését és kezelését végző műveletek szabályzásáért felelős.
+    /// A felhasználói adatok lekérdezését és kezelését végző műveletek szabályzásáért felelős.
     /// </summary>
-    public class UserAddressManager
+    public class UserManager
     {
         private readonly IUserRepository userRepository;
 
@@ -18,9 +19,26 @@ namespace IRestaurant.BL.Managers
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
         /// </summary>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        public UserAddressManager(IUserRepository userRepository)
+        public UserManager(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
+        }
+
+        /// <summary>
+        /// Étterem létrehozása alapméretezett adatokkal az aktuális felhasználóhoz,
+        /// ha még nem létezik hozzá étterem és a felhasználó szerepköre étterem.
+        /// </summary>
+        /// <returns>Az étterem részletes adatai.</returns>
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForCurrentUser()
+        {
+            string userId = userRepository.GetCurrentUserId();
+            if (await userRepository.UserHasRestaurant(userId))
+            {
+                return await userRepository.CreateDefaultRestaurantForUser(userId);
+            }
+
+            throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
+                "A megadott felhasználóhoz már létezik étterem.");
         }
 
         /// <summary>

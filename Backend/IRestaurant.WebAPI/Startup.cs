@@ -112,7 +112,7 @@ namespace IRestaurant.WebAPI
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
             services.AddTransient<OrderManager>();
-            services.AddTransient<UserAddressManager>();
+            services.AddTransient<UserManager>();
         }
 
         /// <summary>

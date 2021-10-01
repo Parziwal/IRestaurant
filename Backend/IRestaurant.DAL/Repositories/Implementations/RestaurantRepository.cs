@@ -68,40 +68,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
-        /// Ha a megadott azonosítóval felhasználó nem található, akkor kivételt dobunk.
-        /// </summary>
-        /// <param name="ownerId">A felhasználó/tulajdonos azonosítója.</param>
-        /// <returns>Az étterem részletes adatai.</returns>
-        public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
-        {
-            var dbOwner = (await dbContext.Users
-                                .SingleOrDefaultAsync(u => u.Id == ownerId))
-                                .CheckIfUserNull();
-
-            var dbRestaurant = new Restaurant {
-                Name = "",
-                ShortDescription = "",
-                DetailedDescription = "",
-                ImagePath = null,
-                Address = new AddressOwned {
-                    ZipCode = 1000,
-                    City = "",
-                    Street = "",
-                    PhoneNumber = ""
-                },
-                ShowForUsers = false,
-                IsOrderAvailable = false,
-                OwnerId = ownerId
-            };
-
-            await dbContext.AddAsync(dbRestaurant);
-            await dbContext.SaveChangesAsync();
-
-            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
-        }
-
-        /// <summary>
         /// A megadott azonosítójú étterem adatainak módosítása.
         /// Ha a megadott azonosítóval étterem nem található, akkor kivételt dobunk.
         /// </summary>

@@ -57,8 +57,6 @@ namespace IRestaurant.Auth
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-
-                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
@@ -76,21 +74,11 @@ namespace IRestaurant.Auth
             //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
             services.AddHttpContextAccessor();
 
-            //A DAL rétegbeli repository osztályok beregisztrálása.
-            services.AddTransient<IRestaurantRepository, RestaurantRepository>();
-            services.AddTransient<IFoodRepository, FoodRepository>();
-            services.AddTransient<IReviewRepository, ReviewRepository>();
+            //A DAL rétegbeli felhasználókat kezelõ repository osztály beregisztrálása.
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
-            services.AddTransient<IImageRepository, ImageRepository>();
 
-            //A BL rétegbeli manager osztályok beregisztrálása.
-            services.AddTransient<RestaurantManager>();
-            services.AddTransient<ReviewManager>();
-            services.AddTransient<FoodManager>();
-            services.AddTransient<OrderManager>();
-            services.AddTransient<UserAddressManager>();
+            //A BL rétegbeli felhasználókat kezelõ manager osztály beregisztrálása.
+            services.AddTransient<UserManager>();
         }
 
         /// <summary>

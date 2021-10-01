@@ -84,23 +84,6 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Étterem létrehozása alapméretezett adatokkal az aktuális felhasználóhoz,
-        /// ha még nem létezik hozzá étterem és a felhasználó szerepköre étterem.
-        /// </summary>
-        /// <returns>Az étterem részletes adatai.</returns>
-        public async Task<RestaurantDetailsDto> CreateDefaultRestaurant()
-        {
-            string userId = userRepository.GetCurrentUserId();
-            if (await userRepository.UserHasRestaurant(userId))
-            {
-                return await restaurantRepository.CreateDefaultRestaurant(userId);
-            }
-
-            throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                "A megadott felhasználóhoz már létezik étterem.");
-        }
-
-        /// <summary>
         /// Az aktuális felhasználóhoz tartozó étterem adatainak szerkesztése.
         /// </summary>
         /// <param name="editRestaurant">Az étterem módosítandó adatai.</param>

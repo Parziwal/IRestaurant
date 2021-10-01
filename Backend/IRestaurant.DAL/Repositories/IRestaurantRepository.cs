@@ -25,13 +25,6 @@ namespace IRestaurant.DAL.Repositories
         Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId);
 
         /// <summary>
-        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
-        /// </summary>
-        /// <param name="ownerId">A felhasználó/tulajdonos azonosítója.</param>
-        /// <returns>Az étterem részletes adatai.</returns>
-        Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId);
-
-        /// <summary>
         /// A megadott azonosítójú étterem adatainak módosítása.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
