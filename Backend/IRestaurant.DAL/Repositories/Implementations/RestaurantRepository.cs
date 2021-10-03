@@ -1,13 +1,16 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Images;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
@@ -31,25 +34,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő éttermek áttekintő adatainak lekérése.
-        /// Ha a név paraméter null, akkor az összes elérhető éttermet visszaadjuk.
+        /// A megadott keresési feltételre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
-        /// <param name="restaurantName">Az étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetRestaurantOverviewList(RestaurantSearchDto search)
         {
-            if (string.IsNullOrEmpty(restaurantName))
-            {
-                return await dbContext.Restaurants
-                    .Where(r => r.ShowForUsers)
-                    .ToRestaurantOverviewDtoList();
-            }
-            else
-            {
-                return await dbContext.Restaurants
-                    .Where(r => r.Name.Contains(restaurantName) && r.ShowForUsers)
-                    .ToRestaurantOverviewDtoList();
-            }
+            return await dbContext.Restaurants
+                   .Where(r => r.ShowForUsers &&
+                       (r.Name.Contains(search.NameOrShortDescriptionOrCity) || 
+                       r.ShortDescription.Contains(search.NameOrShortDescriptionOrCity) || 
+                       r.Address.City.Contains(search.NameOrShortDescriptionOrCity)))
+                   .SortBy(search.SortBy)
+                   .ToRestaurantOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -107,7 +104,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                         .SingleOrDefaultAsync(r => r.Id == restaurantId))
                         .CheckIfRestaurantNull();
 
-            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "restaurant");
+            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "Restaurant");
             imageRepository.DeleteImage(dbRestaurant.ImagePath);
             dbRestaurant.ImagePath = relativeImagePath;
 
@@ -196,26 +193,20 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a szűrési feltételként megadott névre illeszkedik.
-        /// Ha a név paraméter null, akkor az összes elérhető éttermet visszaadjuk.
+        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a megadott keresési feltételre illeszkedik.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="restaurantName">Az ééterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, RestaurantSearchDto search)
         {
-            if (string.IsNullOrEmpty(restaurantName))
-            {
-                return await dbContext.Restaurants
-                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId))
-                       .ToRestaurantOverviewDtoList();
-            }
-            else
-            {
-                return await dbContext.Restaurants
-                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId) && r.Name.Contains(restaurantName))
-                       .ToRestaurantOverviewDtoList();
-            }
+            return await dbContext.Restaurants
+                   .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId) &&
+                       (r.Name.Contains(search.NameOrShortDescriptionOrCity) ||
+                       r.ShortDescription.Contains(search.NameOrShortDescriptionOrCity) ||
+                       r.Address.City.Contains(search.NameOrShortDescriptionOrCity)))
+                   .SortBy(search.SortBy)
+                   .ToRestaurantOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -277,7 +268,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
     }
 
     /// <summary>
-    /// Az rendeléshez kapcsolódó extension metódusok.
+    /// Az étteremhez kapcsolódó extension metódusok.
     /// </summary>
     internal static class RestaurantRepositoryExtensions
     {
@@ -285,12 +276,43 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// A étterem típusú modell osztályok átalakítása adatátviteli objektumok listájává.
         /// </summary>
         /// <param name="restaurants">Étterem típusú lekérdezés.</param>
+        /// <param name="page">Lapozási adatokat tartalmazó ozstály.</param>
         /// <returns>Áttekintő étterem adatokat tartalmazó adatátviteli objektumok listája.</returns>
-        public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> ToRestaurantOverviewDtoList(this IQueryable<Restaurant> restaurants)
+        public static async Task<PagedListDto<RestaurantOverviewDto>> ToRestaurantOverviewDtoPagedList(this IQueryable<Restaurant> restaurants, PageDto page)
         {
-            return await restaurants
-                        .Include(r => r.Reviews)
-                        .Select(r => new RestaurantOverviewDto(r)).ToListAsync();
+            var pagedList = await restaurants
+                            .Include(r => r.Reviews)
+                            .Select(r => new RestaurantOverviewDto(r))
+                            .ToPagedListAsync(page.PageNumber, page.PageSize);
+            return new PagedListDto<RestaurantOverviewDto>(pagedList);
+        }
+
+        /// <summary>
+        /// A lekérdezésre alkalmazza a megadott rendezési szempontot.
+        /// </summary>
+        /// <param name="restaurants">Étterem típusú lekérdezés.</param>
+        /// <param name="sortBy">A rendezési szempont.</param>
+        /// <returns>Étterem típusú lekérdezés.</returns>
+        public static IQueryable<Restaurant> SortBy(this IQueryable<Restaurant> restaurants, string sortBy)
+        {
+            Enum.TryParse(sortBy, true, out RestaurantSortBy restaurantSortBy);
+            switch (restaurantSortBy)
+            {
+                case RestaurantSortBy.NAME_ASC:
+                    return restaurants.OrderBy(r => r.Name);
+                case RestaurantSortBy.NAME_DESC:
+                    return restaurants.OrderByDescending(r => r.Name);
+                case RestaurantSortBy.RATING_ASC:
+                    return restaurants.OrderBy(r => Math.Round(r.Reviews.Average(r => r.Rating), 2));
+                case RestaurantSortBy.RATING_DESC:
+                    return restaurants.OrderByDescending(r => Math.Round(r.Reviews.Average(r => r.Rating), 2));
+                case RestaurantSortBy.REVIEW_COUNT_ASC:
+                    return restaurants.OrderBy(r => r.Reviews.Count);
+                case RestaurantSortBy.REVIEW_COUNT_DESC:
+                    return restaurants.OrderByDescending(r => r.Reviews.Count);
+                default:
+                    return restaurants;
+            }
         }
 
         /// <summary>

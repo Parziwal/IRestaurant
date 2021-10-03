@@ -1,6 +1,7 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using X.PagedList;
 
 namespace IRestaurant.DAL.Repositories.Implementations
 {
@@ -33,27 +35,31 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId)
+        public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                .Where(o => o.UserId == guestId)
-                .ToOrderOverviewDtoList();
+                    .Where(o => o.UserId == guestId && search.Statuses.Contains(o.Status))
+                    .SortBy(search.SortBy)
+                    .ToOrderOverviewDtoPagedList(search);
         }
 
         /// <summary>
-        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId)
+        public async Task<PagedListDto<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
-                .ToOrderOverviewDtoList();
+                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId && search.Statuses.Contains(o.Status))
+                 .SortBy(search.SortBy)
+                .ToOrderOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -202,13 +208,48 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// A rendelés típusú modell osztályok átalakítása adatátviteli objektumok listájává.
         /// </summary>
         /// <param name="orders">Rendelés típusú lekérdezés.</param>
+        /// <param name="page">Lapozási adatokat tartalmazó ozstály.</param>
         /// <returns>Áttekintő rendelési adatokat tartalmazó adatátviteli objektumok listája.</returns>
-        public static async Task<IReadOnlyCollection<OrderOverviewDto>> ToOrderOverviewDtoList(this IQueryable<Order> orders)
+        public static async Task<PagedListDto<OrderOverviewDto>> ToOrderOverviewDtoPagedList(this IQueryable<Order> orders, PageDto page)
         {
-            return await orders
-                        .Include(o => o.OrderFoods)
-                        .Include(o => o.Invoice)
-                        .Select(o => new OrderOverviewDto(o)).ToListAsync();
+            var pagedList = await orders
+                                .Include(o => o.OrderFoods)
+                                .Include(o => o.Invoice)
+                                .Select(o => new OrderOverviewDto(o))
+                                .ToPagedListAsync(page.PageNumber, page.PageSize);
+            return new PagedListDto<OrderOverviewDto>(pagedList);
+        }
+
+        /// <summary>
+        /// A lekérdezésre alkalmazza a megadott rendezési szempontot.
+        /// </summary>
+        /// <param name="orders">Rendelés típusú lekérdezés.</param>
+        /// <param name="sortBy">A rendezési szempont.</param>
+        /// <returns>Rendelés típusú lekérdezés.</returns>
+        public static IQueryable<Order> SortBy(this IQueryable<Order> orders, string sortBy)
+        {
+            Enum.TryParse(sortBy, true, out OrderSortBy orderSortBy);
+            switch (orderSortBy)
+            {
+                case OrderSortBy.CREATED_AT_ASC:
+                    return orders.OrderBy(o => o.CreatedAt);
+                case OrderSortBy.CREATED_AT_DESC:
+                    return orders.OrderByDescending(o => o.CreatedAt);
+                case OrderSortBy.PREFFERED_DELIVERY_DATE_ASC:
+                    return orders.OrderBy(o => o.PreferredDeliveryDate);
+                case OrderSortBy.PREFFERED_DELIVERY_DATE_DESC:
+                    return orders.OrderByDescending(o => o.PreferredDeliveryDate);
+                case OrderSortBy.RESTAURANT_NAME_ASC:
+                    return orders.OrderBy(o => o.Invoice.RestaurantName);
+                case OrderSortBy.RESTAURANT_NAME_DESC:
+                    return orders.OrderByDescending(o => o.Invoice.RestaurantName);
+                case OrderSortBy.USER_NAME_ASC:
+                    return orders.OrderBy(o => o.Invoice.UserFullName);
+                case OrderSortBy.USER_NAME_DESC:
+                    return orders.OrderByDescending(o => o.Invoice.UserFullName);
+                default:
+                    return orders;
+            }
         }
 
         /// <summary>

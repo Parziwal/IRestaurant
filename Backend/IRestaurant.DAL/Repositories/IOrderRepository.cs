@@ -1,4 +1,5 @@
 ﻿using IRestaurant.DAL.DTO.Orders;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,20 @@ namespace IRestaurant.DAL.Repositories
     public interface IOrderRepository
     {
         /// <summary>
-        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
-        Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId);
+        Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId, OrderSearchDto search);
 
         /// <summary>
-        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
-        Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId);
+        Task<PagedListDto<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId, OrderSearchDto search);
 
         /// <summary>
         /// A rendelés részletes adatainak lekérése.

@@ -1,5 +1,6 @@
 ﻿using Hellang.Middleware.ProblemDetails;
 using IRestaurant.DAL.DTO.Orders;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -38,25 +39,28 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése.
+        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése a keresési feltétel alapján.
         /// </summary>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A bejelentkezett vendég rendelési.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList()
+        public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(OrderSearchDto search)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await orderRepository.GetGuestOrderOverviewList(userId);
+            return await orderRepository.GetGuestOrderOverviewList(userId, search);
         }
 
         /// <summary>
-        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak lekérdezése.
+        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak
+        /// lekérdezése a keresési feltétel alapján.
         /// </summary>
+        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremhez beérkező rendelések.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetMyRestaurantOrderOverviewList()
+        public async Task<PagedListDto<OrderOverviewDto>> GetMyRestaurantOrderOverviewList(OrderSearchDto search)
         {
             string userId = userRepository.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
-            return await orderRepository.GetRestaurantOrderOverviewList(ownerRestaurantId);
+            return await orderRepository.GetRestaurantOrderOverviewList(ownerRestaurantId, search);
         }
 
         /// <summary>

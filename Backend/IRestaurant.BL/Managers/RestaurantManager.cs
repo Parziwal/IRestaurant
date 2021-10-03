@@ -6,7 +6,7 @@ using System.Transactions;
 using Microsoft.AspNetCore.Http;
 using Hellang.Middleware.ProblemDetails;
 using IRestaurant.DAL.DTO.Images;
-using IRestaurant.DAL.Data;
+using IRestaurant.DAL.DTO.Pagination;
 
 namespace IRestaurant.BL.Managers
 {
@@ -36,13 +36,13 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő elérhető éttermek áttekintő adatainak lekérdezése.
+        /// A megadott keresési feltételre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
-        /// <param name="restaurantName">Az keresett étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetRestaurantOverviewList(RestaurantSearchDto search)
         {
-            return await restaurantRepository.GetRestaurantOverviewList(restaurantName);
+            return await restaurantRepository.GetRestaurantOverviewList(search);
         }
 
         /// <summary>
@@ -213,14 +213,14 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Az aktuális vendég kedvenc éttermeinek lekérdezése, ami a szűrési feltételként megadott névre illeszkedik.
+        ///  Az aktuális vendég kedvenc éttermeinek lekérdezése, ami a megadott keresési feltételre illeszkedik.
         /// </summary>
-        /// <param name="restaurantName">A keresett étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(RestaurantSearchDto search)
         {
             string userId = userRepository.GetCurrentUserId();
-            return await restaurantRepository.GetGuestFavouriteRestaurantList(userId, restaurantName);
+            return await restaurantRepository.GetGuestFavouriteRestaurantList(userId, search);
         }
 
         /// <summary>
