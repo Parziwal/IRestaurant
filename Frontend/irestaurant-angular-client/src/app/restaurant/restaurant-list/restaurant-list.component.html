@@ -1,22 +1,22 @@
-<div class="row justify-content-center mb-3">
-    <div class="col-lg-8">
-        <mat-form-field appearance="outline">
-            <input matInput type="text" placeholder="Keresés" [(ngModel)]="searchTerm" (keyup.enter)="getRestaurantList()" />
-            <button matSuffix class="btn btn-outline-danger clear-button" *ngIf="searchTerm"
-                (click)="clearBrowser()">
-                <fa-icon [icon]="faTimes"></fa-icon>
-            </button>
-        </mat-form-field>
-    </div>
-</div>
-<app-spinner *ngIf="!(restaurantOverviews | async); else restaurantList"></app-spinner>
-<ng-template #restaurantList>
-    <div class="row">
-        <div *ngIf="(restaurantOverviews | async)?.length === 0" class="col-auto mx-auto">
+<app-restaurant-search-bar [search]="search" (refreshRestaurantList)="getRestaurantList()"></app-restaurant-search-bar>
+<ng-template #spinner>
+    <app-spinner *ngIf="!(restaurantOverviewPagedList | async)"></app-spinner>
+</ng-template>
+<ng-container *ngIf="restaurantOverviewPagedList | async as restaurantPagedList;else spinner">
+    <div class="row justify-content-center">
+        <div *ngIf="restaurantPagedList.result?.length === 0" class="col-auto mx-auto">
             <h1>Nincs találat</h1>
         </div>
         <app-restaurant-list-item class="col-xl-3 col-lg-4 col-md-6"
-            *ngFor="let restaurantOverview of (restaurantOverviews | async)" [restaurantOverview]="restaurantOverview">
+            *ngFor="let restaurant of restaurantPagedList?.result"
+            [restaurantOverview]="restaurant">
         </app-restaurant-list-item>
     </div>
-</ng-template>
+    <mat-paginator [length]="restaurantPagedList.totalItemCount"
+              [pageSize]="restaurantPagedList.pageSize"
+              [pageSizeOptions]="[5, 10, 20, 50]"
+              [pageIndex]="search.pageNumber - 1"
+              (page)="pageOptionsChanged($event)"
+              aria-label="Oldal kiválasztása">
+    </mat-paginator>
+</ng-container>

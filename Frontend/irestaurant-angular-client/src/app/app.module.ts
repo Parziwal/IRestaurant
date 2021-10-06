@@ -31,8 +31,6 @@ import { AddReviewDialogComponent } from './review/restaurant-review-list/add-re
 import { GuestReviewListComponent } from './review/guest-review-list/guest-review-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderListItemComponent } from './order/order-list/order-list-item/order-list-item.component';
-import { InProgressOrdersPipe } from './order/order-list/pipes/processing-orders.pipe';
-import { ClosedOrdersPipe } from './order/order-list/pipes/closed-orders.pipe';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
 import { ChangeOrderStatusDialogComponent } from './order/order-list/order-list-item/change-order-status-dialog/change-order-status-dialog.component';
 import { CreateOrderComponent } from './order/create-order/create-order.component';
@@ -44,6 +42,9 @@ import { UploadFoodImageDialogComponent } from './food/edit-food-list/upload-foo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './angular-material.module';
 import { FooterComponent } from './footer/footer.component';
+import { RestaurantSearchBarComponent } from './restaurant/restaurant-list/restaurant-search-bar/restaurant-search-bar.component';
+import { OrderTabComponent } from './order/order-list/order-tab/order-tab.component';
+import { OrderSearchBarComponent } from './order/order-list/order-search-bar/order-search-bar.component';
 
 registerLocaleData(localeHu, 'hu');
 
@@ -71,8 +72,6 @@ registerLocaleData(localeHu, 'hu');
     GuestReviewListComponent,
     OrderListComponent,
     OrderListItemComponent,
-    InProgressOrdersPipe,
-    ClosedOrdersPipe,
     OrderDetailsComponent,
     ChangeOrderStatusDialogComponent,
     CreateOrderComponent,
@@ -81,7 +80,10 @@ registerLocaleData(localeHu, 'hu');
     OrderFinalizationComponent,
     ImagePickerComponent,
     UploadFoodImageDialogComponent,
-    FooterComponent
+    FooterComponent,
+    RestaurantSearchBarComponent,
+    OrderTabComponent,
+    OrderSearchBarComponent
   ],
   imports: [
     BrowserModule,

@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { PagedList } from '../shared/models/pagedList.type';
 import { EditRestaurant } from './models/edit-restaurant.type';
 import { RestaurantDetails } from './models/restaurant-details.type';
 import { RestaurantOverview } from './models/restaurant-overview.type';
+import { RestaurantSearch } from './models/restaurant-search.type';
 import { RestaurantSettings } from './models/restaurant-settings.type';
+import { RestaurantSortBy } from './models/restaurant-sort-by.type';
 
 @Injectable({
   providedIn: 'root',
@@ -19,26 +22,22 @@ export class RestaurantService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Az átadott API URL-ről lekéri a megadott szűrési feltételre illeszkedő éttermek áttekintő adatait.
+   * Az átadott API URL-ről lekéri a megadott keresési feltételre illeszkedő éttermek áttekintő adatait.
    * @param apiUrl A API elérési útja.
-   * @param options A szűrési feltételeket tartalmazza.
+   * @param search A keresési feltételeket tartalmazza.
    * @returns Az étteremek áttekintő adatait tartalamazó lista.
    */
   private getRestaurantListBase(
     apiUrl: string,
-    options?: { searchTerm?: string }
+    search?: RestaurantSearch
   ) {
-    let searchTerm = (options && options.searchTerm) || '';
-
-    let params = new HttpParams();
-    params = params.append('restaurantName', searchTerm);
     return this.http
-      .get<RestaurantOverview[]>(apiUrl, {
-        params: params,
+      .get<PagedList<RestaurantOverview>>(apiUrl, {
+        params: new HttpParams({fromObject: search as any})
       })
       .pipe(
-        map(RestaurantOverviewList => {
-          return RestaurantOverviewList.map(restaurant => {
+        map(pagedList => {
+          pagedList.result.map(restaurant => {
             if (restaurant.imagePath.startsWith('http')) {
               return restaurant;
             }
@@ -48,29 +47,30 @@ export class RestaurantService {
                 : `${environment.webApiUrl}/${restaurant.imagePath}`;
             return restaurant;
           });
+          return pagedList;
         })
       );
   }
 
   /**
    * A megadott szűrési feltételre illeszkedő éttermek áttekintő adatainak lekérdezése.
-   * @param options A szűrési feltételeket tartalmazza.
+   * @param search A keresési feltételeket tartalmazza.
    * @returns Az étteremek áttekintő adatait tartalamazó lista.
    */
-  getRestaurantList(options?: { searchTerm?: string }) {
-    return this.getRestaurantListBase(this.restaurantApiUrl, options);
+  getRestaurantList(search?: RestaurantSearch) {
+    return this.getRestaurantListBase(this.restaurantApiUrl, search);
   }
 
   /**
    * Az aktuális vendég kedvenc éttermeinek, azok áttekintő adatainak lekérdezése,
    * ami a szűrési feltételre illeszkedik.
-   * @param options A szűrési feltételeket tartalmazza.
+   * @param search A keresési feltételeket tartalmazza.
    * @returns Az étteremek áttekintő adatait tartalamazó lista.
    */
-  getGuestFavouriteRestaurantList(options?: { searchTerm?: string }) {
+  getGuestFavouriteRestaurantList(search?: RestaurantSearch) {
     return this.getRestaurantListBase(
       `${this.restaurantApiUrl}/favourite`,
-      options
+      search
     );
   }
 
@@ -223,5 +223,27 @@ export class RestaurantService {
     return this.http.delete(
       `${this.restaurantApiUrl}/favourite/remove/${restaurantId}`
     );
+  }
+
+  /**
+   * A megadott rendezéshez tartozó szöveg lekérdezése.
+   * @param status A rendezés sorrendje.
+   * @returns A rendezés sorrendjének szövege.
+   */
+  getRestaurantSortByInString(sortBy: RestaurantSortBy) {
+    switch(sortBy) {
+      case RestaurantSortBy.NAME_ASC:
+        return "Név ↑";
+      case RestaurantSortBy.NAME_DESC:
+        return "Név ↓";
+      case RestaurantSortBy.RATING_ASC:
+        return "Értékelés ↑";
+      case RestaurantSortBy.RATING_DESC:
+        return "Értékelés ↓";
+      case RestaurantSortBy.REVIEW_COUNT_ASC:
+        return "Értékelések száma ↑";
+      case RestaurantSortBy.REVIEW_COUNT_DESC:
+        return "Értékelések száma ↓";
+    }
   }
 }

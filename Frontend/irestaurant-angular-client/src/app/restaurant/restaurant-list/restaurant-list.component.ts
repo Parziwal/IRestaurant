@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {faTimes } from '@fortawesome/free-solid-svg-icons';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
+import { PagedList } from 'src/app/shared/models/pagedList.type';
 import { RestaurantListType } from '../models/restaurant-list-type.type';
 import { RestaurantOverview } from '../models/restaurant-overview.type';
+import { RestaurantSearch } from '../models/restaurant-search.type';
+import { RestaurantSortBy } from '../models/restaurant-sort-by.type';
 import { RestaurantService } from '../restaurant.service';
 
 @Component({
@@ -13,15 +17,20 @@ import { RestaurantService } from '../restaurant.service';
 })
 export class RestaurantListComponent implements OnInit {
 
-  /** Az étterem áttekintő adatai. */
-  restaurantOverviews: Observable<RestaurantOverview[]> = new Observable();
-  /** A keresési kifejezés. */
-  searchTerm!: string;
+  /** Az éttermek áttekintő adatai. */
+  restaurantOverviewPagedList: Observable<PagedList<RestaurantOverview>> = new Observable();
+  /** A keresési feltétel. */
+  search: RestaurantSearch = <RestaurantSearch>{
+    nameOrShortDescriptionOrCity: "",
+    sortBy: RestaurantSortBy.NAME_ASC
+  };
   /** Törlési ikon. */
   faTimes = faTimes;
+
   private restaurantListType: RestaurantListType = RestaurantListType.All;
 
   constructor(private restaurantService: RestaurantService,
+    private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -34,7 +43,16 @@ export class RestaurantListComponent implements OnInit {
         if (data.restaurantListType) {
           this.restaurantListType = data.restaurantListType;
         }
-        this.getRestaurantList();
+        this.route.queryParams.subscribe(
+          params => {
+            this.search.nameOrShortDescriptionOrCity = params.nameOrShortDescriptionOrCity ?? "";
+            this.search.sortBy = params.sortBy ?? RestaurantSortBy.NAME_ASC;
+            this.search.pageNumber = params.pageNumber ?? 1;
+            this.search.pageSize = params.pageSize ?? 10;
+
+            this.getRestaurantList();
+          }
+        );
       }
     );
   }
@@ -45,19 +63,25 @@ export class RestaurantListComponent implements OnInit {
    * vagy csak az aktuális vendég kedvenceinek lekérése.
    */
   getRestaurantList() {
-    let options = {searchTerm: this.searchTerm};
     if (this.restaurantListType === RestaurantListType.Favourite) {
-      this.restaurantOverviews = this.restaurantService.getGuestFavouriteRestaurantList(options);
+      this.restaurantOverviewPagedList = this.restaurantService.getGuestFavouriteRestaurantList(this.search);
     } else {
-      this.restaurantOverviews = this.restaurantService.getRestaurantList(options);
-    } 
+      this.restaurantOverviewPagedList = this.restaurantService.getRestaurantList(this.search);
+    }
+    this.router.navigate([], 
+      {
+        relativeTo: this.route,
+        queryParams: this.search
+      });
   }
 
   /**
-   * A kereső mező törlése és az éttermek listájának frissítése.
+   * A lapozási adatok változása hatására frissíti a keresési feltételeket és lekéri az új étterem listát.
+   * @param pageOptions A megváltozott lapozási adatok.
    */
-  clearBrowser() {
-    this.searchTerm = "";
+  pageOptionsChanged(pageOptions: PageEvent) {
+    this.search.pageNumber = pageOptions.pageIndex + 1;
+    this.search.pageSize = pageOptions.pageSize;
     this.getRestaurantList();
   }
 }
