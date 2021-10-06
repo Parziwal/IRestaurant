@@ -12,10 +12,16 @@ namespace IRestaurant.DAL.DTO.Restaurants
     /// </summary>
     public class RestaurantSearchDto : PageDto
     {
+        private string nameOrShortDescriptionOrCity = "";
+
         /// <summary>
         /// Az étterem nevében, ismertetőjében, vagy a város nevében tartalmazandó kifejezés.
         /// </summary>
-        public string NameOrShortDescriptionOrCity { get; set; } = "";
+        public string NameOrShortDescriptionOrCity
+        {
+            get { return nameOrShortDescriptionOrCity; }
+            set { nameOrShortDescriptionOrCity = value == null ? "" : value; }
+        }
 
         /// <summary>
         /// Az étteremre vonatkozó keresési feltételeket tartalmazó osztály.
