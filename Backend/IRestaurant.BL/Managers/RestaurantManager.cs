@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Hellang.Middleware.ProblemDetails;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.DTO.Pagination;
+using IRestaurant.BL.Extensions;
 
 namespace IRestaurant.BL.Managers
 {
@@ -19,6 +20,7 @@ namespace IRestaurant.BL.Managers
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
         private readonly IFoodRepository foodRepository;
+        private readonly IHttpContextAccessor httpContext;
 
         /// <summary>
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
@@ -26,13 +28,16 @@ namespace IRestaurant.BL.Managers
         /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
         /// <param name="foodRepository">Az ételeket kezeli.</param>
+        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public RestaurantManager(IRestaurantRepository restaurantRepository,
             IUserRepository userRepository,
-            IFoodRepository foodRepository)
+            IFoodRepository foodRepository,
+            IHttpContextAccessor httpContext)
         {
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
             this.foodRepository = foodRepository;
+            this.httpContext = httpContext;
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étterem részletes adatai.</returns>
         public async Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             if (await restaurantRepository.IsRestaurantAvailableForUsers(restaurantId))
             {
                var restaurantDetails = await restaurantRepository.GetRestaurantDetails(restaurantId);
@@ -77,7 +82,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étterem részletes adatai.</returns>
         public async Task<RestaurantDetailsDto> GetMyRestaurantDetails()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await GetRestaurantDetails(ownerRestaurantId);
@@ -90,7 +95,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étterem módosított részletes adatai.</returns>
         public async Task<RestaurantDetailsDto> EditMyRestaurant(EditRestaurantDto editRestaurant)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await restaurantRepository.EditRestaurant(ownerRestaurantId, editRestaurant);
@@ -103,7 +108,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A kép relatív elérési útvonala.</returns>
         public async Task<string> UploadMyRestaurantImage(UploadImageDto uploadedImage)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await restaurantRepository.UploadRestaurantImage(ownerRestaurantId, uploadedImage);
@@ -114,7 +119,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         public async Task DeleteMyRestaurantImage()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             await restaurantRepository.DeleteRestaurantImage(ownerRestaurantId);
@@ -126,7 +131,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étterem beállításainak állapotai.</returns>
         public async Task<RestaurantSettingsDto> GetMyRestaurantSettings()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await restaurantRepository.GetRestaurantSettings(ownerRestaurantId);
@@ -138,7 +143,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         public async Task ShowMyRestaurantForUsers()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
             var restaurant = await restaurantRepository.GetRestaurantDetails(ownerRestaurantId);
 
@@ -161,7 +166,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         public async Task HideMyRestaurantForUsers()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             using (var transaction = new TransactionScope(
@@ -182,7 +187,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         public async Task TurnOnMyRestaurantOrderStatus()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             if (!await restaurantRepository.IsRestaurantAvailableForUsers(ownerRestaurantId))
@@ -206,7 +211,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         public async Task TurnOffMyRestaurantOrderStatus()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
@@ -219,7 +224,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
         public async Task<PagedListDto<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(RestaurantSearchDto search)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await restaurantRepository.GetGuestFavouriteRestaurantList(userId, search);
         }
 
@@ -229,7 +234,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="restaurantId">Az étterem azonosítója.</param>
         public async Task AddRestaurantToUserFavourite(int restaurantId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             await restaurantRepository.AddRestaurantToGuestFavourite(restaurantId, userId);
         }
 
@@ -239,7 +244,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="restaurantId">Az étterem azonosítója.</param>
         public async Task RemoveRestaurantFromUserFavourite(int restaurantId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             await restaurantRepository.RemoveRestaurantFromGuestFavourite(restaurantId, userId);
         }
     }

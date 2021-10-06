@@ -3,7 +3,6 @@ using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Extensions;
 using IRestaurant.DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +17,14 @@ namespace IRestaurant.DAL.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IHttpContextAccessor accessor;
 
         /// <summary>
         /// Az adatbázis és a HttpContext hozzáférés inicializációja a konstruktorban.
         /// </summary>
         /// <param name="dbContext">Az adatbázis.</param>
-        /// <param name="accessor">Hozzáférést biztosít a HttpContext-hez.</param>
-        public UserRepository(ApplicationDbContext dbContext, IHttpContextAccessor accessor)
+        public UserRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.accessor = accessor;
         }
 
         /// <summary>
@@ -205,16 +201,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<bool> UserHasRestaurant(string userId)
         {
             return await dbContext.Restaurants.SingleOrDefaultAsync(r => r.OwnerId == userId) != null;
-        }
-
-        /// <summary>
-        /// A jelenleg bejelentkezett felhasználó egyedi azonosítójának lekérdezése.
-        /// </summary>
-        /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
-        public string GetCurrentUserId()
-        {
-            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
-                        accessor.HttpContext.User.FindFirstValue("sub");
         }
     }
 }

@@ -73,11 +73,5 @@ namespace IRestaurant.DAL.Repositories
         /// <param name="userId">A felhasználó egyedi azonosítója.</param>
         /// <returns>Tartozik-e étterem a felhasználóhoz.</returns>
         Task<bool> UserHasRestaurant(string userId);
-
-        /// <summary>
-        /// A jelenleg bejelentkezett felhasználó egyedi azonosítójának lekérdezése.
-        /// </summary>
-        /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
-        string GetCurrentUserId();
     }
 }

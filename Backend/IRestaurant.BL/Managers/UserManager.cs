@@ -5,6 +5,7 @@ using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.DTO.Restaurants;
+using IRestaurant.BL.Extensions;
 
 namespace IRestaurant.BL.Managers
 {
@@ -14,14 +15,18 @@ namespace IRestaurant.BL.Managers
     public class UserManager
     {
         private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor httpContext;
 
         /// <summary>
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
         /// </summary>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        public UserManager(IUserRepository userRepository)
+        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
+        public UserManager(IUserRepository userRepository,
+                          IHttpContextAccessor httpContext)
         {
             this.userRepository = userRepository;
+            this.httpContext = httpContext;
         }
 
         /// <summary>
@@ -31,7 +36,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étterem részletes adatai.</returns>
         public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForCurrentUser()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             if (await userRepository.UserHasRestaurant(userId))
             {
                 return await userRepository.CreateDefaultRestaurantForUser(userId);
@@ -48,7 +53,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A lakcím adatai.</returns>
         public async Task<AddressWithIdDto> GetUserAddress(int addressId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string addressUserId = await userRepository.GetUserAddressUserId(addressId);
 
             if (userId == addressUserId)
@@ -66,7 +71,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az aktuális vendég lakcímeinek listája.</returns>
         public async Task<IReadOnlyCollection<AddressWithIdDto>> GetCurrentGuestAddressList()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await userRepository.GetUserAddressList(userId);
         }
 
@@ -77,7 +82,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A létrehozott lakcím.</returns>
         public async Task<AddressWithIdDto> CreateUserAddress(CreateOrEditAddressDto address)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await userRepository.CreatetUserAddress(userId, address);
         }
 
@@ -89,7 +94,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A módosított cím adatai.</returns>
         public async Task<AddressWithIdDto> EditUserAddress(int addressId, CreateOrEditAddressDto address)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string addressUserId = await userRepository.GetUserAddressUserId(addressId);
 
             if (userId == addressUserId)
@@ -107,7 +112,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="addressId">A cím azonosítója.</param>
         public async Task DeleteUserAddress(int addressId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string addressUserId = await userRepository.GetUserAddressUserId(addressId);
 
             if (userId == addressUserId)

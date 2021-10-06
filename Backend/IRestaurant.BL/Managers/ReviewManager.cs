@@ -1,4 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Extensions;
 using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,7 @@ namespace IRestaurant.BL.Managers
         private readonly IReviewRepository reviewRepository;
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor httpContext;
 
         /// <summary>
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
@@ -26,13 +28,16 @@ namespace IRestaurant.BL.Managers
         /// <param name="reviewRepository">Az értékeléseket kezeli.</param>
         /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
+        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public ReviewManager(IReviewRepository reviewRepository,
             IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IHttpContextAccessor httpContext)
         {
             this.reviewRepository = reviewRepository;
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.httpContext = httpContext;
         }
 
         /// <summary>
@@ -51,7 +56,7 @@ namespace IRestaurant.BL.Managers
                 return await reviewRepository.GetReview(reviewId);
             }
 
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
             int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetMyRestaurantId(userId) : -1;
 
@@ -77,7 +82,7 @@ namespace IRestaurant.BL.Managers
                 return await reviewRepository.GetRestaurantReviewList(restaurantId);
             }
 
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetMyRestaurantId(userId) : -1;
 
             if (restaurantId == ownerRestaurantId)
@@ -94,7 +99,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az aktuális felhasználó éttermének értékelései.</returns>
         public async Task<IReadOnlyCollection<ReviewDto>> GetMyRestaurantReviewList()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await GetRestaurantReviewList(ownerRestaurantId);
@@ -106,7 +111,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az aktuális vendég értékelései.</returns>
         public async Task<IReadOnlyCollection<ReviewDto>> GetCurrentGuestReviewList()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await reviewRepository.GetGuestReviewList(userId);
         }
 
@@ -117,7 +122,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A létrehozott értékelés adatai.</returns>
         public async Task<ReviewDto> AddReviewToRestaurant(CreateReviewDto review)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await reviewRepository.AddReviewToRestaurant(userId, review);
         }
 
@@ -127,7 +132,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="reviewId">Az értékelés azonosítója.</param>
         public async Task DeleteReview(int reviewId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string publisherId = await reviewRepository.GetPubliserUserId(reviewId);
 
             if (publisherId == userId)

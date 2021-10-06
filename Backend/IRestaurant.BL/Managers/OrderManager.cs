@@ -1,4 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Extensions;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
@@ -21,7 +22,8 @@ namespace IRestaurant.BL.Managers
         private readonly IOrderRepository orderRepository;
         private readonly IUserRepository userRepository;
         private readonly IRestaurantRepository restaurantRepository;
-        private const int minHourAfterOrder = 1;
+        private readonly IHttpContextAccessor httpContext;
+        private const int MIN_HOUR_AFTER_ORDER = 1;
 
         /// <summary>
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
@@ -29,13 +31,16 @@ namespace IRestaurant.BL.Managers
         /// <param name="orderRepository">A rendeléseket kezeli.</param>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
         /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
+        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public OrderManager(IOrderRepository orderRepository,
             IUserRepository userRepository,
-            IRestaurantRepository restaurantRepository)
+            IRestaurantRepository restaurantRepository,
+            IHttpContextAccessor httpContext)
         {
             this.orderRepository = orderRepository;
             this.userRepository = userRepository;
             this.restaurantRepository = restaurantRepository;
+            this.httpContext = httpContext;
         }
 
         /// <summary>
@@ -45,7 +50,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A bejelentkezett vendég rendelési.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(OrderSearchDto search)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await orderRepository.GetGuestOrderOverviewList(userId, search);
         }
 
@@ -57,7 +62,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az étteremhez beérkező rendelések.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetMyRestaurantOrderOverviewList(OrderSearchDto search)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await orderRepository.GetRestaurantOrderOverviewList(ownerRestaurantId, search);
@@ -71,7 +76,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A rendelés részletes adatai.</returns>
         public async Task<OrderDetailsDto> GetOrderDetails(int orderId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string orderUserId = await orderRepository.GetOrderUserId(orderId);
             int userRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetMyRestaurantId(userId) : -1;
             int orderRestaurantId = await orderRepository.GetOrderRestaurantId(orderId);
@@ -92,10 +97,10 @@ namespace IRestaurant.BL.Managers
         /// <returns>A létrehozott rendelés részletei.</returns>
         public async Task<OrderDetailsDto> CreateOrder(CreateOrder order)
         {
-            if (order.PreferredDeliveryDate < new DateTime().AddHours(minHourAfterOrder))
+            if (order.PreferredDeliveryDate < new DateTime().AddHours(MIN_HOUR_AFTER_ORDER))
             {
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
-                    $"A kívánt kiszállítási időnek minimum {minHourAfterOrder} órával a rendelés leadása után kell lennie.");
+                    $"A kívánt kiszállítási időnek minimum {MIN_HOUR_AFTER_ORDER} órával a rendelés leadása után kell lennie.");
             }
 
             var restaurantSettings = await restaurantRepository.GetRestaurantSettings(order.RestaurantId);
@@ -105,7 +110,7 @@ namespace IRestaurant.BL.Managers
                     "A megadott étteremnél a rendelési lehetőség jelenleg nem elérhető.");
             }
 
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             return await orderRepository.CreateOrder(userId, order);
         }
 
@@ -120,7 +125,7 @@ namespace IRestaurant.BL.Managers
         public async Task ChangeOrderStatus(int orderId, OrderStatus status)
         {
             OrderStatus orderStatus = await orderRepository.GetOrderStatus(orderId);
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             string orderUserId = await orderRepository.GetOrderUserId(orderId);
 
             if (userId == orderUserId
