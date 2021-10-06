@@ -1,4 +1,4 @@
-<mat-horizontal-stepper linear labelPosition="bottom" #stepper>
+<mat-horizontal-stepper linear labelPosition="bottom" [orientation]="(stepperOrientation | async)!" #stepper>
     <mat-step [editable]="!orderFinalizationCompleted" [completed]="chooseFoodCompleted">
         <ng-template matStepLabel>Ételek kiválasztása</ng-template>
         <app-choose-foods (chooseFoodCompleted)="chooseFoodCompleted = $event"></app-choose-foods>

@@ -1,8 +1,5 @@
 <div class="menu-header">
     <h2 class="m-0">Étlap</h2>
-    <button *ngIf="(userRole | async) === 'Guest'" type="button" class="btn btn-success" (click)="onOrderClicked()">
-        Rendelés az étlapról
-    </button>
 </div>
 <mat-accordion class="row justify-content-center">
     <div class="col-lg-6 my-1" *ngFor="let food of (restaurantMenu | async)">
@@ -23,3 +20,8 @@
         </mat-expansion-panel>
     </div>
 </mat-accordion>
+<div class="row justify-content-center mt-3">
+    <button *ngIf="(userRole | async) === 'Guest'" type="button" class="btn btn-success btn-lg col-lg-6 md-8" (click)="onOrderClicked()">
+        Rendelés az étlapról
+    </button>
+</div>
