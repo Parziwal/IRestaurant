@@ -1,25 +1,37 @@
 <div class="menu-header">
-    <h2 class="m-0">Étlap</h2>
-    <button *ngIf="(userRole | async) === 'Guest'" type="button" class="btn btn-success" (click)="onOrderClicked()">
-        Rendelés az étlapról
-    </button>
+  <h2 class="m-0">Étlap</h2>
 </div>
 <mat-accordion class="row justify-content-center">
-    <div class="col-lg-6 my-1" *ngFor="let food of (restaurantMenu | async)">
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div class="d-flex justify-content-start">
-                        <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath" [alt]="food.name"
-                        class="img-fluid align-self-start">
-                        <div class="d-flex flex-column">
-                            <h3 class="food-name">{{ food.name }}</h3>
-                            <p class="food-price">{{ food.price | currency : 'Ft' : 'symbol' : '1.0-0'}}</p>
-                        </div>
-                    </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <p class="text-muted food-details">{{ food.description }}</p>
-        </mat-expansion-panel>
-    </div>
+  <div class="col-lg-6 my-1" *ngFor="let food of restaurantMenu | async">
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex justify-content-start">
+            <img
+              [src]="food.imagePath"
+              [alt]="food.name"
+              class="img-fluid align-self-start"
+            />
+            <div class="d-flex flex-column">
+              <h3 class="food-name">{{ food.name }}</h3>
+              <p class="food-price">
+                {{ food.price | currency: "Ft":"symbol":"1.0-0" }}
+              </p>
+            </div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p class="text-muted food-details">{{ food.description }}</p>
+    </mat-expansion-panel>
+  </div>
 </mat-accordion>
+<div class="row justify-content-center mt-3">
+  <button
+    *ngIf="(userRole | async) === 'Guest'"
+    type="button"
+    class="btn btn-success btn-lg col-lg-6 md-8"
+    (click)="onOrderClicked()"
+  >
+    Rendelés az étlapról
+  </button>
+</div>

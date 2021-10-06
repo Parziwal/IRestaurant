@@ -1,4 +1,4 @@
 export interface CreateOrderFood {
-    foodId: number;
-    amount: number;
+  foodId: number;
+  amount: number;
 }

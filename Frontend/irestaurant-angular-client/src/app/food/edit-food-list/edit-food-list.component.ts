@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { faEdit, faPlusSquare, faTrashAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faPlusSquare,
+  faTrashAlt,
+  faUpload,
+} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { environment } from 'src/environments/environment';
 import { FoodService } from '../food.service';
 import { Food } from '../models/food.type';
 import { EditFoodDialogComponent } from './edit-food-dialog/edit-food-dialog.component';
@@ -13,26 +17,29 @@ import { UploadFoodImageDialogComponent } from './upload-food-image-dialog/uploa
 @Component({
   selector: 'app-edit-food-list',
   templateUrl: './edit-food-list.component.html',
-  styleUrls: ['./edit-food-list.component.css']
+  styleUrls: ['./edit-food-list.component.css'],
 })
 export class EditFoodListComponent implements OnInit {
-
   /** Az étteremhez tartozó ételek listája. */
   foods: Observable<Food[]> = new Observable();
-  /** Ha egy ételhez nem tartozik kép, akkor ezt jelenítjük meg alapméretezettként. */
-  defaultFoodImgUrl = environment.defaultFoodImgUrl;
+
   /** Szerkesztés ikon. */
   faEdit = faEdit;
+
   /** Törlés ikon. */
   faTrashAlt = faTrashAlt;
+
   /** Hozzáadás ikon. */
   faPlusSquare = faPlusSquare;
+
   /** Feltöltés ikon. */
   faUpload = faUpload;
 
-  constructor(private foodService: FoodService,
+  constructor(
+    private foodService: FoodService,
     private toastr: ToastrService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getFoods();
@@ -48,10 +55,10 @@ export class EditFoodListComponent implements OnInit {
    */
   addFood() {
     const dialogRef = this.dialog.open(EditFoodDialogComponent, {
-      width: "500px"
+      width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getFoods();
       }
@@ -66,10 +73,10 @@ export class EditFoodListComponent implements OnInit {
   editFood(food: Food) {
     const dialogRef = this.dialog.open(EditFoodDialogComponent, {
       data: food,
-      width: "500px"
+      width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.getFoods();
       }
@@ -79,28 +86,30 @@ export class EditFoodListComponent implements OnInit {
   /**
    * A paraméterként átadott étel törlése. Ehhez egy megerősítő dialógus ablak feldobása, aminek
    * jóváhagyása esetén az ételt töröljük.
-   * @param food 
+   * @param food A törlendő étel.
    */
   deleteFood(food: Food) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent);
-    dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"
+    dialogRef.componentInstance.confirmMessage = 'Biztosan törölni szeretnéd?';
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.foodService.removeFoodFromMenu(food.id).subscribe(
-          () => {
-            this.toastr.success("Az étel törlésre került!");
-            this.getFoods();
-          }
-        ); 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.foodService.removeFoodFromMenu(food.id).subscribe(() => {
+          this.toastr.success('Az étel törlésre került!');
+          this.getFoods();
+        });
       }
     });
   }
 
+  /**
+   * A képfeltöltési dialógus ablak megnyitása.
+   * @param food Az étel, aminek a képét módosítani szeretnénk.
+   */
   onImageUpload(food: Food) {
     this.dialog.open(UploadFoodImageDialogComponent, {
-      width: "500px",
-      data: food
+      width: '500px',
+      data: food,
     });
   }
 }

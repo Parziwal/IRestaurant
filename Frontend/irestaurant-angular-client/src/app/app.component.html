@@ -1,4 +1,16 @@
-<app-nav-menu></app-nav-menu>
-<div class="container-md">
+<div class="page">
+  <app-nav-menu></app-nav-menu>
+  <main class="container-md">
     <router-outlet></router-outlet>
+  </main>
+  <app-footer></app-footer>
 </div>
+
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Betöltés...</p></ngx-spinner
+>

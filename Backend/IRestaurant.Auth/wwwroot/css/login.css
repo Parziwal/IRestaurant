@@ -1,0 +1,21 @@
+﻿.card {
+    margin-top: 60px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card .card-body {
+    padding: 20px 40px 10px 40px;
+}
+
+.input-group-prepend span {
+    width: 50px;
+}
+
+.btn-primary.login-btn {
+    padding: 10px 20px;
+    margin-top: 40px;
+}
+
+div.input-group.form-group {
+    margin: 20px auto;
+}

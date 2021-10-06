@@ -16,7 +16,7 @@ namespace IRestaurant.DAL.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("IRestaurant.DAL.Models.ApplicationUser", b =>
@@ -87,6 +87,433 @@ namespace IRestaurant.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "475c5e32-049c-4d7b-a963-02ebdc15a94b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "carson@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Carson Alexander",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CARSON@EMAIL.HU",
+                            NormalizedUserName = "CARSON@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "carson@email.hu"
+                        },
+                        new
+                        {
+                            Id = "512dac39-94d2-429a-a258-7740ca64c50f",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "peggy@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Peggy Justice",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PEGGY@EMAIL.HU",
+                            NormalizedUserName = "PEGGY@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "peggy@email.hu"
+                        },
+                        new
+                        {
+                            Id = "cb35b922-5a91-4949-94e6-47a2d6f82d93",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "bacs.imre@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Bács Imre",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BACS.IMRE@EMAIL.HU",
+                            NormalizedUserName = "BACS.IMRE@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "bacs.imre@email.hu"
+                        },
+                        new
+                        {
+                            Id = "0bf93af4-1769-49f8-9bf4-e977feef94b4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "fabian.barna@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Fábián Barna",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FABIAN.BARNA@EMAIL.HU",
+                            NormalizedUserName = "FABIAN.BARNA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "fabian.barna@email.hu"
+                        },
+                        new
+                        {
+                            Id = "6c364ea9-44b4-4726-9bef-ea83c375e761",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "balazs.oliver@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Balázs Olivér",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BALAZS.OLIVER@EMAIL.HU",
+                            NormalizedUserName = "BALAZS.OLIVER@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "balazs.oliver@email.hu"
+                        },
+                        new
+                        {
+                            Id = "fef0a15c-42bb-4f2d-9a65-382d4d95f667",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "orsos.jozsef@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Orsós József",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ORSOS.JOZSEF@EMAIL.HU",
+                            NormalizedUserName = "ORSOS.JOZSEF@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "orsos.jozsef@email.hu"
+                        },
+                        new
+                        {
+                            Id = "bc803e89-e8c0-4c5a-9467-e94cd5dd0300",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "csonka.krisztina@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Csonka Krisztina",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CSONKA.KRISZTINA@EMAIL.HU",
+                            NormalizedUserName = "CSONKA.KRISZTINA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "csonka.krisztina@email.hu"
+                        },
+                        new
+                        {
+                            Id = "8480bf9e-9553-47b7-a57b-474715139a83",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "kiss.aniko@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Kiss Anikó",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "KISS.ANIKO@EMAIL.HU",
+                            NormalizedUserName = "KISS.ANIKO@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "kiss.aniko@email.hu"
+                        },
+                        new
+                        {
+                            Id = "95810441-4970-488c-afc7-d91a07256c76",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "peter.nikoletta@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Péter Nikoletta",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PETER.NIKOLETTA@EMAIL.HU",
+                            NormalizedUserName = "PETER.NIKOLETTA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "peter.nikoletta@email.hu"
+                        },
+                        new
+                        {
+                            Id = "c5e189f0-7656-4304-b963-1581f5ecf4fb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "szabo.bianka@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Szabó Bianka",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SZABO.BIANKA@EMAIL.HU",
+                            NormalizedUserName = "SZABO.BIANKA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "szabo.bianka@email.hu"
+                        },
+                        new
+                        {
+                            Id = "3eba4364-6a33-459c-9871-5823a9aee62a",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "horvath.katalin@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Horváth Katalin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HORVATH.KATALIN@EMAIL.HU",
+                            NormalizedUserName = "HORVATH.KATALIN@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "horvath.katalin@email.hu"
+                        },
+                        new
+                        {
+                            Id = "765c13fb-7f8c-4474-afb5-d3a9e72feef3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "gaspar.izabella@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Gáspár Izabella",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "GASPAR.IZABELLA@EMAIL.HU",
+                            NormalizedUserName = "GASPAR.IZABELLA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "gaspar.izabella@email.hu"
+                        },
+                        new
+                        {
+                            Id = "7236dae3-7bad-4fe6-bb18-d13ff391939d",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "budai.cintia@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Budai Cintia",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BUDAI.CINTIA@EMAIL.HU",
+                            NormalizedUserName = "BUDAI.CINTIA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "budai.cintia@email.hu"
+                        },
+                        new
+                        {
+                            Id = "5075d4b9-0ba6-4811-84ff-fed147c9c09a",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "szoke.barbara@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Szőke Barbara",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SZOKE.BARBARA@EMAIL.HU",
+                            NormalizedUserName = "SZOKE.BARBARA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "szoke.barbara@email.hu"
+                        },
+                        new
+                        {
+                            Id = "e1eaafad-b9f7-4668-9efd-d8c4418c39ca",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "orsos.nora@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Orsós Nóra",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ORSOS.NORA@EMAIL.HU",
+                            NormalizedUserName = "ORSOS.NORA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "orsos.nora@email.hu"
+                        },
+                        new
+                        {
+                            Id = "5f7e27c3-9398-4cd3-977d-dae625124808",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "torok.monika@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Török Mónika",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TOROK.MONIKA@EMAIL.HU",
+                            NormalizedUserName = "TOROK.MONIKA@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "torok.monika@email.hu"
+                        },
+                        new
+                        {
+                            Id = "93f49281-b3a5-41b5-972c-ff5910f26e56",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "fazekas.barnabas@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Fazekas Barnabás",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FAZEKAS.BARNABAS@EMAIL.HU",
+                            NormalizedUserName = "FAZEKAS.BARNABAS@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "fazekas.barnabas@email.hu"
+                        },
+                        new
+                        {
+                            Id = "4e0a018f-ca12-448e-bda9-67ac1fce5a53",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "bodnar.erik@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Bodnár Erik",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BODNAR.ERIK@EMAIL.HU",
+                            NormalizedUserName = "BODNAR.ERIK@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "bodnar.erik@email.hu"
+                        },
+                        new
+                        {
+                            Id = "77d8c466-d2a0-44cb-8a22-a228b6218f23",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "vaszoly.jakab@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Vászoly Jakab",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "VASZOLY.JAKAB@EMAIL.HU",
+                            NormalizedUserName = "VASZOLY.JAKAB@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "vaszoly.jakab@email.hu"
+                        },
+                        new
+                        {
+                            Id = "5b944a67-5751-423f-89fb-f0c4f0ace3fb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "hajdu.adam@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Hajdú Ádám",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "HAJDU.ADAM@EMAIL.HU",
+                            NormalizedUserName = "HAJDU.ADAM@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "hajdu.adam@email.hu"
+                        },
+                        new
+                        {
+                            Id = "96494a5b-f58d-44dd-8428-6543ef5e5bd7",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "balog.rajmund@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Balog Rajmund",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BALOG.RAJMUND@EMAIL.HU",
+                            NormalizedUserName = "BALOG.RAJMUND@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "balog.rajmund@email.hu"
+                        },
+                        new
+                        {
+                            Id = "5c55f164-cb41-4453-a473-120af44e3493",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "pinter.kornel@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Pintér Kornél",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "PINTER.KORNEL@EMAIL.HU",
+                            NormalizedUserName = "PINTER.KORNEL@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "pinter.kornel@email.hu"
+                        },
+                        new
+                        {
+                            Id = "27410ef4-fa83-45cd-872d-d350042dd8e4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "kiraly.rudolf@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Király Rudolf",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "KIRALY.RUDOLF@EMAIL.HU",
+                            NormalizedUserName = "KIRALY.RUDOLF@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "kiraly.rudolf@email.hu"
+                        },
+                        new
+                        {
+                            Id = "acd5d503-90e3-475c-b700-8e96fbea9e60",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "fodor.szabolcs@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Fodor Szabolcs",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "FODOR.SZABOLCS@EMAIL.HU",
+                            NormalizedUserName = "FODOR.SZABOLCS@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "fodor.szabolcs@email.hu"
+                        },
+                        new
+                        {
+                            Id = "4422d2ba-934c-4899-9195-d9872d1b4c63",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70ceb6e6-9a79-4fb8-b325-93453e2021b1",
+                            Email = "nemeth.vince@email.hu",
+                            EmailConfirmed = true,
+                            FullName = "Németh Vince",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "NEMETH.VINCE@EMAIL.HU",
+                            NormalizedUserName = "NEMETH.VINCE@EMAIL.HU",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYhQeew7rP4OrFaPD7hY14miQgE+SY2grNxQ01VBp/7AGxnUtJLFZxVj+KLYk/2Rw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "QWHJ3YA4ZZ7PH7QGYAB2IU7PLUCA3LBO",
+                            TwoFactorEnabled = false,
+                            UserName = "nemeth.vince@email.hu"
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.FavouriteRestaurant", b =>
@@ -146,6 +573,1008 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("Food");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1524081684693-1519036f3449?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxyZXN0YXVyYW50fHx8fHx8MTYzMjY5MDM4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Libamáj pástétom házi lila hagyma lekvárral",
+                            Price = 4750,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1518290943012-2c2bec0e54d2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxtZWF0fHx8fHx8MTYzMjY5MDUwMQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Burgundi szarvasszelet",
+                            Price = 3650,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1562847961-8f766d774a28?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdHx8fHx8fDE2MzI2OTA1Njg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Ropogós kacsacomb",
+                            Price = 3700,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1583182332473-b31ba08929c8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZG9udXR8fHx8fHwxNjMyNjkwNzA2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea burgonyafánk",
+                            Price = 900,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "marhahús (medium), ezersziget öntet, karamellizált hagyma, csemegeuborka A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1618219877887-442767be5d68?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDc2MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Burger",
+                            Price = 1090,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "10dkg marhahús (medium), karamellizált hagyma, csemegeuborka, cheddar sajt, ezersziget öntet A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1624348754836-743503fe9445?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDgwOA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Cheese Burger",
+                            Price = 1250,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "marhahús (medium), grillezett cheddar sajt, karamellizált hagyma, csemegeuborka, bacon, BBQ szósz A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1491960693564-421771d727d6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDg0Ng&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea BBQ burger",
+                            Price = 1400,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "ketchup, karamellizált hagyma, vegán pogácsa, uborka, mustár A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1470053053191-43e7bd267838?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDg4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Burger vegán pogácsával",
+                            Price = 1250,
+                            RestaurantId = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "paradicsomszósz, mozzarella sajt, füstölt sajt, BBQ csirkehús, paradicsom, lila hagyma, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1618213957768-7789409b9dd8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTEy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "BBQ pizza (32cm)",
+                            Price = 2490,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "paradicsomszósz, mozzarella sajt, feta sajt, hagyma, rukkola, paradicsom, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1516697073-419b2bd079db?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTQ0&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bruschetta pizza (32cm)",
+                            Price = 2390,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "paradicsomszósz, mozzarella sajt, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1585505008861-a5c378857dcc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTc4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Margherita pizza (32cm)",
+                            Price = 2190,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "paradicsomszósz, mozzarella sajt, zöld olívabogyó, paradicsom, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1589375890993-7b568c0b8b1c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDA4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Olívás margarita pizza (32cm)",
+                            Price = 2190,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "paradicsomszósz, mozzarella sajt, sonka, kukorica, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1605478371310-a9f1e96b4ff4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDM4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Sonkás-gombás pizza (32cm)",
+                            Price = 2290,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "paradicsomszósz, mozzarella sajt, szalámi, pepperoni, hagyma, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1589906493606-a6ca2a06078b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDgy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Szalámis pizza (32cm)",
+                            Price = 2290,
+                            RestaurantId = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "zöldfűszeres gnocchi, zeller, kurkuma, shallot",
+                            ImagePath = "https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Y2hpY2tlbnx8fHx8fDE2MzI3NjQzNzU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Balzsamecetben marinált csirke",
+                            Price = 3550,
+                            RestaurantId = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "brokkoli, beluga lencse, édes-savanyú redukció, friss zöldfűszerek",
+                            ImagePath = "https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzY0NDYw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Lazac steak",
+                            Price = 4950,
+                            RestaurantId = 3
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "grillezett füge, szója emulzió, retek",
+                            ImagePath = "https://images.unsplash.com/photo-1601565960311-8a7f4e1ab709?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGFwcmlrYXx8fHx8fDE2MzI3NjQ2ODg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vegán csőben sült kaliforniai paprika",
+                            Price = 2950,
+                            RestaurantId = 3
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "(220 g), rukkola, grana padano d.o.p., koktélparadicsom",
+                            ImagePath = "https://images.unsplash.com/photo-1607198179219-cd8b835fdda7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzY0ODA2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Rib-eye",
+                            Price = 7650,
+                            RestaurantId = 3
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "menta, spárga ragu, pecorino, narancs",
+                            ImagePath = "https://images.unsplash.com/photo-1613478881426-deeadee06d78?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWdncGxhbnR8fHx8fHwxNjMyNzY0OTg1&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Füstölt padlizsán tortelli",
+                            Price = 3250,
+                            RestaurantId = 3
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Description = "pirított pisztáciával, citromhéjas tejszínes udon tésztával",
+                            ImagePath = "https://images.unsplash.com/photo-1556269923-e4ef51d69638?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzcwNjYx&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Beluga steak limoncelloval flambírozva",
+                            Price = 4390,
+                            RestaurantId = 4
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Description = "konyakos-libamájas mártással, tepertős burgonyapürével, szőlővel",
+                            ImagePath = "https://images.unsplash.com/photo-1504472607343-a7fac413b524?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhdGV8fHx8fHwxNjMyNzcwNzkx&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bivaly",
+                            Price = 3790,
+                            RestaurantId = 4
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Description = "Ahogy katalán chef barátunktól tanultuk",
+                            ImagePath = "https://images.unsplash.com/photo-1575932444877-5106bee2a599?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Q2hpY2tlbiBicmVhc3R8fHx8fHwxNjMyNzcwOTk4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Csirkemellből készült paella",
+                            Price = 2990,
+                            RestaurantId = 4
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Description = "rózsaborsos-citrusos mangó pürével, savoyai burgonyával",
+                            ImagePath = "https://images.unsplash.com/photo-1505253668822-42074d58a7c6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZHVjayxmb29kfHx8fHx8MTYzMjc3MTEzNA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Narancsos kacsa",
+                            Price = 3690,
+                            RestaurantId = 4
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Description = "ruccolás burgonyapürével, mentás mártással, toszkán zöldbabbal",
+                            ImagePath = "https://images.unsplash.com/photo-1514516345957-556ca7d90a29?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxwbGF0ZXx8fHx8fDE2MzI3NzEyNzk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vasvári zoltán féle konfitált báránycsülök",
+                            Price = 3990,
+                            RestaurantId = 4
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Description = "vadas, szalvétagombóc",
+                            ImagePath = "https://images.unsplash.com/photo-1516685125522-3c528b8046ee?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE4NjY&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Szarvasgerinc",
+                            Price = 6990,
+                            RestaurantId = 5
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Description = "bazsalikom, stracciatella (V)",
+                            ImagePath = "https://images.unsplash.com/photo-1460667450797-d71a56692010?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE4OTI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Paradicsom rizottó",
+                            Price = 4490,
+                            RestaurantId = 5
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Description = "szarvasgomba, tanyasi csirke/garnéla/bélszín",
+                            ImagePath = "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudCxmb29kfHx8fHx8MTYzMjc3MTY4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Házi tagliatelle",
+                            Price = 4690,
+                            RestaurantId = 5
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Description = "füstölt saláta, boquerones",
+                            ImagePath = "https://images.unsplash.com/photo-1504973960431-1c467e159aa4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE5NzU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Tanyasi csirke",
+                            Price = 4990,
+                            RestaurantId = 5
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Description = "ertéscomb, csirkemáj, gomba,zöldségek - tejszínes-kapros habarással készül",
+                            ImagePath = "https://images.unsplash.com/photo-1574484284002-952d92456975?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI3NzIzOTc&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Legényfogó leves",
+                            Price = 1660,
+                            RestaurantId = 6
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Description = "sonka, főtt-füstölt tarja, téli szalámi és paprikás szalámi, baconszalonna, parasztmájas, füstölt kolbász, sajtok, főtt tojás, friss zöldségek ",
+                            ImagePath = "https://images.unsplash.com/photo-1432139509613-5c4255815697?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxmb29kfHx8fHx8MTYzMjc3MjY1OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Magyaros hidegtál",
+                            Price = 3000,
+                            RestaurantId = 6
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Description = "grillezett libamájjal és gyümölcsökkel",
+                            ImagePath = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzI0ODA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Lávakövön sült pulykamell",
+                            Price = 3700,
+                            RestaurantId = 6
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Description = "roston bélszín, serpenyős cigánypecsenye, rántott csirkemell, kakastaréj, sült kockaburgonya, házi csalamádé",
+                            ImagePath = "https://images.unsplash.com/photo-1611315764615-3e788573f31e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGlzaHx8fHx8fDE2MzI3NzI5ODg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Erdélyi fatányéros",
+                            Price = 4200,
+                            RestaurantId = 6
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Description = "üstölt zellerpüré, padron paprika, vargányagomba",
+                            ImagePath = "https://images.unsplash.com/photo-1626509653291-18d9a934b9db?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxwbGF0ZXx8fHx8fDE2MzI4MjM5MzM&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bikavéres marhapofa",
+                            Price = 4250,
+                            RestaurantId = 7
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Description = "szőlő chutney-val, dióval, házi brioche-sal",
+                            ImagePath = "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjQwMTE&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Kacsamáj befőtt",
+                            Price = 2890,
+                            RestaurantId = 7
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Description = "füstös velőmajonézzel, savanyított hagymákkal",
+                            ImagePath = "https://images.unsplash.com/photo-1514516345957-556ca7d90a29?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8dGF0YXIsbWVhdHx8fHx8fDE2MzI4MjQwOTU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Angus marhatatár",
+                            Price = 2890,
+                            RestaurantId = 7
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Description = "parajlevél pestóval és sós dióval, aszalt paradicsommal",
+                            ImagePath = "https://images.unsplash.com/photo-1618163633808-dbd8a9f658ce?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGFzdGF8fHx8fHwxNjMyODI0MTUz&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Házi hosszúmetélt",
+                            Price = 2490,
+                            RestaurantId = 7
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Description = "szezámmagos buci, marhahúspogácsa 1 db (13 dkg), hamburgerszósz, jégsaláta, csemege uborka, trappista sajt, pirított hagyma, bacon",
+                            ImagePath = "https://images.unsplash.com/photo-1623945359564-b8d01dd5cfe2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDMyNQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Taxi burger",
+                            Price = 1399,
+                            RestaurantId = 8
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Description = "szezámmagos buci, marhahús pogácsa 1 db (13 dkg), ketchup, jégsaláta, kígyóuborka, pirított hagyma, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1585238341267-1cfec2046a55?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDQxOQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Erős Anna",
+                            Price = 1399,
+                            RestaurantId = 8
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Description = "szezámmagos buci, marhahúspogácsa (13 dkg-os), BBQ szósz, jégsaláta, paradicsom, füstölt sajtchips, cheddar sajt, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDUwMg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Rosti Burger",
+                            Price = 1599,
+                            RestaurantId = 8
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Description = "szezámmagos buci, marhahúspogácsa 2 db (13 dkg-os), BBQ szósz, lila hagyma, paradicsom, kígyóuborka, cheddar sajt, füstölt sajt, trappista sajt, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1561043433-9265f73e685f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDYwMQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Zátony Burger",
+                            Price = 1899,
+                            RestaurantId = 8
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Description = "vaslapon sült pácolt karaj tejfölös, füstölt tarjás, savanyú uborkás, szalonnás raguval",
+                            ImagePath = "https://images.unsplash.com/photo-1605209971703-73c7ed7c923e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ4NzI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Favágó karaj",
+                            Price = 2800,
+                            RestaurantId = 9
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Description = "szaftos, vaslapon sült karaj fokhagymával, sült szalonnával",
+                            ImagePath = "https://images.unsplash.com/photo-1624174503860-478619028ab3?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ4OTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Kishuszáros karaj",
+                            Price = 2800,
+                            RestaurantId = 9
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Description = "pirított kolbász, füstölt tarja, füstölt szalonna, vöröshagyma, savanyú uborka, tejföl",
+                            ImagePath = "https://images.unsplash.com/photo-1584932901306-a19fdf291cec?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ5ODQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bádogos csülök",
+                            Price = 2900,
+                            RestaurantId = 9
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Description = "spenót, spárga, sajt",
+                            ImagePath = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZmlzaCxwbGF0ZXx8fHx8fDE2MzI4MjUwOTg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Besütött harcsa főszakács-módra",
+                            Price = 3600,
+                            RestaurantId = 9
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Description = "roston sült libamáj, gomba, egri barnamártás",
+                            ImagePath = "https://images.unsplash.com/photo-1598511726623-d2e9996892f0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bG9pbnx8fHx8fDE2MzI4MjUxMzI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bélszínjava egri módra",
+                            Price = 5800,
+                            RestaurantId = 9
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Description = "Joghurtból készült házi krémsajt, marinált paprikával és sült articsókával, friss pitával tálalva",
+                            ImagePath = "https://images.unsplash.com/photo-1565720490528-48e5be3d6a1f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudCxmb29kfHx8fHx8MTYzMjgyNTI2OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Labane",
+                            Price = 1890,
+                            RestaurantId = 10
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Description = "Jemeni fűszerekkel főtt csirkeleves tépett csirkecombbal, citrommal és friss korianderrel",
+                            ImagePath = "https://images.unsplash.com/photo-1469307517101-0b99d8fb0c33?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjU0OTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Jemeni Csirkeleves",
+                            Price = 1690,
+                            RestaurantId = 10
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Description = "Minden hummusz tálat friss, házi hummusszal, csicseriborsóval, tahinivel, petrezselyemmel és olívaolajjal tálalunk, mellé friss grillezett pitát adunk. Kérheted zhug csipős szósszal is!",
+                            ImagePath = "https://images.unsplash.com/photo-1622040806062-27ae4deb4a40?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aHVtdXN8fHx8fHwxNjMyODI1NTcy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Humusz Tahini tál",
+                            Price = 1890,
+                            RestaurantId = 10
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Description = "Két fajta lencséből készült krémleves, sült padlizsán kockákkal és lime-chili mogyoróval",
+                            ImagePath = "https://images.unsplash.com/photo-1547308283-b74183c15032?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjU1MTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vegán lencsekrémleves",
+                            Price = 1590,
+                            RestaurantId = 10
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Description = "Házi recept alapján készített, darált marha pogácsa",
+                            ImagePath = "https://images.unsplash.com/photo-1625937282844-4a0cb4665820?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YmVlZnx8fHx8fDE2MzI4MjU1OTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bárányzsíron sült petrezselymes marha kebab",
+                            Price = 3590,
+                            RestaurantId = 10
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1524081684693-1519036f3449?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxyZXN0YXVyYW50fHx8fHx8MTYzMjY5MDM4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Libamáj pástétom házi lila hagyma lekvárral",
+                            Price = 4750,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1518290943012-2c2bec0e54d2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxtZWF0fHx8fHx8MTYzMjY5MDUwMQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Burgundi szarvasszelet",
+                            Price = 3650,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1562847961-8f766d774a28?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdHx8fHx8fDE2MzI2OTA1Njg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Ropogós kacsacomb",
+                            Price = 3700,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Description = "További kérdés esetén, rendelésed leadása előtt keresd az ügyfélszolgálatunkat bizalommal.",
+                            ImagePath = "https://images.unsplash.com/photo-1583182332473-b31ba08929c8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZG9udXR8fHx8fHwxNjMyNjkwNzA2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea burgonyafánk",
+                            Price = 900,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Description = "marhahús (medium), ezersziget öntet, karamellizált hagyma, csemegeuborka A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1618219877887-442767be5d68?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDc2MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Burger",
+                            Price = 1090,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Description = "10dkg marhahús (medium), karamellizált hagyma, csemegeuborka, cheddar sajt, ezersziget öntet A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1624348754836-743503fe9445?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDgwOA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Cheese Burger",
+                            Price = 1250,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Description = "marhahús (medium), grillezett cheddar sajt, karamellizált hagyma, csemegeuborka, bacon, BBQ szósz A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1491960693564-421771d727d6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDg0Ng&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea BBQ burger",
+                            Price = 1400,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Description = "ketchup, karamellizált hagyma, vegán pogácsa, uborka, mustár A hamburger húspogácsák és a bucik nem tartalmaznak adalékanyagot és tartósítószert!",
+                            ImagePath = "https://images.unsplash.com/photo-1470053053191-43e7bd267838?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFtYnVyZ2VyfHx8fHx8MTYzMjY5MDg4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Trófea Burger vegán pogácsával",
+                            Price = 1250,
+                            RestaurantId = 11
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Description = "paradicsomszósz, mozzarella sajt, füstölt sajt, BBQ csirkehús, paradicsom, lila hagyma, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1618213957768-7789409b9dd8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTEy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "BBQ pizza (32cm)",
+                            Price = 2490,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Description = "paradicsomszósz, mozzarella sajt, feta sajt, hagyma, rukkola, paradicsom, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1516697073-419b2bd079db?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTQ0&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bruschetta pizza (32cm)",
+                            Price = 2390,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Description = "paradicsomszósz, mozzarella sajt, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1585505008861-a5c378857dcc?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkwOTc4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Margherita pizza (32cm)",
+                            Price = 2190,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Description = "paradicsomszósz, mozzarella sajt, zöld olívabogyó, paradicsom, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1589375890993-7b568c0b8b1c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDA4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Olívás margarita pizza (32cm)",
+                            Price = 2190,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Description = "paradicsomszósz, mozzarella sajt, sonka, kukorica, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1605478371310-a9f1e96b4ff4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDM4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Sonkás-gombás pizza (32cm)",
+                            Price = 2290,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Description = "paradicsomszósz, mozzarella sajt, szalámi, pepperoni, hagyma, Ajándék Xixo mojitoval (Pizzáink 100%-ban olasz alapanyagokból készülnek.)",
+                            ImagePath = "https://images.unsplash.com/photo-1589906493606-a6ca2a06078b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGl6emF8fHx8fHwxNjMyNjkxMDgy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Szalámis pizza (32cm)",
+                            Price = 2290,
+                            RestaurantId = 12
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Description = "zöldfűszeres gnocchi, zeller, kurkuma, shallot",
+                            ImagePath = "https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Y2hpY2tlbnx8fHx8fDE2MzI3NjQzNzU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Balzsamecetben marinált csirke",
+                            Price = 3550,
+                            RestaurantId = 13
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Description = "brokkoli, beluga lencse, édes-savanyú redukció, friss zöldfűszerek",
+                            ImagePath = "https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzY0NDYw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Lazac steak",
+                            Price = 4950,
+                            RestaurantId = 13
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Description = "grillezett füge, szója emulzió, retek",
+                            ImagePath = "https://images.unsplash.com/photo-1601565960311-8a7f4e1ab709?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGFwcmlrYXx8fHx8fDE2MzI3NjQ2ODg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vegán csőben sült kaliforniai paprika",
+                            Price = 2950,
+                            RestaurantId = 13
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Description = "(220 g), rukkola, grana padano d.o.p., koktélparadicsom",
+                            ImagePath = "https://images.unsplash.com/photo-1607198179219-cd8b835fdda7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzY0ODA2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Rib-eye",
+                            Price = 7650,
+                            RestaurantId = 13
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Description = "menta, spárga ragu, pecorino, narancs",
+                            ImagePath = "https://images.unsplash.com/photo-1613478881426-deeadee06d78?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWdncGxhbnR8fHx8fHwxNjMyNzY0OTg1&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Füstölt padlizsán tortelli",
+                            Price = 3250,
+                            RestaurantId = 13
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Description = "pirított pisztáciával, citromhéjas tejszínes udon tésztával",
+                            ImagePath = "https://images.unsplash.com/photo-1556269923-e4ef51d69638?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c3RlYWt8fHx8fHwxNjMyNzcwNjYx&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Beluga steak limoncelloval flambírozva",
+                            Price = 4390,
+                            RestaurantId = 14
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Description = "konyakos-libamájas mártással, tepertős burgonyapürével, szőlővel",
+                            ImagePath = "https://images.unsplash.com/photo-1504472607343-a7fac413b524?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhdGV8fHx8fHwxNjMyNzcwNzkx&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bivaly",
+                            Price = 3790,
+                            RestaurantId = 14
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Description = "Ahogy katalán chef barátunktól tanultuk",
+                            ImagePath = "https://images.unsplash.com/photo-1575932444877-5106bee2a599?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Q2hpY2tlbiBicmVhc3R8fHx8fHwxNjMyNzcwOTk4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Csirkemellből készült paella",
+                            Price = 2990,
+                            RestaurantId = 14
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Description = "rózsaborsos-citrusos mangó pürével, savoyai burgonyával",
+                            ImagePath = "https://images.unsplash.com/photo-1505253668822-42074d58a7c6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZHVjayxmb29kfHx8fHx8MTYzMjc3MTEzNA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Narancsos kacsa",
+                            Price = 3690,
+                            RestaurantId = 14
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Description = "ruccolás burgonyapürével, mentás mártással, toszkán zöldbabbal",
+                            ImagePath = "https://images.unsplash.com/photo-1514516345957-556ca7d90a29?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxwbGF0ZXx8fHx8fDE2MzI3NzEyNzk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vasvári zoltán féle konfitált báránycsülök",
+                            Price = 3990,
+                            RestaurantId = 14
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Description = "vadas, szalvétagombóc",
+                            ImagePath = "https://images.unsplash.com/photo-1516685125522-3c528b8046ee?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE4NjY&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Szarvasgerinc",
+                            Price = 6990,
+                            RestaurantId = 15
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Description = "bazsalikom, stracciatella (V)",
+                            ImagePath = "https://images.unsplash.com/photo-1460667450797-d71a56692010?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE4OTI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Paradicsom rizottó",
+                            Price = 4490,
+                            RestaurantId = 15
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Description = "szarvasgomba, tanyasi csirke/garnéla/bélszín",
+                            ImagePath = "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudCxmb29kfHx8fHx8MTYzMjc3MTY4MA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Házi tagliatelle",
+                            Price = 4690,
+                            RestaurantId = 15
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Description = "füstölt saláta, boquerones",
+                            ImagePath = "https://images.unsplash.com/photo-1504973960431-1c467e159aa4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzE5NzU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Tanyasi csirke",
+                            Price = 4990,
+                            RestaurantId = 15
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Description = "ertéscomb, csirkemáj, gomba,zöldségek - tejszínes-kapros habarással készül",
+                            ImagePath = "https://images.unsplash.com/photo-1574484284002-952d92456975?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI3NzIzOTc&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Legényfogó leves",
+                            Price = 1660,
+                            RestaurantId = 16
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Description = "sonka, főtt-füstölt tarja, téli szalámi és paprikás szalámi, baconszalonna, parasztmájas, füstölt kolbász, sajtok, főtt tojás, friss zöldségek ",
+                            ImagePath = "https://images.unsplash.com/photo-1432139509613-5c4255815697?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxmb29kfHx8fHx8MTYzMjc3MjY1OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Magyaros hidegtál",
+                            Price = 3000,
+                            RestaurantId = 16
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Description = "grillezett libamájjal és gyümölcsökkel",
+                            ImagePath = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Zm9vZCxwbGF0ZXx8fHx8fDE2MzI3NzI0ODA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Lávakövön sült pulykamell",
+                            Price = 3700,
+                            RestaurantId = 16
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Description = "roston bélszín, serpenyős cigánypecsenye, rántott csirkemell, kakastaréj, sült kockaburgonya, házi csalamádé",
+                            ImagePath = "https://images.unsplash.com/photo-1611315764615-3e788573f31e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZGlzaHx8fHx8fDE2MzI3NzI5ODg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Erdélyi fatányéros",
+                            Price = 4200,
+                            RestaurantId = 16
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Description = "üstölt zellerpüré, padron paprika, vargányagomba",
+                            ImagePath = "https://images.unsplash.com/photo-1626509653291-18d9a934b9db?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bWVhdCxwbGF0ZXx8fHx8fDE2MzI4MjM5MzM&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bikavéres marhapofa",
+                            Price = 4250,
+                            RestaurantId = 17
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Description = "szőlő chutney-val, dióval, házi brioche-sal",
+                            ImagePath = "https://images.unsplash.com/photo-1626200419199-391ae4be7a41?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjQwMTE&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Kacsamáj befőtt",
+                            Price = 2890,
+                            RestaurantId = 17
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Description = "füstös velőmajonézzel, savanyított hagymákkal",
+                            ImagePath = "https://images.unsplash.com/photo-1514516345957-556ca7d90a29?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8dGF0YXIsbWVhdHx8fHx8fDE2MzI4MjQwOTU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Angus marhatatár",
+                            Price = 2890,
+                            RestaurantId = 17
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Description = "parajlevél pestóval és sós dióval, aszalt paradicsommal",
+                            ImagePath = "https://images.unsplash.com/photo-1618163633808-dbd8a9f658ce?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cGFzdGF8fHx8fHwxNjMyODI0MTUz&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Házi hosszúmetélt",
+                            Price = 2490,
+                            RestaurantId = 17
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Description = "szezámmagos buci, marhahúspogácsa 1 db (13 dkg), hamburgerszósz, jégsaláta, csemege uborka, trappista sajt, pirított hagyma, bacon",
+                            ImagePath = "https://images.unsplash.com/photo-1623945359564-b8d01dd5cfe2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDMyNQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Taxi burger",
+                            Price = 1399,
+                            RestaurantId = 18
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Description = "szezámmagos buci, marhahús pogácsa 1 db (13 dkg), ketchup, jégsaláta, kígyóuborka, pirított hagyma, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1585238341267-1cfec2046a55?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDQxOQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Erős Anna",
+                            Price = 1399,
+                            RestaurantId = 18
+                        },
+                        new
+                        {
+                            Id = 89,
+                            Description = "szezámmagos buci, marhahúspogácsa (13 dkg-os), BBQ szósz, jégsaláta, paradicsom, füstölt sajtchips, cheddar sajt, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDUwMg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Rosti Burger",
+                            Price = 1599,
+                            RestaurantId = 18
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Description = "szezámmagos buci, marhahúspogácsa 2 db (13 dkg-os), BBQ szósz, lila hagyma, paradicsom, kígyóuborka, cheddar sajt, füstölt sajt, trappista sajt, bacon, jalapeno",
+                            ImagePath = "https://images.unsplash.com/photo-1561043433-9265f73e685f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YnVyZ2VyfHx8fHx8MTYzMjgyNDYwMQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Zátony Burger",
+                            Price = 1899,
+                            RestaurantId = 18
+                        },
+                        new
+                        {
+                            Id = 91,
+                            Description = "vaslapon sült pácolt karaj tejfölös, füstölt tarjás, savanyú uborkás, szalonnás raguval",
+                            ImagePath = "https://images.unsplash.com/photo-1605209971703-73c7ed7c923e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ4NzI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Favágó karaj",
+                            Price = 2800,
+                            RestaurantId = 19
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Description = "szaftos, vaslapon sült karaj fokhagymával, sült szalonnával",
+                            ImagePath = "https://images.unsplash.com/photo-1624174503860-478619028ab3?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ4OTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Kishuszáros karaj",
+                            Price = 2800,
+                            RestaurantId = 19
+                        },
+                        new
+                        {
+                            Id = 93,
+                            Description = "pirított kolbász, füstölt tarja, füstölt szalonna, vöröshagyma, savanyú uborka, tejföl",
+                            ImagePath = "https://images.unsplash.com/photo-1584932901306-a19fdf291cec?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cG9ya3x8fHx8fDE2MzI4MjQ5ODQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bádogos csülök",
+                            Price = 2900,
+                            RestaurantId = 19
+                        },
+                        new
+                        {
+                            Id = 94,
+                            Description = "spenót, spárga, sajt",
+                            ImagePath = "https://images.unsplash.com/photo-1467003909585-2f8a72700288?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZmlzaCxwbGF0ZXx8fHx8fDE2MzI4MjUwOTg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Besütött harcsa főszakács-módra",
+                            Price = 3600,
+                            RestaurantId = 19
+                        },
+                        new
+                        {
+                            Id = 95,
+                            Description = "roston sült libamáj, gomba, egri barnamártás",
+                            ImagePath = "https://images.unsplash.com/photo-1598511726623-d2e9996892f0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8bG9pbnx8fHx8fDE2MzI4MjUxMzI&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bélszínjava egri módra",
+                            Price = 5800,
+                            RestaurantId = 19
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Description = "Joghurtból készült házi krémsajt, marinált paprikával és sült articsókával, friss pitával tálalva",
+                            ImagePath = "https://images.unsplash.com/photo-1565720490528-48e5be3d6a1f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudCxmb29kfHx8fHx8MTYzMjgyNTI2OQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Labane",
+                            Price = 1890,
+                            RestaurantId = 20
+                        },
+                        new
+                        {
+                            Id = 97,
+                            Description = "Jemeni fűszerekkel főtt csirkeleves tépett csirkecombbal, citrommal és friss korianderrel",
+                            ImagePath = "https://images.unsplash.com/photo-1469307517101-0b99d8fb0c33?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjU0OTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Jemeni Csirkeleves",
+                            Price = 1690,
+                            RestaurantId = 20
+                        },
+                        new
+                        {
+                            Id = 98,
+                            Description = "Minden hummusz tálat friss, házi hummusszal, csicseriborsóval, tahinivel, petrezselyemmel és olívaolajjal tálalunk, mellé friss grillezett pitát adunk. Kérheted zhug csipős szósszal is!",
+                            ImagePath = "https://images.unsplash.com/photo-1622040806062-27ae4deb4a40?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aHVtdXN8fHx8fHwxNjMyODI1NTcy&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Humusz Tahini tál",
+                            Price = 1890,
+                            RestaurantId = 20
+                        },
+                        new
+                        {
+                            Id = 99,
+                            Description = "Két fajta lencséből készült krémleves, sült padlizsán kockákkal és lime-chili mogyoróval",
+                            ImagePath = "https://images.unsplash.com/photo-1547308283-b74183c15032?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c291cHx8fHx8fDE2MzI4MjU1MTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Vegán lencsekrémleves",
+                            Price = 1590,
+                            RestaurantId = 20
+                        },
+                        new
+                        {
+                            Id = 100,
+                            Description = "Házi recept alapján készített, darált marha pogácsa",
+                            ImagePath = "https://images.unsplash.com/photo-1625937282844-4a0cb4665820?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YmVlZnx8fHx8fDE2MzI4MjU1OTk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                            IsDeleted = false,
+                            Name = "Bárányzsíron sült petrezselymes marha kebab",
+                            Price = 3590,
+                            RestaurantId = 20
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Invoice", b =>
@@ -174,6 +1603,162 @@ namespace IRestaurant.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Invoice");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderId = 1,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OrderId = 2,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OrderId = 3,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            OrderId = 4,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            OrderId = 5,
+                            RestaurantName = "Princess Bakery&Bistro Örs vezér tér",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            OrderId = 6,
+                            RestaurantName = "Twentysix Budapest",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            OrderId = 7,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            OrderId = 8,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            OrderId = 9,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            OrderId = 10,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            OrderId = 11,
+                            RestaurantName = "Princess Bakery&Bistro Örs vezér tér",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            OrderId = 12,
+                            RestaurantName = "Twentysix Budapest",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            OrderId = 13,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            OrderId = 14,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            OrderId = 15,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            OrderId = 16,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            OrderId = 17,
+                            RestaurantName = "Princess Bakery&Bistro Örs vezér tér",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            OrderId = 18,
+                            RestaurantName = "Twentysix Budapest",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            OrderId = 19,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            OrderId = 20,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Carson Alexander"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            OrderId = 21,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Bács Imre"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            OrderId = 22,
+                            RestaurantName = "Trófea Grill Étterem - Király",
+                            UserFullName = "Bács Imre"
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Order", b =>
@@ -201,6 +1786,184 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Order");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2021, 10, 6, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(4405),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 9, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(4918),
+                            Status = 0,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2021, 10, 5, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5166),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 7, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5176),
+                            Status = 1,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2021, 10, 5, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5180),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 6, 19, 49, 57, 394, DateTimeKind.Local).AddTicks(5182),
+                            Status = 2,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2021, 10, 1, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5195),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 3, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5197),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2021, 10, 6, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5200),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 8, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5202),
+                            Status = 0,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2021, 10, 6, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5205),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 7, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5207),
+                            Status = 0,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5209),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 11, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5212),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2021, 9, 1, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5214),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 3, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5217),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2021, 8, 27, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5219),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 5, 2, 49, 57, 394, DateTimeKind.Local).AddTicks(5221),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2021, 8, 24, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5224),
+                            PreferredDeliveryDate = new DateTime(2021, 8, 26, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5226),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2021, 8, 17, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5229),
+                            PreferredDeliveryDate = new DateTime(2021, 8, 22, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5231),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2021, 8, 12, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5234),
+                            PreferredDeliveryDate = new DateTime(2021, 8, 15, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5236),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2021, 8, 7, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5238),
+                            PreferredDeliveryDate = new DateTime(2021, 8, 8, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5241),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2021, 8, 3, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5243),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 4, 3, 49, 57, 394, DateTimeKind.Local).AddTicks(5245),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2021, 7, 29, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5248),
+                            PreferredDeliveryDate = new DateTime(2021, 7, 31, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5250),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2020, 9, 27, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5253),
+                            PreferredDeliveryDate = new DateTime(2020, 10, 1, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5255),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2020, 9, 16, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5257),
+                            PreferredDeliveryDate = new DateTime(2020, 9, 20, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5260),
+                            Status = 3,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2020, 9, 9, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5262),
+                            PreferredDeliveryDate = new DateTime(2020, 9, 11, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5264),
+                            Status = 4,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2020, 9, 4, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5267),
+                            PreferredDeliveryDate = new DateTime(2020, 9, 6, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5269),
+                            Status = 4,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2019, 11, 1, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5272),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 7, 12, 49, 57, 394, DateTimeKind.Local).AddTicks(5274),
+                            Status = 4,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2021, 10, 5, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5277),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 11, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5279),
+                            Status = 0,
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2020, 9, 23, 16, 49, 57, 394, DateTimeKind.Local).AddTicks(5282),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 21, 4, 49, 57, 394, DateTimeKind.Local).AddTicks(5284),
+                            Status = 3,
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.OrderFood", b =>
@@ -229,6 +1992,712 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderFood");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 3,
+                            FoodId = 1,
+                            OrderId = 1,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 2,
+                            FoodId = 2,
+                            OrderId = 1,
+                            Price = 3650
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 1,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 1,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 1,
+                            FoodId = 1,
+                            OrderId = 2,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Amount = 2,
+                            FoodId = 2,
+                            OrderId = 2,
+                            Price = 3650
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 2,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 2,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 1,
+                            FoodId = 5,
+                            OrderId = 3,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 3,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 3,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 3,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Amount = 2,
+                            FoodId = 7,
+                            OrderId = 4,
+                            Price = 1400
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 4,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 4,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 4,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Amount = 3,
+                            FoodId = 9,
+                            OrderId = 5,
+                            Price = 2490
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Amount = 2,
+                            FoodId = 10,
+                            OrderId = 5,
+                            Price = 2390
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Amount = 4,
+                            FoodId = 11,
+                            OrderId = 5,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Amount = 1,
+                            FoodId = 12,
+                            OrderId = 5,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Amount = 1,
+                            FoodId = 15,
+                            OrderId = 6,
+                            Price = 3550
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Amount = 2,
+                            FoodId = 16,
+                            OrderId = 6,
+                            Price = 4950
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Amount = 1,
+                            FoodId = 17,
+                            OrderId = 6,
+                            Price = 2950
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Amount = 2,
+                            FoodId = 18,
+                            OrderId = 6,
+                            Price = 7650
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Amount = 3,
+                            FoodId = 1,
+                            OrderId = 7,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Amount = 2,
+                            FoodId = 3,
+                            OrderId = 7,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 7,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Amount = 1,
+                            FoodId = 5,
+                            OrderId = 7,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Amount = 1,
+                            FoodId = 1,
+                            OrderId = 8,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Amount = 1,
+                            FoodId = 2,
+                            OrderId = 8,
+                            Price = 3650
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Amount = 2,
+                            FoodId = 3,
+                            OrderId = 8,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Amount = 1,
+                            FoodId = 8,
+                            OrderId = 8,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Amount = 2,
+                            FoodId = 5,
+                            OrderId = 9,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Amount = 1,
+                            FoodId = 6,
+                            OrderId = 9,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Amount = 2,
+                            FoodId = 3,
+                            OrderId = 9,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 9,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Amount = 4,
+                            FoodId = 7,
+                            OrderId = 10,
+                            Price = 1400
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 10,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 10,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Amount = 3,
+                            FoodId = 4,
+                            OrderId = 10,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Amount = 1,
+                            FoodId = 9,
+                            OrderId = 11,
+                            Price = 2490
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Amount = 1,
+                            FoodId = 10,
+                            OrderId = 11,
+                            Price = 2390
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Amount = 1,
+                            FoodId = 11,
+                            OrderId = 11,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Amount = 1,
+                            FoodId = 12,
+                            OrderId = 11,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Amount = 1,
+                            FoodId = 15,
+                            OrderId = 12,
+                            Price = 3550
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Amount = 3,
+                            FoodId = 16,
+                            OrderId = 12,
+                            Price = 4950
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Amount = 1,
+                            FoodId = 17,
+                            OrderId = 12,
+                            Price = 2950
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Amount = 1,
+                            FoodId = 18,
+                            OrderId = 12,
+                            Price = 7650
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Amount = 5,
+                            FoodId = 1,
+                            OrderId = 13,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 13,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 13,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Amount = 2,
+                            FoodId = 5,
+                            OrderId = 13,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Amount = 1,
+                            FoodId = 1,
+                            OrderId = 14,
+                            Price = 4750
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Amount = 5,
+                            FoodId = 2,
+                            OrderId = 14,
+                            Price = 3650
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Amount = 2,
+                            FoodId = 3,
+                            OrderId = 14,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Amount = 1,
+                            FoodId = 8,
+                            OrderId = 14,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Amount = 2,
+                            FoodId = 5,
+                            OrderId = 15,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 15,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Amount = 2,
+                            FoodId = 3,
+                            OrderId = 15,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Amount = 2,
+                            FoodId = 4,
+                            OrderId = 15,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Amount = 1,
+                            FoodId = 7,
+                            OrderId = 16,
+                            Price = 1400
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 16,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Amount = 1,
+                            FoodId = 3,
+                            OrderId = 16,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Amount = 3,
+                            FoodId = 4,
+                            OrderId = 16,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 65,
+                            Amount = 6,
+                            FoodId = 9,
+                            OrderId = 17,
+                            Price = 2490
+                        },
+                        new
+                        {
+                            Id = 66,
+                            Amount = 4,
+                            FoodId = 10,
+                            OrderId = 17,
+                            Price = 2390
+                        },
+                        new
+                        {
+                            Id = 67,
+                            Amount = 2,
+                            FoodId = 11,
+                            OrderId = 17,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Amount = 2,
+                            FoodId = 12,
+                            OrderId = 17,
+                            Price = 2190
+                        },
+                        new
+                        {
+                            Id = 69,
+                            Amount = 2,
+                            FoodId = 15,
+                            OrderId = 18,
+                            Price = 3550
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Amount = 2,
+                            FoodId = 16,
+                            OrderId = 18,
+                            Price = 4950
+                        },
+                        new
+                        {
+                            Id = 71,
+                            Amount = 2,
+                            FoodId = 17,
+                            OrderId = 18,
+                            Price = 2950
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Amount = 2,
+                            FoodId = 18,
+                            OrderId = 18,
+                            Price = 7650
+                        },
+                        new
+                        {
+                            Id = 73,
+                            Amount = 1,
+                            FoodId = 5,
+                            OrderId = 19,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Amount = 1,
+                            FoodId = 6,
+                            OrderId = 19,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 75,
+                            Amount = 1,
+                            FoodId = 3,
+                            OrderId = 19,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Amount = 1,
+                            FoodId = 4,
+                            OrderId = 19,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 77,
+                            Amount = 3,
+                            FoodId = 7,
+                            OrderId = 20,
+                            Price = 1400
+                        },
+                        new
+                        {
+                            Id = 78,
+                            Amount = 3,
+                            FoodId = 6,
+                            OrderId = 20,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 79,
+                            Amount = 3,
+                            FoodId = 3,
+                            OrderId = 20,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 80,
+                            Amount = 3,
+                            FoodId = 4,
+                            OrderId = 20,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 81,
+                            Amount = 2,
+                            FoodId = 5,
+                            OrderId = 21,
+                            Price = 1090
+                        },
+                        new
+                        {
+                            Id = 82,
+                            Amount = 4,
+                            FoodId = 6,
+                            OrderId = 21,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 83,
+                            Amount = 4,
+                            FoodId = 3,
+                            OrderId = 21,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Amount = 4,
+                            FoodId = 4,
+                            OrderId = 21,
+                            Price = 900
+                        },
+                        new
+                        {
+                            Id = 85,
+                            Amount = 1,
+                            FoodId = 7,
+                            OrderId = 22,
+                            Price = 1400
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Amount = 2,
+                            FoodId = 6,
+                            OrderId = 22,
+                            Price = 1250
+                        },
+                        new
+                        {
+                            Id = 87,
+                            Amount = 1,
+                            FoodId = 3,
+                            OrderId = 22,
+                            Price = 3700
+                        },
+                        new
+                        {
+                            Id = 88,
+                            Amount = 2,
+                            FoodId = 4,
+                            OrderId = 22,
+                            Price = 900
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Restaurant", b =>
@@ -271,6 +2740,228 @@ namespace IRestaurant.DAL.Migrations
                         .HasFilter("[OwnerId] IS NOT NULL");
 
                     b.ToTable("Restaurant");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DetailedDescription = "KING'S BUFFET Kft. Fix áron fogyaszthat a több mint 100 féle ételt felvonultató svédasztalunkról és ihat finom borokat, pezsgőt, csapolt sört, szénsavas és rostos üdítőket, ásványvizet és kávét. Használja ki a svédasztalos rendszer előnyeit és válogasson saját ízlése szerint a különböző ínyencségek között! Bőséges kínálatunkban a hideg és meleg előételektől kezdve levesek és főételek sokaságán át a desszertekig számtalan fogás megtalálható. A hagyományos magyaros ételek kedvelői éppúgy megtalálják kedvenceiket, mint a reformkonyha hívei és a vegetáriánusok. A svédasztal részeként tizenkét különböző pácban friss nyers húsok és zöldségek találhatók, amelyeket szakácsaink az Ön választása alapján látványkonyhánkban készítenek el. Kellemes hangulatban rendezhetik meg családi, baráti és céges összejöveteleiket vagy tölthetnek el egy egyszerű hétköznapi ebédet is. Várjuk Önöket szeretettel!",
+                            ImagePath = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI2ODY1ODM&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Trófea Grill Étterem - Király",
+                            OwnerId = "512dac39-94d2-429a-a258-7740ca64c50f",
+                            ShortDescription = "Olasz, Pizza, Hamburger, Amerikai, Magyaros",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DetailedDescription = "Mindig friss péksütemények, gondos kezek által, minőségi alapanyagokból! Inditsd nálunk napjaidat, mert egy Princess mindig útba esik!",
+                            ImagePath = "https://images.unsplash.com/photo-1543007631-283050bb3e8c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI2ODcwNDE&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Princess Bakery&Bistro Örs vezér tér",
+                            OwnerId = "bc803e89-e8c0-4c5a-9467-e94cd5dd0300",
+                            ShortDescription = "Pizza, Pékség",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DetailedDescription = "A Twentysix Budapest egy hatalmas ősoázis tele növénnyel a belváros szívében, egy nagyon zöld, botanikus, tér, ahol a gasztronómia, a természet és a felelős vendéglátás filozófiája találkozik és kel életre a különböző terekben: GARDEN° – mediterrán étterem, SHOP° – no waste kávézó és csomagolásmentes delikátesz bolt, STUDIO° – jógastúdió és HOUSE° – lakásstúdió és rendezvényterem. Budapest legzöldebb kertje, ahol nincsenek évszakok, csak az igazi, mediterrán nyár, az év minden napján. Egy hely, ahol a természet, a gasztronómia és a tudatos lét találkozik.",
+                            ImagePath = "https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI3NjMxNzc&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Twentysix Budapest",
+                            OwnerId = "8480bf9e-9553-47b7-a57b-474715139a83",
+                            ShortDescription = "Mediterrán, Olasz , Nemzetközi, Közép Keleti",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DetailedDescription = "A söröző-étterem a Csokonai Színházzal szemben található, klimatizált pincehelyiség, ahol különböző méretű és hangulatú termek állnak rendelkezésre csoportok fogadsára, rendezvények lebonyolítására. Elkülönített, nemdohányzó helyiség is szolgálja a vendégek kényelmét. Az ételválasztékban nemzetközi, és hagyományos magyaros ételspecialitások gazdag kínálatát vonultatja fel az étterem. ",
+                            ImagePath = "https://images.unsplash.com/photo-1514933651103-005eec06c04b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI3NjM1MDM&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Csokonai Étterem",
+                            OwnerId = "95810441-4970-488c-afc7-d91a07256c76",
+                            ShortDescription = "Terasz és kert, Privát helyiség, Gyermekbarát, Elvitel",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DetailedDescription = "Aki ismer minket, tudja, hogy órákig tudunk mesélni az IKON-ról. De ha csak egy mondatunk van rá, tömören így fogalmazunk: fanatikus gasztro-műhely. Nálunk mindenki őrült egy kicsit, és bár különbözünk, a minőség iránti elkötelezettségünk eggyé kovácsol minket. Nem elégszünk meg a jóval, a tökéletességre törekszünk, hogy a legjobb helyi alapanyagokból, a legnagyobb szakértelemmel és állandó minőségben kerüljenek vendégeink elé az ételek. A friss nyersanyagokra, a modern technológiára helyezzük a hangsúlyt, és miközben rehabilitáljuk az elfeledett vagy mellőzött alapanyagokat, engedjük, hogy távoli országok hatásai is megérintsenek. Így kerülhet vörös márna, lazac és kagyló az étlapunkra. Az étterem berendezésének koncepciója is ezen alapul, ahol a hagyományos eleganciát ötvözzük otthonos, trendi elemekkel.",
+                            ImagePath = "https://images.unsplash.com/photo-1587574293340-e0011c4e8ecf?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI3NjM4MzY&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "IKON Restaurant Debrecen",
+                            OwnerId = "c5e189f0-7656-4304-b963-1581f5ecf4fb",
+                            ShortDescription = "Fúziós konyha, Terasz és kert, Gyermekbarát",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DetailedDescription = "A Kulacs Csárda Panzió Egerben, a tufába vájt borospincék sokaságáról híres Szépasszonyvölgy szívében helyezkedik el. Pince mulatót 1986-ban nyitották, melyet igazi magyaros ízei és jó borai miatt egyre többen kerestek meg az elmúlt évek alatt, így folyamatosan újabb és újabb pinceágakkal kellett bővíteni csárdát. A történelmi hangulatú pincemulató befogadóképessége 350 fő. Öt boltíves terme légkondicionált, hagyományőrzőén, ízlésesen berendezett, kitűnően alkalmas egyéni és csoportos vendégek kulturált kiszolgálására. Tavasztól őszig az országban egyedülálló 150 fő befogadására alkalmas szőlőlugassal fedett kerthelyiség is megkóstolhatják hal, vad, szárnyas ételeinken túl magyaros ételkülönlegességeinket is. Az egri borvidék legjobb borászainak széles kínálata mellett megízlelhetik kimért termelői borokat is. A vendégek jó hangulatáról a csárda virtuóz cigányzenekara gondoskodik.",
+                            ImagePath = "https://images.unsplash.com/photo-1569096651661-820d0de8b4ab?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI3NjU1OTg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Kulacs Csárda",
+                            OwnerId = "3eba4364-6a33-459c-9871-5823a9aee62a",
+                            ShortDescription = "Élőzene, Ebéd, Csoportos rendezvény, Üzleti ebéd, Vacsora",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DetailedDescription = "A Macok Bisztró és Borbár könnyed és fiatalos lendületű hely, ahol kulináris élményt kínálunk igényes bisztró stílusban, helyi borászok bemutatásával és olyan borkülönlegességekkel, amelyek már csak a gyűjtők pincéjében találhatók meg. Az étterem a történelmi belvárosban az egri Vár bejáratánál helyezkedik el, a teraszon üldögélve a megelevenedő történelem részeseivé válhatunk.",
+                            ImagePath = "https://images.unsplash.com/photo-1416453072034-c8dbfa2856b5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjI3ODk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Macok Bisztró és Borbár",
+                            OwnerId = "765c13fb-7f8c-4474-afb5-d3a9e72feef3",
+                            ShortDescription = "Borbár, Étterem, Terasz és kert",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DetailedDescription = "Hamburgerező Szegeden, a Kálvária téren. Ha bármilyen kérdésed van rendelés menetével, a kiszállítással vagy a termékeinkkel kapcsolatban, kérlek, keress minket a lenti elérhetőségeinken!",
+                            ImagePath = "https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjMzNTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Szegedi rostlaposok",
+                            OwnerId = "7236dae3-7bad-4fe6-bb18-d13ff391939d",
+                            ShortDescription = "Burgerek, 5000 Ft alatt",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DetailedDescription = "Ha Szegeden járva egy igazi magyaros kulináris kalandozásban szeretnénk részt venni, akkor bizony a Vendéglő a Régi Hídhoz ránk vár. Az étteremben magyar népies dekoráció, a szegedi paprikafüzérek és a kedves személyzet biztosít minket arról, hogy jó helyen járunk. Az étterem belsőhöz és a magyar tradicionális ételekhez illő kreatív teríték is megfűszerezi a hangulatot. Fenséges ízek, csodálatos adagokban, gusztusos terítéssel, baráti árakon.",
+                            ImagePath = "https://images.unsplash.com/photo-1544609499-d9b16fe50243?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjMzOTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Vendéglő A Régi Hídhoz",
+                            OwnerId = "5075d4b9-0ba6-4811-84ff-fed147c9c09a",
+                            ShortDescription = "Magyar konyha, Terasz és kert, Fizető parkoló, Gyermekbarát, Elvitel",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DetailedDescription = "A mazel tov étterem és bár 2014. Július végén nyitott egy igazi mediterrán hangulatú helyként, melyet évszaktól függetlenül szeretnénk megőrizni nyáron nyitott, télen pedig fűtött kerthelységgel. A mazel tov célja működése óta egy nyitott szemléletű, gasztrónómiai és kulturális szempontból meghatározó, fesztelen hangulatú origó megteremtése, ahol délutántól zárásig várnak szeretettel mindenkit, aki betér és kikapcsolódni vágyik, legyen szó kulturális vagy kulináris élvezetekről, vagy épp baráti fröccsözésekről. A mazel tov ötlete az adottságok és a számunkra fontos gondolatok kiemélésén alapszik; a hangulatos, városi kertek, a nyitott szemlélet valamint a sokszínű mediterrán konyha összekapcsolásán, ötvözetén. Az akácfa utcában nemrég nyílt mazel tov az első olyan szórakozókert, amely az ötödik kerületi magas szintű gasztro-vendéglátó infrastruktúrát az autentikus, romkocsmaközeli hetedik kerületbe hivatott beültetni, így erősítve a sokszínűséget és az új színt a budapesti palettán.",
+                            ImagePath = "https://images.unsplash.com/photo-1603055021980-7a6e8abd9bd5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjM2MjQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Mazel Tov",
+                            OwnerId = "e1eaafad-b9f7-4668-9efd-d8c4418c39ca",
+                            ShortDescription = "Zsidó konyha, Bár ételek, Angolul beszélünk, WIFI, Gyermekbarát, Elvitel",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DetailedDescription = "A High Note SkyBar Budapest egyik legexkluzívabb helyszíne és egyben a város egyetlen, egész évben nyitva tartó tetőterasza. A friss, laza, új szemlélet a garancia rá, hogy itt nem csak a körpanoráma nyújt feledhetetlen élményt. Vendégeinket évszakonként megújuló koktélkínálattal és barfood-választékkal várjuk! Amennyiben szeretne ellátogatni hozzánk, kérjük, minél hamarabb foglalja le asztalát, hogy garantálni tudjuk az ülőhelyet Önöknek!",
+                            ImagePath = "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjU4NzY&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "High Note SkyBar",
+                            OwnerId = "5f7e27c3-9398-4cd3-977d-dae625124808",
+                            ShortDescription = "Bár ételek, Tapas, Sütemények, Terasz és kert, Angolul beszélünk, Fűtött terasz, Közel tömegközlekedéshez, Légkondicionálás",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DetailedDescription = "Borús idő, derűs dél-amerikai hangulat - esténként már az étterem belső terében terítjük az asztalokat, öt órától ma is Tiétek a hacienda! ",
+                            ImagePath = "https://images.unsplash.com/photo-1533777419517-3e4017e2e15a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjYwNTc&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Tereza",
+                            OwnerId = "93f49281-b3a5-41b5-972c-ff5910f26e56",
+                            ShortDescription = "Mexikói konyha, Terasz és kert, Angolul beszélünk",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            DetailedDescription = "A Stand25 Szulló Szabina és Széll Tamás lehető legkomolyabban vett örömkonyhája a a város budai oldalán, sétatávolságra a Lánchídtól és a Váralagúttól. A Stand25 alig egy évvel a nyitása után Bib Gourmand minősítést szerzett. Izgalmas kitérő a séfek számára a fine dining világából, ahol csupán egyetlen szabály van: a minőségben és az alapanyagban nem ismerni kompromisszumot. Szabad magyar konyha, egy laza, barátságos hangulatú bisztróban, ahol a Csahók Ibolya vezette szervíz ugyanolyan törődéssel kíséri végig a vendéget, mint egy csúcsétteremben, csak sokkal közvetlenebb stílusban.",
+                            ImagePath = "https://images.unsplash.com/photo-1485686531765-ba63b07845a7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjYyMjc&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Stand25 Bisztró",
+                            OwnerId = "4e0a018f-ca12-448e-bda9-67ac1fce5a53",
+                            ShortDescription = "Magyar konyha, Bisztró, Ebéd, Alkalmas üzleti tárgyalásokra, Vacsora",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 14,
+                            DetailedDescription = "Egy gasztronómiai szakember 1839-ben elhangzott mondatát idézve, az olasz konyha meghatározó alapanyaga a paradicsom. A zseniális ötlet, hogy a paradicsomot hozzáadják a tésztához és a pizzához, nemcsak a nápolyiak több generációját tette boldoggá, hanem mindenkit, aki szereti és értékeli az olasz konyhát. Ezért is lett az étterem neve a Pomo D'oro, amely ebben a formában aranyalmát egyben írva, pedig paradicsomot jelent. Az étterem konyhafőnöke, Rosario az igazi tradicionális ételek mellett saját receptgyűjteményéből is rengeteg fogást elkészít. Híresek a vendégtérben készülő ételek, melyek nemcsak látványban nyűgözik le a vendégeket, de aki egyszer megkóstolta, az ízükre is sokáig emlékszik. Nap mint nap új ételekkel várja az étterem a vendégeit, hiszen valami érdekességet, kuriózumot mindig rejt a kínálatuk. Legyenek azok ritkán fellelhető gombák, friss halkülönlegességek vagy akár az évszakhoz igazodó idény zöldségek.",
+                            ImagePath = "https://images.unsplash.com/photo-1543007630-9710e4a00a20?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjY0NjY&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Trattoria Pomo D'Oro",
+                            OwnerId = "77d8c466-d2a0-44cb-8a22-a228b6218f23",
+                            ShortDescription = "Mediterrán, Olasz, Halételek, Pizza, Tengeri ételek, Tészta, Hús ételek",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 15,
+                            DetailedDescription = "A Byblos Budapest egy libanoni étterem, mely a keleti és a mediterrán konyha házasságát képviseli. Erősen támaszkodik mind a hagyományos, mind a helyi alapanyagokra. A klasszikus és modern módszerek alkalmazásával ételeink bemutatják a Levantine-i konyha különlegességeit és ízét. A menü igazi utazás a mediterrán és a keleti ízek között. Byblos Budapest családias légkörben kínálja széles választékát a vegán ételeknek, melyek kizárólagosan halal forrásból származnak.",
+                            ImagePath = "https://images.unsplash.com/photo-1581954548122-4dff8989c0f7?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjY3OTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Byblos Budapest",
+                            OwnerId = "5b944a67-5751-423f-89fb-f0c4f0ace3fb",
+                            ShortDescription = "Arab, Libanoni, Halal, Tengeri ételek, Barbeque",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 16,
+                            DetailedDescription = "68 év után ismét megnyílt az egykori kertvendéglő Zuglóban. A múlt században Borház néven működő családi vendéglő, ma újra családi vállalkozás. Mint akkor, ma is az ősfák árnyékában hűsölhetünk, italozhatunk, falatozhatunk és megfeledkezhetünk a rohanó mindennapokról. Élvezhetjük a díjnyertes olasz kézműves kávéból készült különlegességeket, magyar kézműves csapolt söröket és a bisztró konyha remekeit.",
+                            ImagePath = "https://images.unsplash.com/photo-1613274554329-70f997f5789f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjY5Mzk&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "A KERT Bisztro",
+                            OwnerId = "96494a5b-f58d-44dd-8428-6543ef5e5bd7",
+                            ShortDescription = "Magyar, Nemzetközi, Halételek, Tatár steak, Egészséges, Hús ételek",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 17,
+                            DetailedDescription = "A magányos sütés és a titkos kísérletezés ideje lejárt, Franziska csodálatos otthonra lelt.\nTermészetes továbblépés ez, hiszen Franziska szerint a vendéglátásban rejtőzik valami igazi varázslat: a hozzávalók aprólékos kiválasztásában, egy hangulat térbe való átültetésében, egy maradandó íz létrehozásában, a régi könyvekből merített inspirációkban és természetesen egy közösség megteremtésében. \nMert azt szeretnénk, ha nálunk kapnátok fel reggel egy gőzölgő specialty kávét vagy egy friss életerő turmixot, harapnátok egyet mellé a még melegen roppanó szendvicsből, vagy ha végre egyszer igazán hosszan tarthatna a reggeli, kiélvezve a legcsodásabb étkezés minden percét...\nPersze minden a megszokott Franziska desszertekkel körítve, örökre belefeledkezve a kókusz, a datolya, a mandula vagy a pisztácia aromáinak bonyolult árnyalataiba. \nGyertek és legyetek a vendégeink, szeretettel várunk!",
+                            ImagePath = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4MjczNjU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Franziska",
+                            OwnerId = "5c55f164-cb41-4453-a473-120af44e3493",
+                            ShortDescription = "Kávézó, Étterem, Rendelhető ételek, Egészséges, Sütemények",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 18,
+                            DetailedDescription = "2008-ban épült fel egy új szálloda (Hotel Castle Garden) a Budai Vár tövében a Bécsi Kapu lábánál, melynek részeként megnyílt a Bonfini Kert Étterem. \nAz akkori üzemeltetők szemlélete eltért a mi elképzelésünktől, amit 2011 nyara óta próbálunk eljuttatni a köztudatba, immáron Riso Ristorante & Terrace néven. A ’Terrace’ szó nem hiába került bele az elnevezésbe, hiszen a vendégek valóban úgy érezhetik, hogy egy másik világba, idilli környezetbe csöppentek, elég helyet foglalni a buja zöld növényzettel körülölelt terasz asztalainál. A kerthelyiség szinteltolásos építészeti kialakítása, a felső részen helyet kapott grillkonyha, a kényelmesen és tágasan elhelyezett bútorzat és a minden igényt kielégítő gyermekjátszótér intim és egyben otthonos hangulatot teremt. \nTermészetesen a szép terasz és a vidám friss érzést keltő belső tér kevés lenne a vendégek megnyeréséhez, de a nagy részt tradicionális olasz és hazai ízek mellett széles rizottóválaszték, házi tészták és kemencében sült pizza is szerepel a kínálatban!",
+                            ImagePath = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4Mjc1NTQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Riso Ristorante & Terrace",
+                            OwnerId = "27410ef4-fa83-45cd-872d-d350042dd8e4",
+                            ShortDescription = "Mediterrán, Terasz és kert, Ingyenes parkolás, WIFI, Gyermekbarát, Elvitel",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 19,
+                            DetailedDescription = "Akademia Italia egy itáliai gasztronómiai központ Budapest szívében, a Szent István Bazilika tövében. Három az egyben: minőségi olasz étterem, autentikus delikátesz bolt és főzőiskola egy helyen. Az étterem várja mindazokat, akik az olasz konyha minőségi, kizárólag eredetvédett alapanyagaiból készülő fogásait keresik; azokat is, akik egy darab focacciáért érkeznek; de azokat is, akik autentikus olasz hozzávalókat vásárolnának egy nagyszabású, többfogásos családi vacsorához. Várják a munka előtt csak úgy betérő vendégeket egy tökéletes olasz espressóra, hogy jól induljon a napjuk; valamint azokat is, akik esetleg szeretnének belemélyedni a tortelloni-készítés rejtelmeibe a főzőiskola keretein belül.",
+                            ImagePath = "https://images.unsplash.com/photo-1602748828300-2843df3b3923?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4Mjc2NjU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Akademia Italia",
+                            OwnerId = "acd5d503-90e3-475c-b700-8e96fbea9e60",
+                            ShortDescription = "Olasz, Bár ételek, Halételek, Pizza, Tengeri ételek, Tészta",
+                            ShowForUsers = true
+                        },
+                        new
+                        {
+                            Id = 20,
+                            DetailedDescription = "Egy cseppnyi hangulat Budapest szívében. Hangulat egy kávéra, egy finom pohár borra, egy könnyű ebédre, vagy egy vacsorára. A legfrissebb minőségi alapanyagok,gazdag íz választék, igazi vendégszeretet. Budapest legszebb kertjében, mely a téli hidegben fűtött pavillonban idézi fel bennűnk egy meghitt télikert hangulatát",
+                            ImagePath = "https://images.unsplash.com/photo-1600184894885-4066d2b92fda?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=900&ixid=MnwxfDB8MXxyYW5kb218MHx8cmVzdGF1cmFudHx8fHx8fDE2MzI4Mjc4OTg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=1600",
+                            IsOrderAvailable = true,
+                            Name = "Pavillon de Paris Francia Étterem",
+                            OwnerId = "4422d2ba-934c-4899-9195-d9872d1b4c63",
+                            ShortDescription = "Angol, Francia, Terasz és kert, Angolul beszélünk, Fűtött terasz, Németül beszélünk, WIFI, Ebéd menü",
+                            ShowForUsers = true
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.Review", b =>
@@ -309,6 +3000,248 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Review");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2021, 8, 7, 16, 49, 57, 390, DateTimeKind.Local).AddTicks(7288),
+                            Description = "Ízletes fogások, kiváló kiszolgálás.",
+                            Rating = 5.0,
+                            RestaurantId = 1,
+                            Title = "Nagyon ajánlom",
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3020),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
+                            Rating = 4.5,
+                            RestaurantId = 1,
+                            Title = "Remek hely",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3054),
+                            Description = "Kellemes hely. Olyan hely, ahol a legjobb ételek és borok mellett önfeledten beszélgethetsz barátaiddal . Az alaphangszint (vagy inkább zaj) kicsit szokatlan lehet, de viszonylag könnyen hozzá lehet szokni. A felszolgálás ugyanolyan fesztelen, mint maga a hely. ",
+                            Rating = 4.2000000000000002,
+                            RestaurantId = 2,
+                            Title = "Kellemes hely",
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3059),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
+                            Rating = 4.5,
+                            RestaurantId = 2,
+                            Title = "Remek hely",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2021, 8, 17, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3062),
+                            Description = "Itt az étkezés nem kizárólag étkezés, sokkal inkább egy különleges szertartás. A kiszolgálás másodpercre pontosan kiszámolt, mérnöki pontosságú.",
+                            Rating = 4.7000000000000002,
+                            RestaurantId = 3,
+                            Title = "Több mint étkezés",
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3065),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
+                            Rating = 4.2000000000000002,
+                            RestaurantId = 3,
+                            Title = "Remek hely",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3068),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
+                            Rating = 4.5,
+                            RestaurantId = 10,
+                            Title = "Kiváló ár-érték arány",
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2021, 9, 6, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3071),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
+                            Rating = 4.0999999999999996,
+                            RestaurantId = 10,
+                            Title = "Remek hely",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3074),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
+                            Rating = 4.0,
+                            RestaurantId = 11,
+                            Title = "Kiváló ár-érték arány",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3076),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
+                            Rating = 3.8999999999999999,
+                            RestaurantId = 12,
+                            Title = "Kiváló ár-érték arány",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3079),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
+                            Rating = 4.0999999999999996,
+                            RestaurantId = 13,
+                            Title = "Kiváló ár-érték arány",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3082),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
+                            Rating = 3.7999999999999998,
+                            RestaurantId = 15,
+                            Title = "Kiváló ár-érték arány",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2021, 9, 26, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3085),
+                            Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet.",
+                            Rating = 1.8999999999999999,
+                            RestaurantId = 20,
+                            Title = "Nem ajánlom",
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3088),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
+                            Rating = 3.7000000000000002,
+                            RestaurantId = 8,
+                            Title = "Ízléses, de kis adagok",
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3091),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
+                            Rating = 3.5,
+                            RestaurantId = 9,
+                            Title = "Ízléses, de kis adagok",
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3094),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
+                            Rating = 3.6000000000000001,
+                            RestaurantId = 16,
+                            Title = "Ízléses, de kis adagok",
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3097),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
+                            Rating = 3.3999999999999999,
+                            RestaurantId = 17,
+                            Title = "Ízléses, de kis adagok",
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3099),
+                            Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
+                            Rating = 4.0999999999999996,
+                            RestaurantId = 4,
+                            Title = "Átlagon felüli, de nem hibátlan",
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3102),
+                            Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
+                            Rating = 4.0,
+                            RestaurantId = 5,
+                            Title = "Átlagon felüli, de nem hibátlan",
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3105),
+                            Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
+                            Rating = 3.8999999999999999,
+                            RestaurantId = 14,
+                            Title = "Átlagon felüli, de nem hibátlan",
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2021, 9, 16, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3108),
+                            Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
+                            Rating = 3.7999999999999998,
+                            RestaurantId = 18,
+                            Title = "Átlagon felüli, de nem hibátlan",
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2021, 8, 7, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3111),
+                            Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet. ",
+                            Rating = 2.0,
+                            RestaurantId = 19,
+                            Title = "Nem ajánlom",
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2021, 8, 27, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3114),
+                            Description = "Érdemes megkóstolni a különböző finomságokat, igazán jó konyhát visznek. Az ételeik kifinomultak, harmonikusak, mondjuk nem az a hely, ahol tele fogod enni magad - de nem is ez a cél.",
+                            Rating = 4.2000000000000002,
+                            RestaurantId = 6,
+                            Title = "Kifinomult, harmonikus ételek",
+                            UserId = "fef0a15c-42bb-4f2d-9a65-382d4d95f667"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2021, 8, 27, 16, 49, 57, 393, DateTimeKind.Local).AddTicks(3116),
+                            Description = "Érdemes megkóstolni a különböző finomságokat, igazán jó konyhát visznek. Az ételeik kifinomultak, harmonikusak, mondjuk nem az a hely, ahol tele fogod enni magad - de nem is ez a cél.",
+                            Rating = 4.2999999999999998,
+                            RestaurantId = 7,
+                            Title = "Kifinomult, harmonikus ételek",
+                            UserId = "fef0a15c-42bb-4f2d-9a65-382d4d95f667"
+                        });
                 });
 
             modelBuilder.Entity("IRestaurant.DAL.Models.UserAddress", b =>
@@ -327,6 +3260,33 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserAddress");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            UserId = "fef0a15c-42bb-4f2d-9a65-382d4d95f667"
+                        });
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -457,6 +3417,22 @@ namespace IRestaurant.DAL.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "rc95a82e-0abc-4d85-9877-4184177c3a7f",
+                            ConcurrencyStamp = "e388975f-eb14-4f40-ba09-159e4164b513",
+                            Name = "Restaurant",
+                            NormalizedName = "RESTAURANT"
+                        },
+                        new
+                        {
+                            Id = "g8aceb4d-b534-459e-8c4e-d13374f43b65",
+                            ConcurrencyStamp = "24d76572-e1bb-4588-b442-b3907c67e05e",
+                            Name = "Guest",
+                            NormalizedName = "GUEST"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -510,12 +3486,10 @@ namespace IRestaurant.DAL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -544,6 +3518,133 @@ namespace IRestaurant.DAL.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b",
+                            RoleId = "g8aceb4d-b534-459e-8c4e-d13374f43b65"
+                        },
+                        new
+                        {
+                            UserId = "512dac39-94d2-429a-a258-7740ca64c50f",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93",
+                            RoleId = "g8aceb4d-b534-459e-8c4e-d13374f43b65"
+                        },
+                        new
+                        {
+                            UserId = "0bf93af4-1769-49f8-9bf4-e977feef94b4",
+                            RoleId = "g8aceb4d-b534-459e-8c4e-d13374f43b65"
+                        },
+                        new
+                        {
+                            UserId = "6c364ea9-44b4-4726-9bef-ea83c375e761",
+                            RoleId = "g8aceb4d-b534-459e-8c4e-d13374f43b65"
+                        },
+                        new
+                        {
+                            UserId = "fef0a15c-42bb-4f2d-9a65-382d4d95f667",
+                            RoleId = "g8aceb4d-b534-459e-8c4e-d13374f43b65"
+                        },
+                        new
+                        {
+                            UserId = "bc803e89-e8c0-4c5a-9467-e94cd5dd0300",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "8480bf9e-9553-47b7-a57b-474715139a83",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "95810441-4970-488c-afc7-d91a07256c76",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "c5e189f0-7656-4304-b963-1581f5ecf4fb",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "3eba4364-6a33-459c-9871-5823a9aee62a",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "765c13fb-7f8c-4474-afb5-d3a9e72feef3",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "7236dae3-7bad-4fe6-bb18-d13ff391939d",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "5075d4b9-0ba6-4811-84ff-fed147c9c09a",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "e1eaafad-b9f7-4668-9efd-d8c4418c39ca",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "5f7e27c3-9398-4cd3-977d-dae625124808",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "93f49281-b3a5-41b5-972c-ff5910f26e56",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "4e0a018f-ca12-448e-bda9-67ac1fce5a53",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "77d8c466-d2a0-44cb-8a22-a228b6218f23",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "5b944a67-5751-423f-89fb-f0c4f0ace3fb",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "96494a5b-f58d-44dd-8428-6543ef5e5bd7",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "5c55f164-cb41-4453-a473-120af44e3493",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "27410ef4-fa83-45cd-872d-d350042dd8e4",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "acd5d503-90e3-475c-b700-8e96fbea9e60",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        },
+                        new
+                        {
+                            UserId = "4422d2ba-934c-4899-9195-d9872d1b4c63",
+                            RoleId = "rc95a82e-0abc-4d85-9877-4184177c3a7f"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -552,12 +3653,10 @@ namespace IRestaurant.DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -635,6 +3734,184 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    InvoiceId = 1,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 2,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 3,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 4,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 5,
+                                    City = "Budapest",
+                                    PhoneNumber = "06305412567",
+                                    Street = "Örs vezér tere 1",
+                                    ZipCode = 1148
+                                },
+                                new
+                                {
+                                    InvoiceId = 6,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301233456",
+                                    Street = "Király utca 26",
+                                    ZipCode = 1011
+                                },
+                                new
+                                {
+                                    InvoiceId = 7,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 8,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 9,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 10,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 11,
+                                    City = "Budapest",
+                                    PhoneNumber = "06305412567",
+                                    Street = "Örs vezér tere 1",
+                                    ZipCode = 1148
+                                },
+                                new
+                                {
+                                    InvoiceId = 12,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301233456",
+                                    Street = "Király utca 26",
+                                    ZipCode = 1011
+                                },
+                                new
+                                {
+                                    InvoiceId = 13,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 14,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 15,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 16,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 17,
+                                    City = "Budapest",
+                                    PhoneNumber = "06305412567",
+                                    Street = "Örs vezér tere 1",
+                                    ZipCode = 1148
+                                },
+                                new
+                                {
+                                    InvoiceId = 18,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301233456",
+                                    Street = "Király utca 26",
+                                    ZipCode = 1011
+                                },
+                                new
+                                {
+                                    InvoiceId = 19,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 20,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 21,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    InvoiceId = 22,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                });
                         });
 
                     b.OwnsOne("IRestaurant.DAL.Models.AddressOwned", "UserAddress", b1 =>
@@ -667,6 +3944,184 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("InvoiceId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    InvoiceId = 1,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 2,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 3,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 4,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 5,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 6,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 7,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 8,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 9,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 10,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 11,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 12,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 13,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 14,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 15,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 16,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 17,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 18,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 19,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 20,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    InvoiceId = 21,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301451567",
+                                    Street = "Petőfi utca 3",
+                                    ZipCode = 1017
+                                },
+                                new
+                                {
+                                    InvoiceId = 22,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301451567",
+                                    Street = "Petőfi utca 3",
+                                    ZipCode = 1017
+                                });
                         });
 
                     b.Navigation("Order");
@@ -742,6 +4197,168 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("RestaurantId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    RestaurantId = 1,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301234567",
+                                    Street = "Király utca 30",
+                                    ZipCode = 1061
+                                },
+                                new
+                                {
+                                    RestaurantId = 2,
+                                    City = "Budapest",
+                                    PhoneNumber = "06305412567",
+                                    Street = "Örs vezér tere 1",
+                                    ZipCode = 1148
+                                },
+                                new
+                                {
+                                    RestaurantId = 3,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301233456",
+                                    Street = "Király utca 26",
+                                    ZipCode = 1011
+                                },
+                                new
+                                {
+                                    RestaurantId = 4,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06203433499",
+                                    Street = "Kossuth utca 21",
+                                    ZipCode = 4025
+                                },
+                                new
+                                {
+                                    RestaurantId = 5,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06202933472",
+                                    Street = "Piac u. 23",
+                                    ZipCode = 4028
+                                },
+                                new
+                                {
+                                    RestaurantId = 6,
+                                    City = "Eger",
+                                    PhoneNumber = "06301933174",
+                                    Street = "Szépasszonyvölgy 1",
+                                    ZipCode = 3300
+                                },
+                                new
+                                {
+                                    RestaurantId = 7,
+                                    City = "Eger",
+                                    PhoneNumber = "06201944175",
+                                    Street = "Tinódi Sebestyén tér 4",
+                                    ZipCode = 3300
+                                },
+                                new
+                                {
+                                    RestaurantId = 8,
+                                    City = "Szeged",
+                                    PhoneNumber = "06302932179",
+                                    Street = "Kálvária tér 25.",
+                                    ZipCode = 6725
+                                },
+                                new
+                                {
+                                    RestaurantId = 9,
+                                    City = "Szeged",
+                                    PhoneNumber = "06204933175",
+                                    Street = "Oskola utca 4",
+                                    ZipCode = 6725
+                                },
+                                new
+                                {
+                                    RestaurantId = 10,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201733274",
+                                    Street = "Akácfa utca 47",
+                                    ZipCode = 1017
+                                },
+                                new
+                                {
+                                    RestaurantId = 11,
+                                    City = "Budapest",
+                                    PhoneNumber = "06203369867",
+                                    Street = "Hercegprímás utca 5",
+                                    ZipCode = 1007
+                                },
+                                new
+                                {
+                                    RestaurantId = 12,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301876756",
+                                    Street = "Nagymező utca 3",
+                                    ZipCode = 1021
+                                },
+                                new
+                                {
+                                    RestaurantId = 13,
+                                    City = "Budapest",
+                                    PhoneNumber = "06209977645",
+                                    Street = "Attila út 10",
+                                    ZipCode = 1025
+                                },
+                                new
+                                {
+                                    RestaurantId = 14,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06209972364",
+                                    Street = "Arany János utca 9",
+                                    ZipCode = 4014
+                                },
+                                new
+                                {
+                                    RestaurantId = 15,
+                                    City = "Budapest",
+                                    PhoneNumber = "06307789631",
+                                    Street = "Semmelweis utca 1-3",
+                                    ZipCode = 1028
+                                },
+                                new
+                                {
+                                    RestaurantId = 16,
+                                    City = "Szeged",
+                                    PhoneNumber = "06208765698",
+                                    Street = "Thököly út 57/b",
+                                    ZipCode = 6721
+                                },
+                                new
+                                {
+                                    RestaurantId = 17,
+                                    City = "Szeged",
+                                    PhoneNumber = "06208761985",
+                                    Street = "Iskola u. 29",
+                                    ZipCode = 6711
+                                },
+                                new
+                                {
+                                    RestaurantId = 18,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06205872956",
+                                    Street = "Lovas út 41",
+                                    ZipCode = 4007
+                                },
+                                new
+                                {
+                                    RestaurantId = 19,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06308173984",
+                                    Street = "Szent István tér 12",
+                                    ZipCode = 4001
+                                },
+                                new
+                                {
+                                    RestaurantId = 20,
+                                    City = "Budapest",
+                                    PhoneNumber = "06208133946",
+                                    Street = "Fő utca 20",
+                                    ZipCode = 1015
+                                });
                         });
 
                     b.Navigation("Address");
@@ -806,6 +4423,48 @@ namespace IRestaurant.DAL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("UserAddressId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    UserAddressId = 1,
+                                    City = "Budapest",
+                                    PhoneNumber = "06201214561",
+                                    Street = "Kossuth utca 30",
+                                    ZipCode = 1060
+                                },
+                                new
+                                {
+                                    UserAddressId = 2,
+                                    City = "Budapest",
+                                    PhoneNumber = "06301451567",
+                                    Street = "Petőfi utca 3",
+                                    ZipCode = 1017
+                                },
+                                new
+                                {
+                                    UserAddressId = 3,
+                                    City = "Szeged",
+                                    PhoneNumber = "06301455892",
+                                    Street = "Kálmán utca 2",
+                                    ZipCode = 6725
+                                },
+                                new
+                                {
+                                    UserAddressId = 4,
+                                    City = "Debrecen",
+                                    PhoneNumber = "06201351961",
+                                    Street = "Erdei utca 32",
+                                    ZipCode = 4028
+                                },
+                                new
+                                {
+                                    UserAddressId = 5,
+                                    City = "Eger",
+                                    PhoneNumber = "06301451861",
+                                    Street = "Liget utca 11",
+                                    ZipCode = 3300
+                                });
                         });
 
                     b.Navigation("Address");

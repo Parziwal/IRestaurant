@@ -1,6 +1,7 @@
 ﻿using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,25 +33,28 @@ namespace IRestaurant.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése.
+        /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése a keresési feltétel alapján.
         /// </summary>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("guest")]
-        public async Task<IEnumerable<OrderOverviewDto>> GetGuestOrderOverviewList()
+        public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList([FromQuery] OrderSearchDto search)
         {
-            return await orderManager.GetGuestOrderOverviewList();
+            return await orderManager.GetGuestOrderOverviewList(search);
         }
 
         /// <summary>
-        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak lekérdezése.
+        /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak
+        /// lekérdezése a keresési feltétel alapján.
         /// </summary>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant")]
-        public async Task<IEnumerable<OrderOverviewDto>> GetMyRestaurantOrderList()
+        public async Task<PagedListDto<OrderOverviewDto>> GetMyRestaurantOrderList([FromQuery] OrderSearchDto search)
         {
-            return await orderManager.GetMyRestaurantOrderOverviewList();
+            return await orderManager.GetMyRestaurantOrderOverviewList(search);
         }
 
         /// <summary>

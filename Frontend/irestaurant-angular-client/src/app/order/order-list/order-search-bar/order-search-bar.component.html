@@ -1,0 +1,52 @@
+<div class="row justify-content-center mb-3">
+  <div class="col-lg-6">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="text"
+        placeholder="Keresés"
+        [(ngModel)]="search.restaurantName"
+        [(ngModel)]="search.guestName"
+        (keyup.enter)="refreshOrderList.emit()"
+      />
+      <button
+        matSuffix
+        class="btn btn-outline-danger clear-button"
+        *ngIf="search.restaurantName"
+        (click)="clearBrowser()"
+      >
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="col-lg-3 col-md-4">
+    <mat-form-field appearance="outline">
+      <mat-select
+        [value]="orderDateOptions[0].value"
+        (valueChange)="orderDateRangeChanged($event)"
+      >
+        <mat-option
+          *ngFor="let minDate of orderDateOptions"
+          [value]="minDate.value"
+        >
+          {{ minDate.text }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-lg-3 col-md-5">
+    <mat-form-field appearance="outline">
+      <mat-select
+        [(value)]="this.search.sortBy"
+        (valueChange)="refreshOrderList.emit()"
+      >
+        <mat-option
+          *ngFor="let sort of orderSortByOptions"
+          [value]="sort.value"
+        >
+          {{ sort.text }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
+using IRestaurant.BL.Extensions;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.Repositories;
@@ -16,6 +17,7 @@ namespace IRestaurant.BL.Managers
         private readonly IFoodRepository foodRepository;
         private readonly IRestaurantRepository restaurantRepository;
         private readonly IUserRepository userRepository;
+        private readonly IHttpContextAccessor httpContext;
 
         /// <summary>
         /// A szükséges adatelérési rétegbeli függőségek elkérése.
@@ -23,13 +25,16 @@ namespace IRestaurant.BL.Managers
         /// <param name="foodRepository">Az ételeket kezeli.</param>
         /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
         /// <param name="userRepository">A felhasználók adatait kezeli.</param>
+        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public FoodManager(IFoodRepository foodRepository,
             IRestaurantRepository restaurantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IHttpContextAccessor httpContext)
         {
             this.foodRepository = foodRepository;
             this.restaurantRepository = restaurantRepository;
             this.userRepository = userRepository;
+            this.httpContext = httpContext;
         }
 
         /// <summary>
@@ -47,7 +52,7 @@ namespace IRestaurant.BL.Managers
                 return await foodRepository.GetFood(foodId);
             }
 
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetMyRestaurantId(userId) : -1;
 
             if (foodRestaurantId == ownerRestaurantId)
@@ -72,7 +77,7 @@ namespace IRestaurant.BL.Managers
                 return await foodRepository.GetRestaurantMenu(restaurantId);
             }
 
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.UserHasRestaurant(userId) ? await userRepository.GetMyRestaurantId(userId) : -1;
 
             if (restaurantId == ownerRestaurantId)
@@ -89,7 +94,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>Az aktuális felhasználó éttermének ételei.</returns>
         public async Task<IReadOnlyCollection<FoodDto>> GetMyRestaurantMenu()
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await GetRestaurantMenu(ownerRestaurantId);
@@ -102,7 +107,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A létrehozott étel adatai.</returns>
         public async Task<FoodDto> AddFoodToMenu(CreateFoodDto food)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
             return await foodRepository.AddFoodToMenu(ownerRestaurantId, food);
@@ -117,7 +122,7 @@ namespace IRestaurant.BL.Managers
         /// <returns>A kép relatív elérési útja.</returns>
         public async Task<string> UploadFoodImage(int foodId, UploadImageDto uploadedImage)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
@@ -137,7 +142,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="foodId">Az étel azonosítója.</param>
         public async Task DeleteFoodImage(int foodId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
@@ -160,7 +165,7 @@ namespace IRestaurant.BL.Managers
         /// <param name="foodId">Az étel azonosítója.</param>
         public async Task DeleteFoodFromMenu(int foodId)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 
@@ -190,7 +195,7 @@ namespace IRestaurant.BL.Managers
         /// <returns></returns>
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
-            string userId = userRepository.GetCurrentUserId();
+            string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
             int foodRestaurantId = await foodRepository.GetFoodRestaurantId(foodId);
 

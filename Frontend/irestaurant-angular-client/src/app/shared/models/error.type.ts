@@ -1,7 +1,6 @@
 export interface Error {
-    type: string;
-    title: string;
-    status: number;
-    detail: string;
-    traceId: string;
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
 }

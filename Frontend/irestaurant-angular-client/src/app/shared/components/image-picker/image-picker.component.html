@@ -1,22 +1,45 @@
 <form [formGroup]="imageForm">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-center">
-            <img *ngIf="imagePreview != null" class="img-fluid image-preview" [src]="imagePreview">
-            <div *ngIf="imagePreview == null" class="col-8 empty-image">
-                Nincs kiválasztott kép
-            </div>
-        </div>
-        <div class="col-12">
-            <input type="file" class="d-none" #filePicker accept="image/*" (change)="onImagePicked($event)">
-            <button type="button" class="btn btn-success" (click)="filePicker.click()">
-                Kép kiválasztása
-            </button>
-            <button *ngIf="imagePreview != null" type="button" class="btn btn-danger ms-3" (click)="onImageDeleted()">
-                Törlés
-            </button>
-            <mat-error *ngIf="imageForm.get('image')?.invalid && imageForm.get('image')?.touched">
-                Kérlek egy képet válasz ki!
-            </mat-error>
-        </div>
+  <div class="row">
+    <div class="col-12 d-flex justify-content-center">
+      <img
+        *ngIf="imagePreview != null"
+        class="img-fluid image-preview"
+        [src]="imagePreview"
+      />
+      <div *ngIf="imagePreview == null" class="col-8 empty-image">
+        Nincs kiválasztott kép
+      </div>
     </div>
+    <div class="col-12">
+      <input
+        type="file"
+        class="d-none"
+        #filePicker
+        accept="image/*"
+        (change)="onImagePicked($event)"
+      />
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="filePicker.click()"
+      >
+        Kép kiválasztása
+      </button>
+      <button
+        *ngIf="imagePreview != null"
+        type="button"
+        class="btn btn-danger ms-3"
+        (click)="onImageDeleted()"
+      >
+        Törlés
+      </button>
+      <mat-error
+        *ngIf="
+          imageForm.get('image')?.invalid && imageForm.get('image')?.touched
+        "
+      >
+        Kérlek egy képet válasz ki!
+      </mat-error>
+    </div>
+  </div>
 </form>

@@ -49,15 +49,15 @@ namespace IRestaurant.WebAPI
             services.AddAuthentication("Bearer")
             .AddJwtBearer("Bearer", options =>
             {
-                options.Audience = "irestaurant_web_api";
-                options.Authority = "https://localhost:5000";
+                options.Audience = Configuration.GetSection("IRestaurantWebAPI:Audience").Value;
+                options.Authority = Configuration.GetSection("IRestaurantWebAPI:Authority").Value;
             });
 
             //Scope és szerepkör szerinti policy létrehozása.
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IRESTAURANT_API_SCOPE, policy => {
-                    policy.RequireClaim("scope", "irestaurant.api");
+                    policy.RequireClaim("scope", Configuration.GetSection("IRestaurantWebAPI:Scope").Value);
                 });
                 options.AddPolicy(UserRoles.Restaurant, policy =>
                     policy.RequireClaim(ClaimTypes.Role, UserRoles.Restaurant
@@ -71,7 +71,7 @@ namespace IRestaurant.WebAPI
             {
                 options.AddPolicy(DEFAULT_CORS_POLICY, policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200")
+                    policy.WithOrigins(Configuration.GetSection("IRestaurantWebAPI:AllowedCorsOrigins").Get<string[]>())
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -90,9 +90,17 @@ namespace IRestaurant.WebAPI
             //ProblemDetails Middleware-hez szükséges szolgáltatások hozzáadása, és konfigurálása.
             services.AddProblemDetails(options => {
                 // Ez 404 Not Found státusz kódra cseréli EntityNotFoundException-t.
-                options.MapToStatusCode<EntityNotFoundException>(StatusCodes.Status404NotFound);
+                options.Map<EntityNotFoundException>((context, exception) => {
+                    var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status404NotFound);
+                    problemDetails.Title = exception.Message;
+                    return problemDetails;
+                });
                 // Ez 400 Bad Request státusz kódra cseréli EntityAlreadyExistsException-t.
-                options.MapToStatusCode<EntityAlreadyExistsException>(StatusCodes.Status400BadRequest);
+                options.Map<EntityNotFoundException>((context, exception) => {
+                    var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status400BadRequest);
+                    problemDetails.Title = exception.Message;
+                    return problemDetails;
+                });
             });
 
             //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
@@ -112,7 +120,7 @@ namespace IRestaurant.WebAPI
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
             services.AddTransient<OrderManager>();
-            services.AddTransient<UserAddressManager>();
+            services.AddTransient<UserManager>();
         }
 
         /// <summary>
@@ -129,6 +137,7 @@ namespace IRestaurant.WebAPI
             app.UseProblemDetails();
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             //A Swagger generátor és a Swagger UI middleware beregisztrálása
             app.UseOpenApi();
@@ -146,7 +155,10 @@ namespace IRestaurant.WebAPI
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers().RequireAuthorization(IRESTAURANT_API_SCOPE);
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}")
+                .RequireAuthorization(IRESTAURANT_API_SCOPE);
             });
         }
     }

@@ -1,65 +1,89 @@
 <app-spinner *ngIf="!restaurant; else content"></app-spinner>
 <ng-template #content>
-    <div class="row details-header">
-        <div class="col-lg-5 text-center">
-            <img class="img-fluid" [src]="restaurant.imagePath" [alt]="restaurant.name" />
-            <button type="button" class="btn btn-warning btn-lg col-12 w-50 mt-4 mx-auto"
-                *ngIf="(userRole | async) === 'Guest' && !restaurant.isCurrentGuestFavourite"
-                (click)="addRestaurantToFavourite()">
-                <fa-icon [icon]="faStar"></fa-icon> Kedvenc
-            </button>
-            <button type="button" class="btn btn-danger btn-lg col-12 w-50 mt-4 mx-auto"
-                *ngIf="(userRole | async) === 'Guest' && restaurant.isCurrentGuestFavourite"
-                (click)="removeRestaurantFromFavourite()">
-                <fa-icon [icon]="faTrash"></fa-icon> Kedvenc
-            </button>
-        </div>
-        <div class="col-lg-7 mt-lg-0 mt-4">
-            <div class="row">
-                <div class="col">
-                    <h1> {{ restaurant.name }} </h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col restaurant-address">
-                    <p><i>Tulajdonos: {{ restaurant.ownerFullName }}</i></p>
-                    <h3>Cím</h3>
-                    <ul>
-                        <li>Város: {{ restaurant.restaurantAddress.city }}, {{ restaurant.restaurantAddress.zipCode }}</li>
-                        <li>Utca: {{ restaurant.restaurantAddress.street }}</li>
-                        <li>Tel.: {{ restaurant.restaurantAddress.phoneNumber }}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col">
-                    <h3>Értékelés</h3>
-                    <app-rating-bar [rating]="restaurant.rating"></app-rating-bar>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col">
-                    <h3>Ismertető</h3>
-                    <p class="text-justify">{{ restaurant.shortDescription }}</p>
-                </div>
-            </div>
-        </div>
+  <div class="row details-header">
+    <div class="col-lg-5 text-center">
+      <img
+        class="img-fluid"
+        [src]="restaurant.imagePath"
+        [alt]="restaurant.name"
+      />
+      <button
+        type="button"
+        class="btn btn-warning btn-lg col-lg-4 col-6 mt-4 mx-auto"
+        *ngIf="
+          (userRole | async) === 'Guest' && !restaurant.isCurrentGuestFavourite
+        "
+        (click)="addRestaurantToFavourite()"
+        title="Hozzáadás a kedvencekhez"
+      >
+        <fa-icon [icon]="faStar"></fa-icon>
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-lg col-lg-4 col-6 mt-4 mx-auto"
+        *ngIf="
+          (userRole | async) === 'Guest' && restaurant.isCurrentGuestFavourite
+        "
+        (click)="removeRestaurantFromFavourite()"
+        title="Eltávolítás a kedvencekből"
+      >
+        <fa-icon [icon]="faMinusCircle"></fa-icon>
+      </button>
     </div>
-    <div *ngIf="restaurant.detailedDescription !== null" class="row mt-5">
+    <div class="col-lg-7 mt-lg-0 mt-4">
+      <div class="row">
         <div class="col">
-            <h2 class="detailed-description-title">Részletek</h2>
-            <p class="text-justify mx-4">{{ restaurant.detailedDescription }}</p>
+          <h1>{{ restaurant.name }}</h1>
         </div>
-    </div>
-    <div class="row mt-5">
+      </div>
+      <div class="row">
+        <div class="col restaurant-address">
+          <p>
+            <b>Tulajdonos: {{ restaurant.ownerFullName }}</b>
+          </p>
+          <h3>Cím</h3>
+          <ul>
+            <li>
+              Város: {{ restaurant.restaurantAddress.city }},
+              {{ restaurant.restaurantAddress.zipCode }}
+            </li>
+            <li>Utca: {{ restaurant.restaurantAddress.street }}</li>
+            <li>Tel.: {{ restaurant.restaurantAddress.phoneNumber }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row mt-2">
         <div class="col">
-            <app-restaurant-menu [restaurantId]="restaurantId"></app-restaurant-menu>
+          <h3>Értékelés</h3>
+          <app-rating-bar [rating]="restaurant.rating"></app-rating-bar>
         </div>
-    </div>
-    <div class="row mt-5">
+      </div>
+      <div class="row mt-4">
         <div class="col">
-            <app-restaurant-review-list [restaurantId]="restaurantId" [restaurantRating]="restaurant.rating">
-            </app-restaurant-review-list>
+          <h3>Ismertető</h3>
+          <p class="text-justify">{{ restaurant.shortDescription }}</p>
         </div>
+      </div>
     </div>
+  </div>
+  <div *ngIf="restaurant.detailedDescription !== null" class="row mt-5">
+    <div class="col">
+      <h2 class="detailed-description-title">Részletek</h2>
+      <p class="text-justify mx-4">{{ restaurant.detailedDescription }}</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <app-restaurant-menu [restaurantId]="restaurantId"></app-restaurant-menu>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <app-restaurant-review-list
+        [restaurantId]="restaurantId"
+        [restaurantRating]="restaurant.rating"
+      >
+      </app-restaurant-review-list>
+    </div>
+  </div>
 </ng-template>

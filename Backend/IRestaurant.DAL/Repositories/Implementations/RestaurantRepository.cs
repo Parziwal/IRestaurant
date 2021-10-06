@@ -1,11 +1,11 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Images;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.DTO.Restaurants;
+using IRestaurant.DAL.Extensions;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,25 +31,19 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő éttermek áttekintő adatainak lekérése.
-        /// Ha a név paraméter null, akkor az összes elérhető éttermet visszaadjuk.
+        /// A megadott keresési feltételre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
-        /// <param name="restaurantName">Az étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetRestaurantOverviewList(RestaurantSearchDto search)
         {
-            if (string.IsNullOrEmpty(restaurantName))
-            {
-                return await dbContext.Restaurants
-                    .Where(r => r.ShowForUsers)
-                    .ToRestaurantOverviewDtoList();
-            }
-            else
-            {
-                return await dbContext.Restaurants
-                    .Where(r => r.Name.Contains(restaurantName) && r.ShowForUsers)
-                    .ToRestaurantOverviewDtoList();
-            }
+            return await dbContext.Restaurants
+                   .Where(r => r.ShowForUsers &&
+                       (r.Name.Contains(search.NameOrShortDescriptionOrCity) || 
+                       r.ShortDescription.Contains(search.NameOrShortDescriptionOrCity) || 
+                       r.Address.City.Contains(search.NameOrShortDescriptionOrCity)))
+                   .SortBy(search.SortBy)
+                   .ToRestaurantOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -63,40 +57,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
             var dbRestaurant = (await dbContext.Restaurants
                                     .SingleOrDefaultAsync(r => r.Id == restaurantId))
                                     .CheckIfRestaurantNull();
-
-            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
-        }
-
-        /// <summary>
-        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
-        /// Ha a megadott azonosítóval felhasználó nem található, akkor kivételt dobunk.
-        /// </summary>
-        /// <param name="ownerId">A felhasználó/tulajdonos azonosítója.</param>
-        /// <returns>Az étterem részletes adatai.</returns>
-        public async Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId)
-        {
-            var dbOwner = (await dbContext.Users
-                                .SingleOrDefaultAsync(u => u.Id == ownerId))
-                                .CheckIfUserNull();
-
-            var dbRestaurant = new Restaurant {
-                Name = "",
-                ShortDescription = "",
-                DetailedDescription = "",
-                ImagePath = null,
-                Address = new AddressOwned {
-                    ZipCode = 1000,
-                    City = "",
-                    Street = "",
-                    PhoneNumber = ""
-                },
-                ShowForUsers = false,
-                IsOrderAvailable = false,
-                OwnerId = ownerId
-            };
-
-            await dbContext.AddAsync(dbRestaurant);
-            await dbContext.SaveChangesAsync();
 
             return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
@@ -230,26 +190,20 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a szűrési feltételként megadott névre illeszkedik.
-        /// Ha a név paraméter null, akkor az összes elérhető éttermet visszaadjuk.
+        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a megadott keresési feltételre illeszkedik.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="restaurantName">Az ééterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<IReadOnlyCollection<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, RestaurantSearchDto search)
         {
-            if (string.IsNullOrEmpty(restaurantName))
-            {
-                return await dbContext.Restaurants
-                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId))
-                       .ToRestaurantOverviewDtoList();
-            }
-            else
-            {
-                return await dbContext.Restaurants
-                       .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId) && r.Name.Contains(restaurantName))
-                       .ToRestaurantOverviewDtoList();
-            }
+            return await dbContext.Restaurants
+                   .Where(r => r.ShowForUsers && r.UsersFavourite.Any(uf => uf.UserId == guestId) &&
+                       (r.Name.Contains(search.NameOrShortDescriptionOrCity) ||
+                       r.ShortDescription.Contains(search.NameOrShortDescriptionOrCity) ||
+                       r.Address.City.Contains(search.NameOrShortDescriptionOrCity)))
+                   .SortBy(search.SortBy)
+                   .ToRestaurantOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -307,70 +261,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.FavouriteRestaurants
                 .SingleOrDefaultAsync(fr => fr.RestaurantId == restaurantId && fr.UserId == guestId) != null;
-        }
-    }
-
-    /// <summary>
-    /// Az rendeléshez kapcsolódó extension metódusok.
-    /// </summary>
-    internal static class RestaurantRepositoryExtensions
-    {
-        /// <summary>
-        /// A étterem típusú modell osztályok átalakítása adatátviteli objektumok listájává.
-        /// </summary>
-        /// <param name="restaurants">Étterem típusú lekérdezés.</param>
-        /// <returns>Áttekintő étterem adatokat tartalmazó adatátviteli objektumok listája.</returns>
-        public static async Task<IReadOnlyCollection<RestaurantOverviewDto>> ToRestaurantOverviewDtoList(this IQueryable<Restaurant> restaurants)
-        {
-            return await restaurants
-                        .Include(r => r.Reviews)
-                        .Select(r => new RestaurantOverviewDto(r)).ToListAsync();
-        }
-
-        /// <summary>
-        /// Az étterem modell osztály átalakítása részletes adatokat tartalmazó adatátviteli objektummá.
-        /// </summary>
-        /// <param name="restaurant">Étterem típusú entitás.</param>
-        /// <returns>Az étterem részletes adatait tartalmazó adatátviteli objektum.</returns>
-        public static async Task<RestaurantDetailsDto> ToRestaurantDetailsDto(this EntityEntry<Restaurant> restaurant)
-        {
-            await restaurant.Collection(r => r.Reviews).LoadAsync();
-            await restaurant.Reference(r => r.Owner).LoadAsync();
-            return new RestaurantDetailsDto(restaurant.Entity);
-        }
-
-        /// <summary>
-        /// Leellenőrzi, hogy az átadott étterem típusú modell osztály null-e,
-        /// ha igen, akkor ezt egy EntityNotFound kivétellel jelezzük.
-        /// </summary>
-        /// <param name="restaurant">Étterem típusú modell osztály.</param>
-        /// <param name="errorMessage">Hibaüzenet szövege.</param>
-        /// <returns>Étterem típusú modell osztály.</returns>
-        public static Restaurant CheckIfRestaurantNull(this Restaurant restaurant,
-            string errorMessage = "Az étterem nem található.")
-        {
-            if (restaurant == null)
-            {
-                throw new EntityNotFoundException(errorMessage);
-            }
-            return restaurant;
-        }
-
-        /// <summary>
-        /// Leellenőrzi, hogy az átadott kedvenc éttermet tartalamzó modell osztáy null-e,
-        /// ha igen, akkor ezt egy EntityNotFound kivétellel jelezzük.
-        /// </summary>
-        /// <param name="favouriteRestaurant">A vendég egyik kedvenc éttermét tartalmazó modell osztály.</param>
-        /// <param name="errorMessage">Hibaüzenet szövege.</param>
-        /// <returns>A vendég egyik kedvenc éttermét tartalmazó modell osztály.</returns>
-        public static FavouriteRestaurant CheckIfFavouriteRestaurantNull(this FavouriteRestaurant favouriteRestaurant, 
-            string errorMessage = "A felhasználó kedvenc étterme nem található.")
-        {
-            if (favouriteRestaurant == null)
-            {
-                throw new EntityNotFoundException(errorMessage);
-            }
-            return favouriteRestaurant;
         }
     }
 }

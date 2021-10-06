@@ -1,4 +1,4 @@
 export interface EditFood {
-    price: number;
-    description: string;
+  price: number;
+  description: string;
 }

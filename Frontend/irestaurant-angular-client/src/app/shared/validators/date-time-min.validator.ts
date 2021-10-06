@@ -7,10 +7,10 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
  * @returns Valid-e a megadott időpont.
  */
 export function dateTimeMin(min: Date): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-        if (control.value !== undefined && new Date(control.value) < min) {
-            return { dateTimeMin: true };
-        }
-        return null;
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value !== undefined && new Date(control.value) < min) {
+      return { dateTimeMin: true };
     }
+    return null;
+  };
 }

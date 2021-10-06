@@ -1,0 +1,10 @@
+mat-form-field {
+  width: 100%;
+}
+
+.clear-button {
+  margin-right: -12px;
+  margin-top: -20px;
+  height: 60px;
+  border-width: 0px;
+}

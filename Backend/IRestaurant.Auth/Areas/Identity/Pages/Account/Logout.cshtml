@@ -1,0 +1,26 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "Kijelentkezés";
+}
+
+<header>
+    <h1>@ViewData["Title"]</h1>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <div class="row justify-content-center mt-4">
+                <div class="col-auto">
+                    <h3 class="mt-2 mb-2">Biztos ki szeretnél jelentkezni?</h3>
+                    <form class="form-inline" method="post">
+                        <button type="submit" class="btn btn-primary btn-lg mt-2">Igen</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p>Sikeressen kijelentkeztél az alkalmazásból.</p>
+        }
+    }
+</header>

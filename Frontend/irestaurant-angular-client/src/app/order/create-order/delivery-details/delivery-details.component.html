@@ -1,65 +1,104 @@
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-                <mat-form-field appearance="outline" class="col-12">
-                    <mat-label>Kívánt kiszállítási dátum</mat-label>
-                    <input matInput type="datetime-local" formControlName="preferredDeliveryDate"
-                        [min]="minDateTime | date: 'yyyy-MM-ddThh:mm'">
-                    <mat-error *ngIf="deliveryForm.get('preferredDeliveryDate')?.invalid">{{
-                      getErrorMessage("preferredDeliveryDate")
-                      }}</mat-error>
-                </mat-form-field>
-                <div formGroupName="address">
-                    <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Szállítási cím</mat-label>
-                        <mat-select [(ngModel)]="selectedAddressId">
-                            <mat-option [value]="-1" (click)="onAddressSelected(null)">Új</mat-option>
-                            <mat-option *ngFor="let address of (guestAddresses | async)" [value]="address.id"
-                                (click)="onAddressSelected(address)">
-                                    <p>{{ address.city }}, {{ address.street }}</p>
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-md-4">
-                      <mat-label>Irányítószám</mat-label>
-                      <input matInput type="number" formControlName="zipCode" placeholder="1000">
-                      <mat-error *ngIf="deliveryForm.get('address.zipCode')?.invalid">{{
-                        getErrorMessage("address.zipCode")
-                        }}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-md-8">
-                      <mat-label>Város</mat-label>
-                      <input matInput type="text" formControlName="city" placeholder="Budapest">
-                      <mat-error *ngIf="deliveryForm.get('address.city')?.invalid">{{
-                        getErrorMessage("address.city")
-                        }}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-12">
-                      <mat-label>Utca, házszám</mat-label>
-                      <input matInput type="text" formControlName="street" placeholder="Kossuth Lajos u. 1">
-                      <mat-error *ngIf="deliveryForm.get('address.street')?.invalid">{{
-                        getErrorMessage("address.street")
-                        }}</mat-error>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="col-12">
-                      <mat-label>Telefonszám</mat-label>
-                      <input matInput type="tel" formControlName="phoneNumber" placeholder="06-30-125-6789">
-                      <mat-error *ngIf="deliveryForm.get('address.phoneNumber')?.invalid">{{
-                        getErrorMessage("address.phoneNumber")
-                        }}</mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                <button type="button" class="btn btn-secondary btn-lg col-md-4" matStepperPrevious>
-                    Vissza
-                </button>
-                <button type="submit" class="btn btn-primary btn-lg col-md-4 mt-md-0 mt-3" matStepperNext
-                    [disabled]="deliveryForm.invalid">
-                    Tovább
-                </button>
-            </div>
-        </form>
-    </div>
+  <div class="col-md-8">
+    <form [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>Kívánt kiszállítási dátum</mat-label>
+          <input
+            matInput
+            type="datetime-local"
+            formControlName="preferredDeliveryDate"
+            [min]="minDateTime | date: 'yyyy-MM-ddThh:mm'"
+          />
+          <mat-error
+            *ngIf="deliveryForm.get('preferredDeliveryDate')?.invalid"
+            >{{ getErrorMessage("preferredDeliveryDate") }}</mat-error
+          >
+        </mat-form-field>
+        <div formGroupName="address">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Szállítási cím</mat-label>
+            <mat-select [(value)]="selectedAddressId">
+              <mat-option [value]="-1" (click)="onAddressSelected(null)"
+                >Új</mat-option
+              >
+              <mat-option
+                *ngFor="let address of guestAddresses | async"
+                [value]="address.id"
+                (click)="onAddressSelected(address)"
+              >
+                <p>{{ address.city }}, {{ address.street }}</p>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-md-4">
+            <mat-label>Irányítószám</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="zipCode"
+              placeholder="1000"
+            />
+            <mat-error *ngIf="deliveryForm.get('address.zipCode')?.invalid">{{
+              getErrorMessage("address.zipCode")
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-md-8">
+            <mat-label>Város</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="city"
+              placeholder="Budapest"
+            />
+            <mat-error *ngIf="deliveryForm.get('address.city')?.invalid">{{
+              getErrorMessage("address.city")
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Utca, házszám</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="street"
+              placeholder="Kossuth Lajos u. 1"
+            />
+            <mat-error *ngIf="deliveryForm.get('address.street')?.invalid">{{
+              getErrorMessage("address.street")
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Telefonszám</mat-label>
+            <input
+              matInput
+              type="tel"
+              formControlName="phoneNumber"
+              placeholder="06-30-125-6789"
+            />
+            <mat-error
+              *ngIf="deliveryForm.get('address.phoneNumber')?.invalid"
+              >{{ getErrorMessage("address.phoneNumber") }}</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg col-md-4 mt-md-0 mt-3"
+          matStepperNext
+          [disabled]="deliveryForm.invalid"
+        >
+          Mentés
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary btn-lg col-md-4"
+          matStepperPrevious
+        >
+          Vissza
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Images;
+using IRestaurant.DAL.DTO.Pagination;
 
 namespace IRestaurant.WebAPI.Controllers
 {
@@ -30,16 +31,15 @@ namespace IRestaurant.WebAPI.Controllers
         }
 
         /// <summary>
-        /// A megadott névre illeszkedő elérhető éttermek áttekintő adatainak lekérdezése.
-        /// Ha a keresett név null, akkor az összes elérhető étteremet visszaadja.
+        /// A megadott keresési feltételre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
-        /// <param name="restaurantName">A keresett étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IEnumerable<RestaurantOverviewDto>> GetRestaurantOverviewList([FromQuery] string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetRestaurantOverviewList([FromQuery] RestaurantSearchDto search)
         {
-            return await restaurantManager.GetRestaurantOverviewList(restaurantName);
+            return await restaurantManager.GetRestaurantOverviewList(search);
         }
 
         /// <summary>
@@ -184,17 +184,15 @@ namespace IRestaurant.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Az aktuális vendég kedvenc éttermeinek, azok áttekintő adatainak lekérdezése,
-        /// ami a szűrési feltételként megadott névre illeszkedik.
-        /// Ha a keresett név null, akkor az összes kedvenc étteremet visszaadja.
+        ///  Az aktuális vendég kedvenc éttermeinek lekérdezése, ami a megadott keresési feltételre illeszkedik.
         /// </summary>
-        /// <param name="restaurantName">A keresett étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("favourite")]
-        public async Task<IEnumerable<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList([FromQuery] string restaurantName = null)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList([FromQuery] RestaurantSearchDto search)
         {
-            return await restaurantManager.GetUserFavouriteRestaurantList(restaurantName);
+            return await restaurantManager.GetUserFavouriteRestaurantList(search);
         }
 
         /// <summary>

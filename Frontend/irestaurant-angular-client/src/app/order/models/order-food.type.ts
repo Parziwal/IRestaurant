@@ -1,5 +1,5 @@
 export interface OrderFood {
-    foodName: string;
-    price: number;
-    amount: number;
+  foodName: string;
+  price: number;
+  amount: number;
 }

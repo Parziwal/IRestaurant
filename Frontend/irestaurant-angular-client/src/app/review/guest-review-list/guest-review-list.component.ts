@@ -10,18 +10,20 @@ import { ReviewService } from '../review.service';
 @Component({
   selector: 'app-guest-review-list',
   templateUrl: './guest-review-list.component.html',
-  styleUrls: ['./guest-review-list.component.css']
+  styleUrls: ['./guest-review-list.component.css'],
 })
 export class GuestReviewListComponent implements OnInit {
-
   /** Az aktuális vendég értékelései. */
   guestReviews: Observable<Review[]> = new Observable();
+
   /** Törlési ikon. */
   faTrashAlt = faTrashAlt;
 
-  constructor(private reviewService: ReviewService,
+  constructor(
+    private reviewService: ReviewService,
     private toastr: ToastrService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getCurrentGuestReviews();
@@ -38,18 +40,16 @@ export class GuestReviewListComponent implements OnInit {
    */
   deleteReview(review: Review) {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      disableClose: false
+      disableClose: false,
     });
-    dialogRef.componentInstance.confirmMessage = "Biztosan törölni szeretnéd?"
+    dialogRef.componentInstance.confirmMessage = 'Biztosan törölni szeretnéd?';
 
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.reviewService.deleteReview(review.id).subscribe(
-          () => {
-            this.toastr.success('Az értékelés törlésre került!');
-            this.getCurrentGuestReviews();
-          }
-        );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.reviewService.deleteReview(review.id).subscribe(() => {
+          this.toastr.success('Az értékelés törlésre került!');
+          this.getCurrentGuestReviews();
+        });
       }
     });
   }

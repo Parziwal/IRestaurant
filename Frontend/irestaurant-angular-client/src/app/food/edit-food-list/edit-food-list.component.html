@@ -1,35 +1,61 @@
 <div class="row justify-content-center mb-3">
-    <div class="col-md-10">
-        <button type="button" class="btn btn-success add-button" (click)="addFood()">
-            <fa-icon [icon]="faPlusSquare"></fa-icon><span class="d-flex ms-2"> Hozzáadás</span>
-        </button>
-    </div>
+  <div class="col-md-10">
+    <button
+      type="button"
+      class="btn btn-success add-button"
+      (click)="addFood()"
+    >
+      <fa-icon [icon]="faPlusSquare"></fa-icon
+      ><span class="d-flex ms-2"> Hozzáadás</span>
+    </button>
+  </div>
 </div>
 <mat-accordion class="row justify-content-center">
-    <mat-expansion-panel class="col-md-10 my-1" hideToggle *ngFor="let food of (foods | async)">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <div class="d-flex justify-content-start">
-                    <img [src]="food.imagePath === null ? defaultFoodImgUrl : food.imagePath" [alt]="food.name"
-                        class="img-fluid align-self-start">
-                    <div class="d-flex flex-column">
-                        <h3 class="food-name">{{ food.name }}</h3>
-                        <p class="food-price">{{ food.price | currency : 'Ft' : 'symbol' : '1.0-0'}}</p>
-                    </div>
-                </div>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <p class="text-muted food-details">{{ food.description }}</p>
-        <mat-action-row>
-            <button type="button" class="btn btn-success p-3 me-3" (click)="onImageUpload(food)">
-                <fa-icon [icon]="faUpload"></fa-icon> Kép feltöltés
-            </button>
-            <button type="button" class="btn btn-primary p-3 me-3" (click)="editFood(food)">
-                <fa-icon [icon]="faEdit"></fa-icon> Szerkesztés
-            </button>
-            <button type="button" class="btn btn-danger p-3" (click)="deleteFood(food)">
-                <fa-icon [icon]="faTrashAlt"></fa-icon> Törlés
-            </button>
-        </mat-action-row>
-    </mat-expansion-panel>
+  <mat-expansion-panel
+    class="col-md-10 my-1"
+    hideToggle
+    *ngFor="let food of foods | async"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <div class="d-flex justify-content-start">
+          <img
+            [src]="food.imagePath"
+            [alt]="food.name"
+            class="img-fluid align-self-start"
+          />
+          <div class="d-flex flex-column">
+            <h3 class="food-name">{{ food.name }}</h3>
+            <p class="food-price">
+              {{ food.price | currency: "Ft":"symbol":"1.0-0" }}
+            </p>
+          </div>
+        </div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p class="text-muted food-details">{{ food.description }}</p>
+    <mat-action-row>
+      <button
+        type="button"
+        class="btn btn-success p-3 me-3"
+        (click)="onImageUpload(food)"
+      >
+        <fa-icon [icon]="faUpload"></fa-icon> Kép feltöltés
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary p-3 me-3"
+        (click)="editFood(food)"
+      >
+        <fa-icon [icon]="faEdit"></fa-icon> Szerkesztés
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger p-3"
+        (click)="deleteFood(food)"
+      >
+        <fa-icon [icon]="faTrashAlt"></fa-icon> Törlés
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
 </mat-accordion>

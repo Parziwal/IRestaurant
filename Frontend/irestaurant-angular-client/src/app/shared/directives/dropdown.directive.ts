@@ -1,8 +1,13 @@
-import { Directive, HostListener, HostBinding, ElementRef, ContentChild } from '@angular/core';
-
+import {
+  Directive,
+  HostListener,
+  HostBinding,
+  ElementRef,
+  ContentChild,
+} from '@angular/core';
 
 @Directive({
-    selector: '[appDropdownMenu]'
+  selector: '[appDropdownMenu]',
 })
 
 /**
@@ -10,11 +15,11 @@ import { Directive, HostListener, HostBinding, ElementRef, ContentChild } from '
  * Ezt a "dropdown-menu" class-al rendelkező elemre kell tenni.
  */
 export class DropdownMenuDirective {
-    @HostBinding('class.show') isOpen = false;
+  @HostBinding('class.show') isOpen = false;
 }
 
 @Directive({
-    selector: '[appDropdown]'
+  selector: '[appDropdown]',
 })
 
 /**
@@ -22,14 +27,19 @@ export class DropdownMenuDirective {
  * Ezt a "dropdown" class-al rendelkező elemre kell tenni.
  */
 export class DropdownDirective {
-    @ContentChild(DropdownMenuDirective) private dropdownMenu!: DropdownMenuDirective;
+  @ContentChild(DropdownMenuDirective)
+  private dropdownMenu!: DropdownMenuDirective;
 
-    @HostBinding('class.show') private isOpen = false;
+  @HostBinding('class.show') private isOpen = false;
 
-    @HostListener('document: click', ['$event']) private toggelOpen(event: Event) {
-        this.isOpen = this.elRef.nativeElement.contains(event.target) ? !this.isOpen : false;
-        this.dropdownMenu.isOpen = this.isOpen;
-    }
+  @HostListener('document: click', ['$event']) private toggelOpen(
+    event: Event
+  ) {
+    this.isOpen = this.elRef.nativeElement.contains(event.target)
+      ? !this.isOpen
+      : false;
+    this.dropdownMenu.isOpen = this.isOpen;
+  }
 
-    constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef) {}
 }

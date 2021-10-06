@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# IRestaurant Web API images
+**/IRestaurant.WebAPI/wwwroot/**/*.jpg
+**/IRestaurant.WebAPI/wwwroot/**/*.jpeg
+**/IRestaurant.WebAPI/wwwroot/**/*.png
+**/IRestaurant.WebAPI/wwwroot/**/*.gif

@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.EntityFramework.Options;
+using IRestaurant.DAL.Data.EntityTypeConfigurations;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,18 @@ namespace IRestaurant.DAL.Data
             //Query filter beállítása a Food modellen a "soft delete" funkció megvalósítása miatt.
             modelBuilder.Entity<Food>().HasMany(f => f.OrderFoods).WithOne(of => of.Food).IsRequired(false);
             modelBuilder.Entity<Food>().HasQueryFilter(e => !e.IsDeleted);
+
+            //Az adatbázis feltöltése teszt adatokkal
+            modelBuilder.ApplyConfiguration(new RolesSeedConfig());
+            modelBuilder.ApplyConfiguration(new ApplicationUserSeedConfig());
+            modelBuilder.ApplyConfiguration(new UserRolesSeedConfig());
+            modelBuilder.ApplyConfiguration(new UserAddressSeedConfig());
+            modelBuilder.ApplyConfiguration(new RestaurantSeedConfig());
+            modelBuilder.ApplyConfiguration(new FoodSeedConfig());
+            modelBuilder.ApplyConfiguration(new ReviewSeedConfig());
+            modelBuilder.ApplyConfiguration(new OrderSeedConfig());
+            modelBuilder.ApplyConfiguration(new OrderFoodSeedConfig());
+            modelBuilder.ApplyConfiguration(new InvoiceSeedConfig());
         }
     }
 }

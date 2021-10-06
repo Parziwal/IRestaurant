@@ -1,50 +1,50 @@
 img {
-    width: 150px;
-    margin-right: 20px;
-    border-radius: 4px;
+  width: 150px;
+  margin-right: 20px;
+  border-radius: 4px;
 }
 
 .add-button {
-    padding: 5px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 5px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .add-button fa-icon {
-    font-size: xx-large;
+  font-size: xx-large;
 }
 
 .food-name {
-    font-size: 1.4rem;
-    font-weight: bold;
-    padding-bottom: 10px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .food-price {
-    font-family: "Open Sans", "Arial", "sans-serif";
-    font-size: 1.2rem;
+  font-family: "Open Sans", "Arial", "sans-serif";
+  font-size: 1.2rem;
 }
 
 .food-details {
-    text-align: justify;
-    padding-top: 10px;
+  text-align: justify;
+  padding-top: 10px;
 }
 
 .menu-title {
-    margin-bottom: 20px;
-    border-bottom: 2px solid gray;
+  margin-bottom: 20px;
+  border-bottom: 2px solid gray;
 }
 
 mat-expansion-panel {
-    padding: 0px;
+  padding: 0px;
 }
 
 mat-expansion-panel-header {
-    height: auto;
-    padding: 5px;
+  height: auto;
+  padding: 5px;
 }
 
 mat-expansion-panel-header.mat-expanded {
-    height: auto;
-}       
+  height: auto;
+}

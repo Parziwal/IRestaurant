@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -12,22 +18,26 @@ import { OrderService } from '../../order.service';
 @Component({
   selector: 'app-order-finalization',
   templateUrl: './order-finalization.component.html',
-  styleUrls: ['./order-finalization.component.css']
+  styleUrls: ['./order-finalization.component.css'],
 })
 export class OrderFinalizationComponent implements OnInit, OnDestroy {
-
   /** A kiszállítási adatok. */
   deliveryDetails!: DeliveryDetials;
+
   /** A vendég által kiválasztott ételek listája. */
   orderFoods: OrderFoodWithId[] = [];
+
   /** A rendelés véglegesítésnek jelzése és a rendelési azonosító átadása. */
   @Output() orderFinalizationCompleted = new EventEmitter<number>();
+
   private orderFoodsChangeSub!: Subscription;
   private deliveryDetailsChangeSub!: Subscription;
 
-  constructor(private orderService: OrderService,
+  constructor(
+    private orderService: OrderService,
     private route: ActivatedRoute,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.subscribeToOrderDataChange();
@@ -43,7 +53,7 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
    */
   get orderFoodsTotal(): number {
     let total = 0;
-    this.orderFoods.forEach(f => {
+    this.orderFoods.forEach((f) => {
       total += f.price * f.amount;
     });
     return total;
@@ -55,11 +65,12 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
         this.orderFoods = orderFoods;
       }
     );
-    this.deliveryDetailsChangeSub = this.orderService.deliveryDetailsChange.subscribe(
-      (deliveryDetails: DeliveryDetials) => {
-        this.deliveryDetails = deliveryDetails;
-      }
-    );
+    this.deliveryDetailsChangeSub =
+      this.orderService.deliveryDetailsChange.subscribe(
+        (deliveryDetails: DeliveryDetials) => {
+          this.deliveryDetails = deliveryDetails;
+        }
+      );
   }
 
   /**
@@ -67,17 +78,19 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
    * az OrderService segítségével a rendelés leadása.
    */
   onOrderClicked() {
-    let createdOrder = <CreateOrder> {
+    let createdOrder = <CreateOrder>{
       preferredDeliveryDate: this.deliveryDetails.preferredDeliveryDate,
       addressId: this.deliveryDetails.address.id,
       restaurantId: this.route.snapshot.params.id,
-      orderFoods: this.orderFoods.map(of => <CreateOrderFood> { foodId: of.id, amount: of.amount })
+      orderFoods: this.orderFoods.map(
+        (of) => <CreateOrderFood>{ foodId: of.id, amount: of.amount }
+      ),
     };
-    this.orderService.createOrder(createdOrder).subscribe(
-      (createdOrder: OrderDetails) => {
-        this.toastr.success("A rendelés rögzítése megtörtént.");
+    this.orderService
+      .createOrder(createdOrder)
+      .subscribe((createdOrder: OrderDetails) => {
+        this.toastr.success('A rendelés rögzítése megtörtént.');
         this.orderFinalizationCompleted.emit(createdOrder.id);
-      }
-    );
+      });
   }
 }

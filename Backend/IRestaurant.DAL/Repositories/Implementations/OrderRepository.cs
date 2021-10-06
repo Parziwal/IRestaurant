@@ -1,13 +1,12 @@
 ﻿using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
+using IRestaurant.DAL.DTO.Pagination;
+using IRestaurant.DAL.Extensions;
 using IRestaurant.DAL.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
@@ -33,27 +32,39 @@ namespace IRestaurant.DAL.Repositories.Implementations
         }
 
         /// <summary>
-        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId)
+        public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                .Where(o => o.UserId == guestId)
-                .ToOrderOverviewDtoList();
+                    .Where(o => o.UserId == guestId && 
+                            search.Statuses.Contains(o.Status) &&
+                            o.Invoice.RestaurantName.Contains(search.RestaurantName) &&
+                            o.CreatedAt >= search.OrderMinDate &&
+                            o.CreatedAt < search.OrderMaxDate)
+                    .SortBy(search.SortBy)
+                    .ToOrderOverviewDtoPagedList(search);
         }
 
         /// <summary>
-        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése.
+        /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
-        public async Task<IReadOnlyCollection<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId)
+        public async Task<PagedListDto<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId)
-                .ToOrderOverviewDtoList();
+                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId &&
+                            search.Statuses.Contains(o.Status) &&
+                            o.Invoice.UserFullName.Contains(search.GuestName) &&
+                            o.CreatedAt >= search.OrderMinDate &&
+                            o.CreatedAt < search.OrderMaxDate)
+                .SortBy(search.SortBy)
+                .ToOrderOverviewDtoPagedList(search);
         }
 
         /// <summary>
@@ -190,55 +201,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
                             .SingleOrDefaultAsync(o => o.Id == orderId))
                             .CheckIfOrderNull();
             return dbOrder.Status;
-        }
-    }
-
-    /// <summary>
-    /// Az rendeléshez kapcsolódó extension metódusok.
-    /// </summary>
-    internal static class OrderRepositoryExtensions
-    {
-        /// <summary>
-        /// A rendelés típusú modell osztályok átalakítása adatátviteli objektumok listájává.
-        /// </summary>
-        /// <param name="orders">Rendelés típusú lekérdezés.</param>
-        /// <returns>Áttekintő rendelési adatokat tartalmazó adatátviteli objektumok listája.</returns>
-        public static async Task<IReadOnlyCollection<OrderOverviewDto>> ToOrderOverviewDtoList(this IQueryable<Order> orders)
-        {
-            return await orders
-                        .Include(o => o.OrderFoods)
-                        .Include(o => o.Invoice)
-                        .Select(o => new OrderOverviewDto(o)).ToListAsync();
-        }
-
-        /// <summary>
-        /// A rendelés modell osztály átalakítása részletes adatokat tartalmazó adatátviteli objektummá.
-        /// </summary>
-        /// <param name="order">Rendelés típusú entitás.</param>
-        /// <returns>A rendelés részletes adatait tartalmazó adatátviteli objektum.</returns>
-        public static async Task<OrderDetailsDto> ToOrderDetailsDto(this EntityEntry<Order> order)
-        {
-            await order.Reference(o => o.Invoice).LoadAsync();
-            await order.Collection(o => o.OrderFoods).Query()
-                        .Include(of => of.Food).LoadAsync();
-            return new OrderDetailsDto(order.Entity);
-        }
-
-        /// <summary>
-        /// Leellenőrzi, hogy az átadott rendelés típusú modell osztály null-e,
-        /// ha igen, akkor ezt egy EntityNotFound kivétellel jelezzük.
-        /// </summary>
-        /// <param name="order">Rendelés típusú modell osztály.</param>
-        /// <param name="errorMessage">Hibaüzenet szövege.</param>
-        /// <returns>Rendelés típusú modell osztály.</returns>
-        public static Order CheckIfOrderNull(this Order order,
-            string errorMessage = "A rendelés nem található.")
-        {
-            if (order == null)
-            {
-                throw new EntityNotFoundException(errorMessage);
-            }
-            return order;
         }
     }
 }

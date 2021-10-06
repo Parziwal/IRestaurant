@@ -1,4 +1,5 @@
 ﻿using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.DTO.Restaurants;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,13 @@ namespace IRestaurant.DAL.Repositories
     /// </summary>
     public interface IUserRepository
     {
+        /// <summary>
+        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
+        /// </summary>
+        /// <param name="userId">A felhasználó/tulajdonos azonosítója.</param>
+        /// <returns>Az étterem részletes adatai.</returns>
+        Task<RestaurantDetailsDto> CreateDefaultRestaurantForUser(string userId);
+
         /// <summary>
         /// A megadott azonosítójú lakcím lekérdezése.
         /// </summary>
@@ -65,11 +73,5 @@ namespace IRestaurant.DAL.Repositories
         /// <param name="userId">A felhasználó egyedi azonosítója.</param>
         /// <returns>Tartozik-e étterem a felhasználóhoz.</returns>
         Task<bool> UserHasRestaurant(string userId);
-
-        /// <summary>
-        /// A jelenleg bejelentkezett felhasználó egyedi azonosítójának lekérdezése.
-        /// </summary>
-        /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
-        string GetCurrentUserId();
     }
 }

@@ -1,77 +1,88 @@
 <app-spinner *ngIf="!orderDetails; else details"></app-spinner>
 <ng-template #details>
-    <h1>Rendelési részletek</h1>
-    <div class="row border-box mt-5">
-        <div class="col-sm-6">
-            <h2>Étterem címe</h2>
-            <p>{{ orderDetails.restaurantName }}</p>
-            <p>{{ orderDetails.restaurantAddress.city }}, {{ orderDetails.restaurantAddress.zipCode }}</p>
-            <p>{{ orderDetails.restaurantAddress.street }}</p>
-        </div>
-        <div class="col-sm-6">
-            <h2>Telefonszám</h2>
-            <p>{{ orderDetails.restaurantAddress.phoneNumber }}</p>
-        </div>
+  <h1>Rendelési részletek</h1>
+  <div class="row border-box mt-5">
+    <div class="col-sm-6">
+      <h2>Étterem címe</h2>
+      <p>{{ orderDetails.restaurantName }}</p>
+      <p>
+        {{ orderDetails.restaurantAddress.city }},
+        {{ orderDetails.restaurantAddress.zipCode }}
+      </p>
+      <p>{{ orderDetails.restaurantAddress.street }}</p>
     </div>
-    <div class="row border-box">
-        <div class="col-sm-6">
-            <h2>Rendelés időpontja</h2>
-            <p>{{orderDetails.date | date: "yyyy.MM.dd"}} </p>
-        </div>
-        <div class="col-sm-6">
-            <h2>Kívánt kiszállítási idő</h2>
-            <p>{{orderDetails.preferredDeliveryDate | date: "yyyy.MM.dd HH:mm"}}</p>
-        </div>
+    <div class="col-sm-6">
+      <h2>Telefonszám</h2>
+      <p>{{ orderDetails.restaurantAddress.phoneNumber }}</p>
     </div>
-    <div class="row border-box">
-        <div class="col-sm-6">
-            <h2>Szállítási cím</h2>
-            <p>{{ orderDetails.userFullName }}</p>
-            <p>{{ orderDetails.userAddress.city }}, {{ orderDetails.userAddress.zipCode }}</p>
-            <p>{{ orderDetails.userAddress.street }}</p>
-        </div>
-        <div class="col-sm-6">
-            <h2>Telefonszám</h2>
-            <p>{{ orderDetails.userAddress.phoneNumber }}</p>
-        </div>
+  </div>
+  <div class="row border-box">
+    <div class="col-sm-6">
+      <h2>Rendelés időpontja</h2>
+      <p>{{ orderDetails.createdAt | date: "yyyy.MM.dd" }}</p>
     </div>
-    <div class="row mt-5">
-        <div class="col">
-            <ul class="list-group">
-                <li class="list-group-item order-status">
-                    <div class="row">
-                        <div class="col-7">
-                            <h2>Rendelés állapota</h2>
-                        </div>
-                        <div class="col-5">
-                            <h3>{{ orderDetails.statusInString }}</h3>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item" *ngFor="let orderFood of orderDetails.orderFoods">
-                    <div class="row">
-                        <div class="col-6">
-                            <h2>{{ orderFood.foodName }}</h2>
-                        </div>
-                        <div class="col-2">
-                            <h3>{{ orderFood.amount }}x</h3>
-                        </div>
-                        <div class="col-4">
-                            <h3>{{ orderFood.price | currency : 'Ft' : 'symbol' : '1.0-0' }}</h3>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item order-total">
-                    <div class="row">
-                        <div class="col-sm-8 col-7">
-                            <h2>Végösszeg</h2>
-                        </div>
-                        <div class="col-sm-4 col-5">
-                            <h2>{{ orderDetails.total | currency : 'Ft' : 'symbol' : '1.0-0' }}</h2>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <div class="col-sm-6">
+      <h2>Kívánt kiszállítási idő</h2>
+      <p>{{ orderDetails.preferredDeliveryDate | date: "yyyy.MM.dd HH:mm" }}</p>
     </div>
+  </div>
+  <div class="row border-box">
+    <div class="col-sm-6">
+      <h2>Szállítási cím</h2>
+      <p>{{ orderDetails.userFullName }}</p>
+      <p>
+        {{ orderDetails.userAddress.city }},
+        {{ orderDetails.userAddress.zipCode }}
+      </p>
+      <p>{{ orderDetails.userAddress.street }}</p>
+    </div>
+    <div class="col-sm-6">
+      <h2>Telefonszám</h2>
+      <p>{{ orderDetails.userAddress.phoneNumber }}</p>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <ul class="list-group">
+        <li class="list-group-item order-status">
+          <div class="row">
+            <div class="col-7">
+              <h2>Rendelés állapota</h2>
+            </div>
+            <div class="col-5">
+              <h3>{{ orderDetails.statusInString }}</h3>
+            </div>
+          </div>
+        </li>
+        <li
+          class="list-group-item"
+          *ngFor="let orderFood of orderDetails.orderFoods"
+        >
+          <div class="row">
+            <div class="col-6">
+              <h2>{{ orderFood.foodName }}</h2>
+            </div>
+            <div class="col-2">
+              <h3>{{ orderFood.amount }}x</h3>
+            </div>
+            <div class="col-4">
+              <h3>{{ orderFood.price | currency: "Ft":"symbol":"1.0-0" }}</h3>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item order-total">
+          <div class="row">
+            <div class="col-sm-8 col-7">
+              <h2>Végösszeg</h2>
+            </div>
+            <div class="col-sm-4 col-5">
+              <h2>
+                {{ orderDetails.total | currency: "Ft":"symbol":"1.0-0" }}
+              </h2>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </ng-template>

@@ -1,4 +1,5 @@
-mat-form-field, mat-slider {
-    width: 100%;
-    margin-bottom: 10px;
+mat-form-field,
+mat-slider {
+  width: 100%;
+  margin-bottom: 10px;
 }

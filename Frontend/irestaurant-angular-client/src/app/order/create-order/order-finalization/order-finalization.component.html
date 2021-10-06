@@ -1,52 +1,65 @@
 <ng-container *ngIf="orderFoods.length > 0 && deliveryDetails">
-    <h1>Rendelési részletek</h1>
-    <div class="row border-box">
-        <div class="col-sm-6">
-            <h2>Szállítási cím</h2>
-            <p>{{ deliveryDetails.address.city }}, {{ deliveryDetails.address.zipCode }}</p>
-            <p>{{ deliveryDetails.address.street }}</p>
-            <p>Tel.: {{ deliveryDetails.address.phoneNumber }}</p>
-        </div>
-        <div class="col-sm-6">
-            <h2>Kívánt kiszállítási idő</h2>
-            <p>{{deliveryDetails.preferredDeliveryDate | date: "yyyy.MM.dd HH:mm"}}</p>
-        </div>
+  <h1>Rendelési részletek</h1>
+  <div class="row border-box">
+    <div class="col-sm-6">
+      <h2>Szállítási cím</h2>
+      <p>
+        {{ deliveryDetails.address.city }},
+        {{ deliveryDetails.address.zipCode }}
+      </p>
+      <p>{{ deliveryDetails.address.street }}</p>
+      <p>Tel.: {{ deliveryDetails.address.phoneNumber }}</p>
     </div>
-    <div class="row mt-5">
-        <div class="col">
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let food of orderFoods">
-                    <div class="row">
-                        <div class="col-6">
-                            <h2>{{ food.foodName }}</h2>
-                        </div>
-                        <div class="col-2">
-                            <h3>{{ food.amount }}x</h3>
-                        </div>
-                        <div class="col-4">
-                            <h3>{{ food.price | currency : 'Ft' : 'symbol' : '1.0-0' }}</h3>
-                        </div>
-                    </div>
-                </li>
-                <li class="list-group-item order-total">
-                    <div class="row">
-                        <div class="col-sm-8 col-7">
-                            <h2>Végösszeg</h2>
-                        </div>
-                        <div class="col-sm-4 col-5">
-                            <h2>{{ orderFoodsTotal | currency : 'Ft' : 'symbol' : '1.0-0' }}</h2>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <div class="col-sm-6">
+      <h2>Kívánt kiszállítási idő</h2>
+      <p>
+        {{ deliveryDetails.preferredDeliveryDate | date: "yyyy.MM.dd HH:mm" }}
+      </p>
     </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
-        <button type="button" class="btn btn-secondary btn-lg col-md-4" matStepperPrevious>
-            Vissza
-        </button>
-        <button type="submit" class="btn btn-primary btn-lg col-md-4 mt-md-0 mt-3" (click)="onOrderClicked()">
-            Megrendelem
-        </button>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let food of orderFoods">
+          <div class="row">
+            <div class="col-6">
+              <h2>{{ food.foodName }}</h2>
+            </div>
+            <div class="col-2">
+              <h3>{{ food.amount }}x</h3>
+            </div>
+            <div class="col-4">
+              <h3>{{ food.price | currency: "Ft":"symbol":"1.0-0" }}</h3>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item order-total">
+          <div class="row">
+            <div class="col-sm-8 col-7">
+              <h2>Végösszeg</h2>
+            </div>
+            <div class="col-sm-4 col-5">
+              <h2>{{ orderFoodsTotal | currency: "Ft":"symbol":"1.0-0" }}</h2>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+    <button
+      type="submit"
+      class="btn btn-primary btn-lg col-md-4 mt-md-0 mt-3"
+      (click)="onOrderClicked()"
+    >
+      Megrendelem
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary btn-lg col-md-4"
+      matStepperPrevious
+    >
+      Vissza
+    </button>
+  </div>
 </ng-container>

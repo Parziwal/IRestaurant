@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using IRestaurant.DAL.DTO.Images;
+using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.DTO.Restaurants;
 
 namespace IRestaurant.DAL.Repositories
@@ -11,11 +12,11 @@ namespace IRestaurant.DAL.Repositories
     public interface IRestaurantRepository
     {
         /// <summary>
-        /// A megadott névre illeszkedő éttermek áttekintő adatainak lekérése.
+        /// A megadott keresési feltételre illeszkedő éttermek áttekintő adatainak lekérése.
         /// </summary>
-        /// <param name="restaurantName">Az keresett étterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetRestaurantOverviewList(string restaurantName = null);
+        Task<PagedListDto<RestaurantOverviewDto>> GetRestaurantOverviewList(RestaurantSearchDto search);
 
         /// <summary>
         /// Az étterem részletes adatainak lekérdezése.
@@ -23,13 +24,6 @@ namespace IRestaurant.DAL.Repositories
         /// <param name="restaurantId">Az étterem azonosítója.</param>
         /// <returns>Az étterem részletes adatai.</returns>
         Task<RestaurantDetailsDto> GetRestaurantDetails(int restaurantId);
-
-        /// <summary>
-        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
-        /// </summary>
-        /// <param name="ownerId">A felhasználó/tulajdonos azonosítója.</param>
-        /// <returns>Az étterem részletes adatai.</returns>
-        Task<RestaurantDetailsDto> CreateDefaultRestaurant(string ownerId);
 
         /// <summary>
         /// A megadott azonosítójú étterem adatainak módosítása.
@@ -82,12 +76,12 @@ namespace IRestaurant.DAL.Repositories
         Task<bool> IsRestaurantAvailableForUsers(int restaurantId);
 
         /// <summary>
-        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a szűrési feltételként megadott névre illeszkedik.
+        /// A megadott azonosítójú vendég kedvenc éttermeinek lekérdezése, ami a megadott keresési feltételre illeszkedik.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="restaurantName">Az ééterem neve.</param>
+        /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        Task<IReadOnlyCollection<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, string restaurantName = null);
+        Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(string guestId, RestaurantSearchDto search);
 
         /// <summary>
         /// A megadott azonosítójú étterem felvétele a vendég kedvencei közé.

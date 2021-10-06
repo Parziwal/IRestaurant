@@ -1,48 +1,55 @@
-ï»¿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
-using AuthServer.Infrastructure.Services;
 using IdentityServer4.Services;
+using IRestaurant.Auth.Services;
+using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
+using IRestaurant.DAL.Repositories;
+using IRestaurant.DAL.Repositories.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IRestaurant.Auth
 {
     public class Startup
     {
-        public IWebHostEnvironment Environment { get; }
-        public IConfiguration Configuration { get; }
-
-        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
-            Environment = environment;
             Configuration = configuration;
         }
 
+        public IConfiguration Configuration { get; }
+
         /// <summary>
-        /// Ez a metÃ³dus futÃ¡si idÅ‘ben hÃ­vÃ³dik meg. A szolgÃ¡ltatÃ¡sok beregisztrÃ¡lÃ¡sÃ¡ra hasznÃ¡latos.
+        /// Ez a metódus futási idõben hívódik meg. A szolgáltatások beregisztrálására használatos.
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    //Az adatbÃ¡zis migrÃ¡ciÃ³s fÃ¡jlok Ã¡thelyezÃ©se a DAL rÃ©tegbe.
-                    x => x.MigrationsAssembly("IRestaurant.DAL")));
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("DefaultConnection"),
+                   //Az adatbázis migrációs fájlok áthelyezése a DAL rétegbe.
+                   x => x.MigrationsAssembly("IRestaurant.DAL")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                // A Role service beregisztrálása a szerepkörök használatához.
+                .AddRoles<IdentityRole>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -50,8 +57,6 @@ namespace IRestaurant.Auth
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-
-                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
             })
                 .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
@@ -63,28 +68,49 @@ namespace IRestaurant.Auth
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            //A felhasznÃ¡lÃ³ fontosabb adatainak tokenbe helyezÃ©se (pl.: role).
+            //A felhasználó fontosabb adatainak tokenbe helyezése (pl.: role).
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
+
+            //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
+            services.AddHttpContextAccessor();
+
+            //A DAL rétegbeli felhasználókat kezelõ repository osztály beregisztrálása.
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            //A BL rétegbeli felhasználókat kezelõ manager osztály beregisztrálása.
+            services.AddTransient<UserManager>();
         }
 
         /// <summary>
-        /// Ez a metÃ³dus futÃ¡si idÅ‘ben hÃ­vÃ³dik meg. A HTTP kÃ©rÃ©si pipline konfigurÃ¡ciÃ³jÃ¡ra hasznÃ¡latos.
+        /// Ez a metódus futási idõben hívódik meg. A HTTP kérési pipline konfigurációjára használatos.
         /// </summary>
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (Environment.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
-
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

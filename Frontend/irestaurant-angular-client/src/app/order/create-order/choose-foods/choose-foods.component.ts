@@ -10,36 +10,39 @@ import { OrderService } from '../../order.service';
 @Component({
   selector: 'app-choose-foods',
   templateUrl: './choose-foods.component.html',
-  styleUrls: ['./choose-foods.component.css']
+  styleUrls: ['./choose-foods.component.css'],
 })
 export class ChooseFoodsComponent implements OnInit {
-
   /** Az étteremhez tartozó ételek listája, amiből a vendégek rendelhetnek. */
   foods: Observable<Food[]> = new Observable();
+
   /** A vendég által kiválasztott ételek listája. */
   chosenFoods: OrderFoodWithId[] = [];
+
   /** Hozzáadás ikon. */
   faPlus = faPlus;
+
   /** Törlés ikon. */
-  faTimes = faTimes
+  faTimes = faTimes;
+
   /** Jelzi, ha a felhasználó már választott ki ételt. */
   @Output() chooseFoodCompleted = new EventEmitter<boolean>();
 
-  constructor(private foodService: FoodService,
+  constructor(
+    private foodService: FoodService,
     private orderService: OrderService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getRestaurantMenu();
   }
 
   private getRestaurantMenu() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        let restaurantId = +params.id;
-        this.foods = this.foodService.getRestaurantMenu(restaurantId);
-      }
-    );
+    this.route.params.subscribe((params: Params) => {
+      let restaurantId = +params.id;
+      this.foods = this.foodService.getRestaurantMenu(restaurantId);
+    });
   }
 
   /**
@@ -49,17 +52,17 @@ export class ChooseFoodsComponent implements OnInit {
    * @param amount A darabszámot tartalmazó HTML elem.
    */
   addFoodToList(food: Food, amountHTMLElement: HTMLInputElement) {
-    if (amountHTMLElement.value == "" || amountHTMLElement.valueAsNumber < 1) {
+    if (amountHTMLElement.value == '' || amountHTMLElement.valueAsNumber < 1) {
       return;
     }
     let chosenFood = {
-      id: food.id, 
+      id: food.id,
       foodName: food.name,
       amount: amountHTMLElement.valueAsNumber,
-      price: food.price
+      price: food.price,
     };
 
-    let chosenFoodIndex = this.chosenFoods.findIndex(f => f.id === food.id);
+    let chosenFoodIndex = this.chosenFoods.findIndex((f) => f.id === food.id);
     if (chosenFoodIndex === -1) {
       this.chosenFoods.push(chosenFood);
     } else {
@@ -67,7 +70,7 @@ export class ChooseFoodsComponent implements OnInit {
     }
 
     amountHTMLElement.value = '';
-    
+
     this.chooseFoodCompleted.emit(true);
   }
 
@@ -76,7 +79,9 @@ export class ChooseFoodsComponent implements OnInit {
    * @param orderFood A törlendő étel.
    */
   deleteFoodFromList(orderFood: OrderFoodWithId) {
-    let orderFoodIndex = this.chosenFoods.findIndex(f => f.id === orderFood.id);
+    let orderFoodIndex = this.chosenFoods.findIndex(
+      (f) => f.id === orderFood.id
+    );
     this.chosenFoods.splice(orderFoodIndex, 1);
 
     if (this.chosenFoods.length == 0) {
@@ -89,7 +94,7 @@ export class ChooseFoodsComponent implements OnInit {
    */
   get chosenFoodsTotal(): number {
     let total = 0;
-    this.chosenFoods.forEach(f => {
+    this.chosenFoods.forEach((f) => {
       total += f.price * f.amount;
     });
     return total;

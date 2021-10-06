@@ -1,10 +1,9 @@
-﻿using IRestaurant.DAL.CustomExceptions;
-using IRestaurant.DAL.Data;
+﻿using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.DTO.Restaurants;
+using IRestaurant.DAL.Extensions;
 using IRestaurant.DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -18,17 +17,50 @@ namespace IRestaurant.DAL.Repositories.Implementations
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly IHttpContextAccessor accessor;
 
         /// <summary>
         /// Az adatbázis és a HttpContext hozzáférés inicializációja a konstruktorban.
         /// </summary>
         /// <param name="dbContext">Az adatbázis.</param>
-        /// <param name="accessor">Hozzáférést biztosít a HttpContext-hez.</param>
-        public UserRepository(ApplicationDbContext dbContext, IHttpContextAccessor accessor)
+        public UserRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.accessor = accessor;
+        }
+
+        /// <summary>
+        /// A megadott azonosítójú felhasználóhoz egy étterem létrehozása alap adatokkal.
+        /// Ha a megadott azonosítóval felhasználó nem található, akkor kivételt dobunk.
+        /// </summary>
+        /// <param name="userId">A felhasználó/tulajdonos azonosítója.</param>
+        /// <returns>Az étterem részletes adatai.</returns>
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForUser(string userId)
+        {
+            var dbOwner = (await dbContext.Users
+                                .SingleOrDefaultAsync(u => u.Id == userId))
+                                .CheckIfUserNull();
+
+            var dbRestaurant = new Restaurant
+            {
+                Name = "",
+                ShortDescription = "",
+                DetailedDescription = "",
+                ImagePath = null,
+                Address = new AddressOwned
+                {
+                    ZipCode = 1000,
+                    City = "",
+                    Street = "",
+                    PhoneNumber = ""
+                },
+                ShowForUsers = false,
+                IsOrderAvailable = false,
+                OwnerId = userId
+            };
+
+            await dbContext.AddAsync(dbRestaurant);
+            await dbContext.SaveChangesAsync();
+
+            return await dbContext.Entry(dbRestaurant).ToRestaurantDetailsDto();
         }
 
         /// <summary>
@@ -169,81 +201,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         public async Task<bool> UserHasRestaurant(string userId)
         {
             return await dbContext.Restaurants.SingleOrDefaultAsync(r => r.OwnerId == userId) != null;
-        }
-
-        /// <summary>
-        /// A jelenleg bejelentkezett felhasználó egyedi azonosítójának lekérdezése.
-        /// </summary>
-        /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
-        public string GetCurrentUserId()
-        {
-            return accessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
-                        accessor.HttpContext.User.FindFirstValue("sub");
-        }
-    }
-
-    /// <summary>
-    ///  Az felhasználóhoz kapcsolódó extension metódusok.
-    /// </summary>
-    internal static class UserRepositoryExtensions
-    {
-        /// <summary>
-        /// A lakcím típusú modell osztályok átalakítása adatátviteli objektumok listájává.
-        /// </summary>
-        /// <param name="addresses">Cím típusú lekérdezés.</param>
-        /// <returns>A lakcímek adatait tartalmazó adatátviteli objektumok listája.</returns>
-        public static async Task<IReadOnlyCollection<AddressWithIdDto>> ToAddressWithIdDtoList(this IQueryable<UserAddress> addresses)
-        {
-            return await addresses.Select(a => new AddressWithIdDto(a)).ToListAsync();
-        }
-
-        /// <summary>
-        /// Az lakcím modell osztály átalakítása adatátviteli objektummá.
-        /// A metódus nem tartalmaz await operátort, így nem kéne async-nek lenni,
-        /// de mivel a többi hasonló extension metódus (pl.: ToRestaurantDetialsDto()) tartalmaz ilyet,
-        /// így az egységes kezelés/használat érdekében ebben az esetben is meghagytam az async jelzőt.
-        /// </summary>
-        /// <param name="address">Cím típusú entitiás.</param>
-        /// <returns>A lakcím adatait tartalmazó adatátviteli objektum.</returns>
-#pragma warning disable CS1998
-        public static async Task<AddressWithIdDto> ToAddressWithIdDto(this EntityEntry<UserAddress> address)
-#pragma warning restore CS1998
-        {
-            return new AddressWithIdDto(address.Entity);
-        }
-
-        /// <summary>
-        /// Leellenőrzi, hogy az átadott felhasználó típusú modell osztáy null-e,
-        /// ha igen, akkor ezt egy EntityNotFound kivétellel jelezzük.
-        /// </summary>
-        /// <param name="user">Felhasználó típusú modell osztály.</param>
-        /// <param name="errorMessage">Hibaüzenet szövege.</param>
-        /// <returns>Felhasználó típusú modell osztály.</returns>
-        public static ApplicationUser CheckIfUserNull(this ApplicationUser user,
-            string errorMessage = "A felhasználó nem található.")
-        {
-            if (user == null)
-            {
-                throw new EntityNotFoundException(errorMessage);
-            }
-            return user;
-        }
-
-        /// <summary>
-        /// Leellenőrzi, hogy az átadott lakcím típusú modell osztáy null-e,
-        /// ha igen, akkor ezt egy EntityNotFound kivétellel jelezzük.
-        /// </summary>
-        /// <param name="userAddress">Lakcím típusú modell osztály.</param>
-        /// <param name="errorMessage">Hibaüzenet szövege.</param>
-        /// <returns>Lakcím típusú modell osztály.</returns>
-        public static UserAddress CheckIfUserAddressNull(this UserAddress userAddress,
-            string errorMessage = "A felhasználó lakcíme nem található.")
-        {
-            if (userAddress == null)
-            {
-                throw new EntityNotFoundException(errorMessage);
-            }
-            return userAddress;
         }
     }
 }
