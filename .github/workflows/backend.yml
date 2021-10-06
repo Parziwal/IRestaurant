@@ -1,0 +1,57 @@
+name: ASP.NET Backend build, test and deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - Backend/**
+  pull_request:
+    branches: [ main ]
+    paths:
+      - Backend/**
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+      
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: Backend
+      
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: Backend
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: Backend
+      
+    - name: Release build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: Backend
+
+    - name: Publish IRestaurant.Auth
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant-auth
+      working-directory: Backend/IRestaurant.Auth
+    
+    - name: Publish IRestaurant.WebAPI
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant-webapi
+      working-directory: Backend/IRestaurant.WebAPI
+
+    - name: Deploy IRestaurant.Auth to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: IRestaurant
+        slot-name: Production
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AUTH }}
+        package: ${{env.DOTNET_ROOT}}/irestaurant-auth
+
