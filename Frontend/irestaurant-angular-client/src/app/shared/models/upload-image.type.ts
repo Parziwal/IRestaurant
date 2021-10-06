@@ -1,3 +1,3 @@
 export interface UploadImage {
-    imageFile: File;
+  imageFile: File;
 }

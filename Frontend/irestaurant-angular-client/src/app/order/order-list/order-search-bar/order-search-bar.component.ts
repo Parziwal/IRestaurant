@@ -7,10 +7,9 @@ import { OrderService } from '../../order.service';
 @Component({
   selector: 'app-order-search-bar',
   templateUrl: './order-search-bar.component.html',
-  styleUrls: ['./order-search-bar.component.css']
+  styleUrls: ['./order-search-bar.component.css'],
 })
 export class OrderSearchBarComponent implements OnInit {
-
   /** Törlési ikon. */
   faTimes = faTimes;
 
@@ -21,16 +20,15 @@ export class OrderSearchBarComponent implements OnInit {
   @Output() refreshOrderList = new EventEmitter<void>();
 
   /** A lehetséges rendezési szempontokat tartalmazó lista. */
-  orderSortByOptions = Object.keys(OrderSortBy)
-    .map(s => ({
-      value: s,
-      text: this.orderService.getOrderSortByInString(s as OrderSortBy)
-    }));
+  orderSortByOptions = Object.keys(OrderSortBy).map((s) => ({
+    value: s,
+    text: this.orderService.getOrderSortByInString(s as OrderSortBy),
+  }));
 
   /** Azon rendelési dátumokat tartalmazza, amik az alsó határát jelentik a kilistázott rendeléseknek. */
-  orderDateOptions: {value: string, text: string}[] = [];
+  orderDateOptions: { value: string; text: string }[] = [];
 
-  constructor(private orderService: OrderService) { }
+  constructor(private orderService: OrderService) {}
 
   ngOnInit() {
     this.initOrderMinDateOptions();
@@ -39,25 +37,39 @@ export class OrderSearchBarComponent implements OnInit {
 
   private initOrderMinDateOptions() {
     this.orderDateOptions = [
-      { value: new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString(), text: "Előző 30 napban" },
-      { value: new Date(new Date().setMonth(new Date().getMonth() - 3)).toISOString(), text: "Előző 3 hónapban" }
+      {
+        value: new Date(
+          new Date().setMonth(new Date().getMonth() - 1)
+        ).toISOString(),
+        text: 'Előző 30 napban',
+      },
+      {
+        value: new Date(
+          new Date().setMonth(new Date().getMonth() - 3)
+        ).toISOString(),
+        text: 'Előző 3 hónapban',
+      },
     ];
 
     for (let i = new Date().getFullYear(); i > 2010; i--) {
-      this.orderDateOptions.push(
-        { value: new Date(new Date().setFullYear(i, 0, 1)).toISOString() + "#" +  new Date(new Date().setFullYear(i + 1, 0, 1)).toISOString(), text: i.toString()}
-      );
+      this.orderDateOptions.push({
+        value:
+          new Date(new Date().setFullYear(i, 0, 1)).toISOString() +
+          '#' +
+          new Date(new Date().setFullYear(i + 1, 0, 1)).toISOString(),
+        text: i.toString(),
+      });
     }
 
     this.search.orderMinDate = this.orderDateOptions[0].value;
   }
-                                
- /**
-  * A kereső mező törlése és a rendelések listájának frissítése.
-  */
+
+  /**
+   * A kereső mező törlése és a rendelések listájának frissítése.
+   */
   clearBrowser() {
-    this.search.restaurantName = "";
-    this.search.guestName = "";
+    this.search.restaurantName = '';
+    this.search.guestName = '';
     this.refreshOrderList.emit();
   }
 
@@ -67,8 +79,8 @@ export class OrderSearchBarComponent implements OnInit {
    * @param dateRange A kiválasztott rendelési dátum tartomány.
    */
   orderDateRangeChanged(dateRange: string) {
-    this.search.orderMinDate = dateRange.split("#")[0];
-    let maxDate = dateRange.split("#")[1];
+    this.search.orderMinDate = dateRange.split('#')[0];
+    let maxDate = dateRange.split('#')[1];
     if (maxDate === undefined) {
       delete this.search.orderMaxDate;
     } else {

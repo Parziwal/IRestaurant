@@ -8,18 +8,19 @@ import { ReviewService } from '../../review.service';
 @Component({
   selector: 'app-add-review-dialog',
   templateUrl: './add-review-dialog.component.html',
-  styleUrls: ['./add-review-dialog.component.css']
+  styleUrls: ['./add-review-dialog.component.css'],
 })
 export class AddReviewDialogComponent implements OnInit {
-
   /** Az értékeléshez tartozó űrlap. */
   reviewForm!: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef<AddReviewDialogComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<AddReviewDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private restaurantId: number,
     private restaurantService: RestaurantService,
     private reviewService: ReviewService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -27,9 +28,16 @@ export class AddReviewDialogComponent implements OnInit {
 
   private initForm() {
     this.reviewForm = new FormGroup({
-      title: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
-      rating: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(5)]),
-      description: new FormControl(null, [Validators.maxLength(10000)])
+      title: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(200),
+      ]),
+      rating: new FormControl(1, [
+        Validators.required,
+        Validators.min(1),
+        Validators.max(5),
+      ]),
+      description: new FormControl(null, [Validators.maxLength(10000)]),
     });
   }
 
@@ -42,13 +50,16 @@ export class AddReviewDialogComponent implements OnInit {
       return;
     }
 
-    this.reviewService.addReviewToRestaurant({...this.reviewForm.value, restaurantId: this.restaurantId }).subscribe(
-      () => {
-          this.dialogRef.close(true);
-          this.restaurantService.restaurantRatingChanged.next();
-          this.toastr.success('Az értékelés hozzáadásra került!');
-      }
-    );
+    this.reviewService
+      .addReviewToRestaurant({
+        ...this.reviewForm.value,
+        restaurantId: this.restaurantId,
+      })
+      .subscribe(() => {
+        this.dialogRef.close(true);
+        this.restaurantService.restaurantRatingChanged.next();
+        this.toastr.success('Az értékelés hozzáadásra került!');
+      });
   }
 
   /**
@@ -57,27 +68,32 @@ export class AddReviewDialogComponent implements OnInit {
    * @returns A hibaüzenet.
    */
   getErrorMessage(controlName: string) {
-    if (this.reviewForm.get(controlName)?.hasError("required")) {
-      return "A mező kitöltése kötelező!";
+    if (this.reviewForm.get(controlName)?.hasError('required')) {
+      return 'A mező kitöltése kötelező!';
     }
-    if (this.reviewForm.get(controlName)?.hasError("maxlength")) {
-      return `A mező értéke nem lépheti át a(z) ${this.reviewForm.get(controlName)?.errors?.maxlength.requiredLength} karakteres limitet!`;
+    if (this.reviewForm.get(controlName)?.hasError('maxlength')) {
+      return `A mező értéke nem lépheti át a(z) ${
+        this.reviewForm.get(controlName)?.errors?.maxlength.requiredLength
+      } karakteres limitet!`;
     }
-    if (this.reviewForm.get(controlName)?.hasError("min")) {
-      return `A mező értéke nem lehet kisebb mint ${this.reviewForm.get(controlName)?.errors?.min.min}!`;
+    if (this.reviewForm.get(controlName)?.hasError('min')) {
+      return `A mező értéke nem lehet kisebb mint ${
+        this.reviewForm.get(controlName)?.errors?.min.min
+      }!`;
     }
-    if (this.reviewForm.get(controlName)?.hasError("max")) {
-      return `A mező értéke nem lehet nagyobb mint ${this.reviewForm.get(controlName)?.errors?.max.max}!`;
+    if (this.reviewForm.get(controlName)?.hasError('max')) {
+      return `A mező értéke nem lehet nagyobb mint ${
+        this.reviewForm.get(controlName)?.errors?.max.max
+      }!`;
     }
 
     return null;
   }
 
-  
   /**
    * A dialógus ablak bezárása, és visszajelzés, hogy nem hoztak létre értékelést.
    */
-   cancel() {
+  cancel() {
     this.dialogRef.close(false);
   }
 }

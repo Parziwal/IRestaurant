@@ -1,53 +1,53 @@
 mat-form-field {
-    width: 80px;
-    height: 70px;
-    margin-right: 20px;
+  width: 80px;
+  height: 70px;
+  margin-right: 20px;
 }
 
 .plus-button {
-    border-radius: 30px;
-    font-size: x-large;
-    padding: 5px 12px;
+  border-radius: 30px;
+  font-size: x-large;
+  padding: 5px 12px;
 }
 
 p {
-    margin: 0px;
+  margin: 0px;
 }
 
 .chosen-food-list {
-    height: 450px;
-    max-width: 95%;
-    border-radius: 8px;
-    padding: 0px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    position: relative;
+  height: 450px;
+  max-width: 95%;
+  border-radius: 8px;
+  padding: 0px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: relative;
 }
 
 .chosen-food-delete {
-    border-width: 0px;
+  border-width: 0px;
 }
 
-.chosen-food-list .list-group{
-    overflow-y: auto;
-    height: 350px;
+.chosen-food-list .list-group {
+  overflow-y: auto;
+  height: 350px;
 }
 
 .chosen-food-total {
-    background-color: rgb(228, 228, 228);
-    font-weight: bold;
-    font-size: large;
-    padding: 10px;
-    height: 50px;
-    position: absolute;
-    bottom: 50px;
-    left: 0px;
-    right: 0px;
+  background-color: rgb(228, 228, 228);
+  font-weight: bold;
+  font-size: large;
+  padding: 10px;
+  height: 50px;
+  position: absolute;
+  bottom: 50px;
+  left: 0px;
+  right: 0px;
 }
 
 .next-button {
-    height: 50px;
-    border-radius: 0px 0px 8px 8px;
-    position: absolute;
-    bottom: 0px;
+  height: 50px;
+  border-radius: 0px 0px 8px 8px;
+  position: absolute;
+  bottom: 0px;
 }

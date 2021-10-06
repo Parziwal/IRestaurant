@@ -13,48 +13,49 @@ import { RestaurantService } from '../restaurant.service';
 @Component({
   selector: 'app-restaurant-list',
   templateUrl: './restaurant-list.component.html',
-  styleUrls: ['./restaurant-list.component.css']
+  styleUrls: ['./restaurant-list.component.css'],
 })
 export class RestaurantListComponent implements OnInit {
-
   /** Az éttermek áttekintő adatai. */
-  restaurantOverviewPagedList: Observable<PagedList<RestaurantOverview>> = new Observable();
+  restaurantOverviewPagedList: Observable<PagedList<RestaurantOverview>> =
+    new Observable();
+
   /** A keresési feltétel. */
   search: RestaurantSearch = <RestaurantSearch>{
-    nameOrShortDescriptionOrCity: "",
-    sortBy: RestaurantSortBy.NAME_ASC
+    nameOrShortDescriptionOrCity: '',
+    sortBy: RestaurantSortBy.NAME_ASC,
   };
+
   /** Törlési ikon. */
   faTimes = faTimes;
 
   private restaurantListType: RestaurantListType = RestaurantListType.All;
 
-  constructor(private restaurantService: RestaurantService,
+  constructor(
+    private restaurantService: RestaurantService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getRouteData();
   }
 
   private getRouteData() {
-    this.route.data.subscribe(
-      (data) => {
-        if (data.restaurantListType) {
-          this.restaurantListType = data.restaurantListType;
-        }
-        this.route.queryParams.subscribe(
-          params => {
-            this.search.nameOrShortDescriptionOrCity = params.nameOrShortDescriptionOrCity ?? "";
-            this.search.sortBy = params.sortBy ?? RestaurantSortBy.NAME_ASC;
-            this.search.pageNumber = params.pageNumber ?? 1;
-            this.search.pageSize = params.pageSize ?? 10;
-
-            this.getRestaurantList();
-          }
-        );
+    this.route.data.subscribe((data) => {
+      if (data.restaurantListType) {
+        this.restaurantListType = data.restaurantListType;
       }
-    );
+      this.route.queryParams.subscribe((params) => {
+        this.search.nameOrShortDescriptionOrCity =
+          params.nameOrShortDescriptionOrCity ?? '';
+        this.search.sortBy = params.sortBy ?? RestaurantSortBy.NAME_ASC;
+        this.search.pageNumber = params.pageNumber ?? 1;
+        this.search.pageSize = params.pageSize ?? 10;
+
+        this.getRestaurantList();
+      });
+    });
   }
 
   /**
@@ -64,15 +65,16 @@ export class RestaurantListComponent implements OnInit {
    */
   getRestaurantList() {
     if (this.restaurantListType === RestaurantListType.Favourite) {
-      this.restaurantOverviewPagedList = this.restaurantService.getGuestFavouriteRestaurantList(this.search);
+      this.restaurantOverviewPagedList =
+        this.restaurantService.getGuestFavouriteRestaurantList(this.search);
     } else {
-      this.restaurantOverviewPagedList = this.restaurantService.getRestaurantList(this.search);
+      this.restaurantOverviewPagedList =
+        this.restaurantService.getRestaurantList(this.search);
     }
-    this.router.navigate([], 
-      {
-        relativeTo: this.route,
-        queryParams: this.search
-      });
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: this.search,
+    });
   }
 
   /**

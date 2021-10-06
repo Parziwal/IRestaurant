@@ -22,7 +22,10 @@ import { EditRestaurantComponent } from './restaurant/edit-restaurant/edit-resta
 import { EditFoodDialogComponent } from './food/edit-food-list/edit-food-dialog/edit-food-dialog.component';
 import { EditFoodListComponent } from './food/edit-food-list/edit-food-list.component';
 import { RestaurantSettingsComponent } from './restaurant/restaurant-settings/restaurant-settings.component';
-import { DropdownDirective, DropdownMenuDirective } from './shared/directives/dropdown.directive';
+import {
+  DropdownDirective,
+  DropdownMenuDirective,
+} from './shared/directives/dropdown.directive';
 import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 import { ConfirmationDialogComponent } from './shared/components/confirmation-dialog/confirmation-dialog.component';
 import { RestaurantReviewListComponent } from './review/restaurant-review-list/restaurant-review-list.component';
@@ -30,9 +33,9 @@ import { RestaurantReviewListItemComponent } from './review/restaurant-review-li
 import { AddReviewDialogComponent } from './review/restaurant-review-list/add-review-dialog/add-review-dialog.component';
 import { GuestReviewListComponent } from './review/guest-review-list/guest-review-list.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
-import { OrderListItemComponent } from './order/order-list/order-list-item/order-list-item.component';
+import { OrderListItemComponent } from './order/order-list/order-tab/order-list-item/order-list-item.component';
 import { OrderDetailsComponent } from './order/order-details/order-details.component';
-import { ChangeOrderStatusDialogComponent } from './order/order-list/order-list-item/change-order-status-dialog/change-order-status-dialog.component';
+import { ChangeOrderStatusDialogComponent } from './order/order-list/order-tab/order-list-item/change-order-status-dialog/change-order-status-dialog.component';
 import { CreateOrderComponent } from './order/create-order/create-order.component';
 import { ChooseFoodsComponent } from './order/create-order/choose-foods/choose-foods.component';
 import { DeliveryDetailsComponent } from './order/create-order/delivery-details/delivery-details.component';
@@ -83,7 +86,7 @@ registerLocaleData(localeHu, 'hu');
     FooterComponent,
     RestaurantSearchBarComponent,
     OrderTabComponent,
-    OrderSearchBarComponent
+    OrderSearchBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,13 +99,13 @@ registerLocaleData(localeHu, 'hu');
     NgxSpinnerModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
-    AngularMaterialModule
+    AngularMaterialModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'hu' },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}

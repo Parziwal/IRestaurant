@@ -1,22 +1,37 @@
-<app-restaurant-search-bar [search]="search" (refreshRestaurantList)="getRestaurantList()"></app-restaurant-search-bar>
+<app-restaurant-search-bar
+  [search]="search"
+  (refreshRestaurantList)="getRestaurantList()"
+></app-restaurant-search-bar>
 <ng-template #spinner>
-    <app-spinner *ngIf="!(restaurantOverviewPagedList | async)"></app-spinner>
+  <app-spinner *ngIf="!(restaurantOverviewPagedList | async)"></app-spinner>
 </ng-template>
-<ng-container *ngIf="restaurantOverviewPagedList | async as restaurantPagedList;else spinner">
-    <div class="row justify-content-center">
-        <div *ngIf="restaurantPagedList.result?.length === 0" class="col-auto mx-auto">
-            <h1>Nincs találat</h1>
-        </div>
-        <app-restaurant-list-item class="col-xl-3 col-lg-4 col-md-6"
-            *ngFor="let restaurant of restaurantPagedList?.result"
-            [restaurantOverview]="restaurant">
-        </app-restaurant-list-item>
+<ng-container
+  *ngIf="
+    restaurantOverviewPagedList | async as restaurantPagedList;
+    else spinner
+  "
+>
+  <div class="row justify-content-center">
+    <div
+      *ngIf="restaurantPagedList.result?.length === 0"
+      class="col-auto mx-auto"
+    >
+      <h1>Nincs találat</h1>
     </div>
-    <mat-paginator [length]="restaurantPagedList.totalItemCount"
-              [pageSize]="restaurantPagedList.pageSize"
-              [pageSizeOptions]="[5, 10, 20, 50]"
-              [pageIndex]="search.pageNumber - 1"
-              (page)="pageOptionsChanged($event)"
-              aria-label="Oldal kiválasztása">
-    </mat-paginator>
+    <app-restaurant-list-item
+      class="col-xl-3 col-lg-4 col-md-6"
+      *ngFor="let restaurant of restaurantPagedList?.result"
+      [restaurantOverview]="restaurant"
+    >
+    </app-restaurant-list-item>
+  </div>
+  <mat-paginator
+    [length]="restaurantPagedList.totalItemCount"
+    [pageSize]="restaurantPagedList.pageSize"
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    [pageIndex]="search.pageNumber - 1"
+    (page)="pageOptionsChanged($event)"
+    aria-label="Oldal kiválasztása"
+  >
+  </mat-paginator>
 </ng-container>

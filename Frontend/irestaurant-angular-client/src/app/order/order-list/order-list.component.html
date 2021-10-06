@@ -1,17 +1,24 @@
-<app-order-search-bar [search]="search" (refreshOrderList)="refreshOrderPagedList()"></app-order-search-bar>
+<app-order-search-bar
+  [search]="search"
+  (refreshOrderList)="refreshOrderPagedList()"
+></app-order-search-bar>
 <mat-tab-group dynamicHeight (selectedTabChange)="selectedTabChanged($event)">
-    <mat-tab *ngFor="let tabLabel of tabsLabelList" [label]="tabLabel">
-        <ng-template matTabContent>
-            <app-order-tab [orderOverviewPagedList]="orderOverviewPagedList"></app-order-tab>
-        </ng-template>
-    </mat-tab>
+  <mat-tab *ngFor="let tabLabel of tabsLabelList" [label]="tabLabel">
+    <ng-template matTabContent>
+      <app-order-tab
+        [orderOverviewPagedList]="orderOverviewPagedList"
+      ></app-order-tab>
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>
 <ng-container *ngIf="orderOverviewPagedList | async as orderPagedList">
-    <mat-paginator [length]="orderPagedList.totalItemCount"
-        [pageSize]="orderPagedList.pageSize"
-        [pageSizeOptions]="[5, 10, 20, 50]"
-        [pageIndex]="search.pageNumber - 1"
-        (page)="pageOptionsChanged($event)"
-        aria-label="Oldal kiválasztása">
-    </mat-paginator>
+  <mat-paginator
+    [length]="orderPagedList.totalItemCount"
+    [pageSize]="orderPagedList.pageSize"
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    [pageIndex]="search.pageNumber - 1"
+    (page)="pageOptionsChanged($event)"
+    aria-label="Oldal kiválasztása"
+  >
+  </mat-paginator>
 </ng-container>

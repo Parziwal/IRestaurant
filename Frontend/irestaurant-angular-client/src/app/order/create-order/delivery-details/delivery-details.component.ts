@@ -9,25 +9,33 @@ import { OrderService } from '../../order.service';
 @Component({
   selector: 'app-delivery-details',
   templateUrl: './delivery-details.component.html',
-  styleUrls: ['./delivery-details.component.css']
+  styleUrls: ['./delivery-details.component.css'],
 })
 export class DeliveryDetailsComponent implements OnInit {
-
   /** A kiszállítási adatok űrlapja. */
   deliveryForm!: FormGroup;
+
   /** A kiválasztott számlázási cím azonosítója. A -1 új címet jelent. */
   selectedAddressId: number = -1;
+
   /** A vendég számlázási címeit tartalmazó lista. */
   guestAddresses: Observable<UserAddressWithId[]> = new Observable();
+
   /** Jelzi, ha a felhasználó már megadta a kiszállítási adatait. */
-  @Output()  deliveryDetailsCompleted = new EventEmitter<boolean>();
+  @Output() deliveryDetailsCompleted = new EventEmitter<boolean>();
+
   /** A kívánt kiszállítási időnek minimum a megadott órával a rendelés leadása után kell lennie. */
   minHourAfterOrder: number = 1;
-  /** A kívánt kiszállítási időnek megadható minimum dátum. */
-  minDateTime: Date = new Date(new Date().setHours(new Date().getHours() + this.minHourAfterOrder));
 
-  constructor(private guestAddressService: GuestAddressService,
-    private orderService: OrderService) { }
+  /** A kívánt kiszállítási időnek megadható minimum dátum. */
+  minDateTime: Date = new Date(
+    new Date().setHours(new Date().getHours() + this.minHourAfterOrder)
+  );
+
+  constructor(
+    private guestAddressService: GuestAddressService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -41,13 +49,29 @@ export class DeliveryDetailsComponent implements OnInit {
    */
   private initForm() {
     this.deliveryForm = new FormGroup({
-        preferredDeliveryDate: new FormControl(null, [Validators.required, dateTimeMin(this.minDateTime)]),
-        address: new FormGroup({
-          zipCode: new FormControl(null, [Validators.required, Validators.min(1000), Validators.max(9999)]),
-          city: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
-          street: new FormControl(null, [Validators.required, Validators.maxLength(200)]),
-          phoneNumber: new FormControl(null, [Validators.required, Validators.pattern("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}")])
-        })
+      preferredDeliveryDate: new FormControl(null, [
+        Validators.required,
+        dateTimeMin(this.minDateTime),
+      ]),
+      address: new FormGroup({
+        zipCode: new FormControl(null, [
+          Validators.required,
+          Validators.min(1000),
+          Validators.max(9999),
+        ]),
+        city: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(100),
+        ]),
+        street: new FormControl(null, [
+          Validators.required,
+          Validators.maxLength(200),
+        ]),
+        phoneNumber: new FormControl(null, [
+          Validators.required,
+          Validators.pattern('[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}'),
+        ]),
+      }),
     });
 
     this.deliveryForm.valueChanges.subscribe(() => {
@@ -80,27 +104,31 @@ export class DeliveryDetailsComponent implements OnInit {
       zipCode: address.zipCode,
       city: address.city,
       street: address.street,
-      phoneNumber: address.phoneNumber
+      phoneNumber: address.phoneNumber,
     });
     this.deliveryForm.controls.address.disable();
   }
 
-    /**
+  /**
    * A paraméterként átadott vezérlő neve alapján a hozzá tartozó hibaüzenet lekérdezése.
    * @param controlName A vezérlő neve.
    * @returns A hibaüzenet.
    */
   getErrorMessage(controlName: string) {
-    if (this.deliveryForm.get(controlName)?.hasError("required")) {
-      return "A mező kitöltése kötelező!";
+    if (this.deliveryForm.get(controlName)?.hasError('required')) {
+      return 'A mező kitöltése kötelező!';
     }
-    if (this.deliveryForm.get(controlName)?.hasError("maxlength")) {
-      return `A mező értéke nem lépheti át a(z) ${this.deliveryForm.get(controlName)?.errors?.maxlength.requiredLength} karakteres limitet!`;
+    if (this.deliveryForm.get(controlName)?.hasError('maxlength')) {
+      return `A mező értéke nem lépheti át a(z) ${
+        this.deliveryForm.get(controlName)?.errors?.maxlength.requiredLength
+      } karakteres limitet!`;
     }
-    if (this.deliveryForm.get(controlName)?.hasError("min")) {
-      return `A mező értéke nem lehet kisebb mint ${this.deliveryForm.get(controlName)?.errors?.min.min}!`;
+    if (this.deliveryForm.get(controlName)?.hasError('min')) {
+      return `A mező értéke nem lehet kisebb mint ${
+        this.deliveryForm.get(controlName)?.errors?.min.min
+      }!`;
     }
-    if (this.deliveryForm.get(controlName)?.hasError("dateTimeMin")) {
+    if (this.deliveryForm.get(controlName)?.hasError('dateTimeMin')) {
       return `A kívánt kiszállítási időnek minimum ${this.minHourAfterOrder} órával a rendelés leadása után kell lennie!`;
     }
 
@@ -114,24 +142,23 @@ export class DeliveryDetailsComponent implements OnInit {
    */
   onSubmit() {
     if (this.selectedAddressId == -1) {
-      this.guestAddressService.createUserAddress(this.deliveryForm.controls.address.value).subscribe(
-        (createdAddress: UserAddressWithId) => {
+      this.guestAddressService
+        .createUserAddress(this.deliveryForm.controls.address.value)
+        .subscribe((createdAddress: UserAddressWithId) => {
           this.changeDeliveryDetails(createdAddress.id);
-        }
-      );
+        });
     } else {
       this.changeDeliveryDetails(this.selectedAddressId);
     }
   }
 
   private changeDeliveryDetails(addressId: number) {
-    this.orderService.deliveryDetailsChange.next(
-      {
-        ...this.deliveryForm.value, 
-        address: {
-          ...this.deliveryForm.controls.address.value,
-          id: addressId 
-    }});
+    this.orderService.deliveryDetailsChange.next({
+      ...this.deliveryForm.value,
+      address: {
+        ...this.deliveryForm.controls.address.value,
+        id: addressId,
+      },
+    });
   }
 }
-

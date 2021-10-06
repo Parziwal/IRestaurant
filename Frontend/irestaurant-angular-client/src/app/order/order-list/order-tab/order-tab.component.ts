@@ -6,11 +6,10 @@ import { OrderOverview } from '../../models/order-overview.type';
 @Component({
   selector: 'app-order-tab',
   templateUrl: './order-tab.component.html',
-  styleUrls: ['./order-tab.component.css']
+  styleUrls: ['./order-tab.component.css'],
 })
 export class OrderTabComponent {
-
   /** A rendelések áttekintő adatait tartalmazza. */
-  @Input() orderOverviewPagedList: Observable<PagedList<OrderOverview>> = new Observable();
-
+  @Input() orderOverviewPagedList: Observable<PagedList<OrderOverview>> =
+    new Observable();
 }

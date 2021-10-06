@@ -14,17 +14,18 @@ import { OrderSortBy } from './models/order-sort-by.type';
 import { OrderStatus } from './models/order-status.type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
+  private orderApiUrl = environment.webApiUrl + '/api/order';
 
-  private orderApiUrl = environment.webApiUrl + "/api/order";
   /** A rendelés létrehozásakor megadott ételek változásának jelzése. */
   chosenFoodsChange = new Subject<OrderFoodWithId[]>();
+
   /** A kiszállítási adatok megváltozásának jelzése. */
   deliveryDetailsChange = new Subject<DeliveryDetials>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Az átadott API URL-ről lekéri a megadott keresési feltételre illeszkedő éttermek áttekintő adatait.
@@ -33,18 +34,19 @@ export class OrderService {
    * @returns A rendelések listája.
    */
   private getOrderListBase(apiUrl: string, search?: OrderSearch) {
-    return this.http.get<PagedList<OrderOverview>>(apiUrl, {
-        params: new HttpParams({fromObject: search as any})
+    return this.http
+      .get<PagedList<OrderOverview>>(apiUrl, {
+        params: new HttpParams({ fromObject: search as any }),
       })
-      .pipe(map(
-      pagedList => {
-        pagedList.result.map(order => {
-          order.statusInString = this.getOrderStatusInString(order.status)
-          return order;
-        });
-        return pagedList;
-      }
-    ));
+      .pipe(
+        map((pagedList) => {
+          pagedList.result.map((order) => {
+            order.statusInString = this.getOrderStatusInString(order.status);
+            return order;
+          });
+          return pagedList;
+        })
+      );
   }
 
   /**
@@ -53,7 +55,7 @@ export class OrderService {
    * @returns A vendég rendeléseinek listája.
    */
   getCurrentGuestOrderList(search?: OrderSearch) {
-    return this.getOrderListBase(`${this.orderApiUrl}/guest`, search)
+    return this.getOrderListBase(`${this.orderApiUrl}/guest`, search);
   }
 
   /**
@@ -71,12 +73,14 @@ export class OrderService {
    * @returns A rendelés részletes adatai.
    */
   getOrderDetails(orderId: number) {
-    return this.http.get<OrderDetails>(`${this.orderApiUrl}/${orderId}`).pipe(map(
-      (orderDetails) => {
-        orderDetails.statusInString = this.getOrderStatusInString(orderDetails.status);
+    return this.http.get<OrderDetails>(`${this.orderApiUrl}/${orderId}`).pipe(
+      map((orderDetails) => {
+        orderDetails.statusInString = this.getOrderStatusInString(
+          orderDetails.status
+        );
         return orderDetails;
-      }
-    ));
+      })
+    );
   }
 
   /**
@@ -86,9 +90,9 @@ export class OrderService {
    */
   setOrderStatus(orderId: number, status: OrderStatus) {
     let params = new HttpParams();
-    params = params.append("status", status.toString());
+    params = params.append('status', status.toString());
     return this.http.patch(`${this.orderApiUrl}/${orderId}`, null, {
-      params: params
+      params: params,
     });
   }
 
@@ -107,17 +111,17 @@ export class OrderService {
    * @returns A státusz szövege.
    */
   getOrderStatusInString(status: OrderStatus) {
-    switch(status) {
+    switch (status) {
       case OrderStatus.PROCESSING:
-        return "Feldolgozás alatt";
+        return 'Feldolgozás alatt';
       case OrderStatus.ORDER_COMPLETION:
-        return "Rendelés összeállítása";
+        return 'Rendelés összeállítása';
       case OrderStatus.UNDER_DELIVERING:
-        return "Kiszállítás alatt";
+        return 'Kiszállítás alatt';
       case OrderStatus.DELIVERED:
-        return "Kiszállítva";
+        return 'Kiszállítva';
       case OrderStatus.CANCELLED:
-        return "Lemondva";
+        return 'Lemondva';
     }
   }
 
@@ -127,15 +131,15 @@ export class OrderService {
    * @returns A rendezés sorrendjének szövege.
    */
   getOrderSortByInString(sortBy: OrderSortBy) {
-    switch(sortBy) {
+    switch (sortBy) {
       case OrderSortBy.CREATED_AT_ASC:
-        return "Rendelési dátum ↑";
+        return 'Rendelési dátum ↑';
       case OrderSortBy.CREATED_AT_DESC:
-        return "Rendelési dátum ↓";
+        return 'Rendelési dátum ↓';
       case OrderSortBy.PREFFERED_DELIVERY_DATE_ASC:
-        return "Kívánt kiszállítási dátum ↑";
+        return 'Kívánt kiszállítási dátum ↑';
       case OrderSortBy.PREFFERED_DELIVERY_DATE_DESC:
-        return "Kívánt kiszállítási dátum ↓";
+        return 'Kívánt kiszállítási dátum ↓';
     }
   }
 }

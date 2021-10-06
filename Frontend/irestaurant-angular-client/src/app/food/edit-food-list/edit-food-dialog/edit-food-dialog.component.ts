@@ -8,17 +8,18 @@ import { Food } from '../../models/food.type';
 @Component({
   selector: 'app-edit-food-dialog',
   templateUrl: './edit-food-dialog.component.html',
-  styleUrls: ['./edit-food-dialog.component.css']
+  styleUrls: ['./edit-food-dialog.component.css'],
 })
 export class EditFoodDialogComponent implements OnInit {
-
   /** Az ételhez tartozó űrlap. */
   foodForm!: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef<EditFoodDialogComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<EditFoodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public food: Food,
     private foodService: FoodService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -26,10 +27,13 @@ export class EditFoodDialogComponent implements OnInit {
 
   private initForm() {
     this.foodForm = new FormGroup({
-      name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(50),
+      ]),
       price: new FormControl(null, [Validators.required, Validators.min(0)]),
       description: new FormControl(null, [Validators.maxLength(1000)]),
-      image: new FormControl(null)
+      image: new FormControl(null),
     });
 
     if (this.food) {
@@ -37,7 +41,7 @@ export class EditFoodDialogComponent implements OnInit {
         name: this.food.name,
         price: this.food.price,
         description: this.food.description,
-        image: null
+        image: null,
       });
       this.foodForm.controls.name.disable();
     }
@@ -56,14 +60,16 @@ export class EditFoodDialogComponent implements OnInit {
     }
 
     if (!this.food) {
-      this.foodService.addFoodToRestaurantMenu(this.foodForm.value).subscribe(
-        () => {
+      this.foodService
+        .addFoodToRestaurantMenu(this.foodForm.value)
+        .subscribe(() => {
           this.dialogRef.close(true);
           this.toastr.success('Az étel hozzáadásra került!');
         });
     } else {
-      this.foodService.editFood(this.food.id, this.foodForm.value).subscribe(
-        () => {
+      this.foodService
+        .editFood(this.food.id, this.foodForm.value)
+        .subscribe(() => {
           this.dialogRef.close(true);
           this.toastr.success('Az étel módosítása sikerült!');
         });
@@ -76,14 +82,18 @@ export class EditFoodDialogComponent implements OnInit {
    * @returns A hibaüzenet.
    */
   getErrorMessage(controlName: string) {
-    if (this.foodForm.get(controlName)?.hasError("required")) {
-      return "A mező kitöltése kötelező!";
+    if (this.foodForm.get(controlName)?.hasError('required')) {
+      return 'A mező kitöltése kötelező!';
     }
-    if (this.foodForm.get(controlName)?.hasError("maxlength")) {
-      return `A mező értéke nem lépheti át a(z) ${this.foodForm.get(controlName)?.errors?.maxlength.requiredLength} karakteres limitet!`;
+    if (this.foodForm.get(controlName)?.hasError('maxlength')) {
+      return `A mező értéke nem lépheti át a(z) ${
+        this.foodForm.get(controlName)?.errors?.maxlength.requiredLength
+      } karakteres limitet!`;
     }
-    if (this.foodForm.get(controlName)?.hasError("min")) {
-      return `A mező értéke nem lehet kisebb mint ${this.foodForm.get(controlName)?.errors?.min.min}!`;
+    if (this.foodForm.get(controlName)?.hasError('min')) {
+      return `A mező értéke nem lehet kisebb mint ${
+        this.foodForm.get(controlName)?.errors?.min.min
+      }!`;
     }
     return null;
   }

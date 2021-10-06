@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/authentication/auth.service';
-import { UserRole } from 'src/app/authentication/user-roles';
+import { UserRole } from 'src/app/authentication/models/user-roles';
 import { environment } from 'src/environments/environment';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
@@ -13,26 +13,32 @@ import { RestaurantService } from '../restaurant.service';
 @Component({
   selector: 'app-restaurant-details',
   templateUrl: './restaurant-details.component.html',
-  styleUrls: ['./restaurant-details.component.css']
+  styleUrls: ['./restaurant-details.component.css'],
 })
 export class RestaurantDetailsComponent implements OnInit, OnDestroy {
-
   /** Az étterem részletes adatai. */
   restaurant!: RestaurantDetails;
+
   /** Az étterem azonosítója. */
   restaurantId!: number;
+
   /** Kedvenc ikon. */
   faStar = faStar;
+
   /** Eltávolítás a kedvencekből ikon. */
   faMinusCircle = faMinusCircle;
+
   /** Az aktuális felhasználó szerepköre. */
   userRole!: Observable<UserRole>;
+
   private ratingChangedSub = new Subscription();
 
-  constructor(private restaurantService: RestaurantService,
+  constructor(
+    private restaurantService: RestaurantService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    private authService: AuthService) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getCurrentUserRole();
@@ -50,17 +56,16 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getRestaurantId() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.restaurantId = +params['id'];
-      }
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.restaurantId = +params['id'];
+    });
   }
 
   private subscribeToRatingChanged() {
-    this.ratingChangedSub = this.restaurantService.restaurantRatingChanged.subscribe(() =>
-      this.getRestaurantDetails()
-    );
+    this.ratingChangedSub =
+      this.restaurantService.restaurantRatingChanged.subscribe(() =>
+        this.getRestaurantDetails()
+      );
   }
 
   /**
@@ -70,25 +75,25 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
    */
   private getRestaurantDetails() {
     let restaurantDetails: Observable<RestaurantDetails> = new Observable();
-    this.authService.currentUserRole.subscribe(
-      role => {
-        if (role === UserRole.Restaurant) {
-          restaurantDetails = this.restaurantService.getMyRestaurantDetails().pipe(tap(
-            (restaurantData: RestaurantDetails) => {
+    this.authService.currentUserRole.subscribe((role) => {
+      if (role === UserRole.Restaurant) {
+        restaurantDetails = this.restaurantService
+          .getMyRestaurantDetails()
+          .pipe(
+            tap((restaurantData: RestaurantDetails) => {
               this.restaurantId = restaurantData.id;
-            }
-          ));
-        } else {
-          restaurantDetails = this.restaurantService.getRestaurantDetails(this.restaurantId);
-        }
+            })
+          );
+      } else {
+        restaurantDetails = this.restaurantService.getRestaurantDetails(
+          this.restaurantId
+        );
       }
-    );
-    
-    restaurantDetails.subscribe(
-      (restaurantData: RestaurantDetails) => { 
-        this.restaurant = restaurantData;
-      }
-    );
+    });
+
+    restaurantDetails.subscribe((restaurantData: RestaurantDetails) => {
+      this.restaurant = restaurantData;
+    });
   }
 
   /**
@@ -96,12 +101,12 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
    * Csak vendég szerepkörrel rendelkező felhasználók esetén használható.
    */
   addRestaurantToFavourite() {
-    this.restaurantService.addRestaurantToFavourite(this.restaurantId).subscribe(
-      () => {
+    this.restaurantService
+      .addRestaurantToFavourite(this.restaurantId)
+      .subscribe(() => {
         this.restaurant.isCurrentGuestFavourite = true;
-        this.toastr.success("Az étterem hozzáadásra került a kedvencekhez.");
-      }
-    );
+        this.toastr.success('Az étterem hozzáadásra került a kedvencekhez.');
+      });
   }
 
   /**
@@ -109,11 +114,11 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
    * Csak vendég szerepkörrel rendelkező felhasználók esetén használható.
    */
   removeRestaurantFromFavourite() {
-    this.restaurantService.removeRestaurantFromFavourite(this.restaurantId).subscribe(
-      () => {
+    this.restaurantService
+      .removeRestaurantFromFavourite(this.restaurantId)
+      .subscribe(() => {
         this.restaurant.isCurrentGuestFavourite = false;
-        this.toastr.success("Az étterem eltávolításra került a kedvencekből.");
-      }
-    );
+        this.toastr.success('Az étterem eltávolításra került a kedvencekből.');
+      });
   }
 }

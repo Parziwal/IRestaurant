@@ -1,4 +1,4 @@
 export enum RestaurantListType {
-    All,
-    Favourite
+  All,
+  Favourite,
 }

@@ -8,24 +8,26 @@ import { OrderService } from 'src/app/order/order.service';
 @Component({
   selector: 'app-change-order-status-dialog',
   templateUrl: './change-order-status-dialog.component.html',
-  styleUrls: ['./change-order-status-dialog.component.css']
+  styleUrls: ['./change-order-status-dialog.component.css'],
 })
 export class ChangeOrderStatusDialogComponent implements OnInit {
-
   /** A rendelés jelenleg kiválasztott státusza. */
   selectedStatus!: OrderStatus;
+
   /** A lehetséges rendelési státuszok listája a hozzá tartozó szöveges reprezentációval. */
   orderStatuses = [
-    {status: OrderStatus.ORDER_COMPLETION, statusInString: ""},
-    {status: OrderStatus.UNDER_DELIVERING, statusInString: ""},
-    {status: OrderStatus.DELIVERED, statusInString: ""},
-    {status: OrderStatus.CANCELLED, statusInString: ""},
+    { status: OrderStatus.ORDER_COMPLETION, statusInString: '' },
+    { status: OrderStatus.UNDER_DELIVERING, statusInString: '' },
+    { status: OrderStatus.DELIVERED, statusInString: '' },
+    { status: OrderStatus.CANCELLED, statusInString: '' },
   ];
 
-  constructor(private dialogRef: MatDialogRef<ChangeOrderStatusDialogComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<ChangeOrderStatusDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public orderOverview: OrderOverview,
     private orderService: OrderService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.setUpOrderStatuses();
@@ -39,8 +41,10 @@ export class ChangeOrderStatusDialogComponent implements OnInit {
     if (this.orderOverview.status !== OrderStatus.PROCESSING) {
       this.orderStatuses.splice(this.orderStatuses.length - 1, 1);
     }
-    this.orderStatuses.forEach(status => {
-      status.statusInString = this.orderService.getOrderStatusInString(status.status);
+    this.orderStatuses.forEach((status) => {
+      status.statusInString = this.orderService.getOrderStatusInString(
+        status.status
+      );
     });
   }
 
@@ -49,12 +53,14 @@ export class ChangeOrderStatusDialogComponent implements OnInit {
    * és a kiválasztott státusz visszaadása.
    */
   onSaveOrderStatus() {
-    this.orderService.setOrderStatus(this.orderOverview.id, this.selectedStatus).subscribe(
-      () => {
+    this.orderService
+      .setOrderStatus(this.orderOverview.id, this.selectedStatus)
+      .subscribe(() => {
         this.dialogRef.close(this.selectedStatus);
-        this.toastr.success("A rendelés státusza sikeressen módosításra került.");
-      }
-    );
+        this.toastr.success(
+          'A rendelés státusza sikeressen módosításra került.'
+        );
+      });
   }
 
   /**

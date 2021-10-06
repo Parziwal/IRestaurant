@@ -1,0 +1,13 @@
+mat-expansion-panel {
+  padding: 0px;
+  margin: 5px !important;
+}
+
+mat-expansion-panel-header {
+  height: auto;
+  padding: 5px;
+}
+
+mat-expansion-panel-header.mat-expanded {
+  height: auto;
+}

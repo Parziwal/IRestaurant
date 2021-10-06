@@ -1,9 +1,12 @@
-import {Injectable} from '@angular/core';
-import {MatPaginatorIntl} from '@angular/material/paginator';
-import {Subject} from 'rxjs';
-import '@angular/localize/init'
+import { Injectable } from '@angular/core';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { Subject } from 'rxjs';
+import '@angular/localize/init';
 
 @Injectable()
+/**
+ * A angular material-os lapozó elem internalizálása.
+ */
 export class HuPaginatorIntl implements MatPaginatorIntl {
   changes = new Subject<void>();
 
@@ -11,8 +14,6 @@ export class HuPaginatorIntl implements MatPaginatorIntl {
   itemsPerPageLabel = $localize`Oldalankénti tételek:`;
   lastPageLabel = $localize`Utolsó oldal`;
 
-  // You can set labels to an arbitrary string too, or dynamically compute
-  // it through other third-party internationalization libraries.
   nextPageLabel = 'Következő oldal';
   previousPageLabel = 'Előző oldal';
 

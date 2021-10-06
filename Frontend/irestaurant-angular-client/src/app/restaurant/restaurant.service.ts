@@ -27,17 +27,14 @@ export class RestaurantService {
    * @param search A keresési feltételeket tartalmazza.
    * @returns Az étteremek áttekintő adatait tartalamazó lista.
    */
-  private getRestaurantListBase(
-    apiUrl: string,
-    search?: RestaurantSearch
-  ) {
+  private getRestaurantListBase(apiUrl: string, search?: RestaurantSearch) {
     return this.http
       .get<PagedList<RestaurantOverview>>(apiUrl, {
-        params: new HttpParams({fromObject: search as any})
+        params: new HttpParams({ fromObject: search as any }),
       })
       .pipe(
-        map(pagedList => {
-          pagedList.result.map(restaurant => {
+        map((pagedList) => {
+          pagedList.result.map((restaurant) => {
             if (restaurant.imagePath.startsWith('http')) {
               return restaurant;
             }
@@ -84,7 +81,7 @@ export class RestaurantService {
     return this.http
       .get<RestaurantDetails>(`${this.restaurantApiUrl}/${restaurantId}`)
       .pipe(
-        map(restaurantData => {
+        map((restaurantData) => {
           if (restaurantData.imagePath.startsWith('http')) {
             return restaurantData;
           }
@@ -140,7 +137,7 @@ export class RestaurantService {
         imageFormData
       )
       .pipe(
-        map(image => {
+        map((image) => {
           if (image.relativeImagePath.startsWith('http')) {
             return image;
           }
@@ -231,19 +228,19 @@ export class RestaurantService {
    * @returns A rendezés sorrendjének szövege.
    */
   getRestaurantSortByInString(sortBy: RestaurantSortBy) {
-    switch(sortBy) {
+    switch (sortBy) {
       case RestaurantSortBy.NAME_ASC:
-        return "Név ↑";
+        return 'Név ↑';
       case RestaurantSortBy.NAME_DESC:
-        return "Név ↓";
+        return 'Név ↓';
       case RestaurantSortBy.RATING_ASC:
-        return "Értékelés ↑";
+        return 'Értékelés ↑';
       case RestaurantSortBy.RATING_DESC:
-        return "Értékelés ↓";
+        return 'Értékelés ↓';
       case RestaurantSortBy.REVIEW_COUNT_ASC:
-        return "Értékelések száma ↑";
+        return 'Értékelések száma ↑';
       case RestaurantSortBy.REVIEW_COUNT_DESC:
-        return "Értékelések száma ↓";
+        return 'Értékelések száma ↓';
     }
   }
 }

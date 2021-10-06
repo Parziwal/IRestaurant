@@ -1,20 +1,36 @@
 <div class="row justify-content-center mb-3">
-    <div class="col-lg-7 col-md-9">
-        <mat-form-field appearance="outline">
-            <input matInput type="text" placeholder="Keresés" [(ngModel)]="search.nameOrShortDescriptionOrCity" (keyup.enter)="refreshRestaurantList.emit()" />
-            <button matSuffix class="btn btn-outline-danger clear-button" *ngIf="search.nameOrShortDescriptionOrCity"
-                (click)="clearBrowser()">
-                <fa-icon [icon]="faTimes"></fa-icon>
-            </button>
-        </mat-form-field>
-    </div>
-    <div class="col-lg-2 col-md-3">
-        <mat-form-field appearance="outline">
-            <mat-select [(value)]="this.search.sortBy" (valueChange)="refreshRestaurantList.emit()">
-                <mat-option *ngFor="let sort of restaurantSortByOptions" [value]="sort.value">
-                {{ sort.text }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+  <div class="col-lg-7 col-md-9">
+    <mat-form-field appearance="outline">
+      <input
+        matInput
+        type="text"
+        placeholder="Keresés"
+        [(ngModel)]="search.nameOrShortDescriptionOrCity"
+        (keyup.enter)="refreshRestaurantList.emit()"
+      />
+      <button
+        matSuffix
+        class="btn btn-outline-danger clear-button"
+        *ngIf="search.nameOrShortDescriptionOrCity"
+        (click)="clearBrowser()"
+      >
+        <fa-icon [icon]="faTimes"></fa-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="col-lg-2 col-md-3">
+    <mat-form-field appearance="outline">
+      <mat-select
+        [(value)]="this.search.sortBy"
+        (valueChange)="refreshRestaurantList.emit()"
+      >
+        <mat-option
+          *ngFor="let sort of restaurantSortByOptions"
+          [value]="sort.value"
+        >
+          {{ sort.text }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>

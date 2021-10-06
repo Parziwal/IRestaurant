@@ -5,25 +5,24 @@ import { RestaurantService } from '../restaurant.service';
 @Component({
   selector: 'app-restaurant-settings',
   templateUrl: './restaurant-settings.component.html',
-  styleUrls: ['./restaurant-settings.component.css']
+  styleUrls: ['./restaurant-settings.component.css'],
 })
 export class RestaurantSettingsComponent {
-
   /** Az étterem beállítási adatai. */
   restaurantSettings!: RestaurantSettings;
 
-  constructor(private restaurantService: RestaurantService) { }
+  constructor(private restaurantService: RestaurantService) {}
 
   ngOnInit(): void {
     this.getRestaurantSettings();
   }
 
   private getRestaurantSettings() {
-    this.restaurantService.getMyRestaurantSettings().subscribe(
-      (restaurantSettings: RestaurantSettings) => {
+    this.restaurantService
+      .getMyRestaurantSettings()
+      .subscribe((restaurantSettings: RestaurantSettings) => {
         this.restaurantSettings = restaurantSettings;
-      }
-    );
+      });
   }
 
   /**
@@ -33,18 +32,22 @@ export class RestaurantSettingsComponent {
   showForUsersStatusChanged() {
     if (this.restaurantSettings.showForUsers) {
       this.restaurantService.showMyRestaurantForUsers().subscribe(
-        ok => {},
-        error => {
-          this.restaurantSettings.showForUsers = !this.restaurantSettings.showForUsers;
+        (ok) => {},
+        (error) => {
+          this.restaurantSettings.showForUsers =
+            !this.restaurantSettings.showForUsers;
         }
       );
     } else {
-      this.restaurantSettings.isOrderAvailable = this.restaurantSettings.showForUsers;
+      this.restaurantSettings.isOrderAvailable =
+        this.restaurantSettings.showForUsers;
       this.restaurantService.hideMyRestaurantForUsers().subscribe(
-        ok => {},
-        error => {
-          this.restaurantSettings.showForUsers = !this.restaurantSettings.showForUsers
-          this.restaurantSettings.isOrderAvailable = this.restaurantSettings.showForUsers;
+        (ok) => {},
+        (error) => {
+          this.restaurantSettings.showForUsers =
+            !this.restaurantSettings.showForUsers;
+          this.restaurantSettings.isOrderAvailable =
+            this.restaurantSettings.showForUsers;
         }
       );
     }
@@ -56,16 +59,18 @@ export class RestaurantSettingsComponent {
   isOrderAvailableStatusChanged() {
     if (this.restaurantSettings.isOrderAvailable) {
       this.restaurantService.turnOnOrderOption().subscribe(
-        ok => {},
-        error => {
-          this.restaurantSettings.isOrderAvailable = !this.restaurantSettings.isOrderAvailable;
+        (ok) => {},
+        (error) => {
+          this.restaurantSettings.isOrderAvailable =
+            !this.restaurantSettings.isOrderAvailable;
         }
       );
     } else {
       this.restaurantService.turnOffOrderOption().subscribe(
-        ok => {},
-        error => {
-          this.restaurantSettings.isOrderAvailable = !this.restaurantSettings.isOrderAvailable;
+        (ok) => {},
+        (error) => {
+          this.restaurantSettings.isOrderAvailable =
+            !this.restaurantSettings.isOrderAvailable;
         }
       );
     }

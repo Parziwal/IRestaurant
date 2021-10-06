@@ -1,16 +1,16 @@
 mat-expansion-panel {
-    padding: 0px;
+  padding: 0px;
 }
 
 mat-expansion-panel-header {
-    height: auto;
-    padding: 15px 25px;
+  height: auto;
+  padding: 15px 25px;
 }
 
 mat-expansion-panel-header.mat-expanded {
-    height: auto;
-}       
+  height: auto;
+}
 
 .review-header {
-    width: 100%;
+  width: 100%;
 }

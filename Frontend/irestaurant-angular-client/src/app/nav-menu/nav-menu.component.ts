@@ -2,22 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { AuthService } from '../authentication/auth.service';
-import { UserRole } from '../authentication/user-roles';
+import { UserRole } from '../authentication/models/user-roles';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  styleUrls: ['./nav-menu.component.css'],
 })
 export class NavMenuComponent implements OnInit {
+  /** A navigációs menü lenyitása. */
   isExpanded = false;
-  userRole!: Observable<UserRole>;
 
-  constructor(private authService: AuthService, private spinner: NgxSpinnerService) {}
+  /** Az aktuális felhasználó szerepköre. */
+  userRole: Observable<UserRole> = new Observable();
+
+  constructor(
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.getAuthenticationData();
-    console.log(window.location.origin);
   }
 
   private getAuthenticationData() {

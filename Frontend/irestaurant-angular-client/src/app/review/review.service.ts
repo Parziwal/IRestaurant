@@ -5,12 +5,12 @@ import { CreateReview } from './models/create-review.type';
 import { Review } from './models/review.type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReviewService {
-  private reviewApiUrl = environment.webApiUrl + "/api/review";
+  private reviewApiUrl = environment.webApiUrl + '/api/review';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * A megadott azonosítójú étteremhez tartozó értékelések lekérése.
@@ -18,7 +18,9 @@ export class ReviewService {
    * @returns Az étterem értékeléseinek listája.
    */
   getRestaurantReviews(restaurantId: number) {
-    return this.http.get<Review[]>(`${this.reviewApiUrl}/restaurant/${restaurantId}`);
+    return this.http.get<Review[]>(
+      `${this.reviewApiUrl}/restaurant/${restaurantId}`
+    );
   }
 
   /**

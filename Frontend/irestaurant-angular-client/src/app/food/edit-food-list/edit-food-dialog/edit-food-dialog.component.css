@@ -1,8 +1,8 @@
 .right-align {
-    text-align: right;
+  text-align: right;
 }
 
 mat-form-field {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }

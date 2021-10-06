@@ -5,13 +5,12 @@ import { UserAddressWithId } from '../shared/models/user-address-with-id.type';
 import { UserAddress } from '../shared/models/user-address.type';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GuestAddressService {
+  private userAddressApiUrl = environment.webApiUrl + '/api/guestaddress/';
 
-  private userAddressApiUrl = environment.webApiUrl + "/api/guestaddress/";
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Az aktuális vendéghez tartozó lakcímek lekérdezése.

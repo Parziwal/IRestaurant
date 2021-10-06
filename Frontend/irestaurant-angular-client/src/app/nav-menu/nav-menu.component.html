@@ -1,52 +1,123 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-md">
     <a class="navbar-brand" routerLink="">
-      <img src="assets/images/irestaurant-logo.png">
+      <img src="assets/images/irestaurant-logo.png" />
     </a>
-    <button (click)="toggle()" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      (click)="toggle()"
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{show: isExpanded}">
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngClass]="{ show: isExpanded }"
+    >
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" routerLink="restaurant" routerLinkActive="active">Kezdőlap</a>
+          <a class="nav-link" routerLink="restaurant" routerLinkActive="active"
+            >Kezdőlap</a
+          >
         </li>
         <ng-container *ngIf="(userRole | async) === 'Guest'">
           <li class="nav-item">
-            <a class="nav-link" routerLink="order" routerLinkActive="active">Rendeléseim</a>
+            <a class="nav-link" routerLink="order" routerLinkActive="active"
+              >Rendeléseim</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="myreviews" routerLinkActive="active">Értékeléseim</a>
+            <a class="nav-link" routerLink="myreviews" routerLinkActive="active"
+              >Értékeléseim</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="restaurant/favourite" routerLinkActive="active">Kedvencek</a>
+            <a
+              class="nav-link"
+              routerLink="restaurant/favourite"
+              routerLinkActive="active"
+              >Kedvencek</a
+            >
           </li>
         </ng-container>
         <ng-container *ngIf="(userRole | async) === 'Restaurant'">
           <li class="nav-item">
-            <a class="nav-link" routerLink="order" routerLinkActive="active">Rendelések</a>
+            <a class="nav-link" routerLink="order" routerLinkActive="active"
+              >Rendelések</a
+            >
           </li>
           <li class="nav-item dropdown" routerLinkActive="active" appDropdown>
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a
+              class="nav-link dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               Étermem
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" appDropdownMenu>
-              <li><a class="dropdown-item" routerLink="myrestaurant" routerLinkActive="active"
-                  [routerLinkActiveOptions]="{exact: true}">Valós nézet</a></li>
-              <li><a class="dropdown-item" routerLink="myrestaurant/edit" routerLinkActive="active">Szerkesztés</a></li>
-              <li><a class="dropdown-item" routerLink="myrestaurant/menu" routerLinkActive="active">Étlap</a></li>
-              <li><a class="dropdown-item" routerLink="myrestaurant/settings" routerLinkActive="active">Beállítások</a></li>
+            <ul
+              class="dropdown-menu"
+              aria-labelledby="navbarDropdown"
+              appDropdownMenu
+            >
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="myrestaurant"
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="{ exact: true }"
+                  >Valós nézet</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="myrestaurant/edit"
+                  routerLinkActive="active"
+                  >Szerkesztés</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="myrestaurant/menu"
+                  routerLinkActive="active"
+                  >Étlap</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  routerLink="myrestaurant/settings"
+                  routerLinkActive="active"
+                  >Beállítások</a
+                >
+              </li>
             </ul>
           </li>
         </ng-container>
         <li class="nav-item">
-          <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active">Rólunk</a>
+          <a class="nav-link" routerLink="kapcsolatok" routerLinkActive="active"
+            >Rólunk</a
+          >
         </li>
       </ul>
-      <div class="d-flex" *ngIf="(userRole | async) === 'NotAuthorized'; else authorizedMenu">
+      <div
+        class="d-flex"
+        *ngIf="(userRole | async) === 'NotAuthorized'; else authorizedMenu"
+      >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <button class="btn btn-link nav-link" (click)="login()">Bejelentkezés</button>
+            <button class="btn btn-link nav-link" (click)="login()">
+              Bejelentkezés
+            </button>
           </li>
         </ul>
       </div>
@@ -54,10 +125,17 @@
         <div class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <button class="btn btn-link nav-link" (click)="navigateToProfile()">Profil</button>
+              <button
+                class="btn btn-link nav-link"
+                (click)="navigateToProfile()"
+              >
+                Profil
+              </button>
             </li>
             <li class="nav-item">
-              <button class="btn btn-link nav-link" (click)="logout()">Kijelentkezés</button>
+              <button class="btn btn-link nav-link" (click)="logout()">
+                Kijelentkezés
+              </button>
             </li>
           </ul>
         </div>

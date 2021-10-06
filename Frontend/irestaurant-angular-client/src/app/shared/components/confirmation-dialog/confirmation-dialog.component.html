@@ -1,5 +1,13 @@
-<h1 md-dialog-content>{{confirmMessage}}</h1>
+<h1 md-dialog-content>{{ confirmMessage }}</h1>
 <div md-dialog-actions class="d-flex justify-content-end">
-    <button type="button" class="btn btn-primary me-3" (click)="dialogRef.close(true)">Igen</button>
-    <button type="button" class="btn btn-danger" (click)="dialogRef.close(false)">Mégse</button>
+  <button
+    type="button"
+    class="btn btn-primary me-3"
+    (click)="dialogRef.close(true)"
+  >
+    Igen
+  </button>
+  <button type="button" class="btn btn-danger" (click)="dialogRef.close(false)">
+    Mégse
+  </button>
 </div>

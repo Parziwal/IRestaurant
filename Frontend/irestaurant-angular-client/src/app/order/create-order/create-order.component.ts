@@ -7,26 +7,31 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.css']
+  styleUrls: ['./create-order.component.css'],
 })
 export class CreateOrderComponent {
-
   /** A vendég kiválasztotta-e már az ételeket. */
   chooseFoodCompleted: boolean = false;
+
   /** A vengég megadta-e már a szállítási adatait. */
   deliveryDetailsCompleted: boolean = false;
+
   /** A rendelés véglegesítésre került. */
   orderFinalizationCompleted: boolean = false;
+
   /** A léptető HTML elem. */
-  @ViewChild("stepper") stepper!: MatStepper;
+  @ViewChild('stepper') stepper!: MatStepper;
+
   /** A léptető elem orientációja. */
   stepperOrientation: Observable<StepperOrientation>;
+
   /** A létrehozott rendelés azonosítója. */
   createdOrderId: number = -1;
 
   constructor(breakpointObserver: BreakpointObserver) {
-    this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
-      .pipe(map(({matches}) => matches ? 'horizontal' : 'vertical'));
+    this.stepperOrientation = breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   /**
