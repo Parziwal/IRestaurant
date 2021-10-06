@@ -35,7 +35,7 @@ namespace IRestaurant.WebAPI.Controllers
         /// <summary>
         /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése a keresési feltétel alapján.
         /// </summary>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Guest)]
         [HttpGet("guest")]
@@ -48,7 +48,7 @@ namespace IRestaurant.WebAPI.Controllers
         /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak
         /// lekérdezése a keresési feltétel alapján.
         /// </summary>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         [Authorize(Policy = UserRoles.Restaurant)]
         [HttpGet("restaurant")]

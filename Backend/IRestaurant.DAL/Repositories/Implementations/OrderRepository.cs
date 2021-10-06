@@ -38,12 +38,16 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                    .Where(o => o.UserId == guestId && search.Statuses.Contains(o.Status))
+                    .Where(o => o.UserId == guestId && 
+                            search.Statuses.Contains(o.Status) &&
+                            o.Invoice.RestaurantName.Contains(search.RestaurantName) &&
+                            o.CreatedAt >= search.OrderMinDate &&
+                            o.CreatedAt < search.OrderMaxDate)
                     .SortBy(search.SortBy)
                     .ToOrderOverviewDtoPagedList(search);
         }
@@ -52,13 +56,17 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId, OrderSearchDto search)
         {
             return await dbContext.Orders
-                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId && search.Statuses.Contains(o.Status))
-                 .SortBy(search.SortBy)
+                .Where(o => o.OrderFoods.First().Food.RestaurantId == restaurantId &&
+                            search.Statuses.Contains(o.Status) &&
+                            o.Invoice.UserFullName.Contains(search.GuestName) &&
+                            o.CreatedAt >= search.OrderMinDate &&
+                            o.CreatedAt < search.OrderMaxDate)
+                .SortBy(search.SortBy)
                 .ToOrderOverviewDtoPagedList(search);
         }
 
@@ -239,14 +247,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
                     return orders.OrderBy(o => o.PreferredDeliveryDate);
                 case OrderSortBy.PREFFERED_DELIVERY_DATE_DESC:
                     return orders.OrderByDescending(o => o.PreferredDeliveryDate);
-                case OrderSortBy.RESTAURANT_NAME_ASC:
-                    return orders.OrderBy(o => o.Invoice.RestaurantName);
-                case OrderSortBy.RESTAURANT_NAME_DESC:
-                    return orders.OrderByDescending(o => o.Invoice.RestaurantName);
-                case OrderSortBy.USER_NAME_ASC:
-                    return orders.OrderBy(o => o.Invoice.UserFullName);
-                case OrderSortBy.USER_NAME_DESC:
-                    return orders.OrderByDescending(o => o.Invoice.UserFullName);
                 default:
                     return orders;
             }

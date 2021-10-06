@@ -18,7 +18,7 @@ namespace IRestaurant.DAL.Repositories
         /// A megadott vendéghez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="guestId">A vendég azonosítója.</param>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A vendég rendeléseinek áttekintő adatai.</returns>
         Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(string guestId, OrderSearchDto search);
 
@@ -26,7 +26,7 @@ namespace IRestaurant.DAL.Repositories
         /// A megadott étteremhez tartozó rendelések áttekintő adatainak lekérése a keresési feltétel alapján.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étterem rendeléseinek áttekintő adatai.</returns>
         Task<PagedListDto<OrderOverviewDto>> GetRestaurantOrderOverviewList(int restaurantId, OrderSearchDto search);
 

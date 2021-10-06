@@ -41,7 +41,7 @@ namespace IRestaurant.BL.Managers
         /// <summary>
         /// Az aktuális vendéghez tartozó rendelések áttekintő adatainak lekérdezése a keresési feltétel alapján.
         /// </summary>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>A bejelentkezett vendég rendelési.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetGuestOrderOverviewList(OrderSearchDto search)
         {
@@ -53,7 +53,7 @@ namespace IRestaurant.BL.Managers
         /// Az aktuális felhasználóhoz tartozó étteremhez leadott rendelések áttekintő adatainak
         /// lekérdezése a keresési feltétel alapján.
         /// </summary>
-        /// <param name="search">Az rendelésre vonatkozó keresési feltétel.</param>
+        /// <param name="search">A rendelésre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremhez beérkező rendelések.</returns>
         public async Task<PagedListDto<OrderOverviewDto>> GetMyRestaurantOrderOverviewList(OrderSearchDto search)
         {
