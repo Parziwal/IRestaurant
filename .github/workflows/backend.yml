@@ -41,11 +41,11 @@ jobs:
       working-directory: Backend
 
     - name: Publish IRestaurant.Auth
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant-auth
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant/irestaurant-auth
       working-directory: Backend/IRestaurant.Auth
     
     - name: Publish IRestaurant.WebAPI
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant-webapi
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/irestaurant/irestaurant-webapi
       working-directory: Backend/IRestaurant.WebAPI
 
     - name: Deploy IRestaurant.Auth to Azure
@@ -54,5 +54,5 @@ jobs:
         app-name: IRestaurantAuth
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AUTH }}
-        package: ${{env.DOTNET_ROOT}}/irestaurant-auth
+        package: ${{env.DOTNET_ROOT}}/irestaurant
 
