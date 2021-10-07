@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  faEdit,
-  faPlusSquare,
-  faTrashAlt,
-  faUpload,
-} from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
@@ -22,18 +16,6 @@ import { UploadFoodImageDialogComponent } from './upload-food-image-dialog/uploa
 export class EditFoodListComponent implements OnInit {
   /** Az étteremhez tartozó ételek listája. */
   foods: Observable<Food[]> = new Observable();
-
-  /** Szerkesztés ikon. */
-  faEdit = faEdit;
-
-  /** Törlés ikon. */
-  faTrashAlt = faTrashAlt;
-
-  /** Hozzáadás ikon. */
-  faPlusSquare = faPlusSquare;
-
-  /** Feltöltés ikon. */
-  faUpload = faUpload;
 
   constructor(
     private foodService: FoodService,

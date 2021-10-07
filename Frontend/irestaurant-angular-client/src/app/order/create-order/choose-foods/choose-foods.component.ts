@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { FoodService } from 'src/app/food/food.service';
 import { Food } from 'src/app/food/models/food.type';
@@ -18,12 +17,6 @@ export class ChooseFoodsComponent implements OnInit {
 
   /** A vendég által kiválasztott ételek listája. */
   chosenFoods: OrderFoodWithId[] = [];
-
-  /** Hozzáadás ikon. */
-  faPlus = faPlus;
-
-  /** Törlés ikon. */
-  faTimes = faTimes;
 
   /** Jelzi, ha a felhasználó már választott ki ételt. */
   @Output() chooseFoodCompleted = new EventEmitter<boolean>();

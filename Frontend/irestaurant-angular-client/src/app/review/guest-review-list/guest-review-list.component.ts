@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
@@ -15,9 +14,6 @@ import { ReviewService } from '../review.service';
 export class GuestReviewListComponent implements OnInit {
   /** Az aktuális vendég értékelései. */
   guestReviews: Observable<Review[]> = new Observable();
-
-  /** Törlési ikon. */
-  faTrashAlt = faTrashAlt;
 
   constructor(
     private reviewService: ReviewService,

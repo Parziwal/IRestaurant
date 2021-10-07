@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { RestaurantSearch } from '../../models/restaurant-search.type';
 import { RestaurantSortBy } from '../../models/restaurant-sort-by.type';
 import { RestaurantService } from '../../restaurant.service';
@@ -10,9 +9,6 @@ import { RestaurantService } from '../../restaurant.service';
   styleUrls: ['./restaurant-search-bar.component.css'],
 })
 export class RestaurantSearchBarComponent {
-  /** Törlési ikon. */
-  faTimes = faTimes;
-
   /** A keresési feltétel. */
   @Input() search: RestaurantSearch = <RestaurantSearch>{};
 

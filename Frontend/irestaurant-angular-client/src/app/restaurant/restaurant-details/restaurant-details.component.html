@@ -9,25 +9,27 @@
       />
       <button
         type="button"
-        class="btn btn-warning btn-lg col-lg-4 col-6 mt-4 mx-auto"
+        class="btn btn-warning btn-lg col-lg-4 col-6 mt-4 mx-auto btn-fav"
         *ngIf="
           (userRole | async) === 'Guest' && !restaurant.isCurrentGuestFavourite
         "
         (click)="addRestaurantToFavourite()"
         title="Hozzáadás a kedvencekhez"
       >
-        <fa-icon [icon]="faStar"></fa-icon>
+        <mat-icon aria-hidden="false" aria-label="Star">star</mat-icon>
       </button>
       <button
         type="button"
-        class="btn btn-danger btn-lg col-lg-4 col-6 mt-4 mx-auto"
+        class="btn btn-danger btn-lg col-lg-4 col-6 mt-4 mx-auto btn-fav"
         *ngIf="
           (userRole | async) === 'Guest' && restaurant.isCurrentGuestFavourite
         "
         (click)="removeRestaurantFromFavourite()"
         title="Eltávolítás a kedvencekből"
       >
-        <fa-icon [icon]="faMinusCircle"></fa-icon>
+        <mat-icon aria-hidden="false" aria-label="Remove Circle"
+          >remove_circle</mat-icon
+        >
       </button>
     </div>
     <div class="col-lg-7 mt-lg-0 mt-4">

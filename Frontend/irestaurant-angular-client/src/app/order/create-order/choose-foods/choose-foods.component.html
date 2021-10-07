@@ -27,7 +27,7 @@
               class="btn btn-success plus-button"
               (click)="addFoodToList(food, amountInput)"
             >
-              <fa-icon [icon]="faPlus"></fa-icon>
+              <mat-icon aria-hidden="false" aria-label="Add">add</mat-icon>
             </button>
           </div>
         </div>
@@ -55,7 +55,7 @@
           class="btn btn-outline-danger chosen-food-delete"
           (click)="deleteFoodFromList(chosenFood)"
         >
-          <fa-icon [icon]="faTimes"></fa-icon>
+          <mat-icon aria-hidden="false" aria-label="Close">close</mat-icon>
         </button>
       </li>
     </ul>

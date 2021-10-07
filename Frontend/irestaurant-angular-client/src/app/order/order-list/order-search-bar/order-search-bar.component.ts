@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { OrderSearch } from '../../models/order-search.type';
 import { OrderSortBy } from '../../models/order-sort-by.type';
 import { OrderService } from '../../order.service';
@@ -10,9 +9,6 @@ import { OrderService } from '../../order.service';
   styleUrls: ['./order-search-bar.component.css'],
 })
 export class OrderSearchBarComponent implements OnInit {
-  /** Törlési ikon. */
-  faTimes = faTimes;
-
   /** A keresési feltétel. */
   @Input() search: OrderSearch = <OrderSearch>{};
 
