@@ -10,6 +10,11 @@ on:
     paths:
       - Frontend/**
   workflow_dispatch:
+  
+env:
+  NODE_VERSION: '14.x'
+  WEBAPP_PACKAGE_PATH: './dist/irestaurant-angular-client'
+  WORKING_DIRECTORY: 'Frontend/irestaurant-angular-client'
 
 jobs:
   build:
@@ -22,13 +27,13 @@ jobs:
     - name: Set up Node.js 14
       uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: ${{ env.NODE_VERSION }}
   
     - run: npm ci
-      working-directory: Frontend/irestaurant-angular-client
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       
     - run: npm run build --if-present
-      working-directory: Frontend/irestaurant-angular-client
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       
     - name: Deploy Angular frontend to Azure
       uses: azure/webapps-deploy@v2
@@ -36,4 +41,4 @@ jobs:
         app-name: IRestaurantAuth
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AUTH }}
-        package: .
+        package: ${{ env.WEBAPP_PACKAGE_PATH }}
