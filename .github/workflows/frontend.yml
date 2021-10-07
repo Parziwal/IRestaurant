@@ -30,9 +30,6 @@ jobs:
     - run: npm run build --if-present
       working-directory: Frontend/irestaurant-angular-client
       
-    - run: npm test
-      working-directory: Frontend/irestaurant-angular-client
-      
     - name: Deploy Angular frontend to Azure
       uses: azure/webapps-deploy@v2
       with:
