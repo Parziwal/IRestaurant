@@ -51,7 +51,7 @@ jobs:
     - name: Deploy IRestaurant.Auth to Azure
       uses: azure/webapps-deploy@v2
       with:
-        app-name: IRestaurantAuth
+        app-name: IRestaurantBackend
         slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_IRESTAURANT_BACKEND }}
         package: ${{env.DOTNET_ROOT}}/irestaurant
