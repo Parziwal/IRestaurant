@@ -4,15 +4,24 @@ img {
   border-radius: 4px;
 }
 
-.add-button {
-  padding: 5px 25px;
+button {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.add-button fa-icon {
+mat-icon {
+  margin-right: 5px;
+}
+
+.add-button {
+  padding: 10px 25px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.add-button mat-icon {
   font-size: xx-large;
+  margin-right: 15px;
 }
 
 .food-name {

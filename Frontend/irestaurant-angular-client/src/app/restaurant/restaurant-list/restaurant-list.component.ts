@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { PagedList } from 'src/app/shared/models/pagedList.type';
 import { RestaurantListType } from '../models/restaurant-list-type.type';
@@ -25,9 +24,6 @@ export class RestaurantListComponent implements OnInit {
     nameOrShortDescriptionOrCity: '',
     sortBy: RestaurantSortBy.NAME_ASC,
   };
-
-  /** Törlési ikon. */
-  faTimes = faTimes;
 
   private restaurantListType: RestaurantListType = RestaurantListType.All;
 

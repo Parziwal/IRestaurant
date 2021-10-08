@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { faMinusCircle, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { UserRole } from 'src/app/authentication/models/user-roles';
-import { environment } from 'src/environments/environment';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
 
@@ -22,14 +20,8 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   /** Az étterem azonosítója. */
   restaurantId!: number;
 
-  /** Kedvenc ikon. */
-  faStar = faStar;
-
-  /** Eltávolítás a kedvencekből ikon. */
-  faMinusCircle = faMinusCircle;
-
   /** Az aktuális felhasználó szerepköre. */
-  userRole!: Observable<UserRole>;
+  userRole: Observable<UserRole> = new Observable();
 
   private ratingChangedSub = new Subscription();
 

@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { registerLocaleData } from '@angular/common';
 import localeHu from '@angular/common/locales/hu';
 
@@ -98,7 +97,6 @@ registerLocaleData(localeHu, 'hu');
     AppRoutingModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
-    FontAwesomeModule,
     AngularMaterialModule,
   ],
   providers: [

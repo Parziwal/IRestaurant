@@ -8,14 +8,16 @@
       <mat-panel-title>
         <div class="review-header">
           <h4>
-            <a [routerLink]="['/restaurant/details', review.restaurantId]">{{
-              review.restaurantName
-            }}</a>
+            <a
+              class="restaurant-name"
+              [routerLink]="['/restaurant/details', review.restaurantId]"
+              >{{ review.restaurantName }}</a
+            >
           </h4>
-          <h5>{{ review.title }}</h5>
           <h6 class="mb-2 text-muted">
             {{ review.createdAt | date: "yyyy.MM.dd" }}
           </h6>
+          <h5>{{ review.title }}</h5>
           <app-rating-bar [rating]="review.rating"></app-rating-bar>
         </div>
       </mat-panel-title>
@@ -27,7 +29,8 @@
         class="btn btn-danger p-3"
         (click)="deleteReview(review)"
       >
-        <fa-icon [icon]="faTrashAlt"></fa-icon> Törlés
+        <mat-icon aria-hidden="false" aria-label="Delete">delete</mat-icon>
+        Törlés
       </button>
     </mat-action-row>
   </mat-expansion-panel>

@@ -1,4 +1,4 @@
-using Hellang.Middleware.ProblemDetails;
+Ôªøusing Hellang.Middleware.ProblemDetails;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
@@ -34,15 +34,13 @@ namespace IRestaurant.WebAPI
         private const string IRESTAURANT_API_SCOPE = "IRestaurantAPIScope";
 
         /// <summary>
-        /// Ez a metÛdus fut·si idıben hÌvÛdik meg. A szolg·ltat·sok beregisztr·l·s·ra haszn·latos.
+        /// Ez a met√≥dus fut√°si id≈ëben h√≠v√≥dik meg. A szolg√°ltat√°sok beregisztr√°l√°s√°ra haszn√°latos.
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"),
-                    //Az adatb·zis migr·ciÛs f·jlok ·thelyezÈse a DAL rÈtegbe.
-                    x => x.MigrationsAssembly("IRestaurant.DAL")));
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
 
@@ -53,7 +51,7 @@ namespace IRestaurant.WebAPI
                 options.Authority = Configuration.GetSection("IRestaurantWebAPI:Authority").Value;
             });
 
-            //Scope Ès szerepkˆr szerinti policy lÈtrehoz·sa.
+            //Scope √©s szerepk√∂r szerinti policy l√©trehoz√°sa.
             services.AddAuthorization(options =>
             {
                 options.AddPolicy(IRESTAURANT_API_SCOPE, policy => {
@@ -77,25 +75,25 @@ namespace IRestaurant.WebAPI
                 });
             });
 
-            // A Swagger szolg·ltat·s beregisztr·l·sa a Swagger middleware haszn·lat·hoz OAuth2 authentik·ciÛval.
+            // A Swagger szolg√°ltat√°s beregisztr√°l√°sa a Swagger middleware haszn√°lat√°hoz OAuth2 authentik√°ci√≥val.
             services.AddOpenApiDocument(c =>
             {
                 c.Version = "v1";
                 c.Title = "Restaurant API";
-                c.Description = "Egy Ètterem kezelı ASP.NET Core webalkalmaz·s REST API leÌr·sa.";
+                c.Description = "Egy √©tterem kezel≈ë ASP.NET Core webalkalmaz√°s REST API le√≠r√°sa.";
                 c.AddSecurity("OAuth2", Configuration.GetSection("Swagger:OpenApiSecurityScheme").Get<NSwag.OpenApiSecurityScheme>());
                 c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("OAuth2"));
             });
 
-            //ProblemDetails Middleware-hez sz¸ksÈges szolg·ltat·sok hozz·ad·sa, Ès konfigur·l·sa.
+            //ProblemDetails Middleware-hez sz√ºks√©ges szolg√°ltat√°sok hozz√°ad√°sa, √©s konfigur√°l√°sa.
             services.AddProblemDetails(options => {
-                // Ez 404 Not Found st·tusz kÛdra cserÈli EntityNotFoundException-t.
+                // Ez 404 Not Found st√°tusz k√≥dra cser√©li EntityNotFoundException-t.
                 options.Map<EntityNotFoundException>((context, exception) => {
                     var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status404NotFound);
                     problemDetails.Title = exception.Message;
                     return problemDetails;
                 });
-                // Ez 400 Bad Request st·tusz kÛdra cserÈli EntityAlreadyExistsException-t.
+                // Ez 400 Bad Request st√°tusz k√≥dra cser√©li EntityAlreadyExistsException-t.
                 options.Map<EntityNotFoundException>((context, exception) => {
                     var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status400BadRequest);
                     problemDetails.Title = exception.Message;
@@ -103,10 +101,10 @@ namespace IRestaurant.WebAPI
                 });
             });
 
-            //A HttpContext-hez valÛ hozz·fÈrÈs miatt(pl.: a jelenlegi felhaszn·lÛ lekÈrÈse).
+            //A HttpContext-hez val√≥ hozz√°f√©r√©s miatt(pl.: a jelenlegi felhaszn√°l√≥ lek√©r√©se).
             services.AddHttpContextAccessor();
 
-            //A DAL rÈtegbeli repository oszt·lyok beregisztr·l·sa.
+            //A DAL r√©tegbeli repository oszt√°lyok beregisztr√°l√°sa.
             services.AddTransient<IRestaurantRepository, RestaurantRepository>();
             services.AddTransient<IFoodRepository, FoodRepository>();
             services.AddTransient<IReviewRepository, ReviewRepository>();
@@ -115,7 +113,7 @@ namespace IRestaurant.WebAPI
             services.AddTransient<IInvoiceRepository, InvoiceRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
 
-            //A BL rÈtegbeli manager oszt·lyok beregisztr·l·sa.
+            //A BL r√©tegbeli manager oszt√°lyok beregisztr√°l√°sa.
             services.AddTransient<RestaurantManager>();
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
@@ -124,7 +122,7 @@ namespace IRestaurant.WebAPI
         }
 
         /// <summary>
-        /// Ez a metÛdus fut·si idıben hÌvÛdik meg. A HTTP kÈrÈsi pipline konfigur·ciÛj·ra haszn·latos.
+        /// Ez a met√≥dus fut√°si id≈ëben h√≠v√≥dik meg. A HTTP k√©r√©si pipline konfigur√°ci√≥j√°ra haszn√°latos.
         /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -133,13 +131,13 @@ namespace IRestaurant.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            //ProblemDetails Middleware hozz·ad·sa a kÈrÈs feldolgozÛ pipeline-hoz
+            //ProblemDetails Middleware hozz√°ad√°sa a k√©r√©s feldolgoz√≥ pipeline-hoz
             app.UseProblemDetails();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            //A Swagger gener·tor Ès a Swagger UI middleware beregisztr·l·sa
+            //A Swagger gener√°tor √©s a Swagger UI middleware beregisztr√°l√°sa
             app.UseOpenApi();
             app.UseSwaggerUi3(config =>
             {

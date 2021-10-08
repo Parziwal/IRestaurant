@@ -3,6 +3,18 @@ img {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.btn-fav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-fav mat-icon {
+  font-size: xx-large;
+  width: auto;
+  height: auto;
+}
+
 .details-header {
   background-color: rgb(129, 194, 161);
   padding: 60px 10px 40px 10px;

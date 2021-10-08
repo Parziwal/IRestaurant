@@ -11,6 +11,19 @@ mat-expansion-panel-header.mat-expanded {
   height: auto;
 }
 
+button {
+  display: flex;
+  align-items: center;
+}
+
+mat-icon {
+  margin-right: 5px;
+}
+
+.restaurant-name {
+  text-decoration: none;
+}
+
 .review-header {
   width: 100%;
 }

@@ -8,8 +8,12 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
-import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 import { HuPaginatorIntl } from './shared/mat-internalization/hu-paginator-intl';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -22,7 +26,8 @@ import { HuPaginatorIntl } from './shared/mat-internalization/hu-paginator-intl'
     MatTabsModule,
     MatStepperModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule,
   ],
   exports: [
     MatFormFieldModule,
@@ -34,10 +39,9 @@ import { HuPaginatorIntl } from './shared/mat-internalization/hu-paginator-intl'
     MatTabsModule,
     MatStepperModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatIconModule,
   ],
-  providers: [
-    { provide: MatPaginatorIntl, useClass: HuPaginatorIntl }
-  ]
+  providers: [{ provide: MatPaginatorIntl, useClass: HuPaginatorIntl }],
 })
-export class AngularMaterialModule { }
+export class AngularMaterialModule {}

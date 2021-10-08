@@ -2,11 +2,13 @@
   <div class="col-md-10">
     <button
       type="button"
-      class="btn btn-success add-button"
+      class="btn btn-success btn-lg add-button"
       (click)="addFood()"
     >
-      <fa-icon [icon]="faPlusSquare"></fa-icon
-      ><span class="d-flex ms-2"> Hozzáadás</span>
+      <mat-icon aria-hidden="false" aria-label="Add"
+        >add_circle_outline</mat-icon
+      >
+      <span>Hozzáadás</span>
     </button>
   </div>
 </div>
@@ -40,21 +42,24 @@
         class="btn btn-success p-3 me-3"
         (click)="onImageUpload(food)"
       >
-        <fa-icon [icon]="faUpload"></fa-icon> Kép feltöltés
+        <mat-icon aria-hidden="false" aria-label="Upload">upload</mat-icon> Kép
+        feltöltés
       </button>
       <button
         type="button"
         class="btn btn-primary p-3 me-3"
         (click)="editFood(food)"
       >
-        <fa-icon [icon]="faEdit"></fa-icon> Szerkesztés
+        <mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon>
+        Szerkesztés
       </button>
       <button
         type="button"
         class="btn btn-danger p-3"
         (click)="deleteFood(food)"
       >
-        <fa-icon [icon]="faTrashAlt"></fa-icon> Törlés
+        <mat-icon aria-hidden="false" aria-label="Delete">delete</mat-icon>
+        Törlés
       </button>
     </mat-action-row>
   </mat-expansion-panel>

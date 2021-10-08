@@ -1,4 +1,4 @@
-using IdentityServer4.Services;
+Ôªøusing IdentityServer4.Services;
 using IRestaurant.Auth.Services;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
@@ -31,7 +31,7 @@ namespace IRestaurant.Auth
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        /// Ez a metÛdus fut·si idıben hÌvÛdik meg. A szolg·ltat·sok beregisztr·l·s·ra haszn·latos.
+        /// Ez a met√≥dus fut√°si id≈ëben h√≠v√≥dik meg. A szolg√°ltat√°sok beregisztr√°l√°s√°ra haszn√°latos.
         /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
@@ -39,14 +39,12 @@ namespace IRestaurant.Auth
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(
-                   Configuration.GetConnectionString("DefaultConnection"),
-                   //Az adatb·zis migr·ciÛs f·jlok ·thelyezÈse a DAL rÈtegbe.
-                   x => x.MigrationsAssembly("IRestaurant.DAL")));
+                   Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                // A Role service beregisztr·l·sa a szerepkˆrˆk haszn·lat·hoz.
+                // A Role service beregisztr√°l√°sa a szerepk√∂r√∂k haszn√°lat√°hoz.
                 .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -68,21 +66,21 @@ namespace IRestaurant.Auth
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
-            //A felhaszn·lÛ fontosabb adatainak tokenbe helyezÈse (pl.: role).
+            //A felhaszn√°l√≥ fontosabb adatainak tokenbe helyez√©se (pl.: role).
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 
-            //A HttpContext-hez valÛ hozz·fÈrÈs miatt(pl.: a jelenlegi felhaszn·lÛ lekÈrÈse).
+            //A HttpContext-hez val√≥ hozz√°f√©r√©s miatt(pl.: a jelenlegi felhaszn√°l√≥ lek√©r√©se).
             services.AddHttpContextAccessor();
 
-            //A DAL rÈtegbeli felhaszn·lÛkat kezelı repository oszt·ly beregisztr·l·sa.
+            //A DAL r√©tegbeli felhaszn√°l√≥kat kezel≈ë repository oszt√°ly beregisztr√°l√°sa.
             services.AddTransient<IUserRepository, UserRepository>();
 
-            //A BL rÈtegbeli felhaszn·lÛkat kezelı manager oszt·ly beregisztr·l·sa.
+            //A BL r√©tegbeli felhaszn√°l√≥kat kezel≈ë manager oszt√°ly beregisztr√°l√°sa.
             services.AddTransient<UserManager>();
         }
 
         /// <summary>
-        /// Ez a metÛdus fut·si idıben hÌvÛdik meg. A HTTP kÈrÈsi pipline konfigur·ciÛj·ra haszn·latos.
+        /// Ez a met√≥dus fut√°si id≈ëben h√≠v√≥dik meg. A HTTP k√©r√©si pipline konfigur√°ci√≥j√°ra haszn√°latos.
         /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
