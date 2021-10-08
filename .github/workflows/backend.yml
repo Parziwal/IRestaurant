@@ -53,6 +53,6 @@ jobs:
       with:
         app-name: IRestaurantAuth
         slot-name: Production
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AUTH }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_IRESTAURANT_BACKEND }}
         package: ${{env.DOTNET_ROOT}}/irestaurant
 
