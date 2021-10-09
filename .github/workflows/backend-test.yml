@@ -1,0 +1,37 @@
+name: ASP.NET test
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Backend/**'
+  workflow_dispatch:
+
+env:
+  DOTNET_VERSION: '5.0.x'
+  WORKING_DIRECTORY: 'Backend'
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      working-directory: ${{ env.WORKING_DIRECTORY }}
