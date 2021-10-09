@@ -1,4 +1,4 @@
-name: ASP.NET backend build and deploy
+name: ASP.NET backend deploy
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Setup .NET
+    - name: Setup .NET ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
