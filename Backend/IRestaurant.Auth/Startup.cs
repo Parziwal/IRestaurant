@@ -63,9 +63,6 @@ namespace IRestaurant.Auth
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
 
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
-
             //A felhasználó fontosabb adatainak tokenbe helyezése (pl.: role).
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 
