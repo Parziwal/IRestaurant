@@ -57,6 +57,7 @@ namespace IRestaurant.Auth
                 options.Events.RaiseSuccessEvents = true;
                 options.EmitStaticAudienceClaim = true;
             })
+                .AddSigningCredentials(Configuration.GetSection("IdentityServer:Key"))
                 .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
                 .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
                 .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
