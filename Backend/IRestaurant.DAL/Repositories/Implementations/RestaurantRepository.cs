@@ -101,7 +101,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                         .SingleOrDefaultAsync(r => r.Id == restaurantId))
                         .CheckIfRestaurantNull();
 
-            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "Restaurant");
+            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "restaurant");
             imageRepository.DeleteImage(dbRestaurant.ImagePath);
             dbRestaurant.ImagePath = relativeImagePath;
 

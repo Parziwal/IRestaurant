@@ -21,7 +21,7 @@ namespace IRestaurant.DAL.DTO.Pagination
         /// <summary>
         /// Az oldal mérete.
         /// </summary>
-        [Range(5, 50)]
+        [Range(1, 50)]
         public int PageSize { get; set; } = 10;
     }
 }

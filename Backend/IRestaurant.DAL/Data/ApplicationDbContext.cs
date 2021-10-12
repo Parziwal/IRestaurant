@@ -2,6 +2,7 @@
 using IRestaurant.DAL.Data.EntityTypeConfigurations;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -57,15 +58,20 @@ namespace IRestaurant.DAL.Data
         /// </summary>
         public DbSet<FavouriteRestaurant> FavouriteRestaurants { get; set; }
 
+        private ApplicationSeedData seedData;
+
         /// <summary>
         /// Az adatbázishoz szükséges beállítási adatok elkérése.
         /// </summary>
         /// <param name="options">DbContext által használandó opciók.</param>
         /// <param name="operationalStoreOptions">Konfigurált példányok lekérésére szolgál.</param>
+        /// <param name="seedData">Az adatbázist inicializáló adatokat tartalmazza.</param>
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+            IOptions<OperationalStoreOptions> operationalStoreOptions,
+            ApplicationSeedData seedData) : base(options, operationalStoreOptions)
         {
+            this.seedData = seedData;
         }
 
         /// <summary>
@@ -90,17 +96,17 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Food>().HasMany(f => f.OrderFoods).WithOne(of => of.Food).IsRequired(false);
             modelBuilder.Entity<Food>().HasQueryFilter(e => !e.IsDeleted);
 
-            //Az adatbázis feltöltése teszt adatokkal
-            modelBuilder.ApplyConfiguration(new RolesSeedConfig());
-            modelBuilder.ApplyConfiguration(new ApplicationUserSeedConfig());
-            modelBuilder.ApplyConfiguration(new UserRolesSeedConfig());
-            modelBuilder.ApplyConfiguration(new UserAddressSeedConfig());
-            modelBuilder.ApplyConfiguration(new RestaurantSeedConfig());
-            modelBuilder.ApplyConfiguration(new FoodSeedConfig());
-            modelBuilder.ApplyConfiguration(new ReviewSeedConfig());
-            modelBuilder.ApplyConfiguration(new OrderSeedConfig());
-            modelBuilder.ApplyConfiguration(new OrderFoodSeedConfig());
-            modelBuilder.ApplyConfiguration(new InvoiceSeedConfig());
+            /// Az adatbázis feltöltése adatokkal.
+            modelBuilder.ApplyConfiguration(seedData.RoleConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.UserConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.UserRoleConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.UserAddressConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.RestaurantConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.FoodConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.ReviewConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.OrderConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.OrderFoodConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.InvoiceConfiguration);
         }
     }
 }
