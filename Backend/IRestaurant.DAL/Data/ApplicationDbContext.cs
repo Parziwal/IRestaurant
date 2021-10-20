@@ -58,7 +58,7 @@ namespace IRestaurant.DAL.Data
         /// </summary>
         public DbSet<FavouriteRestaurant> FavouriteRestaurants { get; set; }
 
-        private ApplicationSeedData seedData;
+        private IApplicationSeedData seedData;
 
         /// <summary>
         /// Az adatbázishoz szükséges beállítási adatok elkérése.
@@ -69,7 +69,7 @@ namespace IRestaurant.DAL.Data
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
-            ApplicationSeedData seedData) : base(options, operationalStoreOptions)
+            IApplicationSeedData seedData) : base(options, operationalStoreOptions)
         {
             this.seedData = seedData;
         }
@@ -107,6 +107,7 @@ namespace IRestaurant.DAL.Data
             modelBuilder.ApplyConfiguration(seedData.OrderConfiguration);
             modelBuilder.ApplyConfiguration(seedData.OrderFoodConfiguration);
             modelBuilder.ApplyConfiguration(seedData.InvoiceConfiguration);
+            modelBuilder.ApplyConfiguration(seedData.FavouriteRestaurantConfiguration);
         }
     }
 }

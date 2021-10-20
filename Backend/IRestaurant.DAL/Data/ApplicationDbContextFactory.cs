@@ -22,18 +22,6 @@ namespace IRestaurant.DAL.Data
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             var operationalStoreOptions = Options.Create(new OperationalStoreOptions());
 
-            var seedData = new ApplicationSeedData();
-            seedData.RoleConfiguration = new RolesSeedConfig();
-            seedData.UserConfiguration = new ApplicationUserSeedConfig();
-            seedData.UserRoleConfiguration = new UserRolesSeedConfig();
-            seedData.UserAddressConfiguration  = new UserAddressSeedConfig();
-            seedData.RestaurantConfiguration = new RestaurantSeedConfig();
-            seedData.FoodConfiguration = new FoodSeedConfig();
-            seedData.ReviewConfiguration = new ReviewSeedConfig();
-            seedData.OrderConfiguration = new OrderSeedConfig();
-            seedData.OrderFoodConfiguration = new OrderFoodSeedConfig();
-            seedData.InvoiceConfiguration = new InvoiceSeedConfig();
-
             return new ApplicationDbContext(optionsBuilder.Options, operationalStoreOptions, new ApplicationSeedData());
         }
     }

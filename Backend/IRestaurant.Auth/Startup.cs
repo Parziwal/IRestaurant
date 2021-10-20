@@ -64,6 +64,9 @@ namespace IRestaurant.Auth
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
 
+            //Az adatbázist inicializáló adatokat tartalmazó osztály beregisztrálása.
+            services.AddScoped<IApplicationSeedData, ApplicationSeedData>();
+
             //A felhasználó fontosabb adatainak tokenbe helyezése (pl.: role).
             services.AddTransient<IProfileService, IdentityClaimsProfileService>();
 

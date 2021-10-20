@@ -5,17 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.DAL.Data
 {
-    public class ApplicationSeedData
+    public class ApplicationSeedData : IApplicationSeedData
     {
-        public IEntityTypeConfiguration<IdentityRole> RoleConfiguration { get; set; } = new EmptySeedConfig<IdentityRole>();
-        public IEntityTypeConfiguration<ApplicationUser> UserConfiguration { get; set; } = new EmptySeedConfig<ApplicationUser>();
-        public IEntityTypeConfiguration<IdentityUserRole<string>> UserRoleConfiguration { get; set; } = new EmptySeedConfig<IdentityUserRole<string>>();
-        public IEntityTypeConfiguration<UserAddress> UserAddressConfiguration { get; set; } = new EmptySeedConfig<UserAddress>();
-        public IEntityTypeConfiguration<Restaurant> RestaurantConfiguration { get; set; } = new EmptySeedConfig<Restaurant>();
-        public IEntityTypeConfiguration<Food> FoodConfiguration { get; set; } = new EmptySeedConfig<Food>();
-        public IEntityTypeConfiguration<Review> ReviewConfiguration { get; set; } = new EmptySeedConfig<Review>();
-        public IEntityTypeConfiguration<Order> OrderConfiguration { get; set; } = new EmptySeedConfig<Order>();
-        public IEntityTypeConfiguration<OrderFood> OrderFoodConfiguration { get; set; } = new EmptySeedConfig<OrderFood>();
-        public IEntityTypeConfiguration<Invoice> InvoiceConfiguration { get; set; } = new EmptySeedConfig<Invoice>();
+        public IEntityTypeConfiguration<IdentityRole> RoleConfiguration { get; set; } = new RolesSeedConfig();
+        public IEntityTypeConfiguration<ApplicationUser> UserConfiguration { get; set; } = new ApplicationUserSeedConfig();
+        public IEntityTypeConfiguration<IdentityUserRole<string>> UserRoleConfiguration { get; set; } = new UserRolesSeedConfig();
+        public IEntityTypeConfiguration<UserAddress> UserAddressConfiguration { get; set; } = new UserAddressSeedConfig();
+        public IEntityTypeConfiguration<Restaurant> RestaurantConfiguration { get; set; } = new RestaurantSeedConfig();
+        public IEntityTypeConfiguration<Food> FoodConfiguration { get; set; } = new FoodSeedConfig();
+        public IEntityTypeConfiguration<Review> ReviewConfiguration { get; set; } = new ReviewSeedConfig();
+        public IEntityTypeConfiguration<Order> OrderConfiguration { get; set; } = new OrderSeedConfig();
+        public IEntityTypeConfiguration<OrderFood> OrderFoodConfiguration { get; set; } = new OrderFoodSeedConfig();
+        public IEntityTypeConfiguration<Invoice> InvoiceConfiguration { get; set; } = new InvoiceSeedConfig();
+        public IEntityTypeConfiguration<FavouriteRestaurant> FavouriteRestaurantConfiguration { get; set; } = new FavouriteRestaurantSeedConfig();
     }
 }
