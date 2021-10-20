@@ -33,5 +33,5 @@ jobs:
       working-directory: ${{ env.WORKING_DIRECTORY }}
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release
       working-directory: ${{ env.WORKING_DIRECTORY }}
