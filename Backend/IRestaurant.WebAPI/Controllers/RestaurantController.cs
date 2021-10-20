@@ -151,7 +151,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> HideMyRestaurantFromUsers()
         {
-            await restaurantManager.HideMyRestaurantForUsers();
+            await restaurantManager.HideMyRestaurantFromUsers();
             return Ok();
         }
 
@@ -192,7 +192,7 @@ namespace IRestaurant.WebAPI.Controllers
         [HttpGet("favourite")]
         public async Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList([FromQuery] RestaurantSearchDto search)
         {
-            return await restaurantManager.GetUserFavouriteRestaurantList(search);
+            return await restaurantManager.GetGuestFavouriteRestaurantList(search);
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> AddRestaurantToGuestFavourite(int restaurantId)
         {
-            await restaurantManager.AddRestaurantToUserFavourite(restaurantId);
+            await restaurantManager.AddRestaurantToGuestFavourite(restaurantId);
             return Ok();
         }
 
@@ -220,7 +220,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> RemoveRestaurantFromGuestFavourite(int restaurantId)
         {
-            await restaurantManager.RemoveRestaurantFromUserFavourite(restaurantId);
+            await restaurantManager.RemoveRestaurantFromGuestFavourite(restaurantId);
             return NoContent();
         }
     }

@@ -164,7 +164,7 @@ namespace IRestaurant.BL.Managers
         /// Az aktuális felhasználóhoz tartozó étterem elrejtése, levétele a publikusan elérhető éttermek listájából,
         /// ezzel együtt a rendelési opció is kikapcsolásra kerül.
         /// </summary>
-        public async Task HideMyRestaurantForUsers()
+        public async Task HideMyRestaurantFromUsers()
         {
             string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
@@ -222,7 +222,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         /// <param name="search">Az étteremre vonatkozó keresési feltétel.</param>
         /// <returns>Az étteremek áttekintő adatait tartalamazó lista.</returns>
-        public async Task<PagedListDto<RestaurantOverviewDto>> GetUserFavouriteRestaurantList(RestaurantSearchDto search)
+        public async Task<PagedListDto<RestaurantOverviewDto>> GetGuestFavouriteRestaurantList(RestaurantSearchDto search)
         {
             string userId = httpContext.GetCurrentUserId();
             return await restaurantRepository.GetGuestFavouriteRestaurantList(userId, search);
@@ -232,7 +232,7 @@ namespace IRestaurant.BL.Managers
         /// A megadott azonosítójú étterem felvétele az aktuális vendég kedvencei közé.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        public async Task AddRestaurantToUserFavourite(int restaurantId)
+        public async Task AddRestaurantToGuestFavourite(int restaurantId)
         {
             string userId = httpContext.GetCurrentUserId();
             await restaurantRepository.AddRestaurantToGuestFavourite(restaurantId, userId);
@@ -242,7 +242,7 @@ namespace IRestaurant.BL.Managers
         /// A megadott azonosítójú étterem eltávolítása törlése az aktuális vendég kedvencei közül.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
-        public async Task RemoveRestaurantFromUserFavourite(int restaurantId)
+        public async Task RemoveRestaurantFromGuestFavourite(int restaurantId)
         {
             string userId = httpContext.GetCurrentUserId();
             await restaurantRepository.RemoveRestaurantFromGuestFavourite(restaurantId, userId);
