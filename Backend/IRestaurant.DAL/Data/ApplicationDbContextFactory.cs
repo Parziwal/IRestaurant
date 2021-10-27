@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
+using IRestaurant.DAL.Data.EntityTypeConfigurations;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Data
 {
@@ -26,7 +22,7 @@ namespace IRestaurant.DAL.Data
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             var operationalStoreOptions = Options.Create(new OperationalStoreOptions());
 
-            return new ApplicationDbContext(optionsBuilder.Options, operationalStoreOptions);
+            return new ApplicationDbContext(optionsBuilder.Options, operationalStoreOptions, new ApplicationSeedData());
         }
     }
 }

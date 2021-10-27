@@ -101,7 +101,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
                         .SingleOrDefaultAsync(r => r.Id == restaurantId))
                         .CheckIfRestaurantNull();
 
-            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "Restaurant");
+            string relativeImagePath = await imageRepository.UploadImage(uploadedImage.ImageFile, "restaurant");
             imageRepository.DeleteImage(dbRestaurant.ImagePath);
             dbRestaurant.ImagePath = relativeImagePath;
 
@@ -237,7 +237,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
 
         /// <summary>
         /// A megadott azonosítójú étterem eltávolítása törlése a vendég kedvencei közül.
-        /// Ha a felhasználó kedvencei között az megadott étterem nem található, akkor kivételt dobunk.
+        /// Ha a felhasználó, vagy annak kedvencei között az megadott étterem nem található, akkor kivételt dobunk.
         /// </summary>
         /// <param name="restaurantId">Az étterem azonosítója.</param>
         /// <param name="guestId">A vendég azonosítója.</param>

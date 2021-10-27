@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Data.EntityTypeConfigurations
 {
-    class InvoiceSeedConfig : IEntityTypeConfiguration<Invoice>
+    public class InvoiceSeedConfig : IEntityTypeConfiguration<Invoice>
     {
         public void Configure(EntityTypeBuilder<Invoice> builder)
         {

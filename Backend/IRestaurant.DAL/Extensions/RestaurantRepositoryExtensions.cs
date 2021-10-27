@@ -49,9 +49,11 @@ namespace IRestaurant.DAL.Extensions
                 case RestaurantSortBy.NAME_DESC:
                     return restaurants.OrderByDescending(r => r.Name);
                 case RestaurantSortBy.RATING_ASC:
-                    return restaurants.OrderBy(r => Math.Round(r.Reviews.Average(r => r.Rating), 2));
+                    return restaurants.OrderBy(r => 
+                        r.Reviews.Any() ? Math.Round(r.Reviews.Average(r => r.Rating), 2) : 0);
                 case RestaurantSortBy.RATING_DESC:
-                    return restaurants.OrderByDescending(r => Math.Round(r.Reviews.Average(r => r.Rating), 2));
+                    return restaurants.OrderByDescending(r =>
+                        r.Reviews.Any() ? Math.Round(r.Reviews.Average(r => r.Rating), 2) : 0);
                 case RestaurantSortBy.REVIEW_COUNT_ASC:
                     return restaurants.OrderBy(r => r.Reviews.Count);
                 case RestaurantSortBy.REVIEW_COUNT_DESC:

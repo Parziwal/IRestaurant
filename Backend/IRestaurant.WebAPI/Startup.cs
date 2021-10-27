@@ -101,6 +101,9 @@ namespace IRestaurant.WebAPI
                 });
             });
 
+            //Az adatbázist inicializáló adatokat tartalmazó osztály beregisztrálása.
+            services.AddScoped<IApplicationSeedData, ApplicationSeedData>();
+
             //A HttpContext-hez való hozzáférés miatt(pl.: a jelenlegi felhasználó lekérése).
             services.AddHttpContextAccessor();
 
