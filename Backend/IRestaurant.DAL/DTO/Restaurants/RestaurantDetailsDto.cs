@@ -60,6 +60,8 @@ namespace IRestaurant.DAL.DTO.Restaurants
         /// </summary>
         public bool IsCurrentGuestFavourite { get; set; }
 
+        public RestaurantDetailsDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása, illetve
         /// az eddigi felhasználói értékelésekből az étterem átlagos értékelésének kiszámítása.

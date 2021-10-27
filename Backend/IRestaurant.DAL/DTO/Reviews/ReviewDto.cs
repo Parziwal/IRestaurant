@@ -53,6 +53,8 @@ namespace IRestaurant.DAL.DTO.Reviews
         /// </summary>
         public string RestaurantName { get; set; }
 
+        public ReviewDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
         /// </summary>

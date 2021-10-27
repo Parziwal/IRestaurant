@@ -32,11 +32,12 @@ namespace IRestaurant.DAL.DTO.Foods
         /// </summary>
         public string ImagePath { get; set; }
 
+        public FoodDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
         /// </summary>
         /// <param name="food">Étel adatait tartalmazó modell osztály.</param>
-
         public FoodDto(Food food)
         {
             this.Id = food.Id;
