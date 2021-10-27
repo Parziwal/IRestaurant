@@ -94,7 +94,7 @@ namespace IRestaurant.WebAPI
                     return problemDetails;
                 });
                 // Ez 400 Bad Request státusz kódra cseréli EntityAlreadyExistsException-t.
-                options.Map<EntityNotFoundException>((context, exception) => {
+                options.Map<EntityAlreadyExistsException>((context, exception) => {
                     var problemDetails = StatusCodeProblemDetails.Create(StatusCodes.Status400BadRequest);
                     problemDetails.Title = exception.Message;
                     return problemDetails;
