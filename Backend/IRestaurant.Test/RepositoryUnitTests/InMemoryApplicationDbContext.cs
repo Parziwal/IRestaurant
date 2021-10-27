@@ -1,14 +1,15 @@
 ﻿using IdentityServer4.EntityFramework.Options;
 using IRestaurant.DAL.Data;
+using IRestaurant.Test.Data;
 using IRestaurant.Test.Data.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-namespace IRestaurant.Test.Data
+namespace IRestaurant.Test.RepositoryUnitTests
 {
-    public class TestApplicationDbContext
+    public class InMemoryApplicationDbContext
     {
-        public TestApplicationDbContext()
+        public InMemoryApplicationDbContext()
         {
             InitDbContext();
         }
