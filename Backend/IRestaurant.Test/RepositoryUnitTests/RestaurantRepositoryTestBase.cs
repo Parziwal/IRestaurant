@@ -39,7 +39,7 @@ namespace IRestaurant.Test.RepositoryUnitTests
                     PageSize = restaurantsCount,
                     PageNumber = 1,
                 };
-                var orderedRestaurantList = TestSeedService.Restaurants.SortBy(sortBy);
+                var orderedRestaurantList = TestSeedService.Restaurants.SortByAll(sortBy);
                 var repository = CreateRestaurantRepository(dbContext);
 
                 //Act

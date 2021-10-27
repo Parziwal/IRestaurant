@@ -1,18 +1,22 @@
-﻿using IRestaurant.DAL.DTO.Restaurants;
+﻿using IdentityModel.Client;
+using IRestaurant.DAL.DTO.Restaurants;
 using IRestaurant.DAL.Models;
 using IRestaurant.Test.Data;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace IRestaurant.Test.Extensions
 {
-    internal static class RepositoryTestExtensions
+    internal static class TestExtensions
     {
-        public static IReadOnlyList<Restaurant> SortBy(this IReadOnlyList<Restaurant> r, RestaurantSortBy sortBy)
+        public static IReadOnlyList<Restaurant> SortByAll(this IReadOnlyList<Restaurant> r, RestaurantSortBy sortBy)
         {
             switch (sortBy)
             {
@@ -52,6 +56,33 @@ namespace IRestaurant.Test.Extensions
                 default:
                     return r;
             }
+        }
+
+        public static string ToQueryParams(this Object o)
+        {
+            var query = o.GetType().GetProperties()
+               .Where(s => s.GetValue(o, null) != null)
+               .Select(s => s.Name + "=" + HttpUtility.UrlEncode(s.GetValue(o, null).ToString()));
+
+            return String.Join("&", query.ToArray());
+        }
+
+        public static async Task<string> GetAccessToken(this TestServer authServer, string userName, string password)
+        {
+            var authClient = authServer.CreateClient();
+            var discovery = await authClient.GetDiscoveryDocumentAsync();
+            var response = await authClient.RequestPasswordTokenAsync(new PasswordTokenRequest
+            {
+                Address = discovery.TokenEndpoint,
+                ClientId = "irestaurant_test",
+                Scope = "openid profile email irestaurant.api",
+                UserName = userName,
+                Password = password
+            });
+
+            if (response.HttpStatusCode != HttpStatusCode.OK) return null;
+
+            return response.AccessToken;
         }
     }
 }
