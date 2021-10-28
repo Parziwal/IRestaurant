@@ -6,6 +6,8 @@ using IRestaurant.DAL.Models;
 using IRestaurant.Test.Data;
 using IRestaurant.Test.Extensions;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,20 +20,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Xunit;
+using Microsoft.AspNetCore.TestHost;
+using IRestaurant.DAL.Data;
 
 namespace IRestaurant.Test.WebAPIIntegrationTests
 {
-    public class RestaurantControllerTest : IClassFixture<WebServerFixture>, IDisposable
+    public class RestaurantControllerTest : WebServerFixture
     {
-        public WebServerFixture webServerFixture;
-        private IDbContextTransaction transaction;
-
-        public RestaurantControllerTest(WebServerFixture webServerFixture)
-        {
-            this.webServerFixture = webServerFixture;
-
-            transaction = webServerFixture.DbContext.Database.BeginTransaction();
-        }
 
         [Theory]
         [InlineData(RestaurantSortBy.NAME_ASC)]
@@ -52,7 +47,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
                 PageNumber = 1,
             };
             var orderedRestaurantList = TestSeedService.Restaurants.SortByAll(sortBy);
-            var client = webServerFixture.webApiServer.CreateClient();
+            var client = webApiServer.CreateClient();
 
             //Act
             var response = await client.GetAsync("/api/restaurant?" + search.ToQueryParams());
@@ -72,10 +67,9 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             //Arrange
             int restaurantId = 1;
             var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
-            expectedRestaurant.Reviews = TestSeedService.Reviews.Take(2).ToList();
             var ownerFullName = "Peggy Justice";
             var rating = (4.867 + 4.677) / 2.0;
-            var client = webServerFixture.webApiServer.CreateClient();
+            var client = webApiServer.CreateClient();
 
             //Act
             var response = await client.GetAsync("/api/restaurant/" + restaurantId);
@@ -100,11 +94,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetRestaurantDetails_ForNonExistingRestaurant()
         {
             //Arrange
-            int nonExistingRestuarantId = 10;
-            var client = webServerFixture.webApiServer.CreateClient();
+            int nonExistingRestaurantId = 10;
+            var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/" + nonExistingRestuarantId);
+            var response = await client.GetAsync("/api/restaurant/" + nonExistingRestaurantId);
 
             //Assert
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -114,14 +108,14 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetRestaurantDetails_ForExistingButNotPubliclyAvailableRestaurant()
         {
             //Arrange
-            int restuarantId = 1;
-            var restaurant = webServerFixture.DbContext.Restaurants.SingleOrDefault(r => r.Id == restuarantId);
+            int restaurantId = 1;
+            var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.ShowForUsers = false;
-            await webServerFixture.DbContext.SaveChangesAsync();
-            var client = webServerFixture.webApiServer.CreateClient();
+            await DbContext.SaveChangesAsync();
+            var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/" + restuarantId);
+            var response = await client.GetAsync("/api/restaurant/" + restaurantId);
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -131,17 +125,17 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetMyRestaurantDetails_WhereUserIsRestaurantOwner_RestaurantIsNotPubliclyAvailable()
         {
             //Arrange
-            int restuarantId = 1;
-            var expectedRestaurant = TestSeedService.Restaurants[restuarantId - 1];
+            int restaurantId = 1;
+            var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
             var ownerFullName = "Peggy Justice";
             var rating = (4.867 + 4.677) / 2.0;
 
-            var restaurant = webServerFixture.DbContext.Restaurants.SingleOrDefault(r => r.Id == restuarantId);
+            var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.ShowForUsers = false;
-            await webServerFixture.DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -150,7 +144,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
 
             //Assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(restuarantId, restaurantDetails.Id);
+            Assert.Equal(restaurantId, restaurantDetails.Id);
             Assert.Equal(expectedRestaurant.Name, restaurantDetails.Name);
             Assert.Equal(expectedRestaurant.ShortDescription, restaurantDetails.ShortDescription);
             Assert.Equal(expectedRestaurant.DetailedDescription, restaurantDetails.DetailedDescription);
@@ -168,8 +162,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetMyRestaurantDetails_WhereUserIsGuest()
         {
             //Arrange
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -198,8 +192,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
                 }
             };
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -246,8 +240,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
                 }
             };
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -264,8 +258,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             int restaurantId = 1;
             var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -282,8 +276,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetMyRestaurantSettings_WhereUserIsGuest()
         {
             //Arrange
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -299,12 +293,12 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             //Arrange
             int restaurantId = 1;
 
-            var restaurant = webServerFixture.DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
+            var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.ShowForUsers = false;
-            await webServerFixture.DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
 
             //Act
             var originalRestaurantResponse = await client.GetAsync("/api/restaurant/" + restaurantId);
@@ -316,7 +310,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
 
             client.DefaultRequestHeaders.Clear();
             var actualRestaurantResponse = await client.GetAsync("/api/restaurant/" + restaurantId);
-            var actualRestaurantDetails = actualRestaurantResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var actualRestaurantDetails = await actualRestaurantResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
 
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, originalRestaurantResponse.StatusCode);
@@ -332,12 +326,12 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             //Arrange
             int restaurantId = 1;
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
 
             //Act
             var originalRestaurantResponse = await client.GetAsync("/api/restaurant/" + restaurantId);
-            var originalRestaurantDetails = originalRestaurantResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var originalRestaurantDetails = await originalRestaurantResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var statusChangeResponse = await client.PatchAsync("/api/restaurant/myrestaurant/hide", null);
@@ -361,19 +355,19 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             //Arrange
             int restaurantId = 1;
 
-            var restaurant = webServerFixture.DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
+            var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.IsOrderAvailable = false;
-            await webServerFixture.DbContext.Foods.AddAsync(new Food()
+            await DbContext.Foods.AddAsync(new Food()
             {
                 Name = "Teszt Étel",
                 Price = 1000,
                 Description = "Teszt Étel leírása",
                 RestaurantId = restaurantId
             });
-            await webServerFixture.DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -396,19 +390,19 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             //Arrange
             int restaurantId = 1;
 
-            var restaurant = webServerFixture.DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
+            var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.ShowForUsers = false;
-            await webServerFixture.DbContext.Foods.AddAsync(new Food()
+            await DbContext.Foods.AddAsync(new Food()
             {
                 Name = "Teszt Étel",
                 Price = 1000,
                 Description = "Teszt Étel leírása",
                 RestaurantId = restaurantId
             });
-            await webServerFixture.DbContext.SaveChangesAsync();
+            await DbContext.SaveChangesAsync();
 
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -422,8 +416,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task TurnOnMyRestaurantOrderOption_WhereRestaurantWasAvailableButRestaurantDidntHaveFoods_UserIsRestaurantOwner()
         {
             //Arrange
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -437,8 +431,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task TurnOffMyRestaurantOrderOption_WhereRestaurantOrderOptionWasTurnedOn_UserIsRestaurantOwner()
         {
             //Arrange
-            var accessToken = await webServerFixture.authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -473,8 +467,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
                 PageNumber = 1,
             };
             var orderedRestaurantList = TestSeedService.Restaurants.SortByCarsonFavourite(sortBy);
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -494,8 +488,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 3;
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -514,8 +508,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int nonExistingRestaurantId = 10;
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -530,8 +524,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 1;
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -546,8 +540,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 1;
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -566,8 +560,8 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int nonExistingRestaurantId = 10;
-            var accessToken = await webServerFixture.authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
-            var client = webServerFixture.webApiServer.CreateClient();
+            var accessToken = await authServer.GetAccessToken("carson@email.hu", "Test.54321"); //Vendég felhasználó
+            var client = webApiServer.CreateClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
@@ -575,14 +569,6 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
 
             //Assert
             Assert.Equal(HttpStatusCode.NotFound, removeRestaurantResponse.StatusCode);
-        }
-
-        public void Dispose()
-        {
-            if (transaction == null) return;
-
-            transaction.Rollback();
-            transaction.Dispose();
         }
     }
 }

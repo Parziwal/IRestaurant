@@ -20,12 +20,13 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Test.WebAPIIntegrationTests
 {
-    public class WebServerFixture : ApplicationDbContextInit
+    public class WebServerFixture : ApplicationDbContextInit, IDisposable
     {
         public TestServer webApiServer;
         public TestServer authServer;
 
         public ApplicationDbContext DbContext { get; }
+        private IDbContextTransaction transaction;
 
         public WebServerFixture()
         {
@@ -36,6 +37,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             authServer.BaseAddress = new Uri(Configuration.GetSection("WebServer:AuthUrl").Value);
 
             DbContext = webApiServer.Host.Services.GetService<ApplicationDbContext>();
+            transaction = DbContext.Database.BeginTransaction();
         }
 
         private IWebHostBuilder CreateWebAPIWebHostBuilder()
@@ -77,6 +79,14 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             return new WebHostBuilder()
                 .UseConfiguration(Configuration)
                 .UseStartup<Auth.Startup>();
+        }
+
+        public void Dispose()
+        {
+            if (transaction == null) return;
+
+            transaction.Rollback();
+            transaction.Dispose();
         }
     }
 }
