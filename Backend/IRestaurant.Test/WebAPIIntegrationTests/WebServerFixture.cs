@@ -44,6 +44,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             return new WebHostBuilder()
                 .UseConfiguration(Configuration)
+                .UseWebRoot(Configuration.GetSection("IRestaurantWebAPI:WebRoot").Value)
                 .UseStartup<WebAPI.Startup>()
                 .ConfigureServices(services =>
                 {
@@ -83,10 +84,17 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
 
         public void Dispose()
         {
-            if (transaction == null) return;
+            if (transaction != null)
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+            }
 
-            transaction.Rollback();
-            transaction.Dispose();
+            string imagesFolder = $"{Configuration.GetSection("IRestaurantWebAPI:WebRoot").Value}/images";
+            if (Directory.Exists(imagesFolder))
+            {
+                Directory.Delete(imagesFolder, true);
+            }
         }
     }
 }

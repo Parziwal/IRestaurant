@@ -22,6 +22,8 @@ using System.Transactions;
 using Xunit;
 using Microsoft.AspNetCore.TestHost;
 using IRestaurant.DAL.Data;
+using System.IO;
+using IRestaurant.DAL.DTO.Images;
 
 namespace IRestaurant.Test.WebAPIIntegrationTests
 {
@@ -251,6 +253,73 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
 
             //Assert
             Assert.Equal(HttpStatusCode.Forbidden, editRestaurnatResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task UploadMyRestaurantImage_WhereUserIsRestaurantOwner()
+        {
+            //Arrange
+            var testImageName = "test_restaurant_image";
+
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            //Act
+            HttpResponseMessage imageUploadResponse;
+
+            using (var imageFile = File.OpenRead($"WebAPIIntegrationTests/images/{testImageName}.jpg"))
+            using (var content = new StreamContent(imageFile))
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(content, "imageFile", $"{testImageName}.jpg");
+                imageUploadResponse = await client.PostAsync("api/restaurant/myrestaurant/image", formData);
+            }
+            var relativeImagePath = await imageUploadResponse.Content.ReadAsStringAsync();
+            var restaurantDetails = await client.GetAsync("/api/restaurant/myrestaurant").Result.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+
+            var imageAvailableResponse = await client.GetAsync(restaurantDetails.ImagePath);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, imageUploadResponse.StatusCode);
+            Assert.Contains(testImageName, relativeImagePath.ToString());
+            Assert.Contains(testImageName, restaurantDetails.ImagePath);
+            Assert.Equal(HttpStatusCode.OK, imageAvailableResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMyRestaurantImage_WhereRestaurantJustUploadedNewImage_UserIsRestaurantOwner()
+        {
+            //Arrange
+            var testImageName = "test_restaurant_image";
+
+            var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
+            var client = webApiServer.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            //Act
+            HttpResponseMessage imageUploadResponse;
+            using (var imageFile = File.OpenRead($"WebAPIIntegrationTests/images/{testImageName}.jpg"))
+            using (var content = new StreamContent(imageFile))
+            using (var formData = new MultipartFormDataContent())
+            {
+                formData.Add(content, "imageFile", $"{testImageName}.jpg");
+                imageUploadResponse = await client.PostAsync("api/restaurant/myrestaurant/image", formData);
+            }
+            var originalRestaurantDetails = await client.GetAsync("/api/restaurant/myrestaurant").Result.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var originalImageAvailableResponse = await client.GetAsync(originalRestaurantDetails.ImagePath);
+
+            var imageDeleteResponse = await client.DeleteAsync("api/restaurant/myrestaurant/image");
+            var actualRestaurantDetails = await client.GetAsync("/api/restaurant/myrestaurant").Result.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var actualImageAvailableResponse = await client.GetAsync(originalRestaurantDetails.ImagePath);
+
+            //Assert
+            Assert.Equal(HttpStatusCode.OK, imageUploadResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, originalImageAvailableResponse.StatusCode);
+
+            Assert.Equal(HttpStatusCode.NoContent, imageDeleteResponse.StatusCode);
+            Assert.Null(actualRestaurantDetails.ImagePath);
+            Assert.Equal(HttpStatusCode.NotFound, actualImageAvailableResponse.StatusCode);
         }
 
         [Fact]

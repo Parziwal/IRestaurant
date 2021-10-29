@@ -36,6 +36,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="WebAPIIntegrationTests\images\test_restaurant_image.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="WebAPIIntegrationTests\well-known\openid-configuration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
