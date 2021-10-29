@@ -135,8 +135,8 @@ namespace IRestaurant.Auth
                 Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value,
                 Configuration.GetSection("AzureKeyVault:CertificateName").Value);
             var privateKeyBytes = Convert.FromBase64String(certificateSecret.Value);
-
-            return new X509Certificate2(privateKeyBytes, (string)null);
+            
+            return new X509Certificate2(privateKeyBytes);
         }
     }
 }
