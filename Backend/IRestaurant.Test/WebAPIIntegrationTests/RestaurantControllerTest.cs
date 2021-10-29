@@ -50,11 +50,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant?" + search.ToQueryParams());
-            var restaurantPagedList = await response.Content.ReadFromJsonAsync<PagedListDto<RestaurantOverviewDto>>();
+            var restaurantOverviewListResponse = await client.GetAsync("/api/restaurant?" + search.ToQueryParams());
+            var restaurantPagedList = await restaurantOverviewListResponse.Content.ReadFromJsonAsync<PagedListDto<RestaurantOverviewDto>>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, restaurantOverviewListResponse.StatusCode);
             Assert.Equal(TestSeedService.Restaurants.Count, restaurantPagedList.TotalItemCount);
             Assert.Equal(1, restaurantPagedList.PageCount);
             Assert.True(restaurantPagedList.Result.First().Name == orderedRestaurantList.First().Name);
@@ -72,11 +72,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/" + restaurantId);
-            var restaurantDetails = await response.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var restaurantDetailsResponse = await client.GetAsync("/api/restaurant/" + restaurantId);
+            var restaurantDetails = await restaurantDetailsResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, restaurantDetailsResponse.StatusCode);
             Assert.Equal(expectedRestaurant.Name, restaurantDetails.Name);
             Assert.Equal(expectedRestaurant.ShortDescription, restaurantDetails.ShortDescription);
             Assert.Equal(expectedRestaurant.DetailedDescription, restaurantDetails.DetailedDescription);
@@ -98,10 +98,10 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/" + nonExistingRestaurantId);
+            var restaurantDetailsResponse = await client.GetAsync("/api/restaurant/" + nonExistingRestaurantId);
 
             //Assert
-            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, restaurantDetailsResponse.StatusCode);
         }
 
         [Fact]
@@ -109,16 +109,18 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 1;
+
             var restaurant = DbContext.Restaurants.SingleOrDefault(r => r.Id == restaurantId);
             restaurant.ShowForUsers = false;
             await DbContext.SaveChangesAsync();
+
             var client = webApiServer.CreateClient();
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/" + restaurantId);
+            var restaurantDetailsResponse = await client.GetAsync("/api/restaurant/" + restaurantId);
 
             //Assert
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, restaurantDetailsResponse.StatusCode);
         }
 
         [Fact]
@@ -139,11 +141,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/myrestaurant");
-            var restaurantDetails = await response.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var restaurantDetailsResponse = await client.GetAsync("/api/restaurant/myrestaurant");
+            var restaurantDetails = await restaurantDetailsResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, restaurantDetailsResponse.StatusCode);
             Assert.Equal(restaurantId, restaurantDetails.Id);
             Assert.Equal(expectedRestaurant.Name, restaurantDetails.Name);
             Assert.Equal(expectedRestaurant.ShortDescription, restaurantDetails.ShortDescription);
@@ -167,10 +169,10 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/myrestaurant");
+            var restaurantDetailsResponse = await client.GetAsync("/api/restaurant/myrestaurant");
 
             //Assert
-            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, restaurantDetailsResponse.StatusCode);
         }
 
         [Fact]
@@ -197,12 +199,12 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.PutAsJsonAsync("/api/restaurant/myrestaurant", editRestaurant);
-            var editedRestaurant = await response.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
+            var editRestaurnatResponse = await client.PutAsJsonAsync("/api/restaurant/myrestaurant", editRestaurant);
+            var editedRestaurant = await editRestaurnatResponse.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
             var savedRestaurant = await client.GetAsync("/api/restaurant/" + restaurantId).Result.Content.ReadFromJsonAsync<RestaurantDetailsDto>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, editRestaurnatResponse.StatusCode);
             Assert.Equal(restaurantId, editedRestaurant.Id);
             Assert.Equal(editRestaurant.Name, editedRestaurant.Name);
             Assert.Equal(editRestaurant.ShortDescription, editedRestaurant.ShortDescription);
@@ -245,10 +247,10 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.PutAsJsonAsync("/api/restaurant/myrestaurant", editRestaurant);
+            var editRestaurnatResponse = await client.PutAsJsonAsync("/api/restaurant/myrestaurant", editRestaurant);
 
             //Assert
-            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, editRestaurnatResponse.StatusCode);
         }
 
         [Fact]
@@ -263,11 +265,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/myrestaurant/settings");
-            var restaurantSettings = await response.Content.ReadFromJsonAsync<RestaurantSettingsDto>();
+            var restaurantSettingsResponse = await client.GetAsync("/api/restaurant/myrestaurant/settings");
+            var restaurantSettings = await restaurantSettingsResponse.Content.ReadFromJsonAsync<RestaurantSettingsDto>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, restaurantSettingsResponse.StatusCode);
             Assert.Equal(expectedRestaurant.IsOrderAvailable, restaurantSettings.IsOrderAvailable);
             Assert.Equal(expectedRestaurant.ShowForUsers, restaurantSettings.ShowForUsers);
         }
@@ -281,14 +283,14 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/myrestaurant/settings");
+            var restaurantSettingsResponse = await client.GetAsync("/api/restaurant/myrestaurant/settings");
 
             //Assert
-            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, restaurantSettingsResponse.StatusCode);
         }
 
         [Fact]
-        public async Task ShowMyRestaurantForUsers_WhereRestaurantWasNotAvailable_And_UserIsRestaurantOwner()
+        public async Task ShowMyRestaurantForUsers_WhereRestaurantWasNotAvailable_UserIsRestaurantOwner()
         {
             //Arrange
             int restaurantId = 1;
@@ -321,7 +323,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         }
 
         [Fact]
-        public async Task HideMyRestaurantForUsers_WhereRestaurantWasAvailable_And_UserIsRestaurantOwner()
+        public async Task HideMyRestaurantForUsers_WhereRestaurantWasAvailable_UserIsRestaurantOwner()
         {
             //Arrange
             int restaurantId = 1;
@@ -346,6 +348,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             Assert.Equal(restaurantId, originalRestaurantDetails.Id);
             Assert.Equal(HttpStatusCode.OK, statusChangeResponse.StatusCode);
             Assert.False(actualRestaurantSettings.ShowForUsers);
+            Assert.False(actualRestaurantSettings.IsOrderAvailable);
             Assert.Equal(HttpStatusCode.BadRequest, actualRestaurantResponse.StatusCode);
         }
 
@@ -472,11 +475,11 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
             //Act
-            var response = await client.GetAsync("/api/restaurant/favourite?" + search.ToQueryParams());
-            var restaurantPagedList = await response.Content.ReadFromJsonAsync<PagedListDto<RestaurantOverviewDto>>();
+            var favouriteRestaurantListResponse = await client.GetAsync("/api/restaurant/favourite?" + search.ToQueryParams());
+            var restaurantPagedList = await favouriteRestaurantListResponse.Content.ReadFromJsonAsync<PagedListDto<RestaurantOverviewDto>>();
 
             //Assert
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, favouriteRestaurantListResponse.StatusCode);
             Assert.Equal(2, restaurantPagedList.TotalItemCount);
             Assert.Equal(1, restaurantPagedList.PageCount);
             Assert.True(restaurantPagedList.Result.First().Name == orderedRestaurantList.First().Name);
