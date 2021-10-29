@@ -38,7 +38,7 @@ namespace IRestaurant.Auth
         /// <summary>
         /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
         /// </summary>
-        public async void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
@@ -73,7 +73,7 @@ namespace IRestaurant.Auth
             {
                 builder.AddDeveloperSigningCredential();
             } else {
-                var certificate = await GetCertificateFromAzureKeyVault();
+                var certificate = GetCertificateFromAzureKeyVault().GetAwaiter().GetResult();
                 builder.AddSigningCredential(certificate);
             }
 
