@@ -26,12 +26,14 @@ namespace IRestaurant.Auth
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         /// <summary>
         /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
@@ -65,14 +67,14 @@ namespace IRestaurant.Auth
                 .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
-            
+           
             //A tanúsítvány beimportálása
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
+            if (Environment.EnvironmentName == Environments.Development)
             {
+                builder.AddDeveloperSigningCredential();
+            } else {
                 var certificate = await GetCertificateFromAzureKeyVault();
                 builder.AddSigningCredential(certificate);
-            } else {
-                
             }
 
             //Az adatbázist inicializáló adatokat tartalmazó osztály beregisztrálása.

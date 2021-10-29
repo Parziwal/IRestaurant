@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         private IWebHostBuilder CreateWebAPIWebHostBuilder()
         {
             return new WebHostBuilder()
+                .UseEnvironment(Environments.Development)
                 .UseConfiguration(Configuration)
                 .UseWebRoot(Configuration.GetSection("IRestaurantWebAPI:WebRoot").Value)
                 .UseStartup<WebAPI.Startup>()
@@ -78,6 +80,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         private IWebHostBuilder CreateAuthWebHostBuilder()
         {
             return new WebHostBuilder()
+                .UseEnvironment(Environments.Development)
                 .UseConfiguration(Configuration)
                 .UseStartup<Auth.Startup>();
         }
