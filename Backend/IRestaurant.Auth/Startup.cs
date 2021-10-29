@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace IRestaurant.Auth
@@ -33,7 +36,7 @@ namespace IRestaurant.Auth
         /// <summary>
         /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
         /// </summary>
-        public void ConfigureServices(IServiceCollection services)
+        public async void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
@@ -57,12 +60,20 @@ namespace IRestaurant.Auth
                 options.Events.RaiseSuccessEvents = true;
                 options.EmitStaticAudienceClaim = true;
             })
-                .AddSigningCredentials(Configuration.GetSection("IdentityServer:Key"))
                 .AddInMemoryIdentityResources(Configuration.GetSection("IdentityServer:IdentityResources"))
                 .AddInMemoryApiResources(Configuration.GetSection("IdentityServer:ApiResources"))
                 .AddInMemoryApiScopes(Configuration.GetSection("IdentityServer:ApiScopes"))
                 .AddInMemoryClients(Configuration.GetSection("IdentityServer:Clients"))
                 .AddAspNetIdentity<ApplicationUser>();
+            
+            //A tanúsítvány beimportálása
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == Environments.Development)
+            {
+                var certificate = await GetCertificateFromAzureKeyVault();
+                builder.AddSigningCredential(certificate);
+            } else {
+                
+            }
 
             //Az adatbázist inicializáló adatokat tartalmazó osztály beregisztrálása.
             services.AddScoped<IApplicationSeedData, ApplicationSeedData>();
@@ -111,6 +122,19 @@ namespace IRestaurant.Auth
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+
+        private async Task<X509Certificate2> GetCertificateFromAzureKeyVault()
+        {
+            var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+
+            var certificateSecret = await keyVaultClient.GetSecretAsync(
+                Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value,
+                Configuration.GetSection("AzureKeyVault:CertificateName").Value);
+            var privateKeyBytes = Convert.FromBase64String(certificateSecret.Value);
+
+            return new X509Certificate2(privateKeyBytes, (string)null);
         }
     }
 }
