@@ -354,3 +354,6 @@ MigrationBackup/
 **/IRestaurant.WebAPI/wwwroot/**/*.jpeg
 **/IRestaurant.WebAPI/wwwroot/**/*.png
 **/IRestaurant.WebAPI/wwwroot/**/*.gif
+
+# Signing Credentials
+**/*.jwk
