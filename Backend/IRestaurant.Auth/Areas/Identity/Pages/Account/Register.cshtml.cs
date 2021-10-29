@@ -127,8 +127,15 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await emailSender.SendEmailAsync(Input.Email, "Email megerősítés",
+                        $@"Kedves {Input.FullName},
+
+                           Köszönjük, hogy csatkakoztól az IRestaurant portálhoz.
+                           Az email címed megerősítéséhez kérlek <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>kattints ide.</a>
+                           Ha bármi ptoblémát tapasztalsz nyugottan jelezd nekünk az irestaurant.net@gmail.com címen.
+                           
+                           Üdvözlettel,
+                           IRestaurant csapata");
 
                     if (applicationUserManager.Options.SignIn.RequireConfirmedAccount)
                     {

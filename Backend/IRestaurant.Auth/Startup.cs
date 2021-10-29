@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,7 @@ namespace IRestaurant.Auth
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 // A Role service beregisztrálása a szerepkörök használatához.
                 .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders()
@@ -91,6 +92,9 @@ namespace IRestaurant.Auth
 
             //A BL rétegbeli felhasználókat kezelő manager osztály beregisztrálása.
             services.AddTransient<UserManager>();
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         /// <summary>
