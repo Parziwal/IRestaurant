@@ -44,6 +44,8 @@ namespace IRestaurant.DAL.DTO.Orders
         /// </summary>
         public string RestaurantName { get; set; }
 
+        public OrderOverviewDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása, illetve
         /// a rendelésben lévő tételek összértékenek a kiszámítása.

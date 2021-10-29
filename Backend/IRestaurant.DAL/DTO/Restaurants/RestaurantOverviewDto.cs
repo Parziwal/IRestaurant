@@ -57,5 +57,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
             this.ImagePath = restaurant.ImagePath;
             this.City = restaurant.Address.City;
         }
+
+        public RestaurantOverviewDto() { }
     }
 }

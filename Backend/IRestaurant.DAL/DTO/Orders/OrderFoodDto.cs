@@ -21,6 +21,8 @@ namespace IRestaurant.DAL.DTO.Orders
         /// </summary>
         public int Amount { get; set; }
 
+        public OrderFoodDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
         /// </summary>

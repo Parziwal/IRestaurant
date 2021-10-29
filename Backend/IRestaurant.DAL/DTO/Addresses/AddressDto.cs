@@ -27,6 +27,7 @@ namespace IRestaurant.DAL.DTO.Addresses
         /// </summary>
         public string PhoneNumber { get; set; }
 
+        public AddressDto() { }
 
         /// <summary>
         /// A konstruktorban átadott cím osztály alapján a tulajdonságok beállítása.

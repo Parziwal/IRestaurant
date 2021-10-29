@@ -46,5 +46,7 @@ namespace IRestaurant.DAL.DTO.Pagination
             PageSize = pagedList.PageSize;
             Result = pagedList;
         }
+
+        public PagedListDto() { }
     }
 }

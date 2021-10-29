@@ -26,12 +26,12 @@ namespace IRestaurant.DAL.DTO.Orders
         /// </summary>
         public List<OrderFoodDto> OrderFoods { get; set; }
 
+        public OrderDetailsDto() { }
 
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
         /// </summary>
         /// <param name="order">Rendelés adatait tartalmazó modell osztály.</param>
-
         public OrderDetailsDto(Order order) : base(order)
         {
             this.UserAddress = new AddressDto(order.Invoice.UserAddress);

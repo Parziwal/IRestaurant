@@ -12,6 +12,8 @@ namespace IRestaurant.DAL.DTO.Addresses
         /// </summary>
         public int Id { get; set; }
 
+        AddressWithIdDto() { }
+
         /// <summary>
         /// A konstruktorban átadott felhasználói cím alapján a tulajdonságok beállítása.
         /// </summary>

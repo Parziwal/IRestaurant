@@ -22,11 +22,14 @@ namespace IRestaurant.DAL.DTO.Restaurants
         /// </summary>
         public bool IsOrderAvailable { get; set; }
 
+        public RestaurantSettingsDto() { }
+
         /// <summary>
         /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
         /// </summary>
         /// <param name="restaurant">Az étterem adatait tartalmazó modell osztály.</param>
-        public RestaurantSettingsDto(Restaurant restaurant) {
+        public RestaurantSettingsDto(Restaurant restaurant)
+        {
             this.ShowForUsers = restaurant.ShowForUsers;
             this.IsOrderAvailable = restaurant.IsOrderAvailable;
         }

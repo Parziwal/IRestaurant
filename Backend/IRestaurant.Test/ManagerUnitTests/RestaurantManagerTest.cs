@@ -382,7 +382,7 @@ namespace IRestaurant.Test.ManagerUnitTests
             var manager = new RestaurantManager(restaurantRepository.Object, userRepository.Object, foodRepository.Object, httpContext.Object);
 
             //Act
-            await manager.TurnOnMyRestaurantOrderStatus();
+            await manager.TurnOnMyRestaurantOrderOption();
 
             //Assert
             restaurantRepository.Verify();
@@ -415,7 +415,7 @@ namespace IRestaurant.Test.ManagerUnitTests
 
             //Assert
             var exception = await Assert.ThrowsAsync<ProblemDetailsException>(
-                async () => await manager.TurnOnMyRestaurantOrderStatus()
+                async () => await manager.TurnOnMyRestaurantOrderOption()
             );
             Assert.Equal(StatusCodes.Status400BadRequest, exception.Details.Status);
         }
@@ -447,7 +447,7 @@ namespace IRestaurant.Test.ManagerUnitTests
 
             //Assert
             var exception = await Assert.ThrowsAsync<ProblemDetailsException>(
-                async () => await manager.TurnOnMyRestaurantOrderStatus()
+                async () => await manager.TurnOnMyRestaurantOrderOption()
             );
             Assert.Equal(StatusCodes.Status400BadRequest, exception.Details.Status);
         }
@@ -473,7 +473,7 @@ namespace IRestaurant.Test.ManagerUnitTests
             var manager = new RestaurantManager(restaurantRepository.Object, userRepository.Object, foodRepository.Object, httpContext.Object);
 
             //Act
-            await manager.TurnOffMyRestaurantOrderStatus();
+            await manager.TurnOffMyRestaurantOrderOption();
 
             //Assert
             restaurantRepository.Verify();

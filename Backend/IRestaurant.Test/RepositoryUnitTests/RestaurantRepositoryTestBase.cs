@@ -15,7 +15,7 @@ using Xunit;
 
 namespace IRestaurant.Test.RepositoryUnitTests
 {
-    public abstract class RestaurantRepositoryTestBase : TestApplicationDbContext
+    public abstract class RestaurantRepositoryTestBase : InMemoryApplicationDbContext
     {
         public abstract IRestaurantRepository CreateRestaurantRepository(ApplicationDbContext dbContext);
 
@@ -26,7 +26,7 @@ namespace IRestaurant.Test.RepositoryUnitTests
         [InlineData(RestaurantSortBy.RATING_DESC)]
         [InlineData(RestaurantSortBy.REVIEW_COUNT_ASC)]
         [InlineData(RestaurantSortBy.REVIEW_COUNT_DESC)]
-        public async Task GetRestaurantOverviewList_All_OnOnePage_SortBy(RestaurantSortBy sortBy)
+        public async Task GetRestaurantOverviewList_AllAvailable_OnOnePage_SortBy(RestaurantSortBy sortBy)
         {
             using (var dbContext = CreateDbContext())
             {
@@ -39,7 +39,7 @@ namespace IRestaurant.Test.RepositoryUnitTests
                     PageSize = restaurantsCount,
                     PageNumber = 1,
                 };
-                var orderedRestaurantList = TestSeedService.Restaurants.SortBy(sortBy);
+                var orderedRestaurantList = TestSeedService.Restaurants.SortByAll(sortBy);
                 var repository = CreateRestaurantRepository(dbContext);
 
                 //Act

@@ -169,23 +169,15 @@ namespace IRestaurant.BL.Managers
             string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
 
-            using (var transaction = new TransactionScope(
-              TransactionScopeOption.Required,
-              new TransactionOptions() { IsolationLevel = IsolationLevel.RepeatableRead },
-              TransactionScopeAsyncFlowOption.Enabled))
-            {
-                await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, false);
-                await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
-
-                transaction.Complete();
-            }
+            await restaurantRepository.ChangeOrderAvailableStatus(ownerRestaurantId, false);
+            await restaurantRepository.ChangeShowForUsersStatus(ownerRestaurantId, false);
         }
 
         /// <summary>
         /// Az aktuális felhasználóhoz tartozó étterem rendelési lehetőségének bekapcsolása,
         /// ha az étterem elérhető és az étteremhez minimum egy étel tartozik.
         /// </summary>
-        public async Task TurnOnMyRestaurantOrderStatus()
+        public async Task TurnOnMyRestaurantOrderOption()
         {
             string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);
@@ -209,7 +201,7 @@ namespace IRestaurant.BL.Managers
         /// <summary>
         /// Az aktuális felhasználóhoz tartozó étterem rendelési lehetőségének kikapcsolása.
         /// </summary>
-        public async Task TurnOffMyRestaurantOrderStatus()
+        public async Task TurnOffMyRestaurantOrderOption()
         {
             string userId = httpContext.GetCurrentUserId();
             int ownerRestaurantId = await userRepository.GetMyRestaurantId(userId);

@@ -1,0 +1,12 @@
+﻿{
+  "keys": [
+    {
+      "kty": "RSA",
+      "use": "sig",
+      "kid": "Development",
+      "e": "AQAB",
+      "n": "s3GMuEjfbXjdbgQ3efn19htvXfrGd_qQ1lj-TX3MnTfd1Bo5ChYRI3FE_mbno30x-Hw0teIvfWrktIj_GFAJlg8TnwRND6f-G3mX_BwhvD5zFdTc0ynI0xqAZCY46RiuPB26PVTbjSPB7LSUsjLn68dfjMEYb55ib9C4fXkKgKYPOTadN46JXNS2GIJKksFQISseYEGeJmfHeEFuJSOksakv9QQb2B3snV1KydN208-0SuHB7JUEabAj5-K7Dj8Xsliux1BZxl3DCCQFDbQpnFM4NtvDiOBsnuhi6acMuL0RrO6Gq7IVrJWXTLoOpAZBus4WBJ7c7QYwZ9QSGY4hsQ",
+      "alg": "RS256"
+    }
+  ]
+}

@@ -163,9 +163,9 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> TurnOnOrderOption()
+        public async Task<ActionResult> TurnOnMyRestaurantOrderOption()
         {
-            await restaurantManager.TurnOnMyRestaurantOrderStatus();
+            await restaurantManager.TurnOnMyRestaurantOrderOption();
             return Ok();
         }
 
@@ -179,7 +179,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> TurnOffOrderOption()
         {
-            await restaurantManager.TurnOffMyRestaurantOrderStatus();
+            await restaurantManager.TurnOffMyRestaurantOrderOption();
             return Ok();
         }
 
