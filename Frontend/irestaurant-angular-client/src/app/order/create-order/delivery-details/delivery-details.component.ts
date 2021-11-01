@@ -123,6 +123,11 @@ export class DeliveryDetailsComponent implements OnInit {
         this.deliveryForm.get(controlName)?.errors?.maxlength.requiredLength
       } karakteres limitet!`;
     }
+    if (this.deliveryForm.get(controlName)?.hasError('max')) {
+      return `A mező értéke nem lehet nagyobb mint ${
+        this.deliveryForm.get(controlName)?.errors?.max.max
+      }!`;
+    }
     if (this.deliveryForm.get(controlName)?.hasError('min')) {
       return `A mező értéke nem lehet kisebb mint ${
         this.deliveryForm.get(controlName)?.errors?.min.min
@@ -130,6 +135,9 @@ export class DeliveryDetailsComponent implements OnInit {
     }
     if (this.deliveryForm.get(controlName)?.hasError('dateTimeMin')) {
       return `A kívánt kiszállítási időnek minimum ${this.minHourAfterOrder} órával a rendelés leadása után kell lennie!`;
+    }
+    if (this.deliveryForm.get(controlName)?.hasError('pattern')) {
+      return 'Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789!';
     }
 
     return null;
