@@ -94,6 +94,7 @@ namespace IRestaurant.Auth
             //A BL rétegbeli felhasználókat kezelő manager osztály beregisztrálása.
             services.AddTransient<UserManager>();
 
+            //Az email küldő szolgáltatás beregisztrálása
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
@@ -124,6 +125,9 @@ namespace IRestaurant.Auth
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

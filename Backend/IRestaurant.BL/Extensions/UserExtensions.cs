@@ -17,7 +17,7 @@ namespace IRestaurant.BL.Extensions
         /// <returns>Az aktuális felhasználó egyedi azonosítója.</returns>
         public static string GetCurrentUserId(this IHttpContextAccessor httpContext)
         {
-            return httpContext.HttpContext.User.FindFirstValue(ClaimTypes.Name) ??
+            return httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ??
                         httpContext.HttpContext.User.FindFirstValue("sub");
         }
     }
