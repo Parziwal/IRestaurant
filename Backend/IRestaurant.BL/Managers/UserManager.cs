@@ -33,11 +33,11 @@ namespace IRestaurant.BL.Managers
         /// Étterem létrehozása alapméretezett adatokkal az aktuális felhasználóhoz,
         /// ha még nem létezik hozzá étterem és a felhasználó szerepköre étterem.
         /// </summary>
+        /// <param name="userId">A felhasználó azonosítója.</param>
         /// <returns>Az étterem részletes adatai.</returns>
-        public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForCurrentUser()
+        public async Task<RestaurantDetailsDto> CreateDefaultRestaurantForUser(string userId)
         {
-            string userId = httpContext.GetCurrentUserId();
-            if (await userRepository.UserHasRestaurant(userId))
+            if (!(await userRepository.UserHasRestaurant(userId)))
             {
                 return await userRepository.CreateDefaultRestaurantForUser(userId);
             }

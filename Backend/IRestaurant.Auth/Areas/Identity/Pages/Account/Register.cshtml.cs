@@ -58,26 +58,26 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "A szerepkör kiválasztása kötelező.")]
             public string Role { get; set; }
-            [Required]
-            [StringLength(50)]
+            [Required(ErrorMessage = "A vezeték és keresztnév megadása kötelező.")]
+            [StringLength(50, ErrorMessage = "A vezeték és a keresztnév maximum {1} karakter hosszú lehet.")]
             [Display(Name = "Vezeték és keresztnév")]
             public string FullName { get; set; }
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Az email cím megadása kötelező.")]
+            [EmailAddress(ErrorMessage = "Az email cím nem érvényes.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "A {0}nak legalább {2} és maximum {1} karakter hosszúnak kell lennie.", MinimumLength = 6)]
+            [Required(ErrorMessage = "A jelszó megadása kötelező.")]
+            [StringLength(100, ErrorMessage = "A jelszónak legalább {2} és maximum {1} karakter hosszúnak kell lennie.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Jelszó")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Jelszó megerősítése")]
-            [Compare("Password", ErrorMessage = "A jelszók nem egyeznek meg.")]
+            [Compare("Password", ErrorMessage = "A jelszavak nem egyeznek meg.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -107,7 +107,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                     {
                         try
                         {
-                            await userManager.CreateDefaultRestaurantForCurrentUser();
+                            await userManager.CreateDefaultRestaurantForUser(user.Id);
                         }
                         catch (Exception)
                         {
@@ -128,14 +128,12 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         protocol: Request.Scheme);
 
                     await emailSender.SendEmailAsync(Input.Email, "Email megerősítés",
-                        $@"Kedves {Input.FullName},
-
-                           Köszönjük, hogy csatkakoztól az IRestaurant portálhoz.
-                           Az email címed megerősítéséhez kérlek <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>kattints ide.</a>
-                           Ha bármi ptoblémát tapasztalsz nyugottan jelezd nekünk az irestaurant.net@gmail.com címen.
-                           
-                           Üdvözlettel,
-                           IRestaurant csapata");
+                        $"<p>Kedves {Input.FullName}!<br><br>" +
+                        $"Köszönjük, hogy csatkakoztól az IRestaurant portálhoz.<br>" +
+                        $"Az email címed megerősítéséhez kérlek <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>kattints ide.</a><br>" +
+                        $"Ha bármi ptoblémát tapasztalsz nyugottan jelezd nekünk az irestaurant.net@gmail.com címen.<br><br>" +
+                        $"Üdvözlettel,<br>" +
+                        $"IRestaurant csapata</p>");
 
                     if (applicationUserManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -157,7 +155,6 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

@@ -35,20 +35,20 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Az régi jelszó megadása kötelező.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Régi jelszó")]
             public string OldPassword { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Az új jelszó megadása kötelező.")]
+            [StringLength(100, ErrorMessage = "A jelszónak legalább {2} és maximum {1} karakter hosszúnak kell lennie.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Új jelszó")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Új jelszó megerősítése")]
+            [Compare("NewPassword", ErrorMessage = "A jelszavak nem egyeznek meg.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -57,7 +57,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             var hasPassword = await _userManager.HasPasswordAsync(user);
@@ -79,7 +79,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
@@ -94,7 +94,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "A jelszavad megváltoztatásra került.";
 
             return RedirectToPage();
         }

@@ -42,6 +42,7 @@ namespace IRestaurant.Auth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddRazorPages();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(
@@ -50,8 +51,8 @@ namespace IRestaurant.Auth
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                // A Role service beregisztrálása a szerepkörök használatához.
                 .AddRoles<IdentityRole>()
+                .AddErrorDescriber<HungarianIdentityErrorDescriber>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -123,9 +124,6 @@ namespace IRestaurant.Auth
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

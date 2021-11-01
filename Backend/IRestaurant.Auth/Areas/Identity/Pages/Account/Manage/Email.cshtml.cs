@@ -17,16 +17,13 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
     public partial class EmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _emailSender = emailSender;
         }
 
@@ -44,9 +41,9 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "New email")]
+            [Required(ErrorMessage = "Az email cím megadása kötelező.")]
+            [EmailAddress(ErrorMessage = "Az email cím nem érvényes.")]
+            [Display(Name = "Új email")]
             public string NewEmail { get; set; }
         }
 
@@ -68,7 +65,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             await LoadAsync(user);
@@ -80,7 +77,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             if (!ModelState.IsValid)
@@ -90,6 +87,14 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             }
 
             var email = await _userManager.GetEmailAsync(user);
+
+            var userNameExists = await _userManager.FindByNameAsync(Input.NewEmail);
+            if (userNameExists != null)
+            {
+                StatusMessage = "Az felhasználónév/email már használatban van. Kérlek válasz egy másikat.";
+                return RedirectToPage();
+            }
+
             if (Input.NewEmail != email)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
@@ -102,14 +107,17 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
                     protocol: Request.Scheme);
                 await _emailSender.SendEmailAsync(
                     Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Email megerősítése",
+                    $"<p>Kedves {user.FullName}!<br><br>" +
+                    $"Az email címed megerősítéséhez kérlek <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>kattints ide.</a><br><br>" +
+                    $"Üdvözlettel,<br>" +
+                    $"IRestaurant csapata</p>");
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
+                StatusMessage = "Az új email megerősítéséhez szükséges linket elküldtük. Kérlek ellenőrizd az emailjeidet.";
                 return RedirectToPage();
             }
 
-            StatusMessage = "Your email is unchanged.";
+            StatusMessage = "Az email címed nem változott.";
             return RedirectToPage();
         }
 
@@ -118,7 +126,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             if (!ModelState.IsValid)
@@ -138,10 +146,13 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Email megerősítése",
+                $"Kedves {user.FullName},\n\n" +
+                $"Az email címed megerősítéséhez kérlek <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>kattints ide.</a>\n\n" +
+                $"Üdvözlettel,\n" +
+                $"IRestaurant csapata");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "A megerősítő email elküldésre került. Kérjük, ellenőrizze az e-mailjeit.";
             return RedirectToPage();
         }
     }

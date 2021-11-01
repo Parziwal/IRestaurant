@@ -32,21 +32,10 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            public string Username { get; set; }
 
+            [Display(Name = "Vezetéknév és Keresztnév")]
             public string FullName { get; set; }
 
-        }
-
-        private async Task LoadAsync(ApplicationUser user)
-        {
-            var userName = await userManager.GetUserNameAsync(user);
-
-            Input = new InputModel
-            {
-                Username = userName,
-                FullName = user.FullName,
-            };
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -54,10 +43,14 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Az alábbi azonosítóval rendelkező felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
-            await LoadAsync(user);
+            Input = new InputModel
+            {
+                FullName = user.FullName,
+            };
+
             return Page();
         }
 
@@ -66,30 +59,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage
             var user = await userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Az alábbi azonosítóval rendelkező felhasználó betöltése nem lehetséges: '{userManager.GetUserId(User)}'.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await LoadAsync(user);
-                return Page();
-            }
-
-            var userName = await userManager.GetUserNameAsync(user);
-            if (Input.Username != userName)
-            {
-                var userNameExists = await userManager.FindByNameAsync(Input.Username);
-                if (userNameExists != null)
-                {
-                    StatusMessage = "A felhasználónév már használatban van. Kérlek válasz egy másikat.";
-                    return RedirectToPage();
-                }
-                var setUserName = await userManager.SetUserNameAsync(user, Input.Username);
-                if (!setUserName.Succeeded)
-                {
-                    StatusMessage = "Hiba történt felhasználónév megváltoztatása során.";
-                    return RedirectToPage();
-                }
+                return NotFound("A felhasználó betöltése nem sikerült.");
             }
 
             if (Input.FullName != user.FullName)
