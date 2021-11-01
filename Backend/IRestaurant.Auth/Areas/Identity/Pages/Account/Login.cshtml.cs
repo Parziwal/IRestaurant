@@ -44,11 +44,11 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Az email cím megadása kötelező.")]
+            [EmailAddress(ErrorMessage = "Az email cím nem érvényes.")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "A jelszó megadása kötelező.")]
             [DataType(DataType.Password)]
             [Display(Name = "Jelszó")]
             public string Password { get; set; }
@@ -66,7 +66,6 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 
             returnUrl ??= Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -82,8 +81,6 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
         
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
@@ -105,12 +102,11 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Az email cím és/vagy jelszó nem megfelelő.");
                     return Page();
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }

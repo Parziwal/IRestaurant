@@ -20,7 +20,7 @@ export class AuthModule {
   constructor(@Optional() @SkipSelf() parentModule: AuthModule) {
     if (parentModule) {
       throw new Error(
-        'CoreModule is already loaded. Import it in the AppModule only'
+        'AuthModule is already loaded. Import it in the AppModule only'
       );
     }
   }

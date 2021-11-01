@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
+namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage.UserAddress
 {
     [Authorize(Roles = UserRoles.Guest)]
     public class CreateUserAddressModel : PageModel

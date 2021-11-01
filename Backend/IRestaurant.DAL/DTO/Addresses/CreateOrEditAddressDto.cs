@@ -11,30 +11,30 @@ namespace IRestaurant.DAL.DTO.Addresses
         /// <summary>
         /// Az irányítószám.
         /// </summary>
-        [Required]
-        [Range(1000, 9999)]
+        [Required(ErrorMessage = "Az irányítószám megadása kötelező.")]
+        [Range(1000, 9999, ErrorMessage = "A irányítószámnak 4 számjegyből kell állnia.")]
         public int ZipCode { get; set; }
 
         /// <summary>
         /// A város.
         /// </summary>
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "Az város megadása kötelező.")]
+        [StringLength(100, ErrorMessage = "A város maximum {1} karakter hosszú lehet.")]
         public string City { get; set; }
 
         /// <summary>
         /// Az utca és házszám.
         /// </summary>
-        [Required]
-        [StringLength(200)]
+        [Required(ErrorMessage = "Az utca megadása kötelező.")]
+        [StringLength(200, ErrorMessage = "Az utca maximum {1} karakter hosszú lehet.")]
         public string Street { get; set; }
 
         /// <summary>
         /// A címhez tartozó telefonos elérehtőség.
         /// </summary>
-        [Required]
-        [Phone]
-        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}")]
+        [Required(ErrorMessage = "Az telefonszám megadása kötelező.")]
+        [Phone(ErrorMessage = "A telefonszámnak jól formázottnak kell lennie.")]
+        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}", ErrorMessage = "Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789")]
         public string PhoneNumber { get; set; }
     }
 }
