@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
+namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage.UserAddress
 {
     [Authorize(Roles = UserRoles.Guest)]
     public class UserAddressListModel : PageModel
@@ -23,7 +23,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
 
         public List<AddressWithIdDto> UserAddressList { get; set; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             try
             {
@@ -37,7 +37,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
             return Page();
         }
 
-        public async Task<IActionResult> OnDelete(int addressId)
+        public async Task<IActionResult> OnPostAsync(int addressId)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace IRestaurant.Web.Areas.Identity.Pages.Account.Manage.UserAddressSetting
                 ModelState.AddModelError("Error", "Hiba történt a lakcímek törlése során, kérem próbálja újra.");
             }
 
-            return RedirectToPage("UserAddressList");
+            return RedirectToPage();
         }
     }
 }
