@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Services;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using IdentityServer4.Services;
 using IRestaurant.Auth.Services;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
@@ -11,8 +13,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -72,7 +72,7 @@ namespace IRestaurant.Auth
             {
                 builder.AddDeveloperSigningCredential();
             } else {
-                var certificate = GetCertificateFromAzureKeyVault().GetAwaiter().GetResult();
+                var certificate = GetCertificateFromAzureKeyVault();
                 builder.AddSigningCredential(certificate);
             }
 
@@ -124,14 +124,11 @@ namespace IRestaurant.Auth
             });
         }
 
-        private async Task<X509Certificate2> GetCertificateFromAzureKeyVault()
+        private X509Certificate2 GetCertificateFromAzureKeyVault()
         {
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            var client = new SecretClient(vaultUri: new Uri(Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value), credential: new DefaultAzureCredential());
 
-            var certificateSecret = await keyVaultClient.GetSecretAsync(
-                Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value,
-                Configuration.GetSection("AzureKeyVault:CertificateName").Value);
+            KeyVaultSecret certificateSecret = client.GetSecret(Configuration.GetSection("AzureKeyVault:CertificateName").Value);
             var privateKeyBytes = Convert.FromBase64String(certificateSecret.Value);
             
             return new X509Certificate2(privateKeyBytes, string.Empty, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
