@@ -1,6 +1,6 @@
 ﻿using IRestaurant.BL.Managers;
-using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Addresses;
+using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +19,6 @@ namespace IRestaurant.WebAPI.Controllers
     {
         private readonly UserManager userManager;
 
-        /// <summary>
-        /// A szükséges üzleti logikai függőségek elkérése.
-        /// </summary>
-        /// <param name="userManager">A felhasználó adatait kezeli.</param>
         public GuestAddressController(UserManager userManager)
         {
             this.userManager = userManager;

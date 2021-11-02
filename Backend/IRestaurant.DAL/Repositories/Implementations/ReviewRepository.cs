@@ -17,10 +17,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
     {
         private readonly ApplicationDbContext dbContext;
 
-        /// <summary>
-        ///  Az adatbázis inicializációja a konstruktorban.
-        /// </summary>
-        /// <param name="dbContext">Az adatbázis.</param>
         public ReviewRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;

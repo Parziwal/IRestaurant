@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Extensions
 {
-    /// <summary>
-    /// Az értékeléshez kapcsolódó extension metódusok.
-    /// </summary>
     internal static class ReviewRepositoryExtensions
     {
         /// <summary>

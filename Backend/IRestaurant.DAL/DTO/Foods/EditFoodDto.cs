@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IRestaurant.DAL.DTO.Foods
 {
     /// <summary>
-    /// Az ételek szerkesztéséhez az adatokat ezen formátumban várjuk a klienstől.
+    ///  Az étel szerkesztéséhez szükséges adatok követelményeit írja elő.
     /// </summary>
     public class EditFoodDto
     {

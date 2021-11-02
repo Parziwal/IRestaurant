@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Extensions
 {
-    /// <summary>
-    /// Az ételhez kapcsolódó extension metódusok.
-    /// </summary>
     internal static class FoodRepositoryExtensions
     {
         /// <summary>
@@ -30,7 +27,7 @@ namespace IRestaurant.DAL.Extensions
         /// Az étel modell osztály átalakítása adatátviteli objektummá.
         /// A metódus nem tartalmaz await operátort, így nem kéne async-nek lenni,
         /// de mivel a többi hasonló extension metódus (pl.: ToRestaurantDetialsDto()) tartalmaz ilyet,
-        /// így az egységes kezelés/használat érdekében ebben az esetben is meghagytam az async jelzőt.
+        /// így az egységes kezelés érdekében ebben az esetben is meghagytam az async jelzőt.
         /// </summary>
         /// <param name="food">Étel típusú entitás.</param>
         /// <returns>Étel típusú adatátviteli objektum.</returns>

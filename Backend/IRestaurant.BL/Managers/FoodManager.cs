@@ -19,13 +19,6 @@ namespace IRestaurant.BL.Managers
         private readonly IUserRepository userRepository;
         private readonly IHttpContextAccessor httpContext;
 
-        /// <summary>
-        /// A szükséges adatelérési rétegbeli függőségek elkérése.
-        /// </summary>
-        /// <param name="foodRepository">Az ételeket kezeli.</param>
-        /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
-        /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public FoodManager(IFoodRepository foodRepository,
             IRestaurantRepository restaurantRepository,
             IUserRepository userRepository,
@@ -192,7 +185,7 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         /// <param name="foodId">Az étel azonosítója.</param>
         /// <param name="food">Az étel módosítandó adatai.</param>
-        /// <returns></returns>
+        /// <returns>A módosított étel.</returns>
         public async Task<FoodDto> EditFood(int foodId, EditFoodDto food)
         {
             string userId = httpContext.GetCurrentUserId();

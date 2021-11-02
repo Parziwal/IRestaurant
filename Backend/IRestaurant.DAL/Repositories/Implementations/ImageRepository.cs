@@ -18,10 +18,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         private readonly IWebHostEnvironment webHostEnvironment;
         private const string BaseImageFolder = "images";
 
-        /// <summary>
-        /// A webes körnnyzeti változó inicializációja a konstruktorban.
-        /// </summary>
-        /// <param name="webHostEnvironment">Információt nyújt a webes környzetről, amin az alkalmazás fut.</param>
         public ImageRepository(IWebHostEnvironment webHostEnvironment)
         {
             this.webHostEnvironment = webHostEnvironment;

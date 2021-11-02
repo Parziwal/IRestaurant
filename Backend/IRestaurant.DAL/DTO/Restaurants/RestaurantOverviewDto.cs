@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.DTO.Restaurants
 {
     /// <summary>
-    /// Az étterem áttekintő a adatait a kliens ebben a formátumban kapja meg.
+    /// Az étterem áttekintő adatait tartalmazó adatátviteli objektum.
     /// </summary>
     public class RestaurantOverviewDto
     {
@@ -43,11 +43,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
         /// </summary>
         public string City { get; set; }
 
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása, illetve
-        /// az eddigi felhasználói értékelésekből az étterem átlagos értékelésének kiszámítása.
-        /// </summary>
-        /// <param name="restaurant"></param>
+        public RestaurantOverviewDto() { }
         public RestaurantOverviewDto(Restaurant restaurant)
         {
             this.Id = restaurant.Id;
@@ -57,7 +53,5 @@ namespace IRestaurant.DAL.DTO.Restaurants
             this.ImagePath = restaurant.ImagePath;
             this.City = restaurant.Address.City;
         }
-
-        public RestaurantOverviewDto() { }
     }
 }

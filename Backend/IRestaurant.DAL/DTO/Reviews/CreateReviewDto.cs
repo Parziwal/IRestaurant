@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IRestaurant.DAL.DTO.Reviews
 {
     /// <summary>
-    /// Az értéklés létrehozásához ezen osztálynak megfelelő formátumban várjuk az adatokat.
+    /// Az értékelés létrehozásához szükséges adatok követelményeit írja elő.
     /// </summary>
     public class CreateReviewDto
     {

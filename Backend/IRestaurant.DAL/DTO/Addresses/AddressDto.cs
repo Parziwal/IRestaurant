@@ -3,7 +3,7 @@
 namespace IRestaurant.DAL.DTO.Addresses
 {
     /// <summary>
-    /// A felhasználók és éttermek címei ezen formátumban kerülnek visszaküldésre a kliensnek.
+    /// A lakcím infromációkat tartalmazó adatáviteli objektum.
     /// </summary>
     public class AddressDto
     {
@@ -29,10 +29,6 @@ namespace IRestaurant.DAL.DTO.Addresses
 
         public AddressDto() { }
 
-        /// <summary>
-        /// A konstruktorban átadott cím osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="address">Címel kapcsolatos adatokat tartalmazó osztály.</param>
         public AddressDto(AddressOwned address)
         {
             this.ZipCode = address.ZipCode;

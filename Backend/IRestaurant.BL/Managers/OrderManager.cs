@@ -25,13 +25,6 @@ namespace IRestaurant.BL.Managers
         private readonly IHttpContextAccessor httpContext;
         private const int MIN_HOUR_AFTER_ORDER = 1;
 
-        /// <summary>
-        /// A szükséges adatelérési rétegbeli függőségek elkérése.
-        /// </summary>
-        /// <param name="orderRepository">A rendeléseket kezeli.</param>
-        /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
-        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public OrderManager(IOrderRepository orderRepository,
             IUserRepository userRepository,
             IRestaurantRepository restaurantRepository,

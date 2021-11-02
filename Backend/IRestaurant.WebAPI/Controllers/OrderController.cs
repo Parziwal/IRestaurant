@@ -1,5 +1,4 @@
 ﻿using IRestaurant.BL.Managers;
-using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
@@ -23,10 +22,6 @@ namespace IRestaurant.WebAPI.Controllers
     {
         private readonly OrderManager orderManager;
 
-        /// <summary>
-        /// A szükséges üzleti logikai függőségek elkérése.
-        /// </summary>
-        /// <param name="orderManager">A rendeléseket kezeli.</param>
         public OrderController(OrderManager orderManager)
         {
             this.orderManager = orderManager;

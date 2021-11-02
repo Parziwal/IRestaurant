@@ -5,7 +5,7 @@ using System.Linq;
 namespace IRestaurant.DAL.DTO.Orders
 {
     /// <summary>
-    /// A rendelés lényeges/áttekintő adatait tartalmazó osztály.
+    /// A rendelés áttekintő adatait tartalmazó adatáviteli objektum.
     /// </summary>
     public class OrderOverviewDto
     {
@@ -45,12 +45,6 @@ namespace IRestaurant.DAL.DTO.Orders
         public string RestaurantName { get; set; }
 
         public OrderOverviewDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása, illetve
-        /// a rendelésben lévő tételek összértékenek a kiszámítása.
-        /// </summary>
-        /// <param name="order">Rendelés adatait tartalmazó modell osztály.</param>
         public OrderOverviewDto(Order order)
         {
             this.Id = order.Id;

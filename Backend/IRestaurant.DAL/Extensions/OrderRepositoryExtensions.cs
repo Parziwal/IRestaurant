@@ -13,9 +13,6 @@ using X.PagedList;
 
 namespace IRestaurant.DAL.Extensions
 {
-    /// <summary>
-    /// Az rendeléshez kapcsolódó extension metódusok.
-    /// </summary>
     internal static class OrderRepositoryExtensions
     {
         /// <summary>

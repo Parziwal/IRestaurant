@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Services;
+﻿using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using IdentityServer4.Services;
 using IRestaurant.Auth.Services;
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.Data;
@@ -11,8 +13,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,9 +36,6 @@ namespace IRestaurant.Auth
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
-        /// <summary>
-        /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
-        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -75,7 +72,7 @@ namespace IRestaurant.Auth
             {
                 builder.AddDeveloperSigningCredential();
             } else {
-                var certificate = GetCertificateFromAzureKeyVault().GetAwaiter().GetResult();
+                var certificate = GetCertificateFromAzureKeyVault();
                 builder.AddSigningCredential(certificate);
             }
 
@@ -98,10 +95,6 @@ namespace IRestaurant.Auth
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
-
-        /// <summary>
-        /// Ez a metódus futási időben hívódik meg. A HTTP kérési pipline konfigurációjára használatos.
-        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -112,7 +105,6 @@ namespace IRestaurant.Auth
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -132,14 +124,11 @@ namespace IRestaurant.Auth
             });
         }
 
-        private async Task<X509Certificate2> GetCertificateFromAzureKeyVault()
+        private X509Certificate2 GetCertificateFromAzureKeyVault()
         {
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            var client = new SecretClient(vaultUri: new Uri(Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value), credential: new DefaultAzureCredential());
 
-            var certificateSecret = await keyVaultClient.GetSecretAsync(
-                Configuration.GetSection("AzureKeyVault:KeyVaultUrl").Value,
-                Configuration.GetSection("AzureKeyVault:CertificateName").Value);
+            KeyVaultSecret certificateSecret = client.GetSecret(Configuration.GetSection("AzureKeyVault:CertificateName").Value);
             var privateKeyBytes = Convert.FromBase64String(certificateSecret.Value);
             
             return new X509Certificate2(privateKeyBytes, string.Empty, X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);

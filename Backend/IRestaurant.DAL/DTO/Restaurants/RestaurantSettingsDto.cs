@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.DTO.Restaurants
 {
     /// <summary>
-    /// Az étterem elérehtőségének, illetve a rendelés állapotának értékét tartalmaó osztály.
+    /// Az étterem beállítási adatait tartalmaó adatátviteli objektum.
     /// </summary>
     public class RestaurantSettingsDto
     {
@@ -23,11 +23,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public bool IsOrderAvailable { get; set; }
 
         public RestaurantSettingsDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="restaurant">Az étterem adatait tartalmazó modell osztály.</param>
         public RestaurantSettingsDto(Restaurant restaurant)
         {
             this.ShowForUsers = restaurant.ShowForUsers;

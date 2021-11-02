@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IRestaurant.DAL.DTO.Addresses
 {
     /// <summary>
-    /// A kliens ebben a formátumban adhatja meg a létrehozandó, vagy szerkesztendő címet.
+    /// A lakcím létrehozásához és szerkesztéséhez szükséges adatok követelményeit írja elő.
     /// </summary>
     public class CreateOrEditAddressDto
     {
