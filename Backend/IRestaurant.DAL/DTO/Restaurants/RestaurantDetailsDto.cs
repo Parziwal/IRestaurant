@@ -6,7 +6,7 @@ using System.Linq;
 namespace IRestaurant.DAL.DTO.Restaurants
 {
     /// <summary>
-    /// Az étteremhez kapcsolódó összes adatot ebben a formátumban adjuk vissza a kliensnek. 
+    /// Az étterem részletes adatait tartalmazó adatátviteli objektum. 
     /// </summary>
     public class RestaurantDetailsDto
     {
@@ -61,12 +61,6 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public bool IsCurrentGuestFavourite { get; set; }
 
         public RestaurantDetailsDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása, illetve
-        /// az eddigi felhasználói értékelésekből az étterem átlagos értékelésének kiszámítása.
-        /// </summary>
-        /// <param name="restaurant"></param>
         public RestaurantDetailsDto(Restaurant restaurant)
         {
             this.Id = restaurant.Id;

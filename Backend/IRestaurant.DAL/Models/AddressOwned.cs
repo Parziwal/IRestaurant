@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.Models
 {
     /// <summary>
-    /// A cím információkat tartalmazó owned típusú osztály.
+    /// A lakcím információkat tartalmazó owned típusú osztály.
     /// </summary>
     [Owned]
     public class AddressOwned

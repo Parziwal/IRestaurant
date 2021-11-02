@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IRestaurant.DAL.Data
+namespace IRestaurant.DAL.Models
 {
     /// <summary>
     /// A felhasználói szerepköröket tartalmazó osztály.

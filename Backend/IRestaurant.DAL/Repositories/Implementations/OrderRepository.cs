@@ -20,11 +20,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         private readonly ApplicationDbContext dbContext;
         private readonly IInvoiceRepository invoiceRepository;
 
-        /// <summary>
-        /// Az adatbázis és a számlázási repository inicializációja a konstruktorban.
-        /// </summary>
-        /// <param name="dbContext">Az adatbázis.</param>
-        /// <param name="invoiceRepository">A számlázást kezelő repository.</param>
         public OrderRepository(ApplicationDbContext dbContext, IInvoiceRepository invoiceRepository)
         {
             this.dbContext = dbContext;

@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.DAL.Extensions
 {
-    /// <summary>
-    ///  Az felhasználóhoz kapcsolódó extension metódusok.
-    /// </summary>
     internal static class UserRepositoryExtensions
     {
         /// <summary>
@@ -28,7 +25,7 @@ namespace IRestaurant.DAL.Extensions
         /// Az lakcím modell osztály átalakítása adatátviteli objektummá.
         /// A metódus nem tartalmaz await operátort, így nem kéne async-nek lenni,
         /// de mivel a többi hasonló extension metódus (pl.: ToRestaurantDetialsDto()) tartalmaz ilyet,
-        /// így az egységes kezelés/használat érdekében ebben az esetben is meghagytam az async jelzőt.
+        /// így az egységes kezelés érdekében ebben az esetben is meghagytam az async jelzőt.
         /// </summary>
         /// <param name="address">Cím típusú entitiás.</param>
         /// <returns>A lakcím adatait tartalmazó adatátviteli objektum.</returns>

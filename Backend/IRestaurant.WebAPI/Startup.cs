@@ -2,6 +2,7 @@
 using IRestaurant.BL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
+using IRestaurant.DAL.Models;
 using IRestaurant.DAL.Repositories;
 using IRestaurant.DAL.Repositories.Implementations;
 using Microsoft.AspNetCore.Builder;
@@ -11,12 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using NSwag;
 using NSwag.AspNetCore;
 using NSwag.Generation.Processors.Security;
-using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace IRestaurant.WebAPI

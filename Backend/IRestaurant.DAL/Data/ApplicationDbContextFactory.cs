@@ -8,9 +8,16 @@ using System.IO;
 
 namespace IRestaurant.DAL.Data
 {
+    /// <summary>
+    /// Megfelelő ApplicationDbContext adatbázis példány létrehozásáért felelős tervezési időben.
+    /// </summary>
     public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    { 
-
+    {
+        /// <summary>
+        /// ApplicationDbContext adatbázis példányt hoz létre.
+        /// </summary>
+        /// <param name="args">Argumentumok.</param>
+        /// <returns>Az adatbázis példány.</returns>
         ApplicationDbContext IDesignTimeDbContextFactory<ApplicationDbContext>.CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()

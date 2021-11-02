@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IRestaurant.DAL.Data
 {
+    /// <summary>
+    /// Az adatbázis kezdeti inicializálásához szükséges adatokat tartalmazza.
+    /// </summary>
     public class ApplicationSeedData : IApplicationSeedData
     {
         public IEntityTypeConfiguration<IdentityRole> RoleConfiguration { get; set; } = new RolesSeedConfig();

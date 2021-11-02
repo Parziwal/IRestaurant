@@ -3,7 +3,7 @@
 namespace IRestaurant.DAL.DTO.Foods
 {
     /// <summary>
-    /// Az éttermekhez tartozó ételek ebben a formátmban kerülnek visszaküldésre a kliensnek.
+    /// Az éttermekhez tartozó ételek adatait tartalmazó adatáviteli objektum.
     /// </summary>
     public class FoodDto
     {
@@ -33,11 +33,6 @@ namespace IRestaurant.DAL.DTO.Foods
         public string ImagePath { get; set; }
 
         public FoodDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="food">Étel adatait tartalmazó modell osztály.</param>
         public FoodDto(Food food)
         {
             this.Id = food.Id;

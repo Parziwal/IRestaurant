@@ -17,11 +17,6 @@ namespace IRestaurant.BL.Managers
         private readonly IUserRepository userRepository;
         private readonly IHttpContextAccessor httpContext;
 
-        /// <summary>
-        /// A szükséges adatelérési rétegbeli függőségek elkérése.
-        /// </summary>
-        /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public UserManager(IUserRepository userRepository,
                           IHttpContextAccessor httpContext)
         {
@@ -30,8 +25,8 @@ namespace IRestaurant.BL.Managers
         }
 
         /// <summary>
-        /// Étterem létrehozása alapméretezett adatokkal az aktuális felhasználóhoz,
-        /// ha még nem létezik hozzá étterem és a felhasználó szerepköre étterem.
+        /// Étterem létrehozása alapméretezett adatokkal a megadott azonosítójú felhasználóhoz,
+        /// ha még nem létezik hozzá étterem.
         /// </summary>
         /// <param name="userId">A felhasználó azonosítója.</param>
         /// <returns>Az étterem részletes adatai.</returns>

@@ -3,7 +3,7 @@
 namespace IRestaurant.DAL.DTO.Orders
 {
     /// <summary>
-    /// A rendelési tétel ebben a formátumban kerül visszaküldésre a kliensnek.
+    /// Egy rendelési tétel infromációit tartalmazó adatáviteli objektum.
     /// </summary>
     public class OrderFoodDto
     {
@@ -22,11 +22,6 @@ namespace IRestaurant.DAL.DTO.Orders
         public int Amount { get; set; }
 
         public OrderFoodDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="orderFood">A rendelési tétel adatait tartalmazó modell osztály.</param>
         public OrderFoodDto(OrderFood orderFood)
         {
             this.FoodName = orderFood.Food.Name;

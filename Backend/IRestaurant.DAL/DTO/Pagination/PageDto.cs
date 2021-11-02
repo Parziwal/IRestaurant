@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace IRestaurant.DAL.DTO.Pagination
 {
     /// <summary>
-    /// A lapozási adatokat tartalmazó osztály.
+    /// A lapozási adatokat tartalmazó adatátviteli objektum.
     /// </summary>
     public class PageDto
     {

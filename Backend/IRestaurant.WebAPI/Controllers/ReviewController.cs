@@ -1,6 +1,6 @@
 ﻿using IRestaurant.BL.Managers;
-using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Reviews;
+using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +22,6 @@ namespace IRestaurant.WebAPI.Controllers
     {
         private readonly ReviewManager reviewManager;
 
-        /// <summary>
-        /// A szükséges üzleti logikai függőségek elkérése.
-        /// </summary>
-        /// <param name="reviewManager">Az értékeléseket kezeli.</param>
         public ReviewController(ReviewManager reviewManager)
         {
             this.reviewManager = reviewManager;

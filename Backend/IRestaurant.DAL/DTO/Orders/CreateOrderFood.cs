@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IRestaurant.DAL.DTO.Orders
 {
     /// <summary>
-    /// A rendelés létrehozásánál a tételek ezen osztályoknak megfelelő formátumban kell megadni.
+    /// A rendeléshez tarozó tételek létrehozásához szükséges adatok követelményeit írja elő.
     /// </summary>
     public class CreateOrderFood
     {

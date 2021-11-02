@@ -18,11 +18,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
         private readonly ApplicationDbContext dbContext;
         private readonly IImageRepository imageRepository;
 
-        /// <summary>
-        /// Az adatbázis és a képkezelési repository inicializációja a konstruktorban.
-        /// </summary>
-        /// <param name="dbContext">Az adatbázis.</param>
-        /// <param name="imageRepository">A képkezelési repository.</param>
         public FoodRepository(ApplicationDbContext dbContext, IImageRepository imageRepository)
         {
             this.dbContext = dbContext;

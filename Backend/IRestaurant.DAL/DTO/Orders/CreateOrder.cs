@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace IRestaurant.DAL.DTO.Orders
 {
     /// <summary>
-    /// A rendelés létrehozásához ezen osztálynak megfelelő formátumban várjuk az adatokat a klienstől.
+    /// A rendelés létrehozásához szükséges adatok követelményeit írja elő.
     /// </summary>
     public class CreateOrder
     {

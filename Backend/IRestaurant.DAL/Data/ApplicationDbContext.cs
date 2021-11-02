@@ -14,7 +14,7 @@ namespace IRestaurant.DAL.Data
 {
     /// <summary>
     /// Az adatbázist reprezentáló osztály. Egy hidat képez az entitás osztályok és az adatbázis között,
-    /// ő felelős az adatbázissal való interakcióért.
+    /// és felelős az adatbázissal való interakcióért.
     /// </summary>
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
@@ -60,12 +60,6 @@ namespace IRestaurant.DAL.Data
 
         private IApplicationSeedData seedData;
 
-        /// <summary>
-        /// Az adatbázishoz szükséges beállítási adatok elkérése.
-        /// </summary>
-        /// <param name="options">DbContext által használandó opciók.</param>
-        /// <param name="operationalStoreOptions">Konfigurált példányok lekérésére szolgál.</param>
-        /// <param name="seedData">Az adatbázist inicializáló adatokat tartalmazza.</param>
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions,
@@ -96,7 +90,7 @@ namespace IRestaurant.DAL.Data
             modelBuilder.Entity<Food>().HasMany(f => f.OrderFoods).WithOne(of => of.Food).IsRequired(false);
             modelBuilder.Entity<Food>().HasQueryFilter(e => !e.IsDeleted);
 
-            /// Az adatbázis feltöltése adatokkal.
+            // Az adatbázis feltöltése adatokkal.
             modelBuilder.ApplyConfiguration(seedData.RoleConfiguration);
             modelBuilder.ApplyConfiguration(seedData.UserConfiguration);
             modelBuilder.ApplyConfiguration(seedData.UserRoleConfiguration);

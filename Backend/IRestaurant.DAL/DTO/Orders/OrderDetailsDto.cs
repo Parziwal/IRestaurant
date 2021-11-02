@@ -7,7 +7,7 @@ using System.Linq;
 namespace IRestaurant.DAL.DTO.Orders
 {
     /// <summary>
-    /// A rendelés részletes adatai ebben a formátumban kerülnek visszaküldésre a kliensnek.
+    /// A rendelés részletes adatait tartalmazó adatáviteli objektum.
     /// </summary>
     public class OrderDetailsDto : OrderOverviewDto
     {
@@ -27,11 +27,6 @@ namespace IRestaurant.DAL.DTO.Orders
         public List<OrderFoodDto> OrderFoods { get; set; }
 
         public OrderDetailsDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="order">Rendelés adatait tartalmazó modell osztály.</param>
         public OrderDetailsDto(Order order) : base(order)
         {
             this.UserAddress = new AddressDto(order.Invoice.UserAddress);

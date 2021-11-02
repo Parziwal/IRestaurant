@@ -1,7 +1,7 @@
 ﻿using IRestaurant.BL.Managers;
-using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.DTO.Images;
+using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +20,6 @@ namespace IRestaurant.WebAPI.Controllers
     {
         private readonly FoodManager foodManager;
 
-        /// <summary>
-        /// A szükséges üzleti logikai függőségek elkérése.
-        /// </summary>
-        /// <param name="foodManager">Az ételeket kezeli.</param>
         public FoodController(FoodManager foodManager)
         {
             this.foodManager = foodManager;

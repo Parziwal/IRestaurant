@@ -34,10 +34,7 @@ namespace IRestaurant.DAL.DTO.Pagination
         public int PageSize { get; set; }
         public IEnumerable<T> Result { get; set; }
 
-        /// <summary>
-        /// A konstruktorban átadott osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="pagedList">A lapozási adatokat tartalmazó objektum kollekció.</param>
+        public PagedListDto() { }
         public PagedListDto(IPagedList<T> pagedList)
         {
             PageCount = pagedList.PageCount;
@@ -46,7 +43,5 @@ namespace IRestaurant.DAL.DTO.Pagination
             PageSize = pagedList.PageSize;
             Result = pagedList;
         }
-
-        public PagedListDto() { }
     }
 }

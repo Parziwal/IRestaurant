@@ -22,13 +22,6 @@ namespace IRestaurant.BL.Managers
         private readonly IFoodRepository foodRepository;
         private readonly IHttpContextAccessor httpContext;
 
-        /// <summary>
-        /// A szükséges adatelérési rétegbeli függőségek elkérése.
-        /// </summary>
-        /// <param name="restaurantRepository">Az étteremeket kezeli.</param>
-        /// <param name="userRepository">A felhasználók adatait kezeli.</param>
-        /// <param name="foodRepository">Az ételeket kezeli.</param>
-        /// <param name="httpContext">A HttpContext-hez biztosít hozzáférést.</param>
         public RestaurantManager(IRestaurantRepository restaurantRepository,
             IUserRepository userRepository,
             IFoodRepository foodRepository,

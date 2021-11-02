@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace IRestaurant.Auth.Services
 {
+    /// <summary>
+    /// Az Identity hiba üzeneteinek lokalizálása magyar nyelven.
+    /// </summary>
     public class HungarianIdentityErrorDescriber : IdentityErrorDescriber
     {
         public override IdentityError DefaultError() { return new IdentityError { Code = nameof(DefaultError), Description = $"Ismeretlen hiba történt" }; }

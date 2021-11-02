@@ -36,9 +36,6 @@ namespace IRestaurant.Auth
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
-        /// <summary>
-        /// Ez a metódus futási időben hívódik meg. A szolgáltatások beregisztrálására használatos.
-        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -98,10 +95,6 @@ namespace IRestaurant.Auth
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
-
-        /// <summary>
-        /// Ez a metódus futási időben hívódik meg. A HTTP kérési pipline konfigurációjára használatos.
-        /// </summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -112,7 +105,6 @@ namespace IRestaurant.Auth
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

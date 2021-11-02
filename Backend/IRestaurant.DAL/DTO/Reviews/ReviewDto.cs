@@ -4,7 +4,7 @@ using System;
 namespace IRestaurant.DAL.DTO.Reviews
 {
     /// <summary>
-    /// Az értékelés adatait a kliens ebben a formában kapja meg.
+    /// Az értékelés adatait tartalmazó adatátviteli objektum.
     /// </summary>
     public class ReviewDto
     {
@@ -54,11 +54,6 @@ namespace IRestaurant.DAL.DTO.Reviews
         public string RestaurantName { get; set; }
 
         public ReviewDto() { }
-
-        /// <summary>
-        /// A konstruktorban átadott modell osztály alapján a tulajdonságok beállítása.
-        /// </summary>
-        /// <param name="review">Az értékelés adatait tartalmazó modell osztály.</param>
         public ReviewDto(Review review)
         {
             this.Id = review.Id;

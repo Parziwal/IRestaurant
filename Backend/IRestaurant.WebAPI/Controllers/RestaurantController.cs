@@ -5,9 +5,9 @@ using IRestaurant.BL.Managers;
 using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
-using IRestaurant.DAL.Data;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.DTO.Pagination;
+using IRestaurant.DAL.Models;
 
 namespace IRestaurant.WebAPI.Controllers
 {
@@ -21,10 +21,6 @@ namespace IRestaurant.WebAPI.Controllers
     {
         private readonly RestaurantManager restaurantManager;
 
-        /// <summary>
-        /// A szükséges üzleti logikai függőségek elkérése.
-        /// </summary>
-        /// <param name="restaurantManager">Az éttermeket kezeli.</param>
         public RestaurantController(RestaurantManager restaurantManager)
         {
             this.restaurantManager = restaurantManager;

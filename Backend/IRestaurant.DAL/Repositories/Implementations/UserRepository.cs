@@ -18,10 +18,6 @@ namespace IRestaurant.DAL.Repositories.Implementations
     {
         private readonly ApplicationDbContext dbContext;
 
-        /// <summary>
-        /// Az adatbázis és a HttpContext hozzáférés inicializációja a konstruktorban.
-        /// </summary>
-        /// <param name="dbContext">Az adatbázis.</param>
         public UserRepository(ApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
