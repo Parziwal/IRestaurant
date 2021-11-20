@@ -177,7 +177,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -185,7 +185,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -193,7 +193,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -201,7 +201,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 }, 
                 new
                 {
@@ -209,7 +209,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -217,7 +217,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -225,7 +225,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -233,7 +233,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -241,7 +241,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -249,7 +249,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -257,7 +257,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -265,7 +265,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -273,7 +273,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -281,7 +281,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -289,7 +289,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -297,7 +297,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -305,7 +305,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -313,7 +313,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -321,7 +321,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -329,7 +329,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1060,
                     Street = "Kossuth utca 30",
-                    PhoneNumber = "06201214561"
+                    PhoneNumber = "06-20-121-4561"
                 },
                 new
                 {
@@ -337,7 +337,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1017,
                     Street = "Petőfi utca 3",
-                    PhoneNumber = "06301451567"
+                    PhoneNumber = "06-30-145-1567"
                 },
                 new
                 {
@@ -345,7 +345,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1017,
                     Street = "Petőfi utca 3",
-                    PhoneNumber = "06301451567"
+                    PhoneNumber = "06-30-145-1567"
                 }
             );
 
@@ -356,7 +356,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -364,7 +364,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -372,7 +372,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -380,7 +380,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -388,7 +388,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1148,
                     Street = "Örs vezér tere 1",
-                    PhoneNumber = "06305412567"
+                    PhoneNumber = "06-30-541-2567"
                 },
                 new
                 {
@@ -396,7 +396,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1011,
                     Street = "Király utca 26",
-                    PhoneNumber = "06301233456"
+                    PhoneNumber = "06-30-123-3456"
                 },
                 new
                 {
@@ -404,7 +404,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -412,7 +412,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -420,7 +420,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -428,7 +428,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -436,7 +436,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1148,
                     Street = "Örs vezér tere 1",
-                    PhoneNumber = "06305412567"
+                    PhoneNumber = "06-30-541-2567"
                 },
                 new
                 {
@@ -444,7 +444,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1011,
                     Street = "Király utca 26",
-                    PhoneNumber = "06301233456"
+                    PhoneNumber = "06-30-123-3456"
                 },
                 new
                 {
@@ -452,7 +452,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -460,7 +460,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -468,7 +468,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -476,7 +476,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -484,7 +484,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1148,
                     Street = "Örs vezér tere 1",
-                    PhoneNumber = "06305412567"
+                    PhoneNumber = "06-30-541-2567"
                 },
                 new
                 {
@@ -492,7 +492,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1011,
                     Street = "Király utca 26",
-                    PhoneNumber = "06301233456"
+                    PhoneNumber = "06-30-123-3456"
                 },
                 new
                 {
@@ -500,7 +500,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -508,7 +508,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -516,7 +516,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -524,7 +524,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 }
             );
         }

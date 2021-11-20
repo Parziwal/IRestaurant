@@ -137,7 +137,7 @@ namespace IRestaurant.Test.Data
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 }
             },
             new Restaurant
@@ -155,7 +155,7 @@ namespace IRestaurant.Test.Data
                     City = "Budapest",
                     ZipCode = 1148,
                     Street = "Örs vezér tere 1",
-                    PhoneNumber = "06305412567"
+                    PhoneNumber = "06-30-541-2567"
                 }
             },
             new Restaurant
@@ -173,7 +173,7 @@ namespace IRestaurant.Test.Data
                     City = "Debrecen",
                     ZipCode = 4025,
                     Street = "Kossuth utca 21",
-                    PhoneNumber = "06203433499"
+                    PhoneNumber = "06-20-343-3499"
                 }
             }
         };
