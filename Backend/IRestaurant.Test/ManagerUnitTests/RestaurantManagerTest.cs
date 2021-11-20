@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Managers;
+using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.DTO.Restaurants;

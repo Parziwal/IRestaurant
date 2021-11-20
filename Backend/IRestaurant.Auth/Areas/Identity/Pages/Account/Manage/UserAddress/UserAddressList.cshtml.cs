@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IRestaurant.BL.Managers;
+using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;

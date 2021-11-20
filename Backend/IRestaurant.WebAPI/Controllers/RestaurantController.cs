@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IRestaurant.BL.Managers;
+using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Restaurants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;

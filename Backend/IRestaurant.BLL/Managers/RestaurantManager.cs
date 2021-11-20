@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Hellang.Middleware.ProblemDetails;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.DTO.Pagination;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// Az éteremmel kapcsolatos adatok lekérdezésének, manipulációjának és a kedvenc éttermek

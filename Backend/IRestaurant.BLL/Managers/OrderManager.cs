@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// A rendelések lekérdezésével, létrehozásával és státuszuk módosításával kapcsolatos műveletek
