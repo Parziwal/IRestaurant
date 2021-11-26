@@ -22,6 +22,7 @@ export class NavMenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.spinner.hide();
     this.getAuthenticationData();
   }
 
@@ -48,7 +49,6 @@ export class NavMenuComponent implements OnInit {
    * A felhasználó átnavigálása a profil oldalra.
    */
   navigateToProfile() {
-    this.spinner.show();
     this.authService.navigateToProfilePage();
   }
 
