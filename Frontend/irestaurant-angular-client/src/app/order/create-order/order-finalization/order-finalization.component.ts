@@ -8,6 +8,8 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
+import { UserAddressWithId } from 'src/app/shared/models/user-address-with-id.type';
+import { GuestAddressService } from '../../guest-address.service';
 import { CreateOrderFood } from '../../models/create-order-food.type';
 import { CreateOrder } from '../../models/create-order.type';
 import { DeliveryDetials } from '../../models/delivery-details.type';
@@ -35,6 +37,7 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
 
   constructor(
     private orderService: OrderService,
+    private guestAddressService: GuestAddressService,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {}
@@ -74,10 +77,25 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * A rendelés gombra kattintva a rendelés létrehozása az elvárt formátumban, majd
-   * az OrderService segítségével a rendelés leadása.
+   * A rendelés létrehozása a felhasználó által megadott adatok alapján.
+   * Ha a lakcím azonosító -1, akkor az azt jelenti, hogy a felhasználó új lakcímet adott le,
+   * így a rendelés létrehozása előtt elmentjük a lakcímet.
    */
   onOrderClicked() {
+    if (this.deliveryDetails.address.id === -1) {
+      this.guestAddressService
+      .createUserAddress(this.deliveryDetails.address)
+      .subscribe((createdAddress: UserAddressWithId) => {
+        this.deliveryDetails.address.id = createdAddress.id;
+        this.createOrder();
+      });
+      return;
+    }
+
+    this.createOrder();
+  }
+
+  private createOrder() {
     let createdOrder = <CreateOrder>{
       preferredDeliveryDate: this.deliveryDetails.preferredDeliveryDate,
       addressId: this.deliveryDetails.address.id,
