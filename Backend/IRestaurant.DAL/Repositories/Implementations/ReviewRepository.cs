@@ -46,6 +46,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.Reviews
                 .Where(r => r.RestaurantId == restaurantId)
+                .OrderBy(r => r.CreatedAt)
                 .ToReviewDtoList();
         }
 
@@ -58,6 +59,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.Reviews
                 .Where(r => r.UserId == guestId)
+                .OrderBy(r => r.CreatedAt)
                 .ToReviewDtoList();
         }
 

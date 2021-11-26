@@ -48,6 +48,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.Foods
                         .Where(f => f.RestaurantId == restaurantId)
+                        .OrderBy(f => f.Name)
                         .ToFoodDtoList();
         }
 
