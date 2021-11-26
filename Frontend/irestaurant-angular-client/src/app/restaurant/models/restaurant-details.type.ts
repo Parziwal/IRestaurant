@@ -4,6 +4,7 @@ export interface RestaurantDetails {
   id: number;
   name: string;
   rating: number;
+  reviewCount: number;
   shortDescription: string;
   detailedDescription: string;
   imagePath: string;

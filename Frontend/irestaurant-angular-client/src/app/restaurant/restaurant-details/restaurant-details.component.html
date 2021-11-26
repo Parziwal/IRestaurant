@@ -57,7 +57,10 @@
       <div class="row mt-2">
         <div class="col">
           <h3>Értékelés</h3>
-          <app-rating-bar [rating]="restaurant.rating"></app-rating-bar>
+          <div class="d-flex flex-row align-items-center justify-content-between">
+            <app-rating-bar [rating]="restaurant.rating"></app-rating-bar>
+            <div class="review-count">{{ restaurant.reviewCount }}</div>
+          </div>
         </div>
       </div>
       <div class="row mt-4">

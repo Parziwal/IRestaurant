@@ -30,3 +30,15 @@ img {
   margin-bottom: 10px;
   border-bottom: 2px solid gray;
 }
+
+app-rating-bar {
+  width: 90%;
+}
+
+.review-count {
+  padding: 0px 20px;
+  margin-left: 5px;
+  border-radius: 10px;
+  background-color: #0d6efd;
+  color:white;
+}
