@@ -22,7 +22,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 5.0,
                     CreatedAt = DateTime.Now.AddDays(-60),
                     Title = "Nagyon ajánlom",
-                    Description = "Ízletes fogások, kiváló kiszolgálás."
+                    Description = "Ízletes fogások, kiváló kiszállítás."
                 },
                 new Review
                 {
@@ -32,7 +32,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.5,
                     CreatedAt = DateTime.Now.AddDays(-30),
                     Title = "Remek hely",
-                    Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D."
+                    Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni."
                 },
                 new Review
                 {
@@ -52,7 +52,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.5,
                     CreatedAt = DateTime.Now.AddDays(-30),
                     Title = "Remek hely",
-                    Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D."
+                    Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni."
                 },
                 new Review
                 {
@@ -61,8 +61,8 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     RestaurantId = 3,
                     Rating = 4.7,
                     CreatedAt = DateTime.Now.AddDays(-50),
-                    Title = "Több mint étkezés",
-                    Description = "Itt az étkezés nem kizárólag étkezés, sokkal inkább egy különleges szertartás. A kiszolgálás másodpercre pontosan kiszámolt, mérnöki pontosságú."
+                    Title = "Több mint étel",
+                    Description = "Itt az étel nem kizárólag étel, sokkal inkább egy különleges utazás. A kiszállítás másodpercre pontosan kiszámolt, mérnöki pontosságú."
                 },
                 new Review
                 {
@@ -72,7 +72,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.2,
                     CreatedAt = DateTime.Now.AddDays(-30),
                     Title = "Remek hely",
-                    Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D."
+                    Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni."
                 },
                 new Review
                 {
@@ -82,7 +82,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.5,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Kiváló ár-érték arány",
-                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni."
+                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük."
                 },
                 new Review
                 {
@@ -92,7 +92,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.1,
                     CreatedAt = DateTime.Now.AddDays(-30),
                     Title = "Remek hely",
-                    Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D."
+                    Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni."
                 },
                 new Review
                 {
@@ -102,7 +102,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.0,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Kiváló ár-érték arány",
-                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni."
+                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük."
                 },
                 new Review
                 {
@@ -112,7 +112,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.9,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Kiváló ár-érték arány",
-                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni."
+                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük."
                 },
                 new Review
                 {
@@ -122,7 +122,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 4.1,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Kiváló ár-érték arány",
-                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni."
+                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük."
                 },
                 new Review
                 {
@@ -132,7 +132,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.8,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Kiváló ár-érték arány",
-                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni."
+                    Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük."
                 },
                 new Review
                 {
@@ -142,7 +142,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 1.9,
                     CreatedAt = DateTime.Now.AddDays(-10),
                     Title = "Nem ajánlom",
-                    Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet.",
+                    Description = "A rendelésem csak több óra késéssel érkezett meg és elárulom nem érte meg a várakozást. A futár nagyon lekezelő és ápolatlan volt. Senkinek nem ajánlom a helyet.",
                 },
 
                 new Review
@@ -153,7 +153,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.7,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Ízléses, de kis adagok",
-                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. ."
+                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik."
                 },
                 new Review
                 {
@@ -163,7 +163,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.5,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Ízléses, de kis adagok",
-                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. ."
+                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik."
                 },
                 new Review
                 {
@@ -173,7 +173,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.6,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Ízléses, de kis adagok",
-                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. ."
+                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik."
                 },
                 new Review
                 {
@@ -183,7 +183,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 3.4,
                     CreatedAt = DateTime.Now.AddDays(-20),
                     Title = "Ízléses, de kis adagok",
-                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. ."
+                    Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik."
                 },
 
                 new Review
@@ -234,7 +234,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     Rating = 2.0,
                     CreatedAt = DateTime.Now.AddDays(-60),
                     Title = "Nem ajánlom",
-                    Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet. "
+                    Description = "A rendelésem csak több óra késéssel érkezett meg és elárulom nem érte meg a várakozást. A futár nagyon lekezelő és ápolatlan volt. Senkinek nem ajánlom a helyet."
                 },
 
                 new Review
