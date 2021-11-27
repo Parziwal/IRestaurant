@@ -63,13 +63,13 @@ export class OrderFinalizationComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToOrderDataChange() {
-    this.orderFoodsChangeSub = this.orderService.chosenFoodsChange.subscribe(
+    this.orderFoodsChangeSub = this.orderService.chosenFoodsChanged.subscribe(
       (orderFoods: OrderFoodWithId[]) => {
         this.orderFoods = orderFoods;
       }
     );
     this.deliveryDetailsChangeSub =
-      this.orderService.deliveryDetailsChange.subscribe(
+      this.orderService.deliveryDetailsChanged.subscribe(
         (deliveryDetails: DeliveryDetials) => {
           this.deliveryDetails = deliveryDetails;
         }

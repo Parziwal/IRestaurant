@@ -20,10 +20,10 @@ export class OrderService {
   private orderApiUrl = environment.webApiUrl + '/api/order';
 
   /** A rendelés létrehozásakor megadott ételek változásának jelzése. */
-  chosenFoodsChange = new Subject<OrderFoodWithId[]>();
+  chosenFoodsChanged = new Subject<OrderFoodWithId[]>();
 
   /** A kiszállítási adatok megváltozásának jelzése. */
-  deliveryDetailsChange = new Subject<DeliveryDetials>();
+  deliveryDetailsChanged = new Subject<DeliveryDetials>();
 
   constructor(private http: HttpClient) {}
 

@@ -147,7 +147,7 @@ export class DeliveryDetailsComponent implements OnInit {
    * A rendelési adatok, mint a lakcím és a kiszállítási dátum megváltozásának jelzése.
    */
   onSubmit() {
-    this.orderService.deliveryDetailsChange.next({
+    this.orderService.deliveryDetailsChanged.next({
       ...this.deliveryForm.value,
       address: {
         ...this.deliveryForm.controls.address.value,
