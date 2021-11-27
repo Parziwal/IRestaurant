@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/authentication/auth.service';
 import { UserRole } from 'src/app/authentication/models/user-roles';
 import { RestaurantDetails } from '../models/restaurant-details.type';
 import { RestaurantService } from '../restaurant.service';
+import { Error } from '../../shared/models/error.type';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -16,6 +17,9 @@ import { RestaurantService } from '../restaurant.service';
 export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   /** Az étterem részletes adatai. */
   restaurant!: RestaurantDetails;
+
+  /** Az étterem betöltését jelzi. */
+  errorMessage: string | null = null;
 
   /** Az étterem azonosítója. */
   restaurantId!: number;
@@ -85,6 +89,9 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
     restaurantDetails.subscribe((restaurantData: RestaurantDetails) => {
       this.restaurant = restaurantData;
+    },
+    (error: Error) => {
+      this.errorMessage = "Étterem nem elérhető!";
     });
   }
 

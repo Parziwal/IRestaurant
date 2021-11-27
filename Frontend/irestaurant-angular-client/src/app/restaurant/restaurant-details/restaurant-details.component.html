@@ -1,5 +1,6 @@
-<app-spinner *ngIf="!restaurant; else content"></app-spinner>
-<ng-template #content>
+<app-spinner *ngIf="!restaurant && !errorMessage"></app-spinner>
+<ng-container *ngIf="errorMessage"><h2 class="text-center">{{ errorMessage }}</h2></ng-container>
+<ng-container *ngIf="restaurant">
   <div class="row details-header">
     <div class="col-lg-5 text-center">
       <img
@@ -91,4 +92,4 @@
       </app-restaurant-review-list>
     </div>
   </div>
-</ng-template>
+</ng-container>
