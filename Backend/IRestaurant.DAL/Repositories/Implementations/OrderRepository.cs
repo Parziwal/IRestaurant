@@ -87,7 +87,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         /// <param name="userId">A felhasználó azonosítója.</param>
         /// <param name="order">A rendelés adatait tartalmazó objektum.</param>
         /// <returns>A rendelés részletes adatai.</returns>
-        public async Task<OrderDetailsDto> CreateOrder(string userId, CreateOrder order)
+        public async Task<OrderDetailsDto> CreateOrder(string userId, CreateOrderDto order)
         {
             if (!order.OrderFoods.Any())
             {

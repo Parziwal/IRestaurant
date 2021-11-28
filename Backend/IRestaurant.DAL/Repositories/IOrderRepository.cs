@@ -43,7 +43,7 @@ namespace IRestaurant.DAL.Repositories
         /// <param name="userId">A felhasználó azonosítója.</param>
         /// <param name="order">A rendelés adatait tartalmazó objektum.</param>
         /// <returns>A rendelés részletes adatai.</returns>
-        Task<OrderDetailsDto> CreateOrder(string userId, CreateOrder order);
+        Task<OrderDetailsDto> CreateOrder(string userId, CreateOrderDto order);
 
         /// <summary>
         /// A rendelés státuszának módosítása.
