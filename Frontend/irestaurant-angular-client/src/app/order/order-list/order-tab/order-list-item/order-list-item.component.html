@@ -33,7 +33,7 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <mat-action-row>
-    <button class="btn btn-primary p-3 me-3" (click)="onDetailsButtonClicked()">
+    <button class="btn btn-info text-white p-3 me-3" (click)="onDetailsButtonClicked()">
       Részletek
     </button>
     <button
@@ -45,7 +45,7 @@
     </button>
     <button
       *ngIf="(userRole | async) === 'Restaurant' && orderOverview.status < 3"
-      class="btn btn-info p-3 me-3"
+      class="btn btn-primary p-3 me-3"
       (click)="onOrderStatusChange()"
     >
       Státusz módosítása
