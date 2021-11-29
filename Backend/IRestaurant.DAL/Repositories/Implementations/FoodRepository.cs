@@ -99,6 +99,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             else
             {
                 dbContext.Remove(dbFood);
+                imageRepository.DeleteImage(dbFood.ImagePath);
             }
 
             await dbContext.SaveChangesAsync();
