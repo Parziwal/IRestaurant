@@ -40,7 +40,6 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
     this.getCurrentUserRole();
     this.subscribeToRatingChanged();
     this.getRestaurantId();
-    this.getRestaurantDetails();
   }
 
   ngOnDestroy(): void {
@@ -54,6 +53,7 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   private getRestaurantId() {
     this.route.params.subscribe((params: Params) => {
       this.restaurantId = +params['id'];
+      this.getRestaurantDetails();
     });
   }
 
@@ -71,21 +71,20 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
    */
   private getRestaurantDetails() {
     let restaurantDetails: Observable<RestaurantDetails> = new Observable();
-    this.authService.currentUserRole.subscribe((role) => {
-      if (role === UserRole.Restaurant) {
-        restaurantDetails = this.restaurantService
-          .getMyRestaurantDetails()
-          .pipe(
-            tap((restaurantData: RestaurantDetails) => {
-              this.restaurantId = restaurantData.id;
-            })
-          );
-      } else {
-        restaurantDetails = this.restaurantService.getRestaurantDetails(
-          this.restaurantId
+
+    if (this.route.snapshot.queryParamMap.has("myrestaurant")) {
+      restaurantDetails = this.restaurantService
+        .getMyRestaurantDetails()
+        .pipe(
+          tap((restaurantData: RestaurantDetails) => {
+            this.restaurantId = restaurantData.id;
+          })
         );
-      }
-    });
+    } else {
+      restaurantDetails = this.restaurantService.getRestaurantDetails(
+        this.restaurantId
+      );
+    }
 
     restaurantDetails.subscribe((restaurantData: RestaurantDetails) => {
       this.restaurant = restaurantData;
