@@ -15,7 +15,7 @@ using Xunit;
 
 namespace IRestaurant.Test.RepositoryUnitTests
 {
-    public abstract class RestaurantRepositoryTestBase : InMemoryApplicationDbContext
+    public abstract class RestaurantRepositoryTestBase : SqliteInMemoryRepositoryTest
     {
         public abstract IRestaurantRepository CreateRestaurantRepository(ApplicationDbContext dbContext);
 

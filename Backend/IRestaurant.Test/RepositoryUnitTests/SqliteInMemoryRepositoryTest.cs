@@ -2,34 +2,41 @@
 using IRestaurant.DAL.Data;
 using IRestaurant.Test.Data;
 using IRestaurant.Test.Data.EntityTypeConfigurations;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
+using System.Data.Common;
 
 namespace IRestaurant.Test.RepositoryUnitTests
 {
-    public class InMemoryApplicationDbContext
+    public class SqliteInMemoryRepositoryTest : IDisposable
     {
-        public InMemoryApplicationDbContext()
+        private DbConnection connection;
+
+        public SqliteInMemoryRepositoryTest()
         {
-            InitDbContext();
+            connection = new SqliteConnection("DataSource=:memory:");
+            connection.Open();
+
+            using(var dbContext = CreateDbContext())
+            {
+                dbContext.Database.EnsureCreated();
+            }
         }
 
         public ApplicationDbContext CreateDbContext()
         {
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                                        .UseInMemoryDatabase(databaseName: "TestDb").Options;
+                            .UseSqlite(connection).Options;
             var operationalStoreOptions = Options.Create(new OperationalStoreOptions());
 
             return new ApplicationDbContext(contextOptions, operationalStoreOptions, new TestSeedData());
         }
 
-        public void InitDbContext()
+        public void Dispose()
         {
-            using (var dbContext = CreateDbContext())
-            {
-                dbContext.Database.EnsureDeleted();
-                dbContext.Database.EnsureCreated();
-            }
+            connection.Dispose();
         }
     }
 }
