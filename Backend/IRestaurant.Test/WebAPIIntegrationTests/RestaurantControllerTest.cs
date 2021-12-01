@@ -68,7 +68,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 1;
-            var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
+            var expectedRestaurant = TestSeedService.Restaurants[0];
             var ownerFullName = "Peggy Justice";
             var rating = (4.867 + 4.677) / 2.0;
             var client = webApiServer.CreateClient();
@@ -130,7 +130,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         {
             //Arrange
             int restaurantId = 1;
-            var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
+            var expectedRestaurant = TestSeedService.Restaurants[0];
             var ownerFullName = "Peggy Justice";
             var rating = (4.867 + 4.677) / 2.0;
 
@@ -326,8 +326,7 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
         public async Task GetMyRestaurantSettings_WhereUserIsRestaurantOwner()
         {
             //Arrange
-            int restaurantId = 1;
-            var expectedRestaurant = TestSeedService.Restaurants[restaurantId - 1];
+            var expectedRestaurant = TestSeedService.Restaurants[0];
 
             var accessToken = await authServer.GetAccessToken("peggy@email.hu", "Test.54321"); //Az 1-es azonosítójú étterem tulajdonosa
             var client = webApiServer.CreateClient();

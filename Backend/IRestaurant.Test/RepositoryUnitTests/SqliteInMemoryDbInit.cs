@@ -10,11 +10,11 @@ using System.Data.Common;
 
 namespace IRestaurant.Test.RepositoryUnitTests
 {
-    public class SqliteInMemoryRepositoryTest : IDisposable
+    public class SqliteInMemoryDbInit : IDisposable
     {
         private DbConnection connection;
 
-        public SqliteInMemoryRepositoryTest()
+        public SqliteInMemoryDbInit()
         {
             connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();

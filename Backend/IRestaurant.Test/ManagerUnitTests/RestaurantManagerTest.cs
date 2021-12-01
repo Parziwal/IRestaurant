@@ -67,14 +67,18 @@ namespace IRestaurant.Test.ManagerUnitTests
         }
 
         [Fact]
-        public async Task GetRestaurantDetails_RestaurantNotAvailable()
+        public async Task GetRestaurantDetails_RestaurantNotAvailable_UserIsNotRestaurantOwner()
         {
             //Arrange
             int restaurantId = 1;
             string userId = "475c5e32-049c-4d7b-a963-02ebdc15a94b";
 
             var restaurantRepository = new Mock<IRestaurantRepository>();
+            restaurantRepository.Setup(r => r.IsRestaurantAvailableForUsers(restaurantId))
+               .ReturnsAsync(false);
             var userRepository = new Mock<IUserRepository>();
+            userRepository.Setup(u => u.UserHasRestaurant(userId))
+                .ReturnsAsync(false);
             var foodRepository = new Mock<IFoodRepository>();
             var httpContext = new Mock<IHttpContextAccessor>();
             httpContext.SetupGet(h => h.HttpContext.User)
