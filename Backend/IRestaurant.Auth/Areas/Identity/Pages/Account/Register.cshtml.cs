@@ -24,27 +24,27 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly UserManager<ApplicationUser> applicationUserManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
-        private readonly UserManager userManager;
+        private readonly ApplicationUserManager applicationUserManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IIdentityServerInteractionService interactionService;
 
         public RegisterModel(
-            UserManager<ApplicationUser> applicationUserManager,
+            UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            UserManager userManager,
+            ApplicationUserManager applicationUserManager,
             RoleManager<IdentityRole> roleManager,
             IIdentityServerInteractionService interactionService)
         {
-            this.applicationUserManager = applicationUserManager;
+            this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
-            this.userManager = userManager;
+            this.applicationUserManager = applicationUserManager;
             this.roleManager = roleManager;
             this.interactionService = interactionService;
         }
@@ -94,7 +94,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName };
-                var result = await applicationUserManager.CreateAsync(user, Input.Password);
+                var result = await userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     if (!await roleManager.RoleExistsAsync(Input.Role))
@@ -102,16 +102,16 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         await roleManager.CreateAsync(new IdentityRole(Input.Role));
                     }
 
-                    await applicationUserManager.AddToRoleAsync(user, Input.Role);
+                    await userManager.AddToRoleAsync(user, Input.Role);
                     if (Input.Role == UserRoles.Restaurant)
                     {
                         try
                         {
-                            await userManager.CreateDefaultRestaurantForUser(user.Id);
+                            await applicationUserManager.CreateDefaultRestaurantForUser(user.Id);
                         }
                         catch (Exception)
                         {
-                            await applicationUserManager.DeleteAsync(user);
+                            await userManager.DeleteAsync(user);
                             ModelState.AddModelError("Error", "Hiba történt a regisztráció során, kérlem próbálja újra.");
                             return Page();
                         }
@@ -119,7 +119,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
 
                     logger.LogInformation("User created a new account with password.");
 
-                    var code = await applicationUserManager.GenerateEmailConfirmationTokenAsync(user);
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
@@ -135,7 +135,7 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account
                         $"Üdvözlettel,<br>" +
                         $"IRestaurant csapata</p>");
 
-                    if (applicationUserManager.Options.SignIn.RequireConfirmedAccount)
+                    if (userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }

@@ -12,10 +12,10 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage.UserAddress
     [Authorize(Roles = UserRoles.Guest)]
     public class EditUserAddressModel : PageModel
     {
-        private readonly UserManager userManager;
+        private readonly ApplicationUserManager userManager;
 
         public EditUserAddressModel(
-            UserManager userManager)
+            ApplicationUserManager userManager)
         {
             this.userManager = userManager;
         }

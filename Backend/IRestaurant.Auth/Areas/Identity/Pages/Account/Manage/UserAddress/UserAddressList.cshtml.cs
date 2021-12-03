@@ -14,9 +14,9 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage.UserAddress
     [Authorize(Roles = UserRoles.Guest)]
     public class UserAddressListModel : PageModel
     {
-        private readonly UserManager userManager;
+        private readonly ApplicationUserManager userManager;
 
-        public UserAddressListModel(UserManager userManager)
+        public UserAddressListModel(ApplicationUserManager userManager)
         {
             this.userManager = userManager;
         }

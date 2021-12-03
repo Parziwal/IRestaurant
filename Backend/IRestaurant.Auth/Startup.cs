@@ -89,7 +89,7 @@ namespace IRestaurant.Auth
             services.AddTransient<IUserRepository, UserRepository>();
 
             //A BL rétegbeli felhasználókat kezelő manager osztály beregisztrálása.
-            services.AddTransient<UserManager>();
+            services.AddTransient<ApplicationUserManager>();
 
             //Az email küldő szolgáltatás beregisztrálása
             services.AddTransient<IEmailSender, EmailSender>();
