@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutUsComponent } from './about-us/about-us.component';
 import { AuthorizeGuard } from './authentication/guards/authorize.guard';
 import { GuestRoleGuard } from './authentication/guards/guest-role.guard';
 import { RestaurantRoleGuard } from './authentication/guards/restaurant-role.guard';
@@ -72,6 +73,10 @@ const routes: Routes = [
   {
     path: 'order/details/:id',
     component: OrderDetailsComponent,
+  },
+  {
+    path: 'about-us',
+    component: AboutUsComponent,
   },
   { path: '**', redirectTo: 'restaurant' },
 ];
