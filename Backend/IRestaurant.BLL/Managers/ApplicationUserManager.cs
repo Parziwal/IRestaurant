@@ -5,19 +5,19 @@ using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.DTO.Restaurants;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// A felhasználói adatok lekérdezését és kezelését végző műveletek szabályzásáért felelős.
     /// </summary>
-    public class UserManager
+    public class ApplicationUserManager
     {
         private readonly IUserRepository userRepository;
         private readonly IHttpContextAccessor httpContext;
 
-        public UserManager(IUserRepository userRepository,
+        public ApplicationUserManager(IUserRepository userRepository,
                           IHttpContextAccessor httpContext)
         {
             this.userRepository = userRepository;

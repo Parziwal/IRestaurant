@@ -1,4 +1,4 @@
-﻿using IRestaurant.BL.Managers;
+﻿using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
@@ -76,7 +76,7 @@ namespace IRestaurant.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrderDetailsDto>> CreateOrder([FromBody]CreateOrder order)
+        public async Task<ActionResult<OrderDetailsDto>> CreateOrder([FromBody]CreateOrderDto order)
         {
             var createdOrder = await orderManager.CreateOrder(order);
             return CreatedAtAction(nameof(GetOrderDetails), new { id = createdOrder.Id }, createdOrder);

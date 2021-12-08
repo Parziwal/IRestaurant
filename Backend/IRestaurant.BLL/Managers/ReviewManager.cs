@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 using IRestaurant.DAL.DTO.Reviews;
 using IRestaurant.DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// Az értékelésekkel kapcsolatos műveletek, mint adat lekérés, módosítás és törlés szabályzásáért felelős.

@@ -57,7 +57,7 @@ export class EditRestaurantComponent implements OnInit {
         ]),
         phoneNumber: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}'),
+          Validators.pattern('[0-9]{2}-[0-9]{1,2}-[0-9]{3}-[0-9]{4}'),
         ]),
       }),
     });

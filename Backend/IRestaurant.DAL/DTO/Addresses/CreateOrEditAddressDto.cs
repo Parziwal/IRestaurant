@@ -33,8 +33,8 @@ namespace IRestaurant.DAL.DTO.Addresses
         /// A címhez tartozó telefonos elérehtőség.
         /// </summary>
         [Required(ErrorMessage = "Az telefonszám megadása kötelező.")]
-        [Phone(ErrorMessage = "A telefonszámnak jól formázottnak kell lennie.")]
-        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}", ErrorMessage = "Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789")]
+        [Phone(ErrorMessage = "A megadott telefonszám nem érvényes.")]
+        [RegularExpression("[0-9]{2}-[0-9]{1,2}-[0-9]{3}-[0-9]{4}", ErrorMessage = "Kérlek az alábbi formátumban add meg a telefonszámot: 06-30-125-6789")]
         public string PhoneNumber { get; set; }
     }
 }

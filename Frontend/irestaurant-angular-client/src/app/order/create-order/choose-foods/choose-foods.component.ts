@@ -97,6 +97,6 @@ export class ChooseFoodsComponent implements OnInit {
    * A következő gombra való kattintáskor értesítjük a felíratkozottakat a kiválasztott ételek megváltozásáról.
    */
   onNextClikced() {
-    this.orderService.chosenFoodsChange.next(this.chosenFoods);
+    this.orderService.chosenFoodsChanged.next(this.chosenFoods);
   }
 }

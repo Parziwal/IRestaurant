@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRestaurant.DAL", "IRestaurant.DAL\IRestaurant.DAL.csproj", "{26C2E0A3-98FD-4A00-940B-ED11FB9BC2C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRestaurant.BL", "IRestaurant.BL\IRestaurant.BL.csproj", "{77855FC1-E785-4DA8-981B-F0CC915B23AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRestaurant.BLL", "IRestaurant.BLL\IRestaurant.BLL.csproj", "{77855FC1-E785-4DA8-981B-F0CC915B23AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IRestaurant.WebAPI", "IRestaurant.WebAPI\IRestaurant.WebAPI.csproj", "{3EE91A7B-05EE-4095-8FC1-E616468EB448}"
 EndProject

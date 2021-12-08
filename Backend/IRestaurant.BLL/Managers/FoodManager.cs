@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 using IRestaurant.DAL.DTO.Foods;
 using IRestaurant.DAL.DTO.Images;
 using IRestaurant.DAL.Repositories;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// Az ételekkel kapcsolatos adatok lekérési és adatmanipulációs műveleteinek szabályzásáért felelős.

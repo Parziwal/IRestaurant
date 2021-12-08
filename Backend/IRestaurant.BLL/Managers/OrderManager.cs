@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Extensions;
+using IRestaurant.BLL.Extensions;
 using IRestaurant.DAL.DTO.Orders;
 using IRestaurant.DAL.DTO.Pagination;
 using IRestaurant.DAL.Models;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.BL.Managers
+namespace IRestaurant.BLL.Managers
 {
     /// <summary>
     /// A rendelések lekérdezésével, létrehozásával és státuszuk módosításával kapcsolatos műveletek
@@ -88,9 +88,9 @@ namespace IRestaurant.BL.Managers
         /// </summary>
         /// <param name="order">A létrehozandó rendelés adatai.</param>
         /// <returns>A létrehozott rendelés részletei.</returns>
-        public async Task<OrderDetailsDto> CreateOrder(CreateOrder order)
+        public async Task<OrderDetailsDto> CreateOrder(CreateOrderDto order)
         {
-            if (order.PreferredDeliveryDate < new DateTime().AddHours(MIN_HOUR_AFTER_ORDER))
+            if (order.PreferredDeliveryDate < DateTime.Now.AddHours(MIN_HOUR_AFTER_ORDER))
             {
                 throw new ProblemDetailsException(StatusCodes.Status400BadRequest,
                     $"A kívánt kiszállítási időnek minimum {MIN_HOUR_AFTER_ORDER} órával a rendelés leadása után kell lennie.");

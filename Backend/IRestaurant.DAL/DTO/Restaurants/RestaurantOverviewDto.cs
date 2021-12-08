@@ -29,6 +29,11 @@ namespace IRestaurant.DAL.DTO.Restaurants
         public double? Rating { get; set; }
 
         /// <summary>
+        /// Az étterem értékeléseinek a száma.
+        /// </summary>
+        public int ReviewCount { get; set; }
+
+        /// <summary>
         /// Az étteremről egy rövidebb, pár mondatos ismertető.
         /// </summary>
         public string ShortDescription { get; set; }
@@ -49,6 +54,7 @@ namespace IRestaurant.DAL.DTO.Restaurants
             this.Id = restaurant.Id;
             this.Name = restaurant.Name;
             this.Rating = restaurant.Reviews.Any() ? Math.Round(restaurant.Reviews.Average(r => r.Rating), 2) : null;
+            this.ReviewCount = restaurant.Reviews.Count;
             this.ShortDescription = restaurant.ShortDescription;
             this.ImagePath = restaurant.ImagePath;
             this.City = restaurant.Address.City;

@@ -4,14 +4,16 @@ using IRestaurant.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IRestaurant.DAL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211115111316_ValidPhoneNumber")]
+    partial class ValidPhoneNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1823,176 +1825,176 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 11, 26, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(1539),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 29, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(3682),
+                            CreatedAt = new DateTime(2021, 11, 15, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(2717),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 18, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(5710),
                             Status = 0,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 11, 25, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4659),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 27, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4699),
+                            CreatedAt = new DateTime(2021, 11, 14, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6707),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 16, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6735),
                             Status = 1,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 11, 25, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4711),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 26, 22, 42, 11, 162, DateTimeKind.Local).AddTicks(4719),
+                            CreatedAt = new DateTime(2021, 11, 14, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6744),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 15, 15, 13, 13, 869, DateTimeKind.Local).AddTicks(6750),
                             Status = 2,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 11, 21, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4767),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 23, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4775),
+                            CreatedAt = new DateTime(2021, 11, 10, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6794),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 12, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6801),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 11, 26, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4783),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 28, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4792),
+                            CreatedAt = new DateTime(2021, 11, 15, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6807),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 17, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6813),
                             Status = 0,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 11, 26, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4800),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 27, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4808),
+                            CreatedAt = new DateTime(2021, 11, 15, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6820),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 16, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6826),
                             Status = 0,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4817),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 1, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4825),
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6832),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 21, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6838),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 10, 22, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4833),
-                            PreferredDeliveryDate = new DateTime(2021, 10, 24, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4840),
+                            CreatedAt = new DateTime(2021, 10, 11, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6845),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 13, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6851),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2021, 10, 17, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4849),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 25, 5, 42, 11, 162, DateTimeKind.Local).AddTicks(4856),
+                            CreatedAt = new DateTime(2021, 10, 6, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6858),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 13, 22, 13, 13, 869, DateTimeKind.Local).AddTicks(6864),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2021, 10, 14, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4865),
-                            PreferredDeliveryDate = new DateTime(2021, 10, 16, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4872),
+                            CreatedAt = new DateTime(2021, 10, 3, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6870),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 5, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6876),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2021, 10, 7, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4880),
-                            PreferredDeliveryDate = new DateTime(2021, 10, 12, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4888),
+                            CreatedAt = new DateTime(2021, 9, 26, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6883),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 1, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6888),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2021, 10, 2, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4896),
-                            PreferredDeliveryDate = new DateTime(2021, 10, 5, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4903),
+                            CreatedAt = new DateTime(2021, 9, 21, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6895),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 24, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6902),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2021, 9, 27, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4912),
-                            PreferredDeliveryDate = new DateTime(2021, 9, 28, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4919),
+                            CreatedAt = new DateTime(2021, 9, 16, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6908),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 17, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6914),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2021, 9, 23, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4927),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 24, 6, 42, 11, 162, DateTimeKind.Local).AddTicks(4934),
+                            CreatedAt = new DateTime(2021, 9, 12, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6921),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 12, 23, 13, 13, 869, DateTimeKind.Local).AddTicks(6927),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2021, 9, 18, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4943),
-                            PreferredDeliveryDate = new DateTime(2021, 9, 20, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4950),
+                            CreatedAt = new DateTime(2021, 9, 7, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6934),
+                            PreferredDeliveryDate = new DateTime(2021, 9, 9, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6939),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2020, 11, 17, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4958),
-                            PreferredDeliveryDate = new DateTime(2020, 11, 21, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4967),
+                            CreatedAt = new DateTime(2020, 11, 6, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6946),
+                            PreferredDeliveryDate = new DateTime(2020, 11, 10, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6951),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2020, 11, 6, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4975),
-                            PreferredDeliveryDate = new DateTime(2020, 11, 10, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4983),
+                            CreatedAt = new DateTime(2020, 10, 26, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6958),
+                            PreferredDeliveryDate = new DateTime(2020, 10, 30, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6964),
                             Status = 3,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2020, 10, 30, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4991),
-                            PreferredDeliveryDate = new DateTime(2020, 11, 1, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(4998),
+                            CreatedAt = new DateTime(2020, 10, 19, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6970),
+                            PreferredDeliveryDate = new DateTime(2020, 10, 21, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6975),
                             Status = 4,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2020, 10, 25, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5006),
-                            PreferredDeliveryDate = new DateTime(2020, 10, 27, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5014),
+                            CreatedAt = new DateTime(2020, 10, 14, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6982),
+                            PreferredDeliveryDate = new DateTime(2020, 10, 16, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6988),
                             Status = 4,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2019, 12, 22, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5022),
-                            PreferredDeliveryDate = new DateTime(2021, 10, 28, 15, 42, 11, 162, DateTimeKind.Local).AddTicks(5029),
+                            CreatedAt = new DateTime(2019, 12, 11, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(6994),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 17, 8, 13, 13, 869, DateTimeKind.Local).AddTicks(7000),
                             Status = 4,
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2021, 11, 25, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5038),
-                            PreferredDeliveryDate = new DateTime(2021, 12, 1, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5045),
+                            CreatedAt = new DateTime(2021, 11, 14, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(7006),
+                            PreferredDeliveryDate = new DateTime(2021, 11, 20, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(7012),
                             Status = 0,
                             UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
                         },
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2020, 11, 13, 19, 42, 11, 162, DateTimeKind.Local).AddTicks(5054),
-                            PreferredDeliveryDate = new DateTime(2021, 11, 11, 7, 42, 11, 162, DateTimeKind.Local).AddTicks(5062),
+                            CreatedAt = new DateTime(2020, 11, 2, 12, 13, 13, 869, DateTimeKind.Local).AddTicks(7018),
+                            PreferredDeliveryDate = new DateTime(2021, 10, 31, 0, 13, 13, 869, DateTimeKind.Local).AddTicks(7024),
                             Status = 3,
                             UserId = "cb35b922-5a91-4949-94e6-47a2d6f82d93"
                         });
@@ -3037,8 +3039,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 9, 27, 19, 42, 11, 98, DateTimeKind.Local).AddTicks(7251),
-                            Description = "Ízletes fogások, kiváló kiszállítás.",
+                            CreatedAt = new DateTime(2021, 9, 16, 12, 13, 13, 857, DateTimeKind.Local).AddTicks(8686),
+                            Description = "Ízletes fogások, kiváló kiszolgálás.",
                             Rating = 5.0,
                             RestaurantId = 1,
                             Title = "Nagyon ajánlom",
@@ -3047,8 +3049,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7641),
-                            Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni.",
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6605),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
                             Rating = 4.5,
                             RestaurantId = 1,
                             Title = "Remek hely",
@@ -3057,7 +3059,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7764),
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6689),
                             Description = "Kellemes hely. Olyan hely, ahol a legjobb ételek és borok mellett önfeledten beszélgethetsz barátaiddal . Az alaphangszint (vagy inkább zaj) kicsit szokatlan lehet, de viszonylag könnyen hozzá lehet szokni. A felszolgálás ugyanolyan fesztelen, mint maga a hely. ",
                             Rating = 4.2000000000000002,
                             RestaurantId = 2,
@@ -3067,8 +3069,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7786),
-                            Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni.",
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6702),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
                             Rating = 4.5,
                             RestaurantId = 2,
                             Title = "Remek hely",
@@ -3077,18 +3079,18 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 10, 7, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7797),
-                            Description = "Itt az étel nem kizárólag étel, sokkal inkább egy különleges utazás. A kiszállítás másodpercre pontosan kiszámolt, mérnöki pontosságú.",
+                            CreatedAt = new DateTime(2021, 9, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6710),
+                            Description = "Itt az étkezés nem kizárólag étkezés, sokkal inkább egy különleges szertartás. A kiszolgálás másodpercre pontosan kiszámolt, mérnöki pontosságú.",
                             Rating = 4.7000000000000002,
                             RestaurantId = 3,
-                            Title = "Több mint étel",
+                            Title = "Több mint étkezés",
                             UserId = "475c5e32-049c-4d7b-a963-02ebdc15a94b"
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7807),
-                            Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni.",
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6717),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
                             Rating = 4.2000000000000002,
                             RestaurantId = 3,
                             Title = "Remek hely",
@@ -3097,8 +3099,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7819),
-                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6725),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
                             Rating = 4.5,
                             RestaurantId = 10,
                             Title = "Kiváló ár-érték arány",
@@ -3107,8 +3109,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 10, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7828),
-                            Description = "A Rib-eye steakel nagyon meg voltam elégedve, de a futárok egy kicsit túl voltak terhelve és a rendelést csak késve tudtam átvenni.",
+                            CreatedAt = new DateTime(2021, 10, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6732),
+                            Description = "Remek hely, de a pincérek egy kicsit túl voltak terhelve, a hétköznap délutáni teltház persze nem segített a helyzeten. Tavasszal a lezárások alatt egy vendégre 3 felszolgáló jutott, az jobban tetszett. :D.",
                             Rating = 4.0999999999999996,
                             RestaurantId = 10,
                             Title = "Remek hely",
@@ -3117,8 +3119,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7838),
-                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6740),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
                             Rating = 4.0,
                             RestaurantId = 11,
                             Title = "Kiváló ár-érték arány",
@@ -3127,8 +3129,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7848),
-                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6749),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
                             Rating = 3.8999999999999999,
                             RestaurantId = 12,
                             Title = "Kiváló ár-érték arány",
@@ -3137,8 +3139,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7857),
-                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6756),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
                             Rating = 4.0999999999999996,
                             RestaurantId = 13,
                             Title = "Kiváló ár-érték arány",
@@ -3147,8 +3149,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7867),
-                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár-érték arányú ebédet hoztak össze. Szívesen rendelek még tőlük.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6764),
+                            Description = "Összességében azt mondhatom, igazán remek, kiváló ár - érték arányú ebédet hoztak össze.Szívesen jövünk még újabb finomságokat kóstolni.",
                             Rating = 3.7999999999999998,
                             RestaurantId = 15,
                             Title = "Kiváló ár-érték arány",
@@ -3157,8 +3159,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2021, 11, 16, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7879),
-                            Description = "A rendelésem csak több óra késéssel érkezett meg és elárulom nem érte meg a várakozást. A futár nagyon lekezelő és ápolatlan volt. Senkinek nem ajánlom a helyet.",
+                            CreatedAt = new DateTime(2021, 11, 5, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6771),
+                            Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet.",
                             Rating = 1.8999999999999999,
                             RestaurantId = 20,
                             Title = "Nem ajánlom",
@@ -3167,8 +3169,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7889),
-                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6779),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
                             Rating = 3.7000000000000002,
                             RestaurantId = 8,
                             Title = "Ízléses, de kis adagok",
@@ -3177,8 +3179,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7900),
-                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6786),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
                             Rating = 3.5,
                             RestaurantId = 9,
                             Title = "Ízléses, de kis adagok",
@@ -3187,8 +3189,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7911),
-                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6794),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
                             Rating = 3.6000000000000001,
                             RestaurantId = 16,
                             Title = "Ízléses, de kis adagok",
@@ -3197,8 +3199,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7921),
-                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Ha rendelsz tőlük nem fogsz csalódni, remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik.",
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6801),
+                            Description = "Egy friss, fiatalos, üde étterem, ez a szemlélet, lendület visszaköszön ételeiken is. Akár déli, akár esti ajánlatra térsz be, nem fogsz csalódni; remek ár-érték arányú hely. Viszont ha jól szeretnél lakni, nem ez a számodra megfelelő hely. Az ételek bár ízletesek, az adagok kicsik. .",
                             Rating = 3.3999999999999999,
                             RestaurantId = 17,
                             Title = "Ízléses, de kis adagok",
@@ -3207,7 +3209,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7931),
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6809),
                             Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
                             Rating = 4.0999999999999996,
                             RestaurantId = 4,
@@ -3217,7 +3219,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7983),
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6815),
                             Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
                             Rating = 4.0,
                             RestaurantId = 5,
@@ -3227,7 +3229,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(7993),
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6822),
                             Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
                             Rating = 3.8999999999999999,
                             RestaurantId = 14,
@@ -3237,7 +3239,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2021, 11, 6, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(8003),
+                            CreatedAt = new DateTime(2021, 10, 26, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6829),
                             Description = "Bár az előétel és a desszert remek volt, a többi fogás nem varázsolt el. Kicsit olyan érzésem volt, hogy ennek az étteremnek nagyobb a füstje, mint a lángja. Átlagon felüli, de nem hibátlan. Többet vártam.",
                             Rating = 3.7999999999999998,
                             RestaurantId = 18,
@@ -3247,8 +3249,8 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2021, 9, 27, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(8014),
-                            Description = "A rendelésem csak több óra késéssel érkezett meg és elárulom nem érte meg a várakozást. A futár nagyon lekezelő és ápolatlan volt. Senkinek nem ajánlom a helyet.",
+                            CreatedAt = new DateTime(2021, 9, 16, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6837),
+                            Description = "Megérkezdtünk. Nem kisértek az asztalunkhoz, azt mondták, üljünk ahová akarunk. Majd 10 percen keresztül a kutya sem szòlt hozzánk. Akkor megkérdeztük, hogy mikor veszik fel legalább az italrendelést, azt mondták rögtön. Újabb 5 perc után, mivel senki sem jött az asztalunkhoz, távoztunk. Senki nem kérdezte meg, hogy miért megyünk el. Az étlap, amit más asztalokon láttunk, gyürött ès koszos volt. A pincèrnö ruhàja àpolatlan. Senkinek nem ajànlom a helyet. ",
                             Rating = 2.0,
                             RestaurantId = 19,
                             Title = "Nem ajánlom",
@@ -3257,7 +3259,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2021, 10, 17, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(8023),
+                            CreatedAt = new DateTime(2021, 10, 6, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6844),
                             Description = "Érdemes megkóstolni a különböző finomságokat, igazán jó konyhát visznek. Az ételeik kifinomultak, harmonikusak, mondjuk nem az a hely, ahol tele fogod enni magad - de nem is ez a cél.",
                             Rating = 4.2000000000000002,
                             RestaurantId = 6,
@@ -3267,7 +3269,7 @@ namespace IRestaurant.DAL.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2021, 10, 17, 19, 42, 11, 157, DateTimeKind.Local).AddTicks(8033),
+                            CreatedAt = new DateTime(2021, 10, 6, 12, 13, 13, 864, DateTimeKind.Local).AddTicks(6851),
                             Description = "Érdemes megkóstolni a különböző finomságokat, igazán jó konyhát visznek. Az ételeik kifinomultak, harmonikusak, mondjuk nem az a hely, ahol tele fogod enni magad - de nem is ez a cél.",
                             Rating = 4.2999999999999998,
                             RestaurantId = 7,

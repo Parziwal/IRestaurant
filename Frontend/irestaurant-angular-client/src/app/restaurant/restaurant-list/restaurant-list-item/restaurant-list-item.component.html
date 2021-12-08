@@ -6,7 +6,10 @@
   />
   <div class="card-body">
     <h5 class="card-title">{{ restaurantOverview.name }}</h5>
-    <app-rating-bar [rating]="restaurantOverview.rating"></app-rating-bar>
+    <div class="d-flex flex-row align-items-center justify-content-between">
+      <app-rating-bar [rating]="restaurantOverview.rating"></app-rating-bar>
+      <div class="review-count">{{ restaurantOverview.reviewCount }}</div>
+    </div>
     <p class="card-text text-justify mt-3">
       {{ restaurantOverview.shortDescription }}
     </p>

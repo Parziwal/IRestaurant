@@ -7,7 +7,7 @@ namespace IRestaurant.DAL.DTO.Orders
     /// <summary>
     /// A rendelés létrehozásához szükséges adatok követelményeit írja elő.
     /// </summary>
-    public class CreateOrder
+    public class CreateOrderDto
     {
         /// <summary>
         /// A rendelés kívánt kiszállítási dátuma.
@@ -31,6 +31,6 @@ namespace IRestaurant.DAL.DTO.Orders
         /// A rendeléshez tartozó tételek listája.
         /// </summary>
         [Required]
-        public List<CreateOrderFood> OrderFoods { get; set; } 
+        public List<CreateOrderFoodDto> OrderFoods { get; set; } 
     }
 }

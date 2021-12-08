@@ -36,7 +36,9 @@ namespace IRestaurant.Test.WebAPIIntegrationTests
                 .Options;
             var operationalStoreOptions = Options.Create(new OperationalStoreOptions());
 
-            new ApplicationDbContext(contextOptions, operationalStoreOptions, new TestSeedData()).Database.EnsureCreated();
+            var dbContext = new ApplicationDbContext(contextOptions, operationalStoreOptions, new TestSeedData());
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
         }
     }
 }

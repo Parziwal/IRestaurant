@@ -1,4 +1,4 @@
-﻿using IRestaurant.BL.Managers;
+﻿using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -17,9 +17,9 @@ namespace IRestaurant.WebAPI.Controllers
     [ApiController]
     public class GuestAddressController : ControllerBase
     {
-        private readonly UserManager userManager;
+        private readonly ApplicationUserManager userManager;
 
-        public GuestAddressController(UserManager userManager)
+        public GuestAddressController(ApplicationUserManager userManager)
         {
             this.userManager = userManager;
         }

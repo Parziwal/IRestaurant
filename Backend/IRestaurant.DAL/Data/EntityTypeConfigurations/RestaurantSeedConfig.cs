@@ -239,7 +239,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1061,
                     Street = "Király utca 30",
-                    PhoneNumber = "06301234567"
+                    PhoneNumber = "06-30-123-4567"
                 },
                 new
                 {
@@ -247,7 +247,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1148,
                     Street = "Örs vezér tere 1",
-                    PhoneNumber = "06305412567"
+                    PhoneNumber = "06-30-541-2567"
                 },
                 new
                 {
@@ -255,7 +255,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1011,
                     Street = "Király utca 26",
-                    PhoneNumber = "06301233456"
+                    PhoneNumber = "06-30-123-3456"
                 },
                 new
                 {
@@ -263,7 +263,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Debrecen",
                     ZipCode = 4025,
                     Street = "Kossuth utca 21",
-                    PhoneNumber = "06203433499"
+                    PhoneNumber = "06-20-343-3499"
                 },
                 new
                 {
@@ -271,7 +271,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Debrecen",
                     ZipCode = 4028,
                     Street = "Piac u. 23",
-                    PhoneNumber = "06202933472"
+                    PhoneNumber = "06-20-293-3472"
                 },
                 new
                 {
@@ -279,7 +279,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Eger",
                     ZipCode = 3300,
                     Street = "Szépasszonyvölgy 1",
-                    PhoneNumber = "06301933174"
+                    PhoneNumber = "06-30-193-3174"
                 },
                 new
                 {
@@ -287,7 +287,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Eger",
                     ZipCode = 3300,
                     Street = "Tinódi Sebestyén tér 4",
-                    PhoneNumber = "06201944175"
+                    PhoneNumber = "06-20-194-4175"
                 },
                 new
                 {
@@ -295,7 +295,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Szeged",
                     ZipCode = 6725,
                     Street = "Kálvária tér 25.",
-                    PhoneNumber = "06302932179"
+                    PhoneNumber = "06-30-293-2179"
                 },
                 new
                 {
@@ -303,7 +303,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Szeged",
                     ZipCode = 6725,
                     Street = "Oskola utca 4",
-                    PhoneNumber = "06204933175"
+                    PhoneNumber = "06-20-493-3175"
                 },
                 new
                 {
@@ -311,7 +311,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1017,
                     Street = "Akácfa utca 47",
-                    PhoneNumber = "06201733274"
+                    PhoneNumber = "06-20-173-3274"
                 },
                 new
                 {
@@ -319,7 +319,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1007,
                     Street = "Hercegprímás utca 5",
-                    PhoneNumber = "06203369867"
+                    PhoneNumber = "06-20-336-9867"
                 },
                 new
                 {
@@ -327,7 +327,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1021,
                     Street = "Nagymező utca 3",
-                    PhoneNumber = "06301876756"
+                    PhoneNumber = "06-30-187-6756"
                 },
                 new
                 {
@@ -335,7 +335,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1025,
                     Street = "Attila út 10",
-                    PhoneNumber = "06209977645"
+                    PhoneNumber = "06-20-997-7645"
                 },
                 new
                 {
@@ -343,7 +343,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Debrecen",
                     ZipCode = 4014,
                     Street = "Arany János utca 9",
-                    PhoneNumber = "06209972364"
+                    PhoneNumber = "06-20-997-2364"
                 },
                 new
                 {
@@ -351,7 +351,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1028,
                     Street = "Semmelweis utca 1-3",
-                    PhoneNumber = "06307789631"
+                    PhoneNumber = "06-30-778-9631"
                 },
                 new
                 {
@@ -359,7 +359,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Szeged",
                     ZipCode = 6721,
                     Street = "Thököly út 57/b",
-                    PhoneNumber = "06208765698"
+                    PhoneNumber = "06-20-876-5698"
                 },
                 new
                 {
@@ -367,7 +367,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Szeged",
                     ZipCode = 6711,
                     Street = "Iskola u. 29",
-                    PhoneNumber = "06208761985"
+                    PhoneNumber = "06-20-876-1985"
                 },
                 new
                 {
@@ -375,7 +375,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Debrecen",
                     ZipCode = 4007,
                     Street = "Lovas út 41",
-                    PhoneNumber = "06205872956"
+                    PhoneNumber = "06-20-587-2956"
                 },
                 new
                 {
@@ -383,7 +383,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Debrecen",
                     ZipCode = 4001,
                     Street = "Szent István tér 12",
-                    PhoneNumber = "06308173984"
+                    PhoneNumber = "06-30-817-3984"
                 },
                 new
                 {
@@ -391,7 +391,7 @@ namespace IRestaurant.DAL.Data.EntityTypeConfigurations
                     City = "Budapest",
                     ZipCode = 1015,
                     Street = "Fő utca 20",
-                    PhoneNumber = "06208133946"
+                    PhoneNumber = "06-20-813-3946"
                 }
             );
         }

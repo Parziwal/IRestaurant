@@ -22,7 +22,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  ): Observable<HttpEvent<Error>> {
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         const error: Error = errorResponse.error as Error;

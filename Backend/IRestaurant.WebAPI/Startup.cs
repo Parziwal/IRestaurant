@@ -1,5 +1,5 @@
 ﻿using Hellang.Middleware.ProblemDetails;
-using IRestaurant.BL.Managers;
+using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.CustomExceptions;
 using IRestaurant.DAL.Data;
 using IRestaurant.DAL.Models;
@@ -118,7 +118,7 @@ namespace IRestaurant.WebAPI
             services.AddTransient<ReviewManager>();
             services.AddTransient<FoodManager>();
             services.AddTransient<OrderManager>();
-            services.AddTransient<UserManager>();
+            services.AddTransient<ApplicationUserManager>();
         }
 
         /// <summary>

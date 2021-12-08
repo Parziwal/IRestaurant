@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IRestaurant.BL.Extensions
+namespace IRestaurant.BLL.Extensions
 {
     internal static class UserExtensions
     {

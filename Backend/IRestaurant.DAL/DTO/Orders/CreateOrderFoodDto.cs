@@ -6,7 +6,7 @@ namespace IRestaurant.DAL.DTO.Orders
     /// <summary>
     /// A rendeléshez tarozó tételek létrehozásához szükséges adatok követelményeit írja elő.
     /// </summary>
-    public class CreateOrderFood
+    public class CreateOrderFoodDto
     {
         /// <summary>
         /// Az étel egyedi azonosítója.

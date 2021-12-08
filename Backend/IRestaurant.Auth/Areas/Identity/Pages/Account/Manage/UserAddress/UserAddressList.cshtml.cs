@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using IRestaurant.BL.Managers;
+using IRestaurant.BLL.Managers;
 using IRestaurant.DAL.DTO.Addresses;
 using IRestaurant.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +14,9 @@ namespace IRestaurant.Auth.Areas.Identity.Pages.Account.Manage.UserAddress
     [Authorize(Roles = UserRoles.Guest)]
     public class UserAddressListModel : PageModel
     {
-        private readonly UserManager userManager;
+        private readonly ApplicationUserManager userManager;
 
-        public UserAddressListModel(UserManager userManager)
+        public UserAddressListModel(ApplicationUserManager userManager)
         {
             this.userManager = userManager;
         }

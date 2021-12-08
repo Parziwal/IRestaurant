@@ -69,7 +69,7 @@ export class DeliveryDetailsComponent implements OnInit {
         ]),
         phoneNumber: new FormControl(null, [
           Validators.required,
-          Validators.pattern('[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}'),
+          Validators.pattern('[0-9]{2}-[0-9]{1,2}-[0-9]{3}-[0-9]{4}'),
         ]),
       }),
     });
@@ -144,28 +144,14 @@ export class DeliveryDetailsComponent implements OnInit {
   }
 
   /**
-   * Az űrlap elküldése. Ha a kiválasztott cím azonosítója -1, akkor az azt jelenti, hogy a vendég egy új
-   * címet vett fel és ezesetben először létrehozzuk a címet, majd jelezzük, hogy a rendelési adatok megváltoztak.
-   * Ha a kiválasztott cím azonosítója nem -1, akkor simán jelezzük, hogy a rendelési adatok megváltoztak.
+   * A rendelési adatok, mint a lakcím és a kiszállítási dátum megváltozásának jelzése.
    */
   onSubmit() {
-    if (this.selectedAddressId == -1) {
-      this.guestAddressService
-        .createUserAddress(this.deliveryForm.controls.address.value)
-        .subscribe((createdAddress: UserAddressWithId) => {
-          this.changeDeliveryDetails(createdAddress.id);
-        });
-    } else {
-      this.changeDeliveryDetails(this.selectedAddressId);
-    }
-  }
-
-  private changeDeliveryDetails(addressId: number) {
-    this.orderService.deliveryDetailsChange.next({
+    this.orderService.deliveryDetailsChanged.next({
       ...this.deliveryForm.value,
       address: {
         ...this.deliveryForm.controls.address.value,
-        id: addressId,
+        id: this.selectedAddressId,
       },
     });
   }

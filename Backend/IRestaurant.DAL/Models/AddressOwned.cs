@@ -40,7 +40,7 @@ namespace IRestaurant.DAL.Models
         /// </summary>
         [Required]
         [Phone]
-        [RegularExpression("[0-9]{2}-[0-9]{2}-[0-9]{3}-[0-9]{4}")]
+        [RegularExpression("[0-9]{2}-[0-9]{1,2}-[0-9]{3}-[0-9]{4}")]
         public string PhoneNumber { get; set; }
     }
 }

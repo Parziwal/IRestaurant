@@ -47,6 +47,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RestaurantSearchBarComponent } from './restaurant/restaurant-list/restaurant-search-bar/restaurant-search-bar.component';
 import { OrderTabComponent } from './order/order-list/order-tab/order-tab.component';
 import { OrderSearchBarComponent } from './order/order-list/order-search-bar/order-search-bar.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 registerLocaleData(localeHu, 'hu');
 
@@ -86,6 +87,7 @@ registerLocaleData(localeHu, 'hu');
     RestaurantSearchBarComponent,
     OrderTabComponent,
     OrderSearchBarComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,

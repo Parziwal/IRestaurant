@@ -48,6 +48,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
         {
             return await dbContext.Foods
                         .Where(f => f.RestaurantId == restaurantId)
+                        .OrderBy(f => f.Name)
                         .ToFoodDtoList();
         }
 
@@ -98,6 +99,7 @@ namespace IRestaurant.DAL.Repositories.Implementations
             else
             {
                 dbContext.Remove(dbFood);
+                imageRepository.DeleteImage(dbFood.ImagePath);
             }
 
             await dbContext.SaveChangesAsync();
