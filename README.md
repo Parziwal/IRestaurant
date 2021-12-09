@@ -30,7 +30,8 @@ _Megjegyzés:_ A webalkalmazásban az email küldő szolgáltatás alapból nem 
 ### Kliens oldal
 
 1. Az Angular kliens futtatásának feltétele, hogy a `Node.js` csomagkezelő és az `Angular CLI` telepítve legyen, valamint, hogy a szerver oldal már fusson.
-2. Ezután parancssorból a kliens alkalmazás mappájában (`Frontend\irestaurant-angular-client`) adjuk ki az `ng serve --open` parancsot, melynek hatására elindul a szerver és a böngészőben megnyitásra kerül a kliens a `http://localhost:4200/` címen.
+2. Parancssorból a kliens alkalmazás mappájában (`Frontend\irestaurant-angular-client`) adjuk ki az `npm install` parancsot, ami telepíti az Angular alkalmazás függőségeit.
+3. Végül ugyanitt adjuk ki az `ng serve --open` parancsot, melynek hatására elindul a szerver és a böngészőben megnyitásra kerül a kliens a `http://localhost:4200/` címen.
 
 ## Főbb technológiák
 
