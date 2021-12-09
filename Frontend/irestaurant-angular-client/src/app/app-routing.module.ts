@@ -44,6 +44,7 @@ const routes: Routes = [
     path: 'myrestaurant',
     component: RestaurantDetailsComponent,
     canActivate: [RestaurantRoleGuard],
+    data: { myrestaurant: true },
   },
   {
     path: 'myrestaurant/edit',

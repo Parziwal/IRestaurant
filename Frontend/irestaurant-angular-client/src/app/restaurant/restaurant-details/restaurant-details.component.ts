@@ -66,13 +66,13 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
 
   /**
    * Az étterem részletes adatainak lekérése.
-   * Ha az aktuális felhasználó szerepköre étterem, akkor a felhasználó saját éttermének adatait kérjük le,
+   * Ha az aktuális oldal címe 'myrestaurant', akkor a felhasználó saját éttermének adatait kérjük le,
    * egyébként pedig az étterem azonosítója alapján kérjük le az adatokat.
    */
   private getRestaurantDetails() {
     let restaurantDetails: Observable<RestaurantDetails> = new Observable();
 
-    if (this.route.snapshot.queryParamMap.has("myrestaurant")) {
+    if (this.route.snapshot.data['myrestaurant']) {
       restaurantDetails = this.restaurantService
         .getMyRestaurantDetails()
         .pipe(

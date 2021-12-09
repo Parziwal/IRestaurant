@@ -35,7 +35,7 @@ export class RestaurantService {
       .pipe(
         map((pagedList) => {
           pagedList.result.map((restaurant) => {
-            if (restaurant.imagePath.startsWith('http')) {
+            if (restaurant?.imagePath?.startsWith('http')) {
               return restaurant;
             }
             restaurant.imagePath =
@@ -77,12 +77,12 @@ export class RestaurantService {
    * @param restaurantId Az étterem azonosítója.
    * @returns Az étterem részletes adatai.
    */
-  private getRestaurantDetailsBase(restaurantId: number | string) {
+  private getRestaurantDetailsBase(restaurantId: string) {
     return this.http
       .get<RestaurantDetails>(`${this.restaurantApiUrl}/${restaurantId}`)
       .pipe(
         map((restaurantData) => {
-          if (restaurantData.imagePath.startsWith('http')) {
+          if (restaurantData?.imagePath?.startsWith('http')) {
             return restaurantData;
           }
           restaurantData.imagePath =
@@ -100,7 +100,7 @@ export class RestaurantService {
    * @returns Az étterem részletes adatai.
    */
   getRestaurantDetails(restaurantId: number) {
-    return this.getRestaurantDetailsBase(restaurantId);
+    return this.getRestaurantDetailsBase(restaurantId.toString());
   }
 
   /**

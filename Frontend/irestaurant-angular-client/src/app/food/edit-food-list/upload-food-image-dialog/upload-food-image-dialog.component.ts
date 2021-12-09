@@ -2,6 +2,7 @@ import { Inject } from '@angular/core';
 import { Component } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 import { FoodService } from '../../food.service';
 import { Food } from '../../models/food.type';
 
@@ -36,7 +37,7 @@ export class UploadFoodImageDialogComponent {
    */
   onImageDeleted() {
     this.foodService.deleteFoodImage(this.food.id).subscribe(() => {
-      this.food.imagePath = null;
+      this.food.imagePath = environment.defaultFoodImgUrl;
       this.toastr.success('Az étel képe törlésre került.');
       this.dialogRef.close();
     });

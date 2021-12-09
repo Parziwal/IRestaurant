@@ -22,7 +22,7 @@ export class FoodService {
   getFood(foodId: number) {
     return this.http.get<Food>(`${this.foodApiUrl}/${foodId}`).pipe(
       map((foodData) => {
-        if (foodData.imagePath?.startsWith('http')) {
+        if (foodData?.imagePath?.startsWith('http')) {
           return foodData;
         }
         foodData.imagePath =
@@ -46,7 +46,7 @@ export class FoodService {
       .pipe(
         map((foodList) => {
           return foodList.map((food) => {
-            if (food.imagePath?.startsWith('http')) {
+            if (food?.imagePath?.startsWith('http')) {
               return food;
             }
             food.imagePath =
