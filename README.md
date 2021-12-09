@@ -16,7 +16,7 @@ A probléma megoldására egy olyan webalkalmazás készítése volt a célom, a
 
 ### Szerver oldal
 
-1. A projekt `Backend` részét Visual Studio-val kell megnyitni. Fontos, hogy a Visual Studio-ban telepítve legyenek az `ASP.NET and web development` és a `Python development` csomagok. Ezt a `Tools` -> `Get Tools and Features...` menüpontban tudjuk leellenőrizni.
+1. A projekt `Backend` részét Visual Studio-val kell megnyitni.
 2. Az alkalmazás működéséhez szükséges egy Microsoft SQL Server. Az adatbázis lérehozásához a Visual Studio-ban nyissunk egy `Package Manager Console` ablakot (`Tools` -> `NuGet Package Manager` -> `Package Manager Console`), majd ott adjuk ki a `Update-Database -P IRestaurant.DAL`.
 3. A szerver oldal elindításához először ki kell választani a futtatandó projekteket. Ehhez a `Solution Explorer` ablakban jobb klikk a `Solution IRestaurant` projektre, majd válasszuk a `Properties` lehetőséget. A felugró ablakban `Multiple startup projects` opciót kell beállítani, és ezen belül az `IRestaurant.Auth` és `IRestaurant.WebAPI` projektek `Action` lehetőségét kell `Start` módra állítani.
 4. Végül a Visual Studio-ban az F5 vagy a toolbarban található zöld nyílra kattintva lehet az Auth és WebAPI projekteket lefordítani és elindítani.
@@ -30,12 +30,11 @@ _Megjegyzés:_ A webalkalmazásban az email küldő szolgáltatás alapból nem 
 ### Kliens oldal
 
 1. Az Angular kliens futtatásának feltétele, hogy a `Node.js` csomagkezelő és az `Angular CLI` telepítve legyen, valamint, hogy a szerver oldal már fusson.
-2. Ezután parancssorból a kliens alkalmazás mappájában (`Frontend\irestaurant-angular-client`) adjuk ki az `ng serve --open`
-parancsot, melynek hatására elindul a szerver és a böngészőben megnyitásra kerül a kliens a `http://localhost:4200/` címen.
+2. Ezután parancssorból a kliens alkalmazás mappájában (`Frontend\irestaurant-angular-client`) adjuk ki az `ng serve --open` parancsot, melynek hatására elindul a szerver és a böngészőben megnyitásra kerül a kliens a `http://localhost:4200/` címen.
 
 ## Főbb technológiák
 
-- **Angular** Frontend: , Angular Material, angular-oauth2-oidc
+- **Angular** Frontend: Angular Material, angular-oauth2-oidc
 - **ASP.NET Core** Backend: Identity Core, Microsodt SQL Server, Entity Framework Core, IdentityServer, Razor Pages, ProblemDetails middleware, xUnit
 - **Azure** felhőszolgáltatás: Azure App Service, Azure SQL Database, Azure Key Vault, SendGrid
 
