@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { UserRole } from 'src/app/authentication/models/user-roles';
+import { RestaurantService } from 'src/app/restaurant/restaurant.service';
 import { environment } from 'src/environments/environment';
 import { FoodService } from '../food.service';
 import { Food } from '../models/food.type';
@@ -24,10 +25,7 @@ export class RestaurantMenuComponent implements OnInit {
 
   constructor(
     private foodService: FoodService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.getRestaurantMenu();
@@ -40,12 +38,5 @@ export class RestaurantMenuComponent implements OnInit {
 
   private getCurrentUserRole() {
     this.userRole = this.authService.currentUserRole;
-  }
-
-  /**
-   * Ha a rendelés gombra kattintottunk, akkor átnavigálunk a rendelés oldalra.
-   */
-  onOrderClicked() {
-    this.router.navigate(['order'], { relativeTo: this.route });
   }
 }

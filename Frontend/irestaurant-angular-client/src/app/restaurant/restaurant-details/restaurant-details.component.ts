@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -30,10 +30,11 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
   private ratingChangedSub = new Subscription();
 
   constructor(
+    private authService: AuthService,
     private restaurantService: RestaurantService,
+    private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService,
-    private authService: AuthService
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -118,5 +119,12 @@ export class RestaurantDetailsComponent implements OnInit, OnDestroy {
         this.restaurant.isCurrentGuestFavourite = false;
         this.toastr.success('Az étterem eltávolításra került a kedvencekből.');
       });
+  }
+  
+  /**
+   * Ha a rendelés gombra kattintottunk, akkor átnavigálunk a rendelés oldalra.
+   */
+   onOrderClicked() {
+    this.router.navigate(['order'], { relativeTo: this.route });
   }
 }

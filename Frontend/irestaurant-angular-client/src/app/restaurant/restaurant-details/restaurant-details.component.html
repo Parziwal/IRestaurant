@@ -81,6 +81,15 @@
   <div class="row mt-5">
     <div class="col">
       <app-restaurant-menu [restaurantId]="restaurantId"></app-restaurant-menu>
+      <div *ngIf="restaurant.isOrderAvailable && (userRole | async) === 'Guest'" class="row justify-content-center mt-3">
+        <button
+          type="button"
+          class="btn btn-success btn-lg col-lg-6 md-8"
+          (click)="onOrderClicked()"
+        >
+          Rendelés az étlapról
+        </button>
+      </div>
     </div>
   </div>
   <div class="row mt-5">

@@ -25,13 +25,3 @@
     </mat-expansion-panel>
   </div>
 </mat-accordion>
-<div class="row justify-content-center mt-3">
-  <button
-    *ngIf="(userRole | async) === 'Guest'"
-    type="button"
-    class="btn btn-success btn-lg col-lg-6 md-8"
-    (click)="onOrderClicked()"
-  >
-    Rendelés az étlapról
-  </button>
-</div>
