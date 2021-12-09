@@ -22,6 +22,11 @@ A probléma megoldására egy olyan webalkalmazás készítése volt a célom, a
 4. Végül a Visual Studio-ban az F5 vagy a toolbarban található zöld nyílra kattintva lehet az Auth és WebAPI projekteket lefordítani és elindítani.
 5. A böngészőben a `https://localhost:5001/swagger` címen érhetők el a Swagger UI, ami a Web API egyes végpontjai írja le. A `https://localhost:5000/Identity/Account/Login` címen pedig az Auth szerver bejelentkezési felülete.
 
+_Megjegyzés:_ A webalkalmazásban az email küldő szolgáltatás alapból nem fog működni, így a regisztráció, elfelejtett jelszó és az email változtatási funkciók nem lesznek elérhetők. Ennek megoldására két lehetőség van:
+
+- SendGrid fiók létrehozása, és az API kulcs lokális elmentése az alábbi parancsal: `dotnet user-secrets set SendGridKey <API kulcs>`
+- Az Auth projekt Startup fájlában a `RequireConfirmedAccount` változót `false` értékre kell állítani és az alábbi sort kitörölni `services.AddTransient<IEmailSender, EmailSender>()`, de ezzel viszont csak a regisztráció válik működőképessé.
+
 ### Kliens oldal
 
 1. Az Angular kliens futtatásának feltétele, hogy a `Node.js` csomagkezelő és az `Angular CLI` telepítve legyen, valamint, hogy a szerver oldal már fusson.
